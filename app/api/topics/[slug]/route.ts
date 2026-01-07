@@ -49,10 +49,7 @@ export async function GET(
     return NextResponse.json(topic);
   } catch (error) {
     console.error("Error fetching topic:", error);
-    return NextResponse.json(
-      { error: "Erro ao buscar tema" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erro ao buscar tema" }, { status: 500 });
   }
 }
 
@@ -63,18 +60,12 @@ export async function PATCH(
   try {
     const session = await auth();
     if (!session?.user) {
-      return NextResponse.json(
-        { error: "Não autorizado" },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
     }
 
     const userRole = session.user.role;
     if (userRole !== "MOD" && userRole !== "ADMIN") {
-      return NextResponse.json(
-        { error: "Sem permissão" },
-        { status: 403 }
-      );
+      return NextResponse.json({ error: "Sem permissão" }, { status: 403 });
     }
 
     const body = await req.json();
@@ -100,12 +91,14 @@ export async function PATCH(
   } catch (error) {
     console.error("Error updating topic:", error);
     if (error instanceof Error && error.name === "ZodError") {
-      return NextResponse.json(
-        { error: "Dados inválidos" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Dados inválidos" }, { status: 400 });
     }
-    if (error && typeof error === "object" && "code" in error && error.code === "P2025") {
+    if (
+      error &&
+      typeof error === "object" &&
+      "code" in error &&
+      error.code === "P2025"
+    ) {
       return NextResponse.json(
         { error: "Tema não encontrado" },
         { status: 404 }

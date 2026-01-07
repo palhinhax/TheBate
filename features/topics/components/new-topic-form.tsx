@@ -91,7 +91,9 @@ export default function NewTopicForm() {
           className="mt-1"
         />
         {errors.title && (
-          <p className="mt-1 text-sm text-destructive">{errors.title.message}</p>
+          <p className="mt-1 text-sm text-destructive">
+            {errors.title.message}
+          </p>
         )}
       </div>
 

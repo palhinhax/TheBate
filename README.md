@@ -5,18 +5,21 @@ Uma plataforma pública de debates construída com Next.js 14, PostgreSQL e Pris
 ## 🚀 Funcionalidades
 
 ### Temas e Debates
+
 - **Criação de Temas**: Usuários autenticados podem criar novos temas de debate
 - **Páginas Públicas**: Todos os temas são indexáveis pelos motores de busca
 - **Tags**: Cada tema pode ter até 5 tags para categorização
 - **Status**: Temas podem estar ativos, ocultos ou bloqueados (moderação)
 
 ### Comentários e Discussões
+
 - **Comentários em Thread**: Sistema de comentários com respostas (nested)
 - **Sistema de Votos**: Upvote/Downvote para comentários
 - **Ordenação**: Comentários podem ser ordenados por Top (mais votados) ou New (mais recentes)
 - **Edição e Moderação**: Autores podem editar, moderadores podem ocultar/deletar
 
 ### Autenticação e Permissões
+
 - **Leitura Pública**: Qualquer pessoa pode ler temas e comentários sem login
 - **Interação Autenticada**: Login obrigatório para criar temas, comentar e votar
 - **Sistema de Roles**:
@@ -25,6 +28,7 @@ Uma plataforma pública de debates construída com Next.js 14, PostgreSQL e Pris
   - `ADMIN`: Administrador com acesso total
 
 ### SEO e Performance
+
 - **Server-Side Rendering**: Conteúdo renderizado no servidor para melhor SEO
 - **Metadata Dinâmica**: Open Graph, Twitter Cards e canonical URLs
 - **JSON-LD**: Structured data para motores de busca
@@ -78,22 +82,26 @@ Uma plataforma pública de debates construída com Next.js 14, PostgreSQL e Pris
 ### Instalação
 
 1. Clone o repositório:
+
    ```bash
    git clone https://github.com/palhinhax/TheBate.git
    cd TheBate
    ```
 
 2. Instale as dependências:
+
    ```bash
    npm install
    ```
 
 3. Configure as variáveis de ambiente:
+
    ```bash
    cp .env.example .env
    ```
-   
+
    Atualize o `.env` com suas configurações:
+
    ```env
    DATABASE_URL="postgresql://user:password@localhost:5432/thebate"
    AUTH_SECRET="seu-secret-aqui"
@@ -101,11 +109,13 @@ Uma plataforma pública de debates construída com Next.js 14, PostgreSQL e Pris
    ```
 
 4. Execute as migrations do banco:
+
    ```bash
    npm run db:migrate
    ```
 
 5. (Opcional) Popule o banco com dados de exemplo:
+
    ```bash
    npm run db:seed
    ```
@@ -119,20 +129,21 @@ Acesse [http://localhost:3000](http://localhost:3000) para ver a aplicação.
 
 ## 📜 Scripts Disponíveis
 
-| Comando | Descrição |
-|---------|-----------|
-| `npm run dev` | Inicia servidor de desenvolvimento |
-| `npm run build` | Build para produção |
-| `npm run start` | Inicia servidor de produção |
-| `npm run lint` | Executa ESLint |
-| `npm run typecheck` | Verifica tipos TypeScript |
-| `npm run db:migrate` | Executa migrations |
-| `npm run db:seed` | Popula banco com dados |
-| `npm run db:studio` | Abre Prisma Studio |
+| Comando              | Descrição                          |
+| -------------------- | ---------------------------------- |
+| `npm run dev`        | Inicia servidor de desenvolvimento |
+| `npm run build`      | Build para produção                |
+| `npm run start`      | Inicia servidor de produção        |
+| `npm run lint`       | Executa ESLint                     |
+| `npm run typecheck`  | Verifica tipos TypeScript          |
+| `npm run db:migrate` | Executa migrations                 |
+| `npm run db:seed`    | Popula banco com dados             |
+| `npm run db:studio`  | Abre Prisma Studio                 |
 
 ## 🔐 Credenciais de Teste
 
 Após executar o seed:
+
 - **Admin**: `admin@thebate.com` / `password123`
 - **Moderador**: `mod@thebate.com` / `password123`
 - **Usuários**: `maria@example.com`, `joao@example.com`, etc. / `password123`
@@ -141,26 +152,27 @@ Após executar o seed:
 
 ### Temas
 
-| Método | Endpoint | Descrição | Auth |
-|--------|----------|-----------|------|
-| GET | `/api/topics` | Lista todos os temas | Não |
-| GET | `/api/topics/[slug]` | Detalhes de um tema | Não |
-| POST | `/api/topics` | Cria um tema | Sim |
-| PATCH | `/api/topics/[slug]` | Atualiza status (mod/admin) | Sim |
+| Método | Endpoint             | Descrição                   | Auth |
+| ------ | -------------------- | --------------------------- | ---- |
+| GET    | `/api/topics`        | Lista todos os temas        | Não  |
+| GET    | `/api/topics/[slug]` | Detalhes de um tema         | Não  |
+| POST   | `/api/topics`        | Cria um tema                | Sim  |
+| PATCH  | `/api/topics/[slug]` | Atualiza status (mod/admin) | Sim  |
 
 ### Comentários
 
-| Método | Endpoint | Descrição | Auth |
-|--------|----------|-----------|------|
-| GET | `/api/topics/[slug]/comments` | Lista comentários | Não |
-| POST | `/api/comments` | Cria comentário/resposta | Sim |
-| PATCH | `/api/comments/[id]` | Edita ou modera comentário | Sim |
-| DELETE | `/api/comments/[id]` | Remove comentário | Sim |
-| POST | `/api/comments/[id]/vote` | Vota em comentário | Sim |
+| Método | Endpoint                      | Descrição                  | Auth |
+| ------ | ----------------------------- | -------------------------- | ---- |
+| GET    | `/api/topics/[slug]/comments` | Lista comentários          | Não  |
+| POST   | `/api/comments`               | Cria comentário/resposta   | Sim  |
+| PATCH  | `/api/comments/[id]`          | Edita ou modera comentário | Sim  |
+| DELETE | `/api/comments/[id]`          | Remove comentário          | Sim  |
+| POST   | `/api/comments/[id]/vote`     | Vota em comentário         | Sim  |
 
 ## 🗄️ Modelos do Banco
 
 ### User
+
 ```prisma
 - id: String (cuid)
 - username: String (unique)
@@ -173,6 +185,7 @@ Após executar o seed:
 ```
 
 ### Topic
+
 ```prisma
 - id: String (cuid)
 - slug: String (unique)
@@ -186,6 +199,7 @@ Após executar o seed:
 ```
 
 ### Comment
+
 ```prisma
 - id: String (cuid)
 - content: String
@@ -199,6 +213,7 @@ Após executar o seed:
 ```
 
 ### Vote
+
 ```prisma
 - id: String (cuid)
 - value: Int (-1 ou +1)
@@ -223,6 +238,7 @@ Após executar o seed:
 ### Database
 
 Recomendado usar serviços como:
+
 - [Neon](https://neon.tech) - PostgreSQL serverless
 - [Supabase](https://supabase.com) - PostgreSQL com features adicionais
 - [Railway](https://railway.app) - Deploy de apps e databases
@@ -230,6 +246,7 @@ Recomendado usar serviços como:
 ## 🎨 Componentes UI
 
 A plataforma utiliza shadcn/ui para componentes:
+
 - Button, Input, Label
 - Card (para listagem de temas)
 - Dialog (modals)

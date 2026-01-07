@@ -5,9 +5,10 @@ import { auth } from "@/lib/auth";
 import { MessageSquare, TrendingUp, Clock } from "lucide-react";
 
 async function getTopics(sort: "trending" | "new" = "new") {
-  const orderBy = sort === "new" 
-    ? { createdAt: "desc" as const }
-    : { createdAt: "desc" as const }; // TODO: implement real trending algorithm
+  const orderBy =
+    sort === "new"
+      ? { createdAt: "desc" as const }
+      : { createdAt: "desc" as const }; // TODO: implement real trending algorithm
 
   const topics = await prisma.topic.findMany({
     where: { status: "ACTIVE" as const },
@@ -40,7 +41,7 @@ export default async function Home() {
       {/* Header */}
       <header className="border-b">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <Link href="/" className="font-bold text-xl">
+          <Link href="/" className="text-xl font-bold">
             Thebate
           </Link>
           <div className="flex items-center gap-4">
@@ -50,7 +51,9 @@ export default async function Home() {
                   <Button>Novo Tema</Button>
                 </Link>
                 <Link href={`/u/${session.user.username}`}>
-                  <Button variant="ghost">{session.user.name || session.user.username}</Button>
+                  <Button variant="ghost">
+                    {session.user.name || session.user.username}
+                  </Button>
                 </Link>
               </>
             ) : (
@@ -74,15 +77,13 @@ export default async function Home() {
             Plataforma de <span className="text-primary">Debates</span>
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-            Participe de discussões inteligentes sobre tecnologia, sociedade e cultura.
-            Compartilhe ideias, aprenda e debata com respeito.
+            Participe de discussões inteligentes sobre tecnologia, sociedade e
+            cultura. Compartilhe ideias, aprenda e debata com respeito.
           </p>
           {!session?.user && (
             <div className="mt-6">
               <Link href="/auth/register">
-                <Button size="lg">
-                  Começar a Debater
-                </Button>
+                <Button size="lg">Começar a Debater</Button>
               </Link>
             </div>
           )}
@@ -115,7 +116,7 @@ export default async function Home() {
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <h3 className="text-xl font-semibold">{topic.title}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
+                  <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">
                     {topic.description}
                   </p>
                   <div className="mt-3 flex flex-wrap gap-2">
@@ -157,7 +158,7 @@ export default async function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t py-8 mt-12">
+      <footer className="mt-12 border-t py-8">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
           <p>Thebate - Plataforma de debates públicos</p>
         </div>

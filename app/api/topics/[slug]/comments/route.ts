@@ -9,7 +9,10 @@ export async function GET(
     const { searchParams } = new URL(req.url);
     const sort = searchParams.get("sort") || "top";
     const page = parseInt(searchParams.get("page") || "1");
-    const perPage = Math.min(parseInt(searchParams.get("perPage") || "50"), 100);
+    const perPage = Math.min(
+      parseInt(searchParams.get("perPage") || "50"),
+      100
+    );
 
     const skip = (page - 1) * perPage;
 
@@ -32,9 +35,10 @@ export async function GET(
       status: "ACTIVE" as const,
     };
 
-    const orderBy = sort === "new"
-      ? { createdAt: "desc" as const }
-      : [{ score: "desc" as const }, { createdAt: "desc" as const }];
+    const orderBy =
+      sort === "new"
+        ? { createdAt: "desc" as const }
+        : [{ score: "desc" as const }, { createdAt: "desc" as const }];
 
     const [comments, total] = await Promise.all([
       prisma.comment.findMany({

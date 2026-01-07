@@ -14,10 +14,7 @@ export async function POST(
   try {
     const session = await auth();
     if (!session?.user) {
-      return NextResponse.json(
-        { error: "Não autorizado" },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
     }
 
     const body = await req.json();
@@ -108,14 +105,8 @@ export async function POST(
   } catch (error) {
     console.error("Error voting on comment:", error);
     if (error instanceof Error && error.name === "ZodError") {
-      return NextResponse.json(
-        { error: "Dados inválidos" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Dados inválidos" }, { status: 400 });
     }
-    return NextResponse.json(
-      { error: "Erro ao votar" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erro ao votar" }, { status: 500 });
   }
 }
