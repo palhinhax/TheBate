@@ -57,8 +57,7 @@ export default function CommentItem({
   const [isVoting, setIsVoting] = useState(false);
 
   // Check if user has voted (quality vote)
-  const hasVoted =
-    comment.votes && comment.votes.length > 0 ? true : false;
+  const hasVoted = Boolean(comment.votes?.length);
 
   const handleVote = async () => {
     if (!session?.user) {

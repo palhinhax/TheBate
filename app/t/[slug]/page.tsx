@@ -241,7 +241,7 @@ export default async function TopicPage({ params, searchParams }: Props) {
 
           {/* Theme Voting Section */}
           <div className="mb-8 rounded-lg border bg-card p-6">
-            <h2 className="mb-4 text-xl font-semibold">Vota no tema</h2>
+            <h2 className="mb-4 text-xl font-semibold">Vote no tema</h2>
             <div className="mb-6">
               <ThemeVoteButtons
                 topicSlug={topic.slug}

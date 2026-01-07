@@ -18,7 +18,7 @@ export async function POST(
     }
 
     const body = await req.json();
-    voteBodySchema.parse(body);
+    const { value } = voteBodySchema.parse(body);
 
     // Check if comment exists
     const comment = await prisma.comment.findUnique({
@@ -62,10 +62,10 @@ export async function POST(
         });
         scoreDelta = -1;
       } else {
-        // Create new vote
+        // Create new vote with validated value
         await tx.vote.create({
           data: {
-            value: 1,
+            value,
             commentId: params.id,
             userId: session.user.id,
           },

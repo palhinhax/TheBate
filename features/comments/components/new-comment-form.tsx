@@ -96,7 +96,7 @@ export default function NewCommentForm({
               <input
                 type="radio"
                 value="AFAVOR"
-                {...register("side" as keyof (CommentFormData | ReplyFormData))}
+                {...(register("side" as "side"))}
                 className="sr-only"
               />
               <span className="text-lg">👍</span>
@@ -106,7 +106,7 @@ export default function NewCommentForm({
               <input
                 type="radio"
                 value="CONTRA"
-                {...register("side" as keyof (CommentFormData | ReplyFormData))}
+                {...(register("side" as "side"))}
                 className="sr-only"
               />
               <span className="text-lg">👎</span>
@@ -122,11 +122,9 @@ export default function NewCommentForm({
       )}
 
       <div>
-        {!parentId && (
-          <Label htmlFor="content">
-            {isReply ? "Escreva sua resposta" : "Escreva seu argumento"}
-          </Label>
-        )}
+        <Label htmlFor="content">
+          {isReply ? "Escreva sua resposta" : "Escreva seu argumento"}
+        </Label>
         <textarea
           id="content"
           {...register("content")}
