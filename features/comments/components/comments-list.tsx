@@ -5,9 +5,14 @@ import CommentItem from "./comment-item";
 type CommentsListProps = {
   topicSlug: string;
   sort: "top" | "new";
+  side?: "AFAVOR" | "CONTRA" | null;
 };
 
-async function getComments(topicSlug: string, sort: "top" | "new") {
+async function getComments(
+  topicSlug: string,
+  sort: "top" | "new",
+  side?: "AFAVOR" | "CONTRA" | null
+) {
   // First, find the topic
   const topic = await prisma.topic.findUnique({
     where: { slug: topicSlug },
@@ -27,12 +32,19 @@ async function getComments(topicSlug: string, sort: "top" | "new") {
       ? { createdAt: "desc" as const }
       : [{ score: "desc" as const }, { createdAt: "desc" as const }];
 
+  const where: any = {
+    topicId: topic.id,
+    parentId: null,
+    status: "ACTIVE" as const,
+  };
+
+  // Add side filter if specified
+  if (side === "AFAVOR" || side === "CONTRA") {
+    where.side = side;
+  }
+
   const comments = await prisma.comment.findMany({
-    where: {
-      topicId: topic.id,
-      parentId: null,
-      status: "ACTIVE" as const,
-    },
+    where,
     orderBy,
     take: 50,
     include: {
@@ -79,14 +91,17 @@ async function getComments(topicSlug: string, sort: "top" | "new") {
 export default async function CommentsList({
   topicSlug,
   sort,
+  side,
 }: CommentsListProps) {
-  const { comments, topicId } = await getComments(topicSlug, sort);
+  const { comments, topicId } = await getComments(topicSlug, sort, side);
 
   if (comments.length === 0) {
     return (
       <div className="py-12 text-center">
         <p className="text-muted-foreground">
-          Ainda não há comentários. Seja o primeiro a comentar!
+          {side
+            ? `Ainda não há argumentos ${side === "AFAVOR" ? "a favor" : "contra"}.`
+            : "Ainda não há argumentos. Seja o primeiro a argumentar!"}
         </p>
       </div>
     );
