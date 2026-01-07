@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
 
     const skip = (page - 1) * perPage;
 
-    const where: any = {
+    const where: Record<string, unknown> = {
       status: "ACTIVE" as const,
     };
 
@@ -24,14 +24,9 @@ export async function GET(req: NextRequest) {
       };
     }
 
-    let orderBy: any = {};
-    if (sort === "new") {
-      orderBy = { createdAt: "desc" };
-    } else {
-      // For "trending", we'd ideally calculate based on recent activity
-      // For now, using a combination of comment count and recency
-      orderBy = { createdAt: "desc" };
-    }
+    const orderBy = sort === "new" 
+      ? { createdAt: "desc" as const }
+      : { createdAt: "desc" as const }; // TODO: implement real trending algorithm
 
     const [topics, total] = await Promise.all([
       prisma.topic.findMany({
@@ -116,11 +111,11 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(topic, { status: 201 });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error creating topic:", error);
-    if (error.name === "ZodError") {
+    if (error instanceof Error && error.name === "ZodError") {
       return NextResponse.json(
-        { error: "Dados inválidos", details: error.errors },
+        { error: "Dados inválidos" },
         { status: 400 }
       );
     }

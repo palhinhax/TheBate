@@ -77,11 +77,11 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(comment, { status: 201 });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error creating comment:", error);
-    if (error.name === "ZodError") {
+    if (error instanceof Error && error.name === "ZodError") {
       return NextResponse.json(
-        { error: "Dados inválidos", details: error.errors },
+        { error: "Dados inválidos" },
         { status: 400 }
       );
     }

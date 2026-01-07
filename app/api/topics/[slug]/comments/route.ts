@@ -32,13 +32,9 @@ export async function GET(
       status: "ACTIVE" as const,
     };
 
-    let orderBy: any = {};
-    if (sort === "new") {
-      orderBy = { createdAt: "desc" };
-    } else {
-      // top
-      orderBy = [{ score: "desc" }, { createdAt: "desc" }];
-    }
+    const orderBy = sort === "new"
+      ? { createdAt: "desc" as const }
+      : [{ score: "desc" as const }, { createdAt: "desc" as const }];
 
     const [comments, total] = await Promise.all([
       prisma.comment.findMany({

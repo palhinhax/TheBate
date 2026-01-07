@@ -97,15 +97,15 @@ export async function PATCH(
     });
 
     return NextResponse.json(topic);
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error updating topic:", error);
-    if (error.name === "ZodError") {
+    if (error instanceof Error && error.name === "ZodError") {
       return NextResponse.json(
-        { error: "Dados inválidos", details: error.errors },
+        { error: "Dados inválidos" },
         { status: 400 }
       );
     }
-    if (error.code === "P2025") {
+    if (error && typeof error === "object" && "code" in error && error.code === "P2025") {
       return NextResponse.json(
         { error: "Tema não encontrado" },
         { status: 404 }

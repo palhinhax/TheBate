@@ -91,15 +91,15 @@ export async function PATCH(
     });
 
     return NextResponse.json(updatedComment);
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error updating comment:", error);
-    if (error.name === "ZodError") {
+    if (error instanceof Error && error.name === "ZodError") {
       return NextResponse.json(
-        { error: "Dados inválidos", details: error.errors },
+        { error: "Dados inválidos" },
         { status: 400 }
       );
     }
-    if (error.code === "P2025") {
+    if (error && typeof error === "object" && "code" in error && error.code === "P2025") {
       return NextResponse.json(
         { error: "Comentário não encontrado" },
         { status: 404 }
@@ -155,9 +155,9 @@ export async function DELETE(
     });
 
     return NextResponse.json({ message: "Comentário removido" });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error deleting comment:", error);
-    if (error.code === "P2025") {
+    if (error && typeof error === "object" && "code" in error && error.code === "P2025") {
       return NextResponse.json(
         { error: "Comentário não encontrado" },
         { status: 404 }

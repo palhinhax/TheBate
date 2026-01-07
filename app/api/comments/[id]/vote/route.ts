@@ -105,11 +105,11 @@ export async function POST(
     });
 
     return NextResponse.json(updatedComment);
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error voting on comment:", error);
-    if (error.name === "ZodError") {
+    if (error instanceof Error && error.name === "ZodError") {
       return NextResponse.json(
-        { error: "Dados inválidos", details: error.errors },
+        { error: "Dados inválidos" },
         { status: 400 }
       );
     }

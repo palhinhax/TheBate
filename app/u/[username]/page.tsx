@@ -3,7 +3,6 @@ import { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { Calendar, MessageSquare } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 type Props = {
   params: { username: string };
