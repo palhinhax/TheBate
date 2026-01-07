@@ -7,10 +7,7 @@ export async function POST(req: NextRequest) {
   try {
     const session = await auth();
     if (!session?.user) {
-      return NextResponse.json(
-        { error: "Não autorizado" },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
     }
 
     const body = await req.json();
@@ -80,10 +77,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error("Error creating comment:", error);
     if (error instanceof Error && error.name === "ZodError") {
-      return NextResponse.json(
-        { error: "Dados inválidos" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Dados inválidos" }, { status: 400 });
     }
     return NextResponse.json(
       { error: "Erro ao criar comentário" },

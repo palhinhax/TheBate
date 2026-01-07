@@ -23,7 +23,10 @@ import { Spinner } from "@/components/ui/spinner";
 const registerSchema = z
   .object({
     name: z.string().min(2, "O nome deve ter pelo menos 2 caracteres"),
-    username: z.string().min(3, "O username deve ter pelo menos 3 caracteres").max(30, "O username não pode ter mais de 30 caracteres"),
+    username: z
+      .string()
+      .min(3, "O username deve ter pelo menos 3 caracteres")
+      .max(30, "O username não pode ter mais de 30 caracteres"),
     email: z.string().email("Email inválido"),
     password: z.string().min(8, "A senha deve ter pelo menos 8 caracteres"),
     confirmPassword: z.string(),
@@ -90,10 +93,10 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
+    <div className="flex min-h-screen items-center justify-center px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">
+          <CardTitle className="text-center text-2xl font-bold">
             Criar uma conta
           </CardTitle>
           <CardDescription className="text-center">
@@ -103,7 +106,7 @@ export default function RegisterPage() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <CardContent className="space-y-4">
             {error && (
-              <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-md">
+              <div className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
                 {error}
               </div>
             )}
@@ -116,7 +119,9 @@ export default function RegisterPage() {
                 aria-invalid={!!errors.name}
               />
               {errors.name && (
-                <p className="text-sm text-destructive">{errors.name.message}</p>
+                <p className="text-sm text-destructive">
+                  {errors.name.message}
+                </p>
               )}
             </div>
             <div className="space-y-2">
@@ -128,7 +133,9 @@ export default function RegisterPage() {
                 aria-invalid={!!errors.username}
               />
               {errors.username && (
-                <p className="text-sm text-destructive">{errors.username.message}</p>
+                <p className="text-sm text-destructive">
+                  {errors.username.message}
+                </p>
               )}
             </div>
             <div className="space-y-2">
@@ -141,7 +148,9 @@ export default function RegisterPage() {
                 aria-invalid={!!errors.email}
               />
               {errors.email && (
-                <p className="text-sm text-destructive">{errors.email.message}</p>
+                <p className="text-sm text-destructive">
+                  {errors.email.message}
+                </p>
               )}
             </div>
             <div className="space-y-2">
@@ -180,7 +189,7 @@ export default function RegisterPage() {
               {isLoading && <Spinner size="sm" className="mr-2" />}
               Criar conta
             </Button>
-            <p className="text-sm text-center text-muted-foreground">
+            <p className="text-center text-sm text-muted-foreground">
               Já tem uma conta?{" "}
               <Link href="/auth/login" className="text-primary hover:underline">
                 Entrar

@@ -65,10 +65,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
+    <div className="flex min-h-screen items-center justify-center px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">
+          <CardTitle className="text-center text-2xl font-bold">
             Entrar
           </CardTitle>
           <CardDescription className="text-center">
@@ -78,7 +78,7 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <CardContent className="space-y-4">
             {error && (
-              <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-md">
+              <div className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
                 {error}
               </div>
             )}
@@ -92,7 +92,9 @@ export default function LoginPage() {
                 aria-invalid={!!errors.email}
               />
               {errors.email && (
-                <p className="text-sm text-destructive">{errors.email.message}</p>
+                <p className="text-sm text-destructive">
+                  {errors.email.message}
+                </p>
               )}
             </div>
             <div className="space-y-2">
@@ -116,9 +118,12 @@ export default function LoginPage() {
               {isLoading && <Spinner size="sm" className="mr-2" />}
               Entrar
             </Button>
-            <p className="text-sm text-center text-muted-foreground">
+            <p className="text-center text-sm text-muted-foreground">
               Não tem uma conta?{" "}
-              <Link href="/auth/register" className="text-primary hover:underline">
+              <Link
+                href="/auth/register"
+                className="text-primary hover:underline"
+              >
                 Registrar
               </Link>
             </p>

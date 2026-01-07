@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 import CommentItem from "./comment-item";
 
 type CommentsListProps = {
@@ -17,9 +18,14 @@ async function getComments(topicSlug: string, sort: "top" | "new") {
     return { comments: [], topicId: null };
   }
 
-  const orderBy = sort === "new"
-    ? { createdAt: "desc" as const }
-    : [{ score: "desc" as const }, { createdAt: "desc" as const }];
+  // Get current user session
+  const session = await auth();
+  const userId = session?.user?.id;
+
+  const orderBy =
+    sort === "new"
+      ? { createdAt: "desc" as const }
+      : [{ score: "desc" as const }, { createdAt: "desc" as const }];
 
   const comments = await prisma.comment.findMany({
     where: {
@@ -38,6 +44,12 @@ async function getComments(topicSlug: string, sort: "top" | "new") {
           image: true,
         },
       },
+      votes: userId
+        ? {
+            where: { userId },
+            select: { value: true },
+          }
+        : false,
       replies: {
         where: { status: "ACTIVE" as const },
         orderBy: { createdAt: "asc" },
@@ -50,6 +62,12 @@ async function getComments(topicSlug: string, sort: "top" | "new") {
               image: true,
             },
           },
+          votes: userId
+            ? {
+                where: { userId },
+                select: { value: true },
+              }
+            : false,
         },
       },
     },
@@ -58,7 +76,10 @@ async function getComments(topicSlug: string, sort: "top" | "new") {
   return { comments, topicId: topic.id };
 }
 
-export default async function CommentsList({ topicSlug, sort }: CommentsListProps) {
+export default async function CommentsList({
+  topicSlug,
+  sort,
+}: CommentsListProps) {
   const { comments, topicId } = await getComments(topicSlug, sort);
 
   if (comments.length === 0) {

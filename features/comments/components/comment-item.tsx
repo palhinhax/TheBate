@@ -4,7 +4,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { ArrowUp, ArrowDown, MessageSquare, MoreHorizontal } from "lucide-react";
+import {
+  ArrowUp,
+  ArrowDown,
+  MessageSquare,
+  MoreHorizontal,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import NewCommentForm from "./new-comment-form";
@@ -22,6 +27,7 @@ type Reply = {
   score: number;
   createdAt: Date;
   user: CommentUser;
+  votes: { value: number }[];
 };
 
 type Comment = {
@@ -30,6 +36,7 @@ type Comment = {
   score: number;
   createdAt: Date;
   user: CommentUser;
+  votes: { value: number }[];
   replies?: Reply[];
 };
 
@@ -39,12 +46,20 @@ type CommentItemProps = {
   topicId: string;
 };
 
-export default function CommentItem({ comment, isReply = false, topicId }: CommentItemProps) {
+export default function CommentItem({
+  comment,
+  isReply = false,
+  topicId,
+}: CommentItemProps) {
   const router = useRouter();
   const { data: session } = useSession();
   const { toast } = useToast();
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [isVoting, setIsVoting] = useState(false);
+
+  // Get user's current vote value (1, -1, or null)
+  const userVote =
+    comment.votes && comment.votes.length > 0 ? comment.votes[0].value : null;
 
   const handleVote = async (value: number) => {
     if (!session?.user) {
@@ -95,7 +110,9 @@ export default function CommentItem({ comment, isReply = false, topicId }: Comme
           <button
             onClick={() => handleVote(1)}
             disabled={isVoting || !session?.user}
-            className="rounded p-1 hover:bg-muted disabled:opacity-50"
+            className={`rounded p-1 transition-colors hover:bg-muted disabled:opacity-50 ${
+              userVote === 1 ? "text-green-600 dark:text-green-500" : ""
+            }`}
           >
             <ArrowUp className="h-5 w-5" />
           </button>
@@ -103,7 +120,9 @@ export default function CommentItem({ comment, isReply = false, topicId }: Comme
           <button
             onClick={() => handleVote(-1)}
             disabled={isVoting || !session?.user}
-            className="rounded p-1 hover:bg-muted disabled:opacity-50"
+            className={`rounded p-1 transition-colors hover:bg-muted disabled:opacity-50 ${
+              userVote === -1 ? "text-red-600 dark:text-red-500" : ""
+            }`}
           >
             <ArrowDown className="h-5 w-5" />
           </button>
@@ -129,7 +148,7 @@ export default function CommentItem({ comment, isReply = false, topicId }: Comme
             </span>
           </div>
 
-          <p className="mt-2 text-sm whitespace-pre-wrap">{comment.content}</p>
+          <p className="mt-2 whitespace-pre-wrap text-sm">{comment.content}</p>
 
           {/* Actions */}
           <div className="mt-3 flex items-center gap-4">
@@ -166,7 +185,12 @@ export default function CommentItem({ comment, isReply = false, topicId }: Comme
           {comment.replies && comment.replies.length > 0 && (
             <div className="mt-4 space-y-4">
               {comment.replies.map((reply) => (
-                <CommentItem key={reply.id} comment={reply} isReply topicId={topicId} />
+                <CommentItem
+                  key={reply.id}
+                  comment={reply}
+                  isReply
+                  topicId={topicId}
+                />
               ))}
             </div>
           )}

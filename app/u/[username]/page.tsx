@@ -79,16 +79,16 @@ export default async function UserProfilePage({ params }: Props) {
     <div className="min-h-screen">
       <header className="border-b">
         <div className="container mx-auto flex h-16 items-center px-4">
-          <Link href="/" className="font-bold text-xl">
+          <Link href="/" className="text-xl font-bold">
             Thebate
           </Link>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8 max-w-4xl">
+      <main className="container mx-auto max-w-4xl px-4 py-8">
         {/* User Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">
+          <h1 className="mb-2 text-3xl font-bold">
             {user.name || user.username}
           </h1>
           <p className="text-muted-foreground">@{user.username}</p>
@@ -154,9 +154,7 @@ export default async function UserProfilePage({ params }: Props) {
           </div>
         ) : (
           <div className="py-12 text-center">
-            <p className="text-muted-foreground">
-              Nenhum tema criado ainda.
-            </p>
+            <p className="text-muted-foreground">Nenhum tema criado ainda.</p>
           </div>
         )}
       </main>

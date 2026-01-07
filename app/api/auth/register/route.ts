@@ -5,7 +5,10 @@ import { z } from "zod";
 
 const registerSchema = z.object({
   name: z.string().min(2, "O nome deve ter pelo menos 2 caracteres"),
-  username: z.string().min(3, "O username deve ter pelo menos 3 caracteres").max(30, "O username não pode ter mais de 30 caracteres"),
+  username: z
+    .string()
+    .min(3, "O username deve ter pelo menos 3 caracteres")
+    .max(30, "O username não pode ter mais de 30 caracteres"),
   email: z.string().email("Email inválido"),
   password: z.string().min(8, "A senha deve ter pelo menos 8 caracteres"),
 });
@@ -17,7 +20,10 @@ export async function POST(request: Request) {
 
     if (!result.success) {
       return NextResponse.json(
-        { message: "Dados inválidos", errors: result.error.flatten().fieldErrors },
+        {
+          message: "Dados inválidos",
+          errors: result.error.flatten().fieldErrors,
+        },
         { status: 400 }
       );
     }
@@ -27,10 +33,7 @@ export async function POST(request: Request) {
     // Check if user already exists
     const existingUser = await prisma.user.findFirst({
       where: {
-        OR: [
-          { email },
-          { username },
-        ],
+        OR: [{ email }, { username }],
       },
     });
 

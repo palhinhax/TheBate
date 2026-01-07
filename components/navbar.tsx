@@ -26,24 +26,26 @@ export function Navbar({ onMenuClick, showMenuButton }: NavbarProps) {
             <Menu className="h-5 w-5" />
           </Button>
         )}
-        
-        <Link href="/" className="font-bold text-xl">
+
+        <Link href="/" className="text-xl font-bold">
           SaaS Template
         </Link>
 
         <div className="ml-auto flex items-center space-x-4">
           {session ? (
             <>
-              <div className="hidden sm:flex items-center gap-2">
+              <div className="hidden items-center gap-2 sm:flex">
                 <User className="h-4 w-4" />
-                <span className="text-sm">{session.user?.name || session.user?.email}</span>
+                <span className="text-sm">
+                  {session.user?.name || session.user?.email}
+                </span>
               </div>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => signOut({ callbackUrl: "/" })}
               >
-                <LogOut className="h-4 w-4 mr-2" />
+                <LogOut className="mr-2 h-4 w-4" />
                 Sign out
               </Button>
             </>

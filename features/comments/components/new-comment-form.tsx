@@ -4,7 +4,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { commentSchema, type CommentFormData } from "@/features/comments/schemas";
+import {
+  commentSchema,
+  type CommentFormData,
+} from "@/features/comments/schemas";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
@@ -80,11 +83,17 @@ export default function NewCommentForm({
         <textarea
           id="content"
           {...register("content")}
-          placeholder={parentId ? "Escreva sua resposta..." : "O que você pensa sobre isso?"}
+          placeholder={
+            parentId
+              ? "Escreva sua resposta..."
+              : "O que você pensa sobre isso?"
+          }
           className="mt-1 min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
         />
         {errors.content && (
-          <p className="mt-1 text-sm text-destructive">{errors.content.message}</p>
+          <p className="mt-1 text-sm text-destructive">
+            {errors.content.message}
+          </p>
         )}
       </div>
 

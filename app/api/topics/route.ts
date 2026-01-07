@@ -9,7 +9,10 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const sort = searchParams.get("sort") || "new";
     const page = parseInt(searchParams.get("page") || "1");
-    const perPage = Math.min(parseInt(searchParams.get("perPage") || "20"), 100);
+    const perPage = Math.min(
+      parseInt(searchParams.get("perPage") || "20"),
+      100
+    );
     const tag = searchParams.get("tag");
 
     const skip = (page - 1) * perPage;
@@ -24,9 +27,10 @@ export async function GET(req: NextRequest) {
       };
     }
 
-    const orderBy = sort === "new" 
-      ? { createdAt: "desc" as const }
-      : { createdAt: "desc" as const }; // TODO: implement real trending algorithm
+    const orderBy =
+      sort === "new"
+        ? { createdAt: "desc" as const }
+        : { createdAt: "desc" as const }; // TODO: implement real trending algorithm
 
     const [topics, total] = await Promise.all([
       prisma.topic.findMany({
@@ -75,10 +79,7 @@ export async function POST(req: NextRequest) {
   try {
     const session = await auth();
     if (!session?.user) {
-      return NextResponse.json(
-        { error: "Não autorizado" },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
     }
 
     const body = await req.json();
@@ -114,14 +115,8 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error("Error creating topic:", error);
     if (error instanceof Error && error.name === "ZodError") {
-      return NextResponse.json(
-        { error: "Dados inválidos" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Dados inválidos" }, { status: 400 });
     }
-    return NextResponse.json(
-      { error: "Erro ao criar tema" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erro ao criar tema" }, { status: 500 });
   }
 }
