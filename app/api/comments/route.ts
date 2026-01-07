@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
-import { commentSchema } from "@/features/comments/schemas";
+import { commentSchema, replySchema } from "@/features/comments/schemas";
 
 export async function POST(req: NextRequest) {
   try {
@@ -11,7 +11,12 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const validated = commentSchema.parse(body);
+    
+    // Check if this is a reply or a top-level comment
+    const isReply = !!body.parentId;
+    const validated = isReply 
+      ? replySchema.parse(body)
+      : commentSchema.parse(body);
 
     // Check if topic exists and is not locked
     const topic = await prisma.topic.findUnique({
@@ -51,6 +56,7 @@ export async function POST(req: NextRequest) {
     const comment = await prisma.comment.create({
       data: {
         content: validated.content,
+        side: isReply ? null : (validated as any).side,
         topicId: validated.topicId,
         userId: session.user.id,
         parentId: validated.parentId || null,

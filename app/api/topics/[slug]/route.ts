@@ -8,6 +8,8 @@ export async function GET(
   { params }: { params: { slug: string } }
 ) {
   try {
+    const session = await auth();
+    
     const topic = await prisma.topic.findUnique({
       where: { slug: params.slug },
       include: {
@@ -36,7 +38,6 @@ export async function GET(
 
     // Only show non-ACTIVE topics to mods/admins
     if (topic.status !== "ACTIVE") {
-      const session = await auth();
       const userRole = session?.user?.role;
       if (!userRole || (userRole !== "MOD" && userRole !== "ADMIN")) {
         return NextResponse.json(
@@ -46,7 +47,45 @@ export async function GET(
       }
     }
 
-    return NextResponse.json(topic);
+    // Get vote statistics
+    const voteStats = await prisma.topicVote.groupBy({
+      by: ['vote'],
+      where: { topicId: topic.id },
+      _count: true,
+    });
+
+    const voteCounts = {
+      SIM: 0,
+      NAO: 0,
+      DEPENDE: 0,
+      total: 0,
+    };
+
+    voteStats.forEach((stat) => {
+      voteCounts[stat.vote] = stat._count;
+      voteCounts.total += stat._count;
+    });
+
+    // Get user's vote if authenticated
+    let userVote = null;
+    if (session?.user) {
+      const vote = await prisma.topicVote.findUnique({
+        where: {
+          userId_topicId: {
+            userId: session.user.id,
+            topicId: topic.id,
+          },
+        },
+        select: { vote: true },
+      });
+      userVote = vote?.vote || null;
+    }
+
+    return NextResponse.json({
+      ...topic,
+      voteStats: voteCounts,
+      userVote,
+    });
   } catch (error) {
     console.error("Error fetching topic:", error);
     return NextResponse.json({ error: "Erro ao buscar tema" }, { status: 500 });
