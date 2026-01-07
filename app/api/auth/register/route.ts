@@ -4,9 +4,10 @@ import bcrypt from "bcryptjs";
 import { z } from "zod";
 
 const registerSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
+  name: z.string().min(2, "O nome deve ter pelo menos 2 caracteres"),
+  username: z.string().min(3, "O username deve ter pelo menos 3 caracteres").max(30, "O username não pode ter mais de 30 caracteres"),
+  email: z.string().email("Email inválido"),
+  password: z.string().min(8, "A senha deve ter pelo menos 8 caracteres"),
 });
 
 export async function POST(request: Request) {
@@ -16,22 +17,36 @@ export async function POST(request: Request) {
 
     if (!result.success) {
       return NextResponse.json(
-        { message: "Validation failed", errors: result.error.flatten().fieldErrors },
+        { message: "Dados inválidos", errors: result.error.flatten().fieldErrors },
         { status: 400 }
       );
     }
 
-    const { name, email, password } = result.data;
+    const { name, username, email, password } = result.data;
 
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
+    // Check if user already exists
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { email },
+          { username },
+        ],
+      },
     });
 
     if (existingUser) {
-      return NextResponse.json(
-        { message: "User already exists" },
-        { status: 409 }
-      );
+      if (existingUser.email === email) {
+        return NextResponse.json(
+          { message: "Este email já está em uso" },
+          { status: 409 }
+        );
+      }
+      if (existingUser.username === username) {
+        return NextResponse.json(
+          { message: "Este username já está em uso" },
+          { status: 409 }
+        );
+      }
     }
 
     const passwordHash = await bcrypt.hash(password, 12);
@@ -39,12 +54,14 @@ export async function POST(request: Request) {
     const user = await prisma.user.create({
       data: {
         name,
+        username,
         email,
         passwordHash,
       },
       select: {
         id: true,
         name: true,
+        username: true,
         email: true,
         createdAt: true,
       },
@@ -54,7 +71,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Registration error:", error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      { message: "Erro interno do servidor" },
       { status: 500 }
     );
   }

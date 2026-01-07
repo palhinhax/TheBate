@@ -1,271 +1,270 @@
-# Next.js SaaS Template
+# Thebate - Plataforma de Debates
 
-A production-grade, full-stack SaaS template built with modern technologies.
+Uma plataforma pública de debates construída com Next.js 14, PostgreSQL e Prisma, focada em SEO e discussões de qualidade.
 
-## 🚀 Tech Stack
+## 🚀 Funcionalidades
 
-- **Framework:** Next.js 14 (App Router) with TypeScript
-- **Database:** PostgreSQL with Prisma ORM
-- **Authentication:** Auth.js (NextAuth) with Credentials Provider
-- **State Management:** TanStack React Query
-- **UI Components:** shadcn/ui + Tailwind CSS
-- **Form Handling:** React Hook Form + Zod
-- **Testing:** Jest + React Testing Library + MSW
-- **Code Quality:** ESLint + Prettier + Husky
+### Temas e Debates
+- **Criação de Temas**: Usuários autenticados podem criar novos temas de debate
+- **Páginas Públicas**: Todos os temas são indexáveis pelos motores de busca
+- **Tags**: Cada tema pode ter até 5 tags para categorização
+- **Status**: Temas podem estar ativos, ocultos ou bloqueados (moderação)
 
-## 📁 Project Structure
+### Comentários e Discussões
+- **Comentários em Thread**: Sistema de comentários com respostas (nested)
+- **Sistema de Votos**: Upvote/Downvote para comentários
+- **Ordenação**: Comentários podem ser ordenados por Top (mais votados) ou New (mais recentes)
+- **Edição e Moderação**: Autores podem editar, moderadores podem ocultar/deletar
+
+### Autenticação e Permissões
+- **Leitura Pública**: Qualquer pessoa pode ler temas e comentários sem login
+- **Interação Autenticada**: Login obrigatório para criar temas, comentar e votar
+- **Sistema de Roles**:
+  - `USER`: Usuário padrão
+  - `MOD`: Moderador com poderes de moderação
+  - `ADMIN`: Administrador com acesso total
+
+### SEO e Performance
+- **Server-Side Rendering**: Conteúdo renderizado no servidor para melhor SEO
+- **Metadata Dinâmica**: Open Graph, Twitter Cards e canonical URLs
+- **JSON-LD**: Structured data para motores de busca
+- **Sitemap.xml**: Gerado automaticamente com todos os temas ativos
+- **Robots.txt**: Configurado para indexação apropriada
+
+## 📁 Estrutura do Projeto
 
 ```
-├── app/                    # Next.js App Router
-│   ├── api/               # API Routes
-│   │   ├── auth/         # Auth endpoints
-│   │   └── posts/        # Posts CRUD API
-│   ├── auth/             # Auth pages (login, register)
-│   └── dashboard/        # Protected dashboard
-├── components/            # UI Components
-│   └── ui/               # shadcn/ui components
-├── features/             # Feature modules
-│   └── posts/            # Posts feature
-│       ├── api/          # API client functions
-│       ├── components/   # Feature components
-│       ├── hooks/        # React Query hooks
-│       └── schemas/      # Zod schemas
-├── lib/                  # Utilities
-│   ├── api/              # API client layer
-│   └── auth/             # Auth.js configuration
-├── prisma/               # Database schema & migrations
-└── tests/                # Test files
-    ├── mocks/            # MSW handlers
-    └── unit/             # Unit tests
+├── app/                      # Next.js App Router
+│   ├── api/                  # API Routes
+│   │   ├── auth/            # Autenticação
+│   │   ├── topics/          # Temas CRUD
+│   │   └── comments/        # Comentários CRUD
+│   ├── auth/                # Páginas de login/registro
+│   ├── new/                 # Criar novo tema
+│   ├── t/[slug]/            # Página de tema individual
+│   ├── u/[username]/        # Perfil de usuário
+│   ├── sitemap.ts           # Sitemap dinâmico
+│   └── robots.ts            # Robots.txt
+├── components/              # Componentes UI (shadcn/ui)
+├── features/                # Módulos de funcionalidades
+│   ├── topics/              # Lógica de temas
+│   └── comments/            # Lógica de comentários
+├── lib/                     # Utilitários
+│   ├── auth/                # Configuração Auth.js
+│   ├── prisma.ts            # Cliente Prisma
+│   └── slug.ts              # Geração de slugs
+└── prisma/                  # Schema e migrations
+    ├── schema.prisma        # Modelos do banco
+    └── seed.ts              # Dados de exemplo
 ```
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 14 (App Router) com TypeScript
+- **Database**: PostgreSQL com Prisma ORM
+- **Authentication**: Auth.js (NextAuth) com Credentials Provider
+- **UI**: Tailwind CSS + shadcn/ui
+- **Form Validation**: React Hook Form + Zod
+- **Code Quality**: ESLint + Prettier + Husky
 
 ## 🏁 Getting Started
 
-### Prerequisites
+### Pré-requisitos
 
 - Node.js 18+
-- pnpm
+- npm ou pnpm
 - PostgreSQL database
 
-### Installation
+### Instalação
 
-1. Clone the repository:
+1. Clone o repositório:
    ```bash
-   git clone https://github.com/your-username/next-prisma-saas-template.git
-   cd next-prisma-saas-template
+   git clone https://github.com/palhinhax/TheBate.git
+   cd TheBate
    ```
 
-2. Install dependencies:
+2. Instale as dependências:
    ```bash
-   pnpm install
+   npm install
    ```
 
-3. Set up environment variables:
+3. Configure as variáveis de ambiente:
    ```bash
    cp .env.example .env
    ```
    
-   Update `.env` with your database URL and auth secret:
+   Atualize o `.env` com suas configurações:
    ```env
-   DATABASE_URL="postgresql://postgres:password@localhost:5432/saas_template"
-   AUTH_SECRET="your-secret-key-here"
+   DATABASE_URL="postgresql://user:password@localhost:5432/thebate"
+   AUTH_SECRET="seu-secret-aqui"
+   NEXTAUTH_URL="http://localhost:3000"
    ```
 
-4. Run database migrations:
+4. Execute as migrations do banco:
    ```bash
-   pnpm db:migrate
+   npm run db:migrate
    ```
 
-5. (Optional) Seed the database:
+5. (Opcional) Popule o banco com dados de exemplo:
    ```bash
-   pnpm db:seed
+   npm run db:seed
    ```
 
-6. Start the development server:
+6. Inicie o servidor de desenvolvimento:
    ```bash
-   pnpm dev
+   npm run dev
    ```
 
-Visit [http://localhost:3000](http://localhost:3000) to see the app.
+Acesse [http://localhost:3000](http://localhost:3000) para ver a aplicação.
 
-## 📜 Available Scripts
+## 📜 Scripts Disponíveis
 
-| Command | Description |
-|---------|-------------|
-| `pnpm dev` | Start development server |
-| `pnpm build` | Build for production |
-| `pnpm start` | Start production server |
-| `pnpm lint` | Run ESLint |
-| `pnpm test` | Run tests |
-| `pnpm test:watch` | Run tests in watch mode |
-| `pnpm test:coverage` | Run tests with coverage |
-| `pnpm format` | Format code with Prettier |
-| `pnpm typecheck` | Run TypeScript type checking |
-| `pnpm db:migrate` | Run database migrations |
-| `pnpm db:seed` | Seed the database |
-| `pnpm db:studio` | Open Prisma Studio |
+| Comando | Descrição |
+|---------|-----------|
+| `npm run dev` | Inicia servidor de desenvolvimento |
+| `npm run build` | Build para produção |
+| `npm run start` | Inicia servidor de produção |
+| `npm run lint` | Executa ESLint |
+| `npm run typecheck` | Verifica tipos TypeScript |
+| `npm run db:migrate` | Executa migrations |
+| `npm run db:seed` | Popula banco com dados |
+| `npm run db:studio` | Abre Prisma Studio |
 
-## 🔐 Authentication
+## 🔐 Credenciais de Teste
 
-The template uses Auth.js with a Credentials provider for email/password authentication.
-
-### Demo Credentials
-
-After seeding the database:
-- Email: `demo@example.com`
-- Password: `password123`
-
-### Protected Routes
-
-Routes under `/dashboard` are protected and require authentication. The middleware automatically redirects unauthenticated users to the login page.
+Após executar o seed:
+- **Admin**: `admin@thebate.com` / `password123`
+- **Moderador**: `mod@thebate.com` / `password123`
+- **Usuários**: `maria@example.com`, `joao@example.com`, etc. / `password123`
 
 ## 📝 API Endpoints
 
-### Posts API
+### Temas
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| GET | `/api/posts` | List all posts | No |
-| GET | `/api/posts/:id` | Get a single post | No |
-| POST | `/api/posts` | Create a post | Yes |
-| PATCH | `/api/posts/:id` | Update a post | Yes (owner only) |
-| DELETE | `/api/posts/:id` | Delete a post | Yes (owner only) |
+| Método | Endpoint | Descrição | Auth |
+|--------|----------|-----------|------|
+| GET | `/api/topics` | Lista todos os temas | Não |
+| GET | `/api/topics/[slug]` | Detalhes de um tema | Não |
+| POST | `/api/topics` | Cria um tema | Sim |
+| PATCH | `/api/topics/[slug]` | Atualiza status (mod/admin) | Sim |
 
-### Example Usage
+### Comentários
 
-```typescript
-// Using React Query hooks
-import { usePosts, useCreatePost } from "@/features/posts";
+| Método | Endpoint | Descrição | Auth |
+|--------|----------|-----------|------|
+| GET | `/api/topics/[slug]/comments` | Lista comentários | Não |
+| POST | `/api/comments` | Cria comentário/resposta | Sim |
+| PATCH | `/api/comments/[id]` | Edita ou modera comentário | Sim |
+| DELETE | `/api/comments/[id]` | Remove comentário | Sim |
+| POST | `/api/comments/[id]/vote` | Vota em comentário | Sim |
 
-function PostsList() {
-  const { data: posts, isLoading } = usePosts();
-  const createPost = useCreatePost();
-
-  const handleCreate = async () => {
-    await createPost.mutateAsync({
-      title: "New Post",
-      content: "Post content here",
-    });
-  };
-
-  // ...
-}
-```
-
-## 🧪 Testing
-
-The template includes Jest, React Testing Library, and MSW for testing.
-
-### Running Tests
-
-```bash
-# Run all tests
-pnpm test
-
-# Run in watch mode
-pnpm test:watch
-
-# Run with coverage
-pnpm test:coverage
-```
-
-### Test Structure
-
-- `tests/unit/` - Unit tests for components and hooks
-- `tests/mocks/` - MSW handlers for API mocking
-
-## 🎨 UI Components
-
-The template includes these shadcn/ui components:
-
-- **Button** - Various button styles and sizes
-- **Input** - Text input with validation support
-- **Card** - Content container with header/footer
-- **Dialog** - Modal dialogs
-- **Label** - Form labels
-- **Spinner** - Loading indicator
-- **Toast** - Toast notifications
-
-### Using Components
-
-```tsx
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-
-function Example() {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>My Card</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Button>Click me</Button>
-      </CardContent>
-    </Card>
-  );
-}
-```
-
-## 🔄 Form Validation
-
-Forms use React Hook Form with Zod for end-to-end validation:
-
-```typescript
-import { postSchema, type PostFormData } from "@/features/posts/schemas";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-const form = useForm<PostFormData>({
-  resolver: zodResolver(postSchema),
-});
-```
-
-## 🌙 Dark Mode
-
-The template supports dark mode out of the box. Add the `dark` class to the `<html>` element to enable it.
-
-## 📦 Database Models
+## 🗄️ Modelos do Banco
 
 ### User
 ```prisma
-model User {
-  id           String   @id @default(cuid())
-  name         String?
-  email        String   @unique
-  passwordHash String
-  createdAt    DateTime @default(now())
-  posts        Post[]
-}
+- id: String (cuid)
+- username: String (unique)
+- email: String (unique)
+- name: String?
+- passwordHash: String
+- role: UserRole (USER, MOD, ADMIN)
+- image: String?
+- createdAt: DateTime
 ```
 
-### Post
+### Topic
 ```prisma
-model Post {
-  id        String   @id @default(cuid())
-  title     String
-  content   String
-  authorId  String
-  author    User     @relation(fields: [authorId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
+- id: String (cuid)
+- slug: String (unique)
+- title: String
+- description: String
+- tags: String[]
+- status: TopicStatus (ACTIVE, HIDDEN, LOCKED)
+- createdById: String
+- createdAt: DateTime
+- updatedAt: DateTime
 ```
 
-## 🚀 Deployment
+### Comment
+```prisma
+- id: String (cuid)
+- content: String
+- score: Int
+- status: CommentStatus (ACTIVE, HIDDEN, DELETED)
+- topicId: String
+- userId: String
+- parentId: String?
+- createdAt: DateTime
+- updatedAt: DateTime
+```
 
-### Vercel (Recommended)
+### Vote
+```prisma
+- id: String (cuid)
+- value: Int (-1 ou +1)
+- commentId: String
+- userId: String
+- createdAt: DateTime
+- unique(userId, commentId)
+```
 
-1. Push your code to GitHub
-2. Import the project in Vercel
-3. Set environment variables:
+## 🚀 Deploy
+
+### Vercel (Recomendado)
+
+1. Faça push do código para GitHub
+2. Importe o projeto no Vercel
+3. Configure as variáveis de ambiente:
    - `DATABASE_URL`
    - `AUTH_SECRET`
+   - `NEXTAUTH_URL`
 4. Deploy!
 
-## 📄 License
+### Database
 
-MIT License - see [LICENSE](LICENSE) for details.
+Recomendado usar serviços como:
+- [Neon](https://neon.tech) - PostgreSQL serverless
+- [Supabase](https://supabase.com) - PostgreSQL com features adicionais
+- [Railway](https://railway.app) - Deploy de apps e databases
+
+## 🎨 Componentes UI
+
+A plataforma utiliza shadcn/ui para componentes:
+- Button, Input, Label
+- Card (para listagem de temas)
+- Dialog (modals)
+- Toast (notificações)
+- Spinner (loading states)
+
+## 🔒 Segurança
+
+- **Validação**: Zod schemas em todos os endpoints
+- **Autenticação**: Auth.js com JWT sessions
+- **Sanitização**: Validação de inputs no servidor
+- **CORS**: Proteção contra requisições não autorizadas
+- **Permissões**: Verificação de roles em rotas protegidas
+
+## 📊 Performance
+
+- **SSR**: Server-Side Rendering para SEO
+- **Índices**: Indexes otimizados no Prisma
+- **Paginação**: Limite de resultados em listagens
+- **Caching**: Revalidation tags para ISR
+
+## 🤝 Contribuindo
+
+Contribuições são bem-vindas! Por favor:
+
+1. Faça fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/MinhaFeature`)
+3. Commit suas mudanças (`git commit -m 'Add: MinhaFeature'`)
+4. Push para a branch (`git push origin feature/MinhaFeature`)
+5. Abra um Pull Request
+
+## 📄 Licença
+
+MIT License - veja [LICENSE](LICENSE) para detalhes.
 
 ---
 
-Built with ❤️ using Next.js, Prisma, and shadcn/ui
+Construído com ❤️ usando Next.js, Prisma e shadcn/ui
