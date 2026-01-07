@@ -10,7 +10,7 @@ async function getTopics(sort: "trending" | "new" = "new") {
     : { createdAt: "desc" as const }; // TODO: implement real trending algorithm
 
   const topics = await prisma.topic.findMany({
-    where: { status: "ACTIVE" },
+    where: { status: "ACTIVE" as const },
     orderBy,
     take: 20,
     include: {

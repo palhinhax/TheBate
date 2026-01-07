@@ -25,7 +25,7 @@ async function getComments(topicSlug: string, sort: "top" | "new") {
     where: {
       topicId: topic.id,
       parentId: null,
-      status: "ACTIVE",
+      status: "ACTIVE" as const,
     },
     orderBy,
     take: 50,
@@ -39,7 +39,7 @@ async function getComments(topicSlug: string, sort: "top" | "new") {
         },
       },
       replies: {
-        where: { status: "ACTIVE" },
+        where: { status: "ACTIVE" as const },
         orderBy: { createdAt: "asc" },
         include: {
           user: {

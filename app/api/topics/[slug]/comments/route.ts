@@ -29,7 +29,7 @@ export async function GET(
     const where = {
       topicId: topic.id,
       parentId: null, // Only top-level comments
-      status: "ACTIVE",
+      status: "ACTIVE" as const,
     };
 
     let orderBy: any = {};
@@ -56,7 +56,7 @@ export async function GET(
             },
           },
           replies: {
-            where: { status: "ACTIVE" },
+            where: { status: "ACTIVE" as const },
             orderBy: { createdAt: "asc" },
             include: {
               user: {

@@ -44,6 +44,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
+  const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
+
   return {
     title: `${topic.title} - Thebate`,
     description: topic.description.substring(0, 160),
@@ -54,6 +56,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       publishedTime: topic.createdAt.toISOString(),
       authors: [topic.createdBy.username],
       tags: topic.tags,
+      url: `${baseUrl}/t/${topic.slug}`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: topic.title,
+      description: topic.description.substring(0, 160),
+    },
+    alternates: {
+      canonical: `${baseUrl}/t/${topic.slug}`,
     },
   };
 }
@@ -75,9 +86,36 @@ export default async function TopicPage({ params, searchParams }: Props) {
   }
 
   const sort = searchParams.sort || "top";
+  const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
+
+  // JSON-LD structured data
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "DiscussionForumPosting",
+    headline: topic.title,
+    text: topic.description,
+    datePublished: topic.createdAt.toISOString(),
+    dateModified: topic.updatedAt.toISOString(),
+    author: {
+      "@type": "Person",
+      name: topic.createdBy.name || topic.createdBy.username,
+      url: `${baseUrl}/u/${topic.createdBy.username}`,
+    },
+    interactionStatistic: {
+      "@type": "InteractionCounter",
+      interactionType: "https://schema.org/CommentAction",
+      userInteractionCount: topic._count.comments,
+    },
+    keywords: topic.tags.join(", "),
+  };
 
   return (
-    <div className="min-h-screen">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="min-h-screen">
       <header className="border-b">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <Link href="/" className="font-bold text-xl">
@@ -201,5 +239,6 @@ export default async function TopicPage({ params, searchParams }: Props) {
         </div>
       </main>
     </div>
+    </>
   );
 }
