@@ -30,7 +30,14 @@ export async function GET(
       );
     }
 
-    const where: any = {
+    interface CommentWhere {
+      topicId: string;
+      parentId: null;
+      status: "ACTIVE";
+      side?: "AFAVOR" | "CONTRA";
+    }
+
+    const where: CommentWhere = {
       topicId: topic.id,
       parentId: null, // Only top-level comments
       status: "ACTIVE" as const,

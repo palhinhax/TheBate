@@ -18,7 +18,7 @@ export async function POST(
     }
 
     const body = await req.json();
-    const { value } = voteBodySchema.parse(body);
+    voteBodySchema.parse(body);
 
     // Check if comment exists
     const comment = await prisma.comment.findUnique({

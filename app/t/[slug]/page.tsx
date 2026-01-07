@@ -240,19 +240,17 @@ export default async function TopicPage({ params, searchParams }: Props) {
           </div>
 
           {/* Theme Voting Section */}
-          {topic.status !== "LOCKED" && (
-            <div className="mb-8 rounded-lg border bg-card p-6">
-              <h2 className="mb-4 text-xl font-semibold">Vota no tema</h2>
-              <div className="mb-6">
-                <ThemeVoteButtons
-                  topicSlug={topic.slug}
-                  userVote={topic.userVote}
-                  disabled={topic.status === "LOCKED"}
-                />
-              </div>
-              <ThemeVoteResults voteStats={topic.voteStats} />
+          <div className="mb-8 rounded-lg border bg-card p-6">
+            <h2 className="mb-4 text-xl font-semibold">Vota no tema</h2>
+            <div className="mb-6">
+              <ThemeVoteButtons
+                topicSlug={topic.slug}
+                userVote={topic.userVote}
+                disabled={false}
+              />
             </div>
-          )}
+            <ThemeVoteResults voteStats={topic.voteStats} />
+          </div>
 
           {/* New Comment Form */}
           {topic.status !== "LOCKED" && (

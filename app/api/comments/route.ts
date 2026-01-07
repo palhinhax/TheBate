@@ -53,14 +53,16 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    const commentData = {
+      content: validated.content,
+      side: isReply ? null : ("side" in validated ? validated.side : null),
+      topicId: validated.topicId,
+      userId: session.user.id,
+      parentId: validated.parentId || null,
+    };
+
     const comment = await prisma.comment.create({
-      data: {
-        content: validated.content,
-        side: isReply ? null : (validated as any).side,
-        topicId: validated.topicId,
-        userId: session.user.id,
-        parentId: validated.parentId || null,
-      },
+      data: commentData,
       include: {
         user: {
           select: {

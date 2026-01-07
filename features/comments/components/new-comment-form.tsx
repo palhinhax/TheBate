@@ -96,7 +96,7 @@ export default function NewCommentForm({
               <input
                 type="radio"
                 value="AFAVOR"
-                {...register("side" as any)}
+                {...register("side" as keyof (CommentFormData | ReplyFormData))}
                 className="sr-only"
               />
               <span className="text-lg">👍</span>
@@ -106,14 +106,14 @@ export default function NewCommentForm({
               <input
                 type="radio"
                 value="CONTRA"
-                {...register("side" as any)}
+                {...register("side" as keyof (CommentFormData | ReplyFormData))}
                 className="sr-only"
               />
               <span className="text-lg">👎</span>
               <span>Contra</span>
             </label>
           </div>
-          {errors.side && (
+          {"side" in errors && errors.side && (
             <p className="mt-1 text-sm text-destructive">
               {errors.side.message}
             </p>
