@@ -6,12 +6,12 @@ export default auth((req) => {
   const { pathname } = req.nextUrl;
 
   // Protected routes
-  const protectedRoutes = ["/dashboard"];
+  const protectedRoutes = ["/dashboard", "/new", "/admin", "/mod"];
   const isProtectedRoute = protectedRoutes.some((route) =>
     pathname.startsWith(route)
   );
 
-  // Auth routes (should redirect to dashboard if logged in)
+  // Auth routes (should redirect to home if logged in)
   const authRoutes = ["/auth/login", "/auth/register"];
   const isAuthRoute = authRoutes.some((route) => pathname.startsWith(route));
 
@@ -22,7 +22,7 @@ export default auth((req) => {
   }
 
   if (isAuthRoute && isLoggedIn) {
-    return NextResponse.redirect(new URL("/dashboard", req.url));
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
   return NextResponse.next();

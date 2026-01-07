@@ -16,8 +16,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Next.js SaaS Template",
-  description: "A production-grade SaaS template with Next.js 14, Prisma, and Auth.js",
+  title: "Thebate - Plataforma de Debates",
+  description: "Participe de discussões inteligentes sobre tecnologia, sociedade e cultura. Compartilhe ideias, aprenda e debata com respeito.",
 };
 
 export default function RootLayout({

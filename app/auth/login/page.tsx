@@ -21,8 +21,8 @@ import {
 import { Spinner } from "@/components/ui/spinner";
 
 const loginSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(1, "Password is required"),
+  email: z.string().email("Email inválido"),
+  password: z.string().min(1, "Senha é obrigatória"),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
@@ -52,13 +52,13 @@ export default function LoginPage() {
       });
 
       if (result?.error) {
-        setError("Invalid email or password");
+        setError("Email ou senha inválidos");
       } else {
-        router.push("/dashboard");
+        router.push("/");
         router.refresh();
       }
     } catch {
-      setError("An unexpected error occurred");
+      setError("Ocorreu um erro inesperado");
     } finally {
       setIsLoading(false);
     }
@@ -69,10 +69,10 @@ export default function LoginPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
-            Sign in
+            Entrar
           </CardTitle>
           <CardDescription className="text-center">
-            Enter your credentials to access your account
+            Digite suas credenciais para acessar sua conta
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -87,7 +87,7 @@ export default function LoginPage() {
               <Input
                 id="email"
                 type="email"
-                placeholder="demo@example.com"
+                placeholder="maria@exemplo.com"
                 {...register("email")}
                 aria-invalid={!!errors.email}
               />
@@ -96,7 +96,7 @@ export default function LoginPage() {
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Senha</Label>
               <Input
                 id="password"
                 type="password"
@@ -114,12 +114,12 @@ export default function LoginPage() {
           <CardFooter className="flex flex-col space-y-4">
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading && <Spinner size="sm" className="mr-2" />}
-              Sign in
+              Entrar
             </Button>
             <p className="text-sm text-center text-muted-foreground">
-              Don&apos;t have an account?{" "}
+              Não tem uma conta?{" "}
               <Link href="/auth/register" className="text-primary hover:underline">
-                Sign up
+                Registrar
               </Link>
             </p>
           </CardFooter>

@@ -22,13 +22,14 @@ import { Spinner } from "@/components/ui/spinner";
 
 const registerSchema = z
   .object({
-    name: z.string().min(2, "Name must be at least 2 characters"),
-    email: z.string().email("Invalid email address"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
+    name: z.string().min(2, "O nome deve ter pelo menos 2 caracteres"),
+    username: z.string().min(3, "O username deve ter pelo menos 3 caracteres").max(30, "O username não pode ter mais de 30 caracteres"),
+    email: z.string().email("Email inválido"),
+    password: z.string().min(8, "A senha deve ter pelo menos 8 caracteres"),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
+    message: "As senhas não coincidem",
     path: ["confirmPassword"],
   });
 
@@ -57,6 +58,7 @@ export default function RegisterPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: data.name,
+          username: data.username,
           email: data.email,
           password: data.password,
         }),
@@ -64,7 +66,7 @@ export default function RegisterPage() {
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.message || "Registration failed");
+        throw new Error(error.message || "Falha no registro");
       }
 
       // Auto sign in after registration
@@ -77,11 +79,11 @@ export default function RegisterPage() {
       if (result?.error) {
         router.push("/auth/login");
       } else {
-        router.push("/dashboard");
+        router.push("/");
         router.refresh();
       }
     } catch (error) {
-      setError(error instanceof Error ? error.message : "Registration failed");
+      setError(error instanceof Error ? error.message : "Falha no registro");
     } finally {
       setIsLoading(false);
     }
@@ -92,10 +94,10 @@ export default function RegisterPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">
-            Create an account
+            Criar uma conta
           </CardTitle>
           <CardDescription className="text-center">
-            Enter your details to create your account
+            Preencha seus dados para criar sua conta
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -106,10 +108,10 @@ export default function RegisterPage() {
               </div>
             )}
             <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
+              <Label htmlFor="name">Nome</Label>
               <Input
                 id="name"
-                placeholder="John Doe"
+                placeholder="João Silva"
                 {...register("name")}
                 aria-invalid={!!errors.name}
               />
@@ -118,11 +120,23 @@ export default function RegisterPage() {
               )}
             </div>
             <div className="space-y-2">
+              <Label htmlFor="username">Username</Label>
+              <Input
+                id="username"
+                placeholder="joaosilva"
+                {...register("username")}
+                aria-invalid={!!errors.username}
+              />
+              {errors.username && (
+                <p className="text-sm text-destructive">{errors.username.message}</p>
+              )}
+            </div>
+            <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="john@example.com"
+                placeholder="joao@exemplo.com"
                 {...register("email")}
                 aria-invalid={!!errors.email}
               />
@@ -131,7 +145,7 @@ export default function RegisterPage() {
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Senha</Label>
               <Input
                 id="password"
                 type="password"
@@ -146,7 +160,7 @@ export default function RegisterPage() {
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Label htmlFor="confirmPassword">Confirmar Senha</Label>
               <Input
                 id="confirmPassword"
                 type="password"
@@ -164,12 +178,12 @@ export default function RegisterPage() {
           <CardFooter className="flex flex-col space-y-4">
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading && <Spinner size="sm" className="mr-2" />}
-              Create account
+              Criar conta
             </Button>
             <p className="text-sm text-center text-muted-foreground">
-              Already have an account?{" "}
+              Já tem uma conta?{" "}
               <Link href="/auth/login" className="text-primary hover:underline">
-                Sign in
+                Entrar
               </Link>
             </p>
           </CardFooter>
