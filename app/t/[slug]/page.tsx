@@ -7,6 +7,7 @@ import { MessageSquare, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CommentsList from "@/features/comments/components/comments-list";
 import NewCommentForm from "@/features/comments/components/new-comment-form";
+import { AdContainer } from "@/components/ad-container";
 
 type Props = {
   params: { slug: string };
@@ -219,6 +220,9 @@ export default async function TopicPage({ params, searchParams }: Props) {
               comentários.
             </div>
           )}
+
+          {/* Advertisement - Between content and comments */}
+          <AdContainer />
 
           {/* Comments Section */}
           <div>

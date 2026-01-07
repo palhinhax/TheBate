@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { MessageSquare, TrendingUp, Clock } from "lucide-react";
+import { AdContainer } from "@/components/ad-container";
 
 async function getTopics(sort: "trending" | "new" = "new") {
   const orderBy =
@@ -155,6 +156,9 @@ export default async function Home() {
             </p>
           </div>
         )}
+
+        {/* Advertisement - At the bottom of content */}
+        <AdContainer />
       </section>
 
       {/* Footer */}
