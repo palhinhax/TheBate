@@ -10,21 +10,101 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id           String   @id @default(cuid())
-  name         String?
-  email        String   @unique
-  passwordHash String
-  createdAt    DateTime @default(now())
-  posts        Post[]
+enum UserRole {
+  USER
+  MOD
+  ADMIN
 }
 
-model Post {
+enum TopicStatus {
+  ACTIVE
+  HIDDEN
+  LOCKED
+}
+
+enum CommentStatus {
+  ACTIVE
+  HIDDEN
+  DELETED
+}
+
+model User {
+  id           String      @id @default(cuid())
+  name         String?
+  username     String      @unique
+  email        String      @unique
+  passwordHash String
+  image        String?
+  role         UserRole    @default(USER)
+  createdAt    DateTime    @default(now())
+  topics       Topic[]
+  comments     Comment[]
+  votes        Vote[]
+  topicVotes   TopicVote[]
+}
+
+model Topic {
+  id          String       @id @default(cuid())
+  slug        String       @unique
+  title       String
+  description String       @db.Text
+  tags        String[]
+  status      TopicStatus  @default(ACTIVE)
+  createdById String
+  createdBy   User         @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  comments    Comment[]
+  topicVotes  TopicVote[]
+
+  @@index([slug])
+  @@index([createdAt(sort: Desc)])
+  @@index([status])
+}
+
+model Comment {
+  id        String        @id @default(cuid())
+  content   String        @db.Text
+  score     Int           @default(0)
+  status    CommentStatus @default(ACTIVE)
+  topicId   String
+  topic     Topic         @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parentId  String?
+  parent    Comment?      @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies   Comment[]     @relation("CommentReplies")
+  votes     Vote[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@index([topicId, createdAt(sort: Desc)])
+  @@index([topicId, score(sort: Desc)])
+  @@index([userId])
+}
+
+model Vote {
   id        String   @id @default(cuid())
-  title     String
-  content   String
-  authorId  String
-  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  value     Int // -1 or +1
+  commentId String
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+
+  @@unique([userId, commentId])
+  @@index([commentId])
+}
+
+model TopicVote {
+  id        String   @id @default(cuid())
+  value     Int // -1 or +1
+  topicId   String
+  topic     Topic    @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, topicId])
+  @@index([topicId])
 }

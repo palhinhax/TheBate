@@ -1,2 +1,2 @@
-pnpm lint-staged
-pnpm test
+npm run lint-staged
+npm test
