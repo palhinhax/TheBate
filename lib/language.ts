@@ -55,20 +55,31 @@ export async function detectUserLanguage(
 }
 
 /**
- * Gets languages user likely understands
- * Returns array with detected language + English as fallback
+ * Gets languages user prefers to see
+ * Checks localStorage for saved preferences, falls back to detected language
+ * NO automatic English fallback - users see only their chosen languages
  */
 export async function getUserLanguages(
   searchParams?: { lang?: string }
 ): Promise<SupportedLanguage[]> {
-  const primaryLang = await detectUserLanguage(searchParams);
-  
-  // Return primary language + English as fallback (if not already English)
-  if (primaryLang === "en") {
-    return ["en"];
+  // Check if running on client and has saved preferences
+  if (typeof window !== 'undefined') {
+    const saved = localStorage.getItem('preferredLanguages');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed as SupportedLanguage[];
+        }
+      } catch (e) {
+        // Invalid JSON, ignore
+      }
+    }
   }
   
-  return [primaryLang, "en"];
+  // Default to only the detected language (NO forced English)
+  const primaryLang = await detectUserLanguage(searchParams);
+  return [primaryLang];
 }
 
 /**
