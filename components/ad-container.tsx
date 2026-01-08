@@ -43,7 +43,7 @@ export function AdContainer({ className, adSlot }: AdContainerProps) {
           ) : (
             <div className="flex items-center justify-center rounded border border-dashed border-muted-foreground/30 bg-muted/30 p-4">
               <p className="text-sm text-muted-foreground">
-                Ad slot not configured
+                Espaço Publicitário
               </p>
             </div>
           )}
