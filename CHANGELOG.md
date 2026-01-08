@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/palhinhax/TheBate/compare/v1.0.2...v1.1.0) (2026-01-08)
+
+
+### Features
+
+* **ui:** add footer with version display ([273bc0b](https://github.com/palhinhax/TheBate/commit/273bc0bcde417797ebf6b2581a3a2d49f9ae7b9c))
+
 ## [1.0.2](https://github.com/palhinhax/TheBate/compare/v1.0.1...v1.0.2) (2026-01-08)
 
 
