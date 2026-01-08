@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/palhinhax/TheBate/compare/v1.0.1...v1.0.2) (2026-01-08)
+
+
+### Bug Fixes
+
+* **ui:** prevent language dropdown from overflowing on mobile ([859e799](https://github.com/palhinhax/TheBate/commit/859e799364f773590d2bb29fb4c3038f68969e93))
+
 ## [1.0.1](https://github.com/palhinhax/TheBate/compare/v1.0.0...v1.0.1) (2026-01-08)
 
 
