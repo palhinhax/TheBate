@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/palhinhax/TheBate/compare/v1.3.0...v1.4.0) (2026-01-08)
+
+
+### Features
+
+* **auth:** add password visibility toggle button to register form ([7af1788](https://github.com/palhinhax/TheBate/commit/7af1788fff7234715744f135abdc777b15af649c))
+
 # [1.3.0](https://github.com/palhinhax/TheBate/compare/v1.2.0...v1.3.0) (2026-01-08)
 
 
