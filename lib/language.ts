@@ -71,7 +71,7 @@ export async function getUserLanguages(
         if (Array.isArray(parsed) && parsed.length > 0) {
           return parsed as SupportedLanguage[];
         }
-      } catch (e) {
+      } catch {
         // Invalid JSON, ignore
       }
     }

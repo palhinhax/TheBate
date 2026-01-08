@@ -25,7 +25,7 @@ export function LanguageSelector() {
         if (Array.isArray(parsed) && parsed.length > 0) {
           setSelectedLangs(parsed);
         }
-      } catch (e) {
+      } catch {
         // Invalid JSON, ignore
       }
     }
