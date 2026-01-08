@@ -30,18 +30,18 @@ Every commit message **MUST** follow this structure:
 
 ## Allowed Commit Types
 
-| Type | Effect | Description | When to Use |
-|------|--------|-------------|-------------|
-| `feat` | **MINOR** release | New feature for the user | Adding new functionality, endpoints, UI components |
-| `fix` | **PATCH** release | Bug fix for the user | Fixing broken behavior, errors, edge cases |
-| `perf` | **PATCH** release | Performance improvement | Optimizing queries, reducing bundle size, improving speed |
-| `refactor` | No release | Code change without functional impact | Restructuring code, renaming, cleaning up |
-| `docs` | No release | Documentation changes | README, comments, markdown files |
-| `test` | No release | Adding or fixing tests | Unit tests, integration tests, e2e tests |
-| `chore` | No release | Maintenance tasks | Dependencies update, config changes, tooling |
-| `ci` | No release | CI/CD pipeline changes | GitHub Actions, build configs |
-| `build` | No release | Build system changes | Webpack, Next.js config, bundler settings |
-| `style` | No release | Code style changes | Formatting, linting fixes, whitespace |
+| Type       | Effect            | Description                           | When to Use                                               |
+| ---------- | ----------------- | ------------------------------------- | --------------------------------------------------------- |
+| `feat`     | **MINOR** release | New feature for the user              | Adding new functionality, endpoints, UI components        |
+| `fix`      | **PATCH** release | Bug fix for the user                  | Fixing broken behavior, errors, edge cases                |
+| `perf`     | **PATCH** release | Performance improvement               | Optimizing queries, reducing bundle size, improving speed |
+| `refactor` | No release        | Code change without functional impact | Restructuring code, renaming, cleaning up                 |
+| `docs`     | No release        | Documentation changes                 | README, comments, markdown files                          |
+| `test`     | No release        | Adding or fixing tests                | Unit tests, integration tests, e2e tests                  |
+| `chore`    | No release        | Maintenance tasks                     | Dependencies update, config changes, tooling              |
+| `ci`       | No release        | CI/CD pipeline changes                | GitHub Actions, build configs                             |
+| `build`    | No release        | Build system changes                  | Webpack, Next.js config, bundler settings                 |
+| `style`    | No release        | Code style changes                    | Formatting, linting fixes, whitespace                     |
 
 ### Important Notes
 
@@ -67,7 +67,7 @@ feat(auth)!: switch to rotating refresh tokens
 ```
 feat(auth)!: switch to rotating refresh tokens
 
-BREAKING CHANGE: All existing sessions will be invalidated. 
+BREAKING CHANGE: All existing sessions will be invalidated.
 Users must re-authenticate after deployment.
 ```
 
@@ -100,18 +100,18 @@ BREAKING CHANGE: Node.js 18 is no longer supported. Minimum version is now 20.
 
 ### Type Selection Guide
 
-| Situation | Type | Example |
-|-----------|------|---------|
-| Adding new user-facing feature | `feat` | `feat(topics): add markdown support` |
-| Fixing bug visible to users | `fix` | `fix(comments): prevent duplicate submissions` |
-| Improving performance | `perf` | `perf(db): reduce N+1 queries on topic list` |
-| Refactoring without behavior change | `refactor` | `refactor(auth): extract validation logic` |
-| Updating documentation | `docs` | `docs: add deployment instructions` |
-| Adding/fixing tests | `test` | `test(api): add topic creation tests` |
-| Updating dependencies | `chore` | `chore(deps): update next to 14.1.0` |
-| Changing CI/CD | `ci` | `ci: add automated e2e tests` |
-| Changing build config | `build` | `build: enable SWC minification` |
-| Code formatting only | `style` | `style: fix ESLint warnings` |
+| Situation                           | Type       | Example                                        |
+| ----------------------------------- | ---------- | ---------------------------------------------- |
+| Adding new user-facing feature      | `feat`     | `feat(topics): add markdown support`           |
+| Fixing bug visible to users         | `fix`      | `fix(comments): prevent duplicate submissions` |
+| Improving performance               | `perf`     | `perf(db): reduce N+1 queries on topic list`   |
+| Refactoring without behavior change | `refactor` | `refactor(auth): extract validation logic`     |
+| Updating documentation              | `docs`     | `docs: add deployment instructions`            |
+| Adding/fixing tests                 | `test`     | `test(api): add topic creation tests`          |
+| Updating dependencies               | `chore`    | `chore(deps): update next to 14.1.0`           |
+| Changing CI/CD                      | `ci`       | `ci: add automated e2e tests`                  |
+| Changing build config               | `build`    | `build: enable SWC minification`               |
+| Code formatting only                | `style`    | `style: fix ESLint warnings`                   |
 
 ### Scope Selection Guide
 
