@@ -4,12 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import {
-  ArrowUp,
-  ArrowDown,
-  MessageSquare,
-  MoreHorizontal,
-} from "lucide-react";
+import { ThumbsUp, MessageSquare, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import NewCommentForm from "./new-comment-form";
@@ -24,20 +19,24 @@ type CommentUser = {
 type Reply = {
   id: string;
   content: string;
+  side: "AFAVOR" | "CONTRA" | null;
   score: number;
   createdAt: Date;
   user: CommentUser;
-  votes: { value: number }[];
+  votes?: { value: number }[];
+  _count?: { votes: number };
 };
 
 type Comment = {
   id: string;
   content: string;
+  side: "AFAVOR" | "CONTRA" | null;
   score: number;
   createdAt: Date;
   user: CommentUser;
-  votes: { value: number }[];
+  votes?: { value: number }[];
   replies?: Reply[];
+  _count?: { votes: number };
 };
 
 type CommentItemProps = {
@@ -57,11 +56,10 @@ export default function CommentItem({
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [isVoting, setIsVoting] = useState(false);
 
-  // Get user's current vote value (1, -1, or null)
-  const userVote =
-    comment.votes && comment.votes.length > 0 ? comment.votes[0].value : null;
+  // Check if user has voted (quality vote)
+  const hasVoted = Boolean(comment.votes?.length);
 
-  const handleVote = async (value: number) => {
+  const handleVote = async () => {
     if (!session?.user) {
       toast({
         title: "Entre para votar",
@@ -78,7 +76,7 @@ export default function CommentItem({
       const response = await fetch(`/api/comments/${comment.id}/vote`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ value }),
+        body: JSON.stringify({ value: 1 }),
       });
 
       if (!response.ok) {
@@ -102,41 +100,54 @@ export default function CommentItem({
     setShowReplyForm(false);
   };
 
+  const getSideBadge = () => {
+    if (!comment.side) return null;
+
+    const badgeClasses =
+      comment.side === "AFAVOR"
+        ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+        : "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
+
+    return (
+      <span
+        className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold ${badgeClasses}`}
+      >
+        <span>{comment.side === "AFAVOR" ? "👍" : "👎"}</span>
+        {comment.side === "AFAVOR" ? "A Favor" : "Contra"}
+      </span>
+    );
+  };
+
   return (
     <div className={isReply ? "ml-8 mt-4" : ""}>
       <div className="flex gap-3">
-        {/* Voting */}
+        {/* Quality Voting */}
         <div className="flex flex-col items-center gap-1">
           <button
-            onClick={() => handleVote(1)}
+            onClick={handleVote}
             disabled={isVoting || !session?.user}
-            className={`rounded p-1 transition-colors hover:bg-muted disabled:opacity-50 ${
-              userVote === 1 ? "text-green-600 dark:text-green-500" : ""
+            className={`rounded p-1.5 transition-colors hover:bg-muted disabled:opacity-50 ${
+              hasVoted
+                ? "text-primary"
+                : "text-muted-foreground"
             }`}
+            title="Bom argumento"
           >
-            <ArrowUp className="h-5 w-5" />
+            <ThumbsUp className="h-5 w-5" />
           </button>
           <span className="text-sm font-medium">{comment.score}</span>
-          <button
-            onClick={() => handleVote(-1)}
-            disabled={isVoting || !session?.user}
-            className={`rounded p-1 transition-colors hover:bg-muted disabled:opacity-50 ${
-              userVote === -1 ? "text-red-600 dark:text-red-500" : ""
-            }`}
-          >
-            <ArrowDown className="h-5 w-5" />
-          </button>
         </div>
 
         {/* Comment Content */}
         <div className="flex-1">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
             <Link
               href={`/u/${comment.user.username}`}
               className="font-medium hover:underline"
             >
               @{comment.user.username}
             </Link>
+            {getSideBadge()}
             <span>•</span>
             <span>
               {new Date(comment.createdAt).toLocaleDateString("pt-BR", {

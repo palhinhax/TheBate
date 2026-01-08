@@ -8,6 +8,7 @@ export async function GET(
   try {
     const { searchParams } = new URL(req.url);
     const sort = searchParams.get("sort") || "top";
+    const side = searchParams.get("side"); // AFAVOR, CONTRA, or null for all
     const page = parseInt(searchParams.get("page") || "1");
     const perPage = Math.min(
       parseInt(searchParams.get("perPage") || "50"),
@@ -29,11 +30,23 @@ export async function GET(
       );
     }
 
-    const where = {
+    interface CommentWhere {
+      topicId: string;
+      parentId: null;
+      status: "ACTIVE";
+      side?: "AFAVOR" | "CONTRA";
+    }
+
+    const where: CommentWhere = {
       topicId: topic.id,
       parentId: null, // Only top-level comments
       status: "ACTIVE" as const,
     };
+
+    // Add side filter if specified
+    if (side === "AFAVOR" || side === "CONTRA") {
+      where.side = side;
+    }
 
     const orderBy =
       sort === "new"

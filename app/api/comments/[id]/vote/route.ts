@@ -4,7 +4,7 @@ import { auth } from "@/lib/auth";
 import { z } from "zod";
 
 const voteBodySchema = z.object({
-  value: z.number().int().min(-1).max(1),
+  value: z.literal(1), // Only +1 for quality vote
 });
 
 export async function POST(
@@ -53,25 +53,16 @@ export async function POST(
         },
       });
 
-      let scoreDelta = value;
+      let scoreDelta = 0;
 
       if (existingVote) {
-        if (existingVote.value === value) {
-          // Remove vote if clicking the same button
-          await tx.vote.delete({
-            where: { id: existingVote.id },
-          });
-          scoreDelta = -existingVote.value;
-        } else {
-          // Update vote
-          await tx.vote.update({
-            where: { id: existingVote.id },
-            data: { value },
-          });
-          scoreDelta = value - existingVote.value;
-        }
+        // Remove vote if clicking again (toggle)
+        await tx.vote.delete({
+          where: { id: existingVote.id },
+        });
+        scoreDelta = -1;
       } else {
-        // Create new vote
+        // Create new vote with validated value
         await tx.vote.create({
           data: {
             value,
@@ -79,6 +70,7 @@ export async function POST(
             userId: session.user.id,
           },
         });
+        scoreDelta = 1;
       }
 
       // Update comment score

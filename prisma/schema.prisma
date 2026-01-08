@@ -28,6 +28,17 @@ enum CommentStatus {
   DELETED
 }
 
+enum CommentSide {
+  AFAVOR
+  CONTRA
+}
+
+enum ThemeVote {
+  SIM
+  NAO
+  DEPENDE
+}
+
 model User {
   id           String      @id @default(cuid())
   name         String?
@@ -65,6 +76,7 @@ model Topic {
 model Comment {
   id        String        @id @default(cuid())
   content   String        @db.Text
+  side      CommentSide?  // A FAVOR or CONTRA (null for replies)
   score     Int           @default(0)
   status    CommentStatus @default(ACTIVE)
   topicId   String
@@ -80,12 +92,13 @@ model Comment {
 
   @@index([topicId, createdAt(sort: Desc)])
   @@index([topicId, score(sort: Desc)])
+  @@index([topicId, side])
   @@index([userId])
 }
 
 model Vote {
   id        String   @id @default(cuid())
-  value     Int // -1 or +1
+  value     Int // Only +1 for "good argument" quality vote
   commentId String
   comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
   userId    String
@@ -97,13 +110,14 @@ model Vote {
 }
 
 model TopicVote {
-  id        String   @id @default(cuid())
-  value     Int // -1 or +1
+  id        String    @id @default(cuid())
+  vote      ThemeVote // SIM, NAO, or DEPENDE
   topicId   String
-  topic     Topic    @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  topic     Topic     @relation(fields: [topicId], references: [id], onDelete: Cascade)
   userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
   @@unique([userId, topicId])
   @@index([topicId])

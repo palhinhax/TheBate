@@ -7,14 +7,16 @@ import { MessageSquare, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CommentsList from "@/features/comments/components/comments-list";
 import NewCommentForm from "@/features/comments/components/new-comment-form";
+import ThemeVoteButtons from "@/features/topics/components/theme-vote-buttons";
+import ThemeVoteResults from "@/features/topics/components/theme-vote-results";
 import { AdContainer } from "@/components/ad-container";
 
 type Props = {
   params: { slug: string };
-  searchParams: { sort?: string };
+  searchParams: { sort?: string; side?: string };
 };
 
-async function getTopic(slug: string) {
+async function getTopic(slug: string, userId?: string) {
   const topic = await prisma.topic.findUnique({
     where: { slug },
     include: {
@@ -33,7 +35,47 @@ async function getTopic(slug: string) {
     },
   });
 
-  return topic;
+  if (!topic) return null;
+
+  // Get vote statistics
+  const voteStats = await prisma.topicVote.groupBy({
+    by: ["vote"],
+    where: { topicId: topic.id },
+    _count: true,
+  });
+
+  const voteCounts = {
+    SIM: 0,
+    NAO: 0,
+    DEPENDE: 0,
+    total: 0,
+  };
+
+  voteStats.forEach((stat) => {
+    voteCounts[stat.vote] = stat._count;
+    voteCounts.total += stat._count;
+  });
+
+  // Get user's vote if authenticated
+  let userVote = null;
+  if (userId) {
+    const vote = await prisma.topicVote.findUnique({
+      where: {
+        userId_topicId: {
+          userId,
+          topicId: topic.id,
+        },
+      },
+      select: { vote: true },
+    });
+    userVote = vote?.vote || null;
+  }
+
+  return {
+    ...topic,
+    voteStats: voteCounts,
+    userVote,
+  };
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -72,7 +114,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function TopicPage({ params, searchParams }: Props) {
   const session = await auth();
-  const topic = await getTopic(params.slug);
+  const topic = await getTopic(params.slug, session?.user?.id);
 
   if (!topic) {
     notFound();
@@ -87,6 +129,7 @@ export default async function TopicPage({ params, searchParams }: Props) {
   }
 
   const sort = searchParams.sort || "top";
+  const side = searchParams.side as "AFAVOR" | "CONTRA" | undefined;
   const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
 
   // JSON-LD structured data
@@ -196,11 +239,29 @@ export default async function TopicPage({ params, searchParams }: Props) {
             </div>
           </div>
 
+          {/* Theme Voting Section */}
+          <div className="mb-8 rounded-lg border bg-card p-6">
+            <h2 className="mb-4 text-xl font-semibold">Vote no tema</h2>
+            <div className="mb-6">
+              <ThemeVoteButtons
+                topicSlug={topic.slug}
+                userVote={topic.userVote}
+                disabled={false}
+              />
+            </div>
+            <ThemeVoteResults voteStats={topic.voteStats} />
+          </div>
+
           {/* New Comment Form */}
           {topic.status !== "LOCKED" && (
             <div className="mb-8">
               {session?.user ? (
-                <NewCommentForm topicId={topic.id} />
+                <>
+                  <h2 className="mb-4 text-xl font-semibold">
+                    Adicionar argumento
+                  </h2>
+                  <NewCommentForm topicId={topic.id} />
+                </>
               ) : (
                 <div className="rounded-lg border bg-muted/50 px-6 py-8 text-center">
                   <p className="mb-4 text-muted-foreground">
@@ -217,7 +278,7 @@ export default async function TopicPage({ params, searchParams }: Props) {
           {topic.status === "LOCKED" && (
             <div className="mb-8 rounded-lg border border-yellow-500 bg-yellow-50 px-4 py-3 text-center text-sm text-yellow-800">
               Este tema está bloqueado. Não é possível adicionar novos
-              comentários.
+              argumentos.
             </div>
           )}
 
@@ -226,29 +287,73 @@ export default async function TopicPage({ params, searchParams }: Props) {
 
           {/* Comments Section */}
           <div>
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-2xl font-bold">Comentários</h2>
-              <div className="flex gap-2">
-                <Link href={`/t/${topic.slug}?sort=top`}>
-                  <Button
-                    variant={sort === "top" ? "default" : "ghost"}
-                    size="sm"
+            <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <h2 className="text-2xl font-bold">Argumentos</h2>
+              <div className="flex flex-wrap gap-2">
+                {/* Sort buttons */}
+                <div className="flex gap-2">
+                  <Link
+                    href={`/t/${topic.slug}?sort=top${side ? `&side=${side}` : ""}`}
                   >
-                    Top
-                  </Button>
-                </Link>
-                <Link href={`/t/${topic.slug}?sort=new`}>
-                  <Button
-                    variant={sort === "new" ? "default" : "ghost"}
-                    size="sm"
+                    <Button
+                      variant={sort === "top" ? "default" : "ghost"}
+                      size="sm"
+                    >
+                      Top
+                    </Button>
+                  </Link>
+                  <Link
+                    href={`/t/${topic.slug}?sort=new${side ? `&side=${side}` : ""}`}
                   >
-                    Novos
-                  </Button>
-                </Link>
+                    <Button
+                      variant={sort === "new" ? "default" : "ghost"}
+                      size="sm"
+                    >
+                      Novos
+                    </Button>
+                  </Link>
+                </div>
+                {/* Side filter buttons */}
+                <div className="flex gap-2">
+                  <Link
+                    href={`/t/${topic.slug}?sort=${sort}`}
+                  >
+                    <Button
+                      variant={!side ? "default" : "ghost"}
+                      size="sm"
+                    >
+                      Todos
+                    </Button>
+                  </Link>
+                  <Link
+                    href={`/t/${topic.slug}?sort=${sort}&side=AFAVOR`}
+                  >
+                    <Button
+                      variant={side === "AFAVOR" ? "default" : "ghost"}
+                      size="sm"
+                    >
+                      👍 A Favor
+                    </Button>
+                  </Link>
+                  <Link
+                    href={`/t/${topic.slug}?sort=${sort}&side=CONTRA`}
+                  >
+                    <Button
+                      variant={side === "CONTRA" ? "default" : "ghost"}
+                      size="sm"
+                    >
+                      👎 Contra
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </div>
 
-            <CommentsList topicSlug={topic.slug} sort={sort as "top" | "new"} />
+            <CommentsList 
+              topicSlug={topic.slug} 
+              sort={sort as "top" | "new"}
+              side={side}
+            />
           </div>
         </main>
       </div>
