@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/palhinhax/TheBate/compare/v1.1.1...v1.1.2) (2026-01-08)
+
+
+### Bug Fixes
+
+* **ads:** update placeholder text to Portuguese ([05f525f](https://github.com/palhinhax/TheBate/commit/05f525fc9590de565b7ea6e866557eb09707848e))
+
 ## [1.1.1](https://github.com/palhinhax/TheBate/compare/v1.1.0...v1.1.1) (2026-01-08)
 
 
