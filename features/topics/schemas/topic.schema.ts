@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { SUPPORTED_LANGUAGES } from "@/lib/language-shared";
 
 export const topicSchema = z.object({
   title: z
@@ -9,9 +10,7 @@ export const topicSchema = z.object({
     .string()
     .min(20, "A descrição deve ter pelo menos 20 caracteres")
     .max(5000, "A descrição não pode ter mais de 5000 caracteres"),
-  language: z
-    .enum(["en", "pt", "es", "fr", "de"])
-    .default("pt"),
+  language: z.enum(SUPPORTED_LANGUAGES),
   tags: z
     .array(z.string().min(2).max(30))
     .min(1, "Adicione pelo menos uma tag")

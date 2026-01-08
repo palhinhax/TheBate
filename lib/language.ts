@@ -1,8 +1,9 @@
 import { headers } from "next/headers";
+import { SUPPORTED_LANGUAGES, type SupportedLanguage } from "./language-shared";
 
-export type SupportedLanguage = "en" | "pt" | "es" | "fr" | "de";
-
-const SUPPORTED_LANGUAGES: SupportedLanguage[] = ["en", "pt", "es", "fr", "de"];
+// Re-export for convenience
+export type { SupportedLanguage } from "./language-shared";
+export { SUPPORTED_LANGUAGES, LANGUAGE_METADATA, LANGUAGES } from "./language-shared";
 
 /**
  * Detects user's preferred language based on:
@@ -81,47 +82,3 @@ export async function getUserLanguages(
   const primaryLang = await detectUserLanguage(searchParams);
   return [primaryLang];
 }
-
-/**
- * Language metadata for SEO and display
- */
-export const LANGUAGE_METADATA: Record<
-  SupportedLanguage,
-  {
-    name: string;
-    nativeName: string;
-    flag: string;
-    locale: string;
-  }
-> = {
-  en: {
-    name: "English",
-    nativeName: "English",
-    flag: "🇬🇧",
-    locale: "en_US",
-  },
-  pt: {
-    name: "Portuguese",
-    nativeName: "Português",
-    flag: "🇵🇹",
-    locale: "pt_PT",
-  },
-  es: {
-    name: "Spanish",
-    nativeName: "Español",
-    flag: "🇪🇸",
-    locale: "es_ES",
-  },
-  fr: {
-    name: "French",
-    nativeName: "Français",
-    flag: "🇫🇷",
-    locale: "fr_FR",
-  },
-  de: {
-    name: "German",
-    nativeName: "Deutsch",
-    flag: "🇩🇪",
-    locale: "de_DE",
-  },
-};
