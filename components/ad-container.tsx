@@ -34,11 +34,19 @@ export function AdContainer({ className, adSlot }: AdContainerProps) {
           Publicidade
         </p>
         <div className="mx-auto w-full max-w-[728px]">
-          <GoogleAdSense
-            adSlot={adSlot || "0000000000"}
-            adFormat="auto"
-            fullWidthResponsive={true}
-          />
+          {adSlot ? (
+            <GoogleAdSense
+              adSlot={adSlot}
+              adFormat="auto"
+              fullWidthResponsive={true}
+            />
+          ) : (
+            <div className="flex items-center justify-center rounded border border-dashed border-muted-foreground/30 bg-muted/30 p-4">
+              <p className="text-sm text-muted-foreground">
+                Ad slot not configured
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </aside>
