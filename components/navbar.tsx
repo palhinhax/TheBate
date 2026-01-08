@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { LogOut, User, Plus } from "lucide-react";
@@ -12,8 +13,15 @@ export function Navbar() {
   return (
     <nav className="border-b bg-background">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link href="/" className="text-xl font-bold">
-          Thebate
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/logo_no_bg.png"
+            alt="Thebate"
+            width={120}
+            height={40}
+            className="h-10 w-auto"
+            priority
+          />
         </Link>
 
         <div className="flex items-center gap-4">
