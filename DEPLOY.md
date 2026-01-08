@@ -39,7 +39,7 @@ Quando houver mudanças no schema do banco de dados, é necessário executar as 
 npx prisma migrate deploy
 ```
 
-Esta comando aplica todas as migrações pendentes ao banco de dados de produção.
+Este comando aplica todas as migrações pendentes ao banco de dados de produção.
 
 ### Opção 2: Via Vercel Build (Automático)
 
