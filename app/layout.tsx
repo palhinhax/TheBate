@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Navbar } from "@/components/navbar";
 import { AdSenseScript } from "@/components/adsense-script";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -39,7 +40,8 @@ export default function RootLayout({
           <Navbar />
           {children}
           <Toaster />
-        <Analytics />
+          <Analytics />
+          <SpeedInsights />
         </Providers>
       </body>
     </html>

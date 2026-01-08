@@ -5,6 +5,7 @@
 Adiciona estas variáveis no teu serviço de hosting (Vercel, Netlify, etc.):
 
 ### Vercel
+
 1. Vai ao dashboard do projeto
 2. Settings → Environment Variables
 3. Adiciona:
@@ -30,6 +31,7 @@ NODE_ENV="production"
 ## 🔄 Como Fazer Redeploy
 
 ### Opção 1: Via Git (Recomendado)
+
 ```bash
 git add .
 git commit -m "fix: update sitemap URLs to production domain"
@@ -39,11 +41,13 @@ git push origin main
 O Vercel/Netlify vai fazer deploy automático.
 
 ### Opção 2: Via Vercel CLI
+
 ```bash
 vercel --prod
 ```
 
 ### Opção 3: Via Dashboard
+
 1. Vai ao dashboard do Vercel
 2. Clica em "Deployments"
 3. No último deployment, clica nos 3 pontos → "Redeploy"
@@ -51,6 +55,7 @@ vercel --prod
 ## ✅ Verificar se Funcionou
 
 Depois do deploy, acede a:
+
 - https://thebatee.com/sitemap.xml
 - https://thebatee.com/robots.txt
 
@@ -74,12 +79,14 @@ Os URLs devem mostrar `https://thebatee.com` em vez de `localhost:3000`
 ```
 
 ### `.env` (produção - commitado)
+
 ```bash
 NEXTAUTH_URL="https://thebatee.com"
 NEXT_PUBLIC_SITE_URL="https://thebatee.com"
 ```
 
 ### `.env.local` (dev - NÃO commitado)
+
 ```bash
 NEXTAUTH_URL="http://localhost:3000"
 ```
