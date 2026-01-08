@@ -18,18 +18,20 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/spinner";
-
-const forgotPasswordSchema = z.object({
-  email: z.string().email("Email inválido"),
-});
-
-type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
+import { useTranslations } from "@/lib/use-translations";
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { t } = useTranslations();
+
+  const forgotPasswordSchema = z.object({
+    email: z.string().email(t("common.error", "Email inválido")),
+  });
+
+  type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
 
   const {
     register,
@@ -57,19 +59,19 @@ export default function ForgotPasswordPage() {
 
       if (response.status === 429) {
         setError(
-          `Muitas tentativas. Tente novamente em ${result.retryAfter} segundos.`
+          t("common.error", `Muitas tentativas. Tente novamente em ${result.retryAfter} segundos.`)
         );
         return;
       }
 
       if (!response.ok) {
-        setError(result.message || "Ocorreu um erro inesperado");
+        setError(result.message || t("common.error", "Ocorreu um erro inesperado"));
         return;
       }
 
       setSuccess(true);
     } catch {
-      setError("Ocorreu um erro inesperado");
+      setError(t("common.error", "Ocorreu um erro inesperado"));
     } finally {
       setIsLoading(false);
     }
@@ -81,19 +83,21 @@ export default function ForgotPasswordPage() {
         <Card className="w-full max-w-md">
           <CardHeader className="space-y-1">
             <CardTitle className="text-center text-2xl font-bold">
-              Email Enviado
+              {t("auth.email_sent", "Email Enviado")}
             </CardTitle>
             <CardDescription className="text-center">
-              Verifique a sua caixa de entrada
+              {t("auth.check_inbox", "Verifique a sua caixa de entrada")}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="rounded-md bg-green-50 p-4 text-sm text-green-800 dark:bg-green-950 dark:text-green-200">
-              Se o email existir na nossa base de dados, receberá um link para
-              recuperar a sua senha nos próximos minutos.
+              {t(
+                "auth.reset_email_sent_message",
+                "Se o email existir na nossa base de dados, receberá um link para recuperar a sua senha nos próximos minutos."
+              )}
             </div>
             <p className="text-center text-sm text-muted-foreground">
-              Não se esqueça de verificar a pasta de spam.
+              {t("auth.check_spam", "Não se esqueça de verificar a pasta de spam.")}
             </p>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
@@ -102,7 +106,7 @@ export default function ForgotPasswordPage() {
               className="w-full"
               onClick={() => router.push("/auth/login")}
             >
-              Voltar ao Login
+              {t("auth.back_to_login", "Voltar ao Login")}
             </Button>
           </CardFooter>
         </Card>
@@ -115,10 +119,13 @@ export default function ForgotPasswordPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-center text-2xl font-bold">
-            Recuperar Senha
+            {t("auth.reset_password", "Recuperar Senha")}
           </CardTitle>
           <CardDescription className="text-center">
-            Digite o seu email para receber um link de recuperação
+            {t(
+              "auth.forgot_password_description",
+              "Digite o seu email para receber um link de recuperação"
+            )}
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -147,15 +154,15 @@ export default function ForgotPasswordPage() {
           <CardFooter className="flex flex-col space-y-4">
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading && <Spinner size="sm" className="mr-2" />}
-              Enviar Link de Recuperação
+              {t("auth.send_reset_link", "Enviar Link de Recuperação")}
             </Button>
             <p className="text-center text-sm text-muted-foreground">
-              Lembrou-se da senha?{" "}
+              {t("auth.remembered_password", "Lembrou-se da senha?")}{" "}
               <Link
                 href="/auth/login"
                 className="text-primary hover:underline"
               >
-                Entrar
+                {t("common.login", "Entrar")}
               </Link>
             </p>
           </CardFooter>

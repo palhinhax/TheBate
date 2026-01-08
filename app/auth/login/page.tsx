@@ -19,6 +19,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/spinner";
+import { useTranslations } from "@/lib/use-translations";
 
 const loginSchema = z.object({
   email: z.string().email("Email inválido"),
@@ -31,6 +32,7 @@ export default function LoginPage() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { t } = useTranslations();
 
   const {
     register,
@@ -104,7 +106,7 @@ export default function LoginPage() {
                   href="/auth/forgot-password"
                   className="text-xs text-primary hover:underline"
                 >
-                  Esqueceu a senha?
+                  {t("auth.forgot_password", "Esqueceu a senha?")}
                 </Link>
               </div>
               <Input

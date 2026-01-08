@@ -1,0 +1,73 @@
+{
+  "common": {
+    "home": "Início",
+    "new_topic": "Novo Tema",
+    "login": "Entrar",
+    "register": "Registar",
+    "logout": "Sair",
+    "loading": "A carregar...",
+    "error": "Erro",
+    "search": "Pesquisar"
+  },
+  "hero": {
+    "title": "Plataforma Global de Discussão",
+    "subtitle": "Participe de discussões inteligentes sobre tecnologia, sociedade e cultura. Compartilhe ideias, aprenda e conecte-se com respeito.",
+    "cta": "Começar Agora"
+  },
+  "topics": {
+    "recent": "Tópicos Recentes",
+    "trending": "Em Alta",
+    "new": "Novos",
+    "no_topics": "Nenhum tópico encontrado",
+    "create": "Criar Novo Tema",
+    "title": "Título",
+    "description": "Descrição",
+    "tags": "Tags",
+    "language": "Idioma"
+  },
+  "comments": {
+    "title": "Comentários",
+    "add": "Adicionar Comentário",
+    "reply": "Responder",
+    "for": "A Favor",
+    "against": "Contra",
+    "neutral": "Neutro"
+  },
+  "languages": {
+    "pt": "Português",
+    "en": "English",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch"
+  },
+  "footer": {
+    "tagline": "Discussões públicas globais"
+  },
+  "auth": {
+    "show_password": "Mostrar senha",
+    "hide_password": "Ocultar senha",
+    "forgot_password": "Esqueceu a senha?",
+    "reset_password": "Recuperar Senha",
+    "reset_password_title": "Criar Nova Senha",
+    "reset_password_description": "Digite a sua nova senha abaixo",
+    "forgot_password_description": "Digite o seu email para receber um link de recuperação",
+    "send_reset_link": "Enviar Link de Recuperação",
+    "email_sent": "Email Enviado",
+    "check_inbox": "Verifique a sua caixa de entrada",
+    "reset_email_sent_message": "Se o email existir na nossa base de dados, receberá um link para recuperar a sua senha nos próximos minutos.",
+    "check_spam": "Não se esqueça de verificar a pasta de spam.",
+    "password_changed": "Senha Alterada",
+    "password_changed_success": "A sua senha foi alterada com sucesso",
+    "redirecting_to_login": "Redirecionando para o login...",
+    "remembered_password": "Lembrou-se da senha?",
+    "back_to_login": "Voltar ao Login",
+    "new_password": "Nova Senha",
+    "confirm_password": "Confirmar Senha",
+    "password_requirements": {
+      "min_length": "Mínimo de 8 caracteres",
+      "uppercase": "Pelo menos uma letra maiúscula",
+      "lowercase": "Pelo menos uma letra minúscula",
+      "number": "Pelo menos um número"
+    }
+  }
+}
