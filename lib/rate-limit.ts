@@ -11,19 +11,23 @@ interface RateLimitEntry {
 // Store rate limit data in memory
 const rateLimitStore = new Map<string, RateLimitEntry>();
 
-// Clean up old entries every 5 minutes
-setInterval(() => {
+/**
+ * Clean up expired entries
+ * Called during rate limit checks instead of on a timer
+ * to be compatible with serverless environments
+ */
+function cleanupExpiredEntries(): void {
   const now = Date.now();
   const keysToDelete: string[] = [];
-  
+
   rateLimitStore.forEach((entry, key) => {
     if (entry.resetAt < now) {
       keysToDelete.push(key);
     }
   });
-  
+
   keysToDelete.forEach((key) => rateLimitStore.delete(key));
-}, 5 * 60 * 1000);
+}
 
 export interface RateLimitConfig {
   maxAttempts: number;
@@ -46,6 +50,12 @@ export function checkRateLimit(
   identifier: string,
   config: RateLimitConfig
 ): RateLimitResult {
+  // Clean up expired entries periodically (10% chance on each check)
+  // This ensures cleanup happens without relying on timers (serverless-friendly)
+  if (Math.random() < 0.1) {
+    cleanupExpiredEntries();
+  }
+
   const now = Date.now();
   const key = identifier;
 
