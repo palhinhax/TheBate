@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,7 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
-import { X } from "lucide-react";
+import { X, Globe } from "lucide-react";
+import { LANGUAGES, type SupportedLanguage } from "@/lib/language";
 
 export default function NewTopicForm() {
   const router = useRouter();
@@ -17,6 +18,7 @@ export default function NewTopicForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
+  const [selectedLanguage, setSelectedLanguage] = useState<SupportedLanguage>("pt");
 
   const {
     register,
@@ -25,7 +27,26 @@ export default function NewTopicForm() {
     setValue,
   } = useForm<TopicFormData>({
     resolver: zodResolver(topicSchema),
+    defaultValues: {
+      language: "pt",
+    },
   });
+
+  // Detect user's preferred language on mount
+  useEffect(() => {
+    const saved = localStorage.getItem('preferredLanguages');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setSelectedLanguage(parsed[0]);
+          setValue('language', parsed[0]);
+        }
+      } catch {
+        // ignore
+      }
+    }
+  }, [setValue]);
 
   const handleAddTag = () => {
     const tag = tagInput.trim().toLowerCase();
@@ -155,6 +176,32 @@ export default function NewTopicForm() {
         )}
         <p className="mt-1 text-xs text-muted-foreground">
           Adicione de 1 a 5 tags para categorizar seu tema
+        </p>
+      </div>
+
+      <div>
+        <Label htmlFor="language">
+          <Globe className="inline h-4 w-4 mr-1" />
+          Idioma do Tema
+        </Label>
+        <select
+          id="language"
+          value={selectedLanguage}
+          onChange={(e) => {
+            const lang = e.target.value as SupportedLanguage;
+            setSelectedLanguage(lang);
+            setValue('language', lang);
+          }}
+          className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          {LANGUAGES.map((lang) => (
+            <option key={lang.code} value={lang.code}>
+              {lang.flag} {lang.name}
+            </option>
+          ))}
+        </select>
+        <p className="mt-1 text-xs text-muted-foreground">
+          Escolha o idioma em que vai escrever este tema
         </p>
       </div>
 

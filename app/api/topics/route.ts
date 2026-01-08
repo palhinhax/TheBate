@@ -97,6 +97,7 @@ export async function POST(req: NextRequest) {
         slug,
         title: validated.title,
         description: validated.description,
+        language: validated.language,
         tags: validated.tags,
         createdById: session.user.id,
       },
