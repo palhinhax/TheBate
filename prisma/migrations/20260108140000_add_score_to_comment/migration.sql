@@ -11,8 +11,9 @@ BEGIN
         AND column_name = 'score'
     ) THEN
         ALTER TABLE "Comment" ADD COLUMN "score" INTEGER NOT NULL DEFAULT 0;
-        
-        -- Create index on (topicId, score) since it's also missing if column doesn't exist
-        CREATE INDEX "Comment_topicId_score_idx" ON "Comment"("topicId", "score" DESC);
     END IF;
 END $$;
+
+-- Create index on (topicId, score) if it doesn't exist
+-- This handles cases where the column exists but the index doesn't
+CREATE INDEX IF NOT EXISTS "Comment_topicId_score_idx" ON "Comment"("topicId", "score" DESC);
