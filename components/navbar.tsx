@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
-import { LogOut, User, Plus } from "lucide-react";
+import { LogOut, User, Plus, Shield } from "lucide-react";
 import { LanguageSelector } from "./language-selector";
 
 export function Navbar() {
@@ -28,6 +28,14 @@ export function Navbar() {
           <LanguageSelector />
           {session ? (
             <>
+              {session.user?.role === "ADMIN" && (
+                <Link href="/admin">
+                  <Button variant="outline" size="sm">
+                    <Shield className="mr-2 h-4 w-4" />
+                    Admin
+                  </Button>
+                </Link>
+              )}
               <Link href="/new">
                 <Button size="sm">
                   <Plus className="mr-2 h-4 w-4" />
