@@ -103,7 +103,7 @@ describe("Rate Limiting Utilities", () => {
             return null;
           },
         },
-      } as Request;
+      } as unknown as Request;
 
       const ip = getClientIp(request);
       expect(ip).toBe("1.2.3.4");
@@ -117,7 +117,7 @@ describe("Rate Limiting Utilities", () => {
             return null;
           },
         },
-      } as Request;
+      } as unknown as Request;
 
       const ip = getClientIp(request);
       expect(ip).toBe("5.6.7.8");
@@ -132,7 +132,7 @@ describe("Rate Limiting Utilities", () => {
             return null;
           },
         },
-      } as Request;
+      } as unknown as Request;
 
       const ip = getClientIp(request);
       expect(ip).toBe("9.10.11.12");
@@ -148,7 +148,7 @@ describe("Rate Limiting Utilities", () => {
             return null;
           },
         },
-      } as Request;
+      } as unknown as Request;
 
       const ip = getClientIp(request);
       expect(ip).toBe("1.1.1.1");
@@ -159,7 +159,7 @@ describe("Rate Limiting Utilities", () => {
         headers: {
           get: () => null,
         },
-      } as Request;
+      } as unknown as Request;
 
       const ip = getClientIp(request);
       expect(ip).toBe("unknown");
