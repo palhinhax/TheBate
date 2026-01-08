@@ -1,6 +1,7 @@
 # Como Configurar Google AdSense
 
 ## 📋 Pré-requisitos
+
 - Ter um domínio próprio (Google AdSense não funciona em localhost ou codespaces diretamente)
 - Aplicação publicada e acessível publicamente
 
@@ -58,6 +59,7 @@ NEXT_PUBLIC_GOOGLE_ADSENSE_ID="ca-pub-XXXXXXXXXXXXXXXX"
 ## 🧪 Testar em Desenvolvimento
 
 **⚠️ IMPORTANTE:** Google AdSense **não mostra anúncios reais** em:
+
 - `localhost`
 - IPs privados
 - Subdomínios do GitHub Codespaces
@@ -66,7 +68,9 @@ NEXT_PUBLIC_GOOGLE_ADSENSE_ID="ca-pub-XXXXXXXXXXXXXXXX"
 ### Opções para testar:
 
 #### Opção 1: Publicar o Site (Recomendado)
+
 Deploy no Vercel/Netlify com domínio próprio:
+
 ```bash
 # Deploy no Vercel
 npx vercel --prod
@@ -76,12 +80,15 @@ npx vercel --prod
 ```
 
 #### Opção 2: Usar Anúncios de Teste
+
 Adiciona isto ao `.env` para ver anúncios de teste:
+
 ```bash
 NEXT_PUBLIC_GOOGLE_ADSENSE_ID="ca-pub-test"
 ```
 
 #### Opção 3: Verificar com Google Publisher Toolbar
+
 1. Instala a extensão: [Google Publisher Toolbar](https://chrome.google.com/webstore/detail/google-publisher-toolbar/omioeahgfecgfpfldejlnideemfidugg)
 2. Faz login com a conta do AdSense
 3. Ativa o modo de teste
@@ -143,10 +150,10 @@ export default function MinhaPage() {
   return (
     <div>
       <h1>Conteúdo</h1>
-      
+
       {/* Anúncio no meio do conteúdo */}
       <AdContainer adSlot="SEU_AD_SLOT_AQUI" />
-      
+
       <p>Mais conteúdo...</p>
     </div>
   );

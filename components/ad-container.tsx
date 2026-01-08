@@ -9,7 +9,7 @@ interface AdContainerProps {
 
 /**
  * AdContainer - Componente isolado para exibir anúncios não intrusivos
- * 
+ *
  * Características:
  * - Sempre visível de forma passiva
  * - Sem reprodução automática de vídeo ou som
