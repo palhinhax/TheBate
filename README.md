@@ -1,4 +1,4 @@
-# Thebate - Plataforma de Discussão
+# Thebate
 
 Uma plataforma pública de discussões construída com Next.js 14, PostgreSQL e Prisma, focada em SEO e conversas de qualidade.
 

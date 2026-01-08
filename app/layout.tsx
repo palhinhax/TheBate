@@ -20,7 +20,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Thebate - Plataforma de Discussão",
+  title: "Thebate",
   description:
     "Participe de discussões inteligentes sobre tecnologia, sociedade e cultura. Compartilhe ideias, aprenda e conecte-se com respeito.",
 };
