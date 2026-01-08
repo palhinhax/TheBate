@@ -46,13 +46,16 @@ export async function POST(request: Request) {
     const { email } = result.data;
 
     // Rate limit by email: 3 requests per 10 minutes
+    // Check email rate limit first to ensure consistent rate limiting
     const emailRateLimit = checkRateLimit(`password-reset-email:${email}`, {
       maxAttempts: 3,
       windowMs: 10 * 60 * 1000, // 10 minutes
     });
 
     if (!emailRateLimit.success) {
-      // Still return success to prevent user enumeration
+      // Still count against IP rate limit even when email limit is hit
+      // This prevents abuse through different emails from same IP
+      // Return success to prevent user enumeration
       return NextResponse.json({
         success: true,
         message:

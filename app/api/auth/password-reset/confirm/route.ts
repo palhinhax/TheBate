@@ -46,26 +46,11 @@ export async function POST(request: Request) {
       include: { user: true },
     });
 
-    // Check if token exists
-    if (!resetToken) {
+    // Check if token exists, is expired, or has been used
+    // Use same error message for all cases to prevent token enumeration
+    if (!resetToken || resetToken.expiresAt < new Date() || resetToken.usedAt) {
       return NextResponse.json(
         { message: "Token inválido ou expirado" },
-        { status: 400 }
-      );
-    }
-
-    // Check if token is expired
-    if (resetToken.expiresAt < new Date()) {
-      return NextResponse.json(
-        { message: "Token expirado" },
-        { status: 400 }
-      );
-    }
-
-    // Check if token has already been used
-    if (resetToken.usedAt) {
-      return NextResponse.json(
-        { message: "Token já foi utilizado" },
         { status: 400 }
       );
     }

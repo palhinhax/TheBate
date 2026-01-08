@@ -41,6 +41,11 @@ export async function sendEmail(options: EmailOptions): Promise<void> {
     console.log("-".repeat(60));
     console.log(options.text);
     console.log("=".repeat(60));
+  } else {
+    // In production, log a warning if no email provider is configured
+    console.warn(
+      "⚠️  Email sending not configured for production. Configure RESEND_API_KEY or another email provider."
+    );
   }
 
   // Simulate async operation

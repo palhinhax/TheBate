@@ -55,8 +55,8 @@ describe("Rate Limiting Utilities", () => {
     it("should reset after window expires", async () => {
       const config = { maxAttempts: 2, windowMs: 100 }; // 100ms window
 
-      const result1 = checkRateLimit("test-user", config);
-      const result2 = checkRateLimit("test-user", config);
+      checkRateLimit("test-user", config);
+      checkRateLimit("test-user", config);
 
       // Should be blocked
       const blockedResult = checkRateLimit("test-user", config);
