@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/palhinhax/TheBate/compare/v1.1.0...v1.1.1) (2026-01-08)
+
+
+### Bug Fixes
+
+* **ads:** prevent AdSense 400 errors with invalid slot ID ([4726f31](https://github.com/palhinhax/TheBate/commit/4726f31f1592f67144ddc2815b02b9dd948a7287))
+
 # [1.1.0](https://github.com/palhinhax/TheBate/compare/v1.0.2...v1.1.0) (2026-01-08)
 
 
