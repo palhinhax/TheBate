@@ -10,7 +10,16 @@ BEGIN
         AND table_name = 'Comment' 
         AND column_name = 'score'
     ) THEN
+        -- Add the score column with default 0
         ALTER TABLE "Comment" ADD COLUMN "score" INTEGER NOT NULL DEFAULT 0;
+        
+        -- Calculate and set the score for each comment based on existing votes
+        UPDATE "Comment" 
+        SET "score" = COALESCE((
+            SELECT SUM("Vote"."value")
+            FROM "Vote"
+            WHERE "Vote"."commentId" = "Comment"."id"
+        ), 0);
     END IF;
 END $$;
 

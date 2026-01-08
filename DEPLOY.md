@@ -49,7 +49,7 @@ O build script já inclui `prisma generate`, mas se precisares aplicar migraçõ
 2. Settings → General → Build & Development Settings
 3. Build Command: `prisma generate && prisma migrate deploy && next build`
 
-> **Nota:** A migração `20260108140000_add_score_to_comment` foi criada para adicionar a coluna `score` à tabela `Comment` e o índice correspondente de forma segura, verificando primeiro se já existem.
+> **Nota:** A migração `20260108140000_add_score_to_comment` foi criada para adicionar a coluna `score` à tabela `Comment`, calcular o score baseado nos votos existentes, e criar o índice correspondente de forma segura, verificando primeiro se já existem.
 
 ## 🔄 Como Fazer Redeploy
 
