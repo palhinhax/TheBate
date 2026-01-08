@@ -48,29 +48,76 @@ export async function GET(
       where.side = side;
     }
 
+    // For "top" sort, we need to order by vote count (calculated field)
+    // This requires a raw query for optimal performance with large datasets
     const orderBy =
       sort === "new"
         ? { createdAt: "desc" as const }
-        : [{ score: "desc" as const }, { createdAt: "desc" as const }];
+        : { createdAt: "desc" as const }; // Will sort by votes in the query below
 
-    const [comments, total] = await Promise.all([
-      prisma.comment.findMany({
-        where,
-        orderBy,
-        skip,
-        take: perPage,
-        include: {
-          user: {
-            select: {
-              id: true,
-              username: true,
-              name: true,
-              image: true,
-            },
-          },
-          replies: {
-            where: { status: "ACTIVE" as const },
-            orderBy: { createdAt: "asc" },
+    const comments =
+      sort === "top"
+        ? await prisma.$queryRaw`
+          SELECT 
+            c.*,
+            COUNT(v.id)::int as "voteCount"
+          FROM "Comment" c
+          LEFT JOIN "Vote" v ON v."commentId" = c.id
+          WHERE c."topicId" = ${topic.id}
+            AND c."parentId" IS NULL
+            AND c.status = 'ACTIVE'
+            ${side === "AFAVOR" || side === "CONTRA" ? prisma.raw(`AND c.side = '${side}'`) : prisma.empty}
+          GROUP BY c.id
+          ORDER BY "voteCount" DESC, c."createdAt" DESC
+          LIMIT ${perPage}
+          OFFSET ${skip}
+        `.then(async (results: any[]) => {
+            // Fetch full relations for each comment
+            const commentIds = results.map((r) => r.id);
+            return await prisma.comment.findMany({
+              where: { id: { in: commentIds } },
+              include: {
+                user: {
+                  select: {
+                    id: true,
+                    username: true,
+                    name: true,
+                    image: true,
+                  },
+                },
+                replies: {
+                  where: { status: "ACTIVE" as const },
+                  orderBy: { createdAt: "asc" },
+                  include: {
+                    user: {
+                      select: {
+                        id: true,
+                        username: true,
+                        name: true,
+                        image: true,
+                      },
+                    },
+                    _count: {
+                      select: {
+                        votes: true,
+                      },
+                    },
+                  },
+                },
+                _count: {
+                  select: {
+                    votes: true,
+                    replies: true,
+                  },
+                },
+              },
+            });
+          })
+        : await prisma.comment.findMany({
+            where,
+            orderBy,
+            skip,
+            take: perPage,
             include: {
               user: {
                 select: {
@@ -80,23 +127,35 @@ export async function GET(
                   image: true,
                 },
               },
+              replies: {
+                where: { status: "ACTIVE" as const },
+                orderBy: { createdAt: "asc" },
+                include: {
+                  user: {
+                    select: {
+                      id: true,
+                      username: true,
+                      name: true,
+                      image: true,
+                    },
+                  },
+                  _count: {
+                    select: {
+                      votes: true,
+                    },
+                  },
+                },
+              },
               _count: {
                 select: {
                   votes: true,
+                  replies: true,
                 },
               },
             },
-          },
-          _count: {
-            select: {
-              votes: true,
-              replies: true,
-            },
-          },
-        },
-      }),
-      prisma.comment.count({ where }),
-    ]);
+          });
+
+    const total = await prisma.comment.count({ where });
 
     return NextResponse.json({
       comments,

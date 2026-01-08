@@ -41,55 +41,42 @@ export async function POST(
       );
     }
 
-    // Use transaction to ensure consistency
-    await prisma.$transaction(async (tx) => {
-      // Find existing vote
-      const existingVote = await tx.vote.findUnique({
-        where: {
-          userId_commentId: {
-            userId: session.user.id,
-            commentId: params.id,
-          },
+    // Find existing vote
+    const existingVote = await prisma.vote.findUnique({
+      where: {
+        userId_commentId: {
+          userId: session.user.id,
+          commentId: params.id,
         },
-      });
-
-      let scoreDelta = 0;
-
-      if (existingVote) {
-        // Remove vote if clicking again (toggle)
-        await tx.vote.delete({
-          where: { id: existingVote.id },
-        });
-        scoreDelta = -1;
-      } else {
-        // Create new vote with validated value
-        await tx.vote.create({
-          data: {
-            value,
-            commentId: params.id,
-            userId: session.user.id,
-          },
-        });
-        scoreDelta = 1;
-      }
-
-      // Update comment score
-      await tx.comment.update({
-        where: { id: params.id },
-        data: {
-          score: {
-            increment: scoreDelta,
-          },
-        },
-      });
+      },
     });
 
-    // Fetch updated comment
+    if (existingVote) {
+      // Remove vote if clicking again (toggle)
+      await prisma.vote.delete({
+        where: { id: existingVote.id },
+      });
+    } else {
+      // Create new vote
+      await prisma.vote.create({
+        data: {
+          value,
+          commentId: params.id,
+          userId: session.user.id,
+        },
+      });
+    }
+
+    // Fetch updated comment with vote count
     const updatedComment = await prisma.comment.findUnique({
       where: { id: params.id },
       select: {
         id: true,
-        score: true,
+        _count: {
+          select: {
+            votes: true,
+          },
+        },
       },
     });
 

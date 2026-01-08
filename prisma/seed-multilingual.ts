@@ -324,7 +324,6 @@ async function main() {
           side: side as "AFAVOR" | "CONTRA",
           topicId: topic.id,
           userId: user.id,
-          score: Math.floor(Math.random() * 20) - 5,
         },
       });
       commentCount++;

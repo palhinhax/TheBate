@@ -20,7 +20,6 @@ type Reply = {
   id: string;
   content: string;
   side: "AFAVOR" | "CONTRA" | null;
-  score: number;
   createdAt: Date;
   user: CommentUser;
   votes?: { value: number }[];
@@ -31,7 +30,6 @@ type Comment = {
   id: string;
   content: string;
   side: "AFAVOR" | "CONTRA" | null;
-  score: number;
   createdAt: Date;
   user: CommentUser;
   votes?: { value: number }[];
@@ -60,6 +58,8 @@ export default function CommentItem({
   const hasVoted = Boolean(comment.votes?.length);
 
   const handleVote = async () => {
+    // Calculate score from vote count
+    const score = comment._count?.votes ?? 0;
     if (!session?.user) {
       toast({
         title: "Entre para votar",
@@ -127,9 +127,7 @@ export default function CommentItem({
             onClick={handleVote}
             disabled={isVoting || !session?.user}
             className={`rounded p-1.5 transition-colors hover:bg-muted disabled:opacity-50 ${
-              hasVoted
-                ? "text-primary"
-                : "text-muted-foreground"
+              hasVoted ? "text-primary" : "text-muted-foreground"
             }`}
             title="Bom argumento"
           >

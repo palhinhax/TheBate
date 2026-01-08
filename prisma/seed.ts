@@ -198,7 +198,6 @@ async function main() {
           content,
           topicId: topic.id,
           userId: randomUser.id,
-          score: Math.floor(Math.random() * 20) - 5, // Random score between -5 and 15
         },
       });
 
@@ -214,7 +213,6 @@ async function main() {
               topicId: topic.id,
               userId: replyUser.id,
               parentId: comment.id,
-              score: Math.floor(Math.random() * 10) - 2,
             },
           });
           commentCount++;

@@ -27,11 +27,6 @@ async function getComments(
   const session = await auth();
   const userId = session?.user?.id;
 
-  const orderBy =
-    sort === "new"
-      ? { createdAt: "desc" as const }
-      : [{ score: "desc" as const }, { createdAt: "desc" as const }];
-
   const where: any = {
     topicId: topic.id,
     parentId: null,
@@ -43,47 +38,129 @@ async function getComments(
     where.side = side;
   }
 
-  const comments = await prisma.comment.findMany({
-    where,
-    orderBy,
-    take: 50,
-    include: {
-      user: {
-        select: {
-          id: true,
-          username: true,
-          name: true,
-          image: true,
-        },
-      },
-      votes: userId
-        ? {
-            where: { userId },
-            select: { value: true },
-          }
-        : false,
-      replies: {
-        where: { status: "ACTIVE" as const },
-        orderBy: { createdAt: "asc" },
-        include: {
-          user: {
-            select: {
-              id: true,
-              username: true,
-              name: true,
-              image: true,
+  // For "top" sort, we use raw SQL for efficiency with vote count
+  // For "new" sort, we use standard Prisma query
+  const comments =
+    sort === "top"
+      ? await prisma.$queryRaw`
+        SELECT 
+          c.*,
+          COUNT(v.id)::int as "voteCount"
+        FROM "Comment" c
+        LEFT JOIN "Vote" v ON v."commentId" = c.id
+        WHERE c."topicId" = ${topic.id}
+          AND c."parentId" IS NULL
+          AND c.status = 'ACTIVE'
+          ${side === "AFAVOR" || side === "CONTRA" ? prisma.raw(`AND c.side = '${side}'`) : prisma.empty}
+        GROUP BY c.id
+        ORDER BY "voteCount" DESC, c."createdAt" DESC
+        LIMIT 50
+      `.then(async (results: any[]) => {
+          // Get the full comment data with relations
+          const commentIds = results.map((r: any) => r.id);
+          if (commentIds.length === 0) return [];
+
+          return await prisma.comment.findMany({
+            where: { id: { in: commentIds } },
+            include: {
+              user: {
+                select: {
+                  id: true,
+                  username: true,
+                  name: true,
+                  image: true,
+                },
+              },
+              votes: userId
+                ? {
+                    where: { userId },
+                    select: { value: true },
+                  }
+                : false,
+              _count: {
+                select: {
+                  votes: true,
+                },
+              },
+              replies: {
+                where: { status: "ACTIVE" as const },
+                orderBy: { createdAt: "asc" },
+                include: {
+                  user: {
+                    select: {
+                      id: true,
+                      username: true,
+                      name: true,
+                      image: true,
+                    },
+                  },
+                  votes: userId
+                    ? {
+                        where: { userId },
+                        select: { value: true },
+                      }
+                    : false,
+                  _count: {
+                    select: {
+                      votes: true,
+                    },
+                  },
+                },
+              },
+            },
+          });
+        })
+      : await prisma.comment.findMany({
+          where,
+          orderBy: { createdAt: "desc" as const },
+          take: 50,
+          include: {
+            user: {
+              select: {
+                id: true,
+                username: true,
+                name: true,
+                image: true,
+              },
+            },
+            votes: userId
+              ? {
+                  where: { userId },
+                  select: { value: true },
+                }
+              : false,
+            _count: {
+              select: {
+                votes: true,
+              },
+            },
+            replies: {
+              where: { status: "ACTIVE" as const },
+              orderBy: { createdAt: "asc" },
+              include: {
+                user: {
+                  select: {
+                    id: true,
+                    username: true,
+                    name: true,
+                    image: true,
+                  },
+                },
+                votes: userId
+                  ? {
+                      where: { userId },
+                      select: { value: true },
+                    }
+                  : false,
+                _count: {
+                  select: {
+                    votes: true,
+                  },
+                },
+              },
             },
           },
-          votes: userId
-            ? {
-                where: { userId },
-                select: { value: true },
-              }
-            : false,
-        },
-      },
-    },
-  });
+        });
 
   return { comments, topicId: topic.id };
 }
