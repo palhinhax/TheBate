@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { X, Globe } from "lucide-react";
-import { LANGUAGES, type SupportedLanguage } from "@/lib/language";
+import { LANGUAGES, type SupportedLanguage } from "@/lib/language-shared";
 
 export default function NewTopicForm() {
   const router = useRouter();
