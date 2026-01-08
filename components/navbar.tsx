@@ -31,7 +31,7 @@ export function Navbar() {
               <Link href="/new">
                 <Button size="sm">
                   <Plus className="mr-2 h-4 w-4" />
-                  Novo Tema
+                  New Topic
                 </Button>
               </Link>
               <Link href={`/u/${session.user?.username}`}>
@@ -46,18 +46,18 @@ export function Navbar() {
                 onClick={() => signOut({ callbackUrl: "/" })}
               >
                 <LogOut className="mr-2 h-4 w-4" />
-                Sair
+                Sign Out
               </Button>
             </>
           ) : (
             <>
               <Link href="/auth/login">
                 <Button variant="ghost" size="sm">
-                  Entrar
+                  Sign In
                 </Button>
               </Link>
               <Link href="/auth/register">
-                <Button size="sm">Registrar</Button>
+                <Button size="sm">Sign Up</Button>
               </Link>
             </>
           )}

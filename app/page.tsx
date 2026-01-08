@@ -54,16 +54,16 @@ export default async function Home({
       <section className="border-b bg-muted/50 py-12">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            Plataforma de <span className="text-primary">Discussão</span>
+            Global <span className="text-primary">Discussion</span> Platform
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-            Participe de discussões inteligentes sobre tecnologia, sociedade e
-            cultura. Compartilhe ideias, aprenda e conecte-se com respeito.
+            Join intelligent discussions about technology, society, and culture.
+            Share ideas, learn, and connect with respect.
           </p>
           {!session?.user && (
             <div className="mt-6">
               <Link href="/auth/register">
-                <Button size="lg">Começar Agora</Button>
+                <Button size="lg">Get Started</Button>
               </Link>
             </div>
           )}
@@ -73,7 +73,7 @@ export default async function Home({
       {/* Topics List */}
       <section className="container mx-auto px-4 py-8">
         <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-2xl font-bold">Tópicos Recentes</h2>
+          <h2 className="text-2xl font-bold">Recent Topics</h2>
           <div className="flex gap-2">
             <Button variant="ghost" size="sm">
               <TrendingUp className="mr-2 h-4 w-4" />
@@ -81,7 +81,7 @@ export default async function Home({
             </Button>
             <Button variant="ghost" size="sm">
               <Clock className="mr-2 h-4 w-4" />
-              Novos
+              New
             </Button>
           </div>
         </div>
@@ -110,10 +110,10 @@ export default async function Home({
                     ))}
                   </div>
                   <div className="mt-3 flex items-center gap-4 text-xs text-muted-foreground">
-                    <span>por @{topic.createdBy.username}</span>
+                    <span>by @{topic.createdBy.username}</span>
                     <span>•</span>
                     <span>
-                      {new Date(topic.createdAt).toLocaleDateString("pt-BR")}
+                      {new Date(topic.createdAt).toLocaleDateString("en-US")}
                     </span>
                   </div>
                 </div>
@@ -131,7 +131,7 @@ export default async function Home({
         {topics.length === 0 && (
           <div className="py-12 text-center">
             <p className="text-muted-foreground">
-              Nenhum tema encontrado. Seja o primeiro a criar um!
+              No topics found. Be the first to create one!
             </p>
           </div>
         )}
@@ -143,7 +143,7 @@ export default async function Home({
       {/* Footer */}
       <footer className="mt-12 border-t py-8">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          <p>Thebate - Plataforma de discussões públicas</p>
+          <p>Thebate - Global public discussions platform</p>
         </div>
       </footer>
     </div>
