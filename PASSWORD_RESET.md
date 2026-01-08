@@ -151,50 +151,39 @@ Subject: Recuperar Senha - TheBate
 
 ### Production Mode
 
-For production, configure one of the following email providers:
+The system uses **Resend** for email delivery in production.
 
-#### Option 1: Resend
+#### Setup Instructions
 
-```env
-RESEND_API_KEY="re_..."
-EMAIL_FROM="noreply@yourdomain.com"
-```
+1. **Get Resend API Key**:
+   - Sign up at [resend.com](https://resend.com)
+   - Create an API key from your dashboard
+   - Verify your domain (or use the test domain for development)
 
-Update `lib/email.ts`:
-```typescript
-import { Resend } from 'resend';
+2. **Configure Environment Variables**:
+   ```env
+   RESEND_API_KEY="re_..."
+   EMAIL_FROM="noreply@yourdomain.com"
+   ```
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+3. **Domain Verification**:
+   - For production, verify your domain in Resend dashboard
+   - Update `EMAIL_FROM` with your verified domain email
+   - For testing, you can use `onboarding@resend.dev`
 
-await resend.emails.send({
-  from: process.env.EMAIL_FROM || 'noreply@example.com',
-  to: options.to,
-  subject: options.subject,
-  html: options.html || options.text,
-});
-```
+#### Email Template
 
-#### Option 2: SendGrid
+Emails are sent with:
+- **From**: Value from `EMAIL_FROM` env variable (default: `onboarding@resend.dev`)
+- **Subject**: Localized based on user's language (pt/en/es)
+- **Content**: Plain text with reset link
+- **Link expiration**: Clearly stated (15 minutes)
 
-```env
-SENDGRID_API_KEY="SG...."
-EMAIL_FROM="noreply@yourdomain.com"
-```
+#### Error Handling
 
-Update `lib/email.ts`:
-```typescript
-import sgMail from '@sendgrid/mail';
-
-sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
-
-await sgMail.send({
-  to: options.to,
-  from: process.env.EMAIL_FROM || 'noreply@example.com',
-  subject: options.subject,
-  text: options.text,
-  html: options.html,
-});
-```
+- Missing `RESEND_API_KEY` in production throws an error
+- Failed email sends are logged and re-thrown
+- Development mode always logs to console (never sends actual emails)
 
 ## Rate Limiting
 

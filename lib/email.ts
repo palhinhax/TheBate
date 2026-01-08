@@ -1,13 +1,11 @@
 /**
  * Email sending utilities
  * 
- * For production, integrate with:
- * - Resend: https://resend.com/docs/send-with-nextjs
- * - SendGrid: https://www.npmjs.com/package/@sendgrid/mail
- * - AWS SES: https://aws.amazon.com/ses/
- * 
+ * Uses Resend for production email delivery
  * For development, emails are logged to console
  */
+
+import { Resend } from "resend";
 
 export interface EmailOptions {
   to: string;
@@ -17,21 +15,10 @@ export interface EmailOptions {
 }
 
 /**
- * Send an email
- * This is a placeholder implementation that logs to console
- * Replace with actual email provider in production
+ * Send an email using Resend
+ * In development, logs to console instead
  */
 export async function sendEmail(options: EmailOptions): Promise<void> {
-  // In production, replace with actual email provider
-  // Example with Resend:
-  // const resend = new Resend(process.env.RESEND_API_KEY);
-  // await resend.emails.send({
-  //   from: process.env.EMAIL_FROM || 'noreply@example.com',
-  //   to: options.to,
-  //   subject: options.subject,
-  //   html: options.html || options.text,
-  // });
-
   // For development: log email to console
   if (process.env.NODE_ENV === "development") {
     console.log("=".repeat(60));
@@ -41,15 +28,30 @@ export async function sendEmail(options: EmailOptions): Promise<void> {
     console.log("-".repeat(60));
     console.log(options.text);
     console.log("=".repeat(60));
-  } else {
-    // In production, log a warning if no email provider is configured
-    console.warn(
-      "⚠️  Email sending not configured for production. Configure RESEND_API_KEY or another email provider."
-    );
+    return;
   }
 
-  // Simulate async operation
-  await new Promise((resolve) => setTimeout(resolve, 100));
+  // Production: Use Resend
+  if (!process.env.RESEND_API_KEY) {
+    console.error("❌ RESEND_API_KEY is not configured");
+    throw new Error("Email service not configured. Please set RESEND_API_KEY environment variable.");
+  }
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const from = process.env.EMAIL_FROM || "onboarding@resend.dev";
+
+  try {
+    await resend.emails.send({
+      from,
+      to: options.to,
+      subject: options.subject,
+      text: options.text,
+      html: options.html,
+    });
+  } catch (error) {
+    console.error("Failed to send email via Resend:", error);
+    throw error;
+  }
 }
 
 /**
