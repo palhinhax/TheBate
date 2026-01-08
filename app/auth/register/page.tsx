@@ -115,6 +115,7 @@ export default function RegisterPage() {
               <Input
                 id="name"
                 placeholder="João Silva"
+                autoComplete="name"
                 {...register("name")}
                 aria-invalid={!!errors.name}
               />
@@ -129,6 +130,7 @@ export default function RegisterPage() {
               <Input
                 id="username"
                 placeholder="joaosilva"
+                autoComplete="username"
                 {...register("username")}
                 aria-invalid={!!errors.username}
               />
@@ -144,6 +146,7 @@ export default function RegisterPage() {
                 id="email"
                 type="email"
                 placeholder="joao@exemplo.com"
+                autoComplete="email"
                 {...register("email")}
                 aria-invalid={!!errors.email}
               />
@@ -159,6 +162,7 @@ export default function RegisterPage() {
                 id="password"
                 type="password"
                 placeholder="••••••••"
+                autoComplete="new-password"
                 {...register("password")}
                 aria-invalid={!!errors.password}
               />
@@ -174,6 +178,7 @@ export default function RegisterPage() {
                 id="confirmPassword"
                 type="password"
                 placeholder="••••••••"
+                autoComplete="new-password"
                 {...register("confirmPassword")}
                 aria-invalid={!!errors.confirmPassword}
               />
