@@ -5,7 +5,7 @@
 
 export type SupportedLanguage = "en" | "pt" | "es" | "fr" | "de";
 
-export const SUPPORTED_LANGUAGES: SupportedLanguage[] = ["en", "pt", "es", "fr", "de"];
+export const SUPPORTED_LANGUAGES = ["en", "pt", "es", "fr", "de"] as const;
 
 /**
  * Language metadata for SEO and display

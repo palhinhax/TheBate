@@ -10,8 +10,7 @@ export const topicSchema = z.object({
     .string()
     .min(20, "A descrição deve ter pelo menos 20 caracteres")
     .max(5000, "A descrição não pode ter mais de 5000 caracteres"),
-  language: z
-    .enum(SUPPORTED_LANGUAGES as [string, ...string[]] as ["en", "pt", "es", "fr", "de"]),
+  language: z.enum(SUPPORTED_LANGUAGES),
   tags: z
     .array(z.string().min(2).max(30))
     .min(1, "Adicione pelo menos uma tag")
