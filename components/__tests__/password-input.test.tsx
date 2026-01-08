@@ -16,7 +16,7 @@ describe("PasswordInput", () => {
     render(<PasswordInput placeholder="Digite sua senha" />);
 
     const input = screen.getByPlaceholderText("Digite sua senha");
-    const toggleButton = screen.getByLabelText("Mostrar senha");
+    const toggleButton = screen.getByTestId("password-toggle");
 
     // Initially hidden
     expect(input).toHaveAttribute("type", "password");
@@ -24,12 +24,30 @@ describe("PasswordInput", () => {
     // Click to show
     await user.click(toggleButton);
     expect(input).toHaveAttribute("type", "text");
-    expect(screen.getByLabelText("Ocultar senha")).toBeInTheDocument();
 
     // Click to hide again
-    await user.click(screen.getByLabelText("Ocultar senha"));
+    await user.click(toggleButton);
     expect(input).toHaveAttribute("type", "password");
-    expect(screen.getByLabelText("Mostrar senha")).toBeInTheDocument();
+  });
+
+  it("uses custom aria labels when provided", async () => {
+    const user = userEvent.setup();
+    render(
+      <PasswordInput
+        placeholder="Password"
+        showPasswordLabel="Show password"
+        hidePasswordLabel="Hide password"
+      />
+    );
+
+    const toggleButton = screen.getByTestId("password-toggle");
+
+    // Initially shows "Show password"
+    expect(toggleButton).toHaveAttribute("aria-label", "Show password");
+
+    // After clicking, shows "Hide password"
+    await user.click(toggleButton);
+    expect(toggleButton).toHaveAttribute("aria-label", "Hide password");
   });
 
   it("applies custom className", () => {

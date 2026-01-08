@@ -6,10 +6,23 @@ import { Button } from "./button";
 export type PasswordInputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   "type"
->;
+> & {
+  /** Aria label for the show password button. Defaults to "Mostrar senha" (Portuguese) */
+  showPasswordLabel?: string;
+  /** Aria label for the hide password button. Defaults to "Ocultar senha" (Portuguese) */
+  hidePasswordLabel?: string;
+};
 
 const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
-  ({ className, ...props }, ref) => {
+  (
+    {
+      className,
+      showPasswordLabel = "Mostrar senha",
+      hidePasswordLabel = "Ocultar senha",
+      ...props
+    },
+    ref
+  ) => {
     const [showPassword, setShowPassword] = React.useState(false);
 
     return (
@@ -29,7 +42,8 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
           size="sm"
           className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
           onClick={() => setShowPassword(!showPassword)}
-          aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+          aria-label={showPassword ? hidePasswordLabel : showPasswordLabel}
+          data-testid="password-toggle"
         >
           {showPassword ? (
             <EyeOff className="h-4 w-4 text-muted-foreground" />

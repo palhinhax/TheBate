@@ -42,5 +42,9 @@
   },
   "footer": {
     "tagline": "Globale öffentliche Diskussionen"
+  },
+  "auth": {
+    "show_password": "Passwort anzeigen",
+    "hide_password": "Passwort verbergen"
   }
 }
