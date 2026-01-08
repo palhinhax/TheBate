@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,43 +19,55 @@ import {
 } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/spinner";
 
-const loginSchema = z.object({
+const forgotPasswordSchema = z.object({
   email: z.string().email("Email inválido"),
-  password: z.string().min(1, "Senha é obrigatória"),
 });
 
-type LoginFormData = z.infer<typeof loginSchema>;
+type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
 
-export default function LoginPage() {
+export default function ForgotPasswordPage() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<ForgotPasswordFormData>({
+    resolver: zodResolver(forgotPasswordSchema),
   });
 
-  const onSubmit = async (data: LoginFormData) => {
+  const onSubmit = async (data: ForgotPasswordFormData) => {
     setIsLoading(true);
     setError(null);
+    setSuccess(false);
 
     try {
-      const result = await signIn("credentials", {
-        email: data.email,
-        password: data.password,
-        redirect: false,
+      const response = await fetch("/api/auth/password-reset/request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       });
 
-      if (result?.error) {
-        setError("Email ou senha inválidos");
-      } else {
-        router.push("/");
-        router.refresh();
+      const result = await response.json();
+
+      if (response.status === 429) {
+        setError(
+          `Muitas tentativas. Tente novamente em ${result.retryAfter} segundos.`
+        );
+        return;
       }
+
+      if (!response.ok) {
+        setError(result.message || "Ocorreu um erro inesperado");
+        return;
+      }
+
+      setSuccess(true);
     } catch {
       setError("Ocorreu um erro inesperado");
     } finally {
@@ -64,15 +75,50 @@ export default function LoginPage() {
     }
   };
 
+  if (success) {
+    return (
+      <div className="flex min-h-screen items-center justify-center px-4">
+        <Card className="w-full max-w-md">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-center text-2xl font-bold">
+              Email Enviado
+            </CardTitle>
+            <CardDescription className="text-center">
+              Verifique a sua caixa de entrada
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="rounded-md bg-green-50 p-4 text-sm text-green-800 dark:bg-green-950 dark:text-green-200">
+              Se o email existir na nossa base de dados, receberá um link para
+              recuperar a sua senha nos próximos minutos.
+            </div>
+            <p className="text-center text-sm text-muted-foreground">
+              Não se esqueça de verificar a pasta de spam.
+            </p>
+          </CardContent>
+          <CardFooter className="flex flex-col space-y-4">
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={() => router.push("/auth/login")}
+            >
+              Voltar ao Login
+            </Button>
+          </CardFooter>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-center text-2xl font-bold">
-            Entrar
+            Recuperar Senha
           </CardTitle>
           <CardDescription className="text-center">
-            Digite suas credenciais para acessar sua conta
+            Digite o seu email para receber um link de recuperação
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -97,42 +143,19 @@ export default function LoginPage() {
                 </p>
               )}
             </div>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="password">Senha</Label>
-                <Link
-                  href="/auth/forgot-password"
-                  className="text-xs text-primary hover:underline"
-                >
-                  Esqueceu a senha?
-                </Link>
-              </div>
-              <Input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                {...register("password")}
-                aria-invalid={!!errors.password}
-              />
-              {errors.password && (
-                <p className="text-sm text-destructive">
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading && <Spinner size="sm" className="mr-2" />}
-              Entrar
+              Enviar Link de Recuperação
             </Button>
             <p className="text-center text-sm text-muted-foreground">
-              Não tem uma conta?{" "}
+              Lembrou-se da senha?{" "}
               <Link
-                href="/auth/register"
+                href="/auth/login"
                 className="text-primary hover:underline"
               >
-                Registrar
+                Entrar
               </Link>
             </p>
           </CardFooter>

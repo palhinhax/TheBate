@@ -45,6 +45,29 @@
   },
   "auth": {
     "show_password": "Show password",
-    "hide_password": "Hide password"
+    "hide_password": "Hide password",
+    "forgot_password": "Forgot password?",
+    "reset_password": "Reset Password",
+    "reset_password_title": "Create New Password",
+    "reset_password_description": "Enter your new password below",
+    "forgot_password_description": "Enter your email to receive a reset link",
+    "send_reset_link": "Send Reset Link",
+    "email_sent": "Email Sent",
+    "check_inbox": "Check your inbox",
+    "reset_email_sent_message": "If the email exists in our database, you will receive a password reset link within a few minutes.",
+    "check_spam": "Don't forget to check your spam folder.",
+    "password_changed": "Password Changed",
+    "password_changed_success": "Your password has been changed successfully",
+    "redirecting_to_login": "Redirecting to login...",
+    "remembered_password": "Remembered your password?",
+    "back_to_login": "Back to Login",
+    "new_password": "New Password",
+    "confirm_password": "Confirm Password",
+    "password_requirements": {
+      "min_length": "At least 8 characters",
+      "uppercase": "At least one uppercase letter",
+      "lowercase": "At least one lowercase letter",
+      "number": "At least one number"
+    }
   }
 }
