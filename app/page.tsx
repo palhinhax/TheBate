@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
-import { MessageSquare, TrendingUp, Clock, Globe } from "lucide-react";
+import { MessageSquare, TrendingUp, Clock } from "lucide-react";
 import { AdContainer } from "@/components/ad-container";
 
 async function getTopics(sort: "trending" | "new" = "new", language?: string) {
@@ -44,14 +44,6 @@ export default async function Home({
   const session = await auth();
   const language = searchParams.lang;
   const topics = await getTopics("new", language);
-
-  const languageNames: Record<string, string> = {
-    pt: "🇵🇹 Português",
-    en: "🇬🇧 English",
-    es: "🇪🇸 Español",
-    fr: "🇫🇷 Français",
-    de: "🇩🇪 Deutsch",
-  };
 
   return (
     <div className="min-h-screen">
