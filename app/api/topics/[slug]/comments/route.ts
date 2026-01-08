@@ -71,7 +71,7 @@ export async function GET(
           ORDER BY "voteCount" DESC, c."createdAt" DESC
           LIMIT ${perPage}
           OFFSET ${skip}
-        `.then(async (results: any[]) => {
+        `.then(async (results: { id: string }[]) => {
             // Fetch full relations for each comment
             const commentIds = results.map((r) => r.id);
             return await prisma.comment.findMany({
