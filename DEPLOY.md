@@ -28,6 +28,29 @@ NEXT_PUBLIC_GOOGLE_ADSENSE_ID="ca-pub-9458046359698653"
 NODE_ENV="production"
 ```
 
+## 🗄️ Database Migrations
+
+Quando houver mudanças no schema do banco de dados, é necessário executar as migrações:
+
+### Opção 1: Usando Prisma Migrate (Recomendado)
+
+```bash
+# Para produção, usa migrate deploy (não é interativo)
+npx prisma migrate deploy
+```
+
+Este comando aplica todas as migrações pendentes ao banco de dados de produção.
+
+### Opção 2: Via Vercel Build (Automático)
+
+O build script já inclui `prisma generate`, mas se precisares aplicar migrações manualmente:
+
+1. Vai ao dashboard do Vercel
+2. Settings → General → Build & Development Settings
+3. Build Command: `prisma generate && prisma migrate deploy && next build`
+
+> **Nota:** A migração `20260108140000_add_score_to_comment` foi criada para adicionar a coluna `score` à tabela `Comment`, calcular o score baseado nos votos existentes, e criar o índice correspondente de forma segura, verificando primeiro se já existem.
+
 ## 🔄 Como Fazer Redeploy
 
 ### Opção 1: Via Git (Recomendado)
