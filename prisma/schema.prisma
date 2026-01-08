@@ -47,6 +47,7 @@ model User {
   passwordHash String
   image        String?
   role         UserRole    @default(USER)
+  isOwner      Boolean     @default(false)
   createdAt    DateTime    @default(now())
   topics       Topic[]
   comments     Comment[]

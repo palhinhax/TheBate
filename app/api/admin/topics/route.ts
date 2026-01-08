@@ -1,13 +1,12 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authConfig } from "@/lib/auth/config";
+import { auth } from "@/lib/auth/config";
 import { prisma } from "@/lib/prisma";
 
 export async function GET() {
   try {
-    const session = await getServerSession(authConfig);
+    const session = await auth();
 
-    if (!session?.user || session.user.role !== "ADMIN") {
+    if (!session?.user || !session.user.isOwner) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 

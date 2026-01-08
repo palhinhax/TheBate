@@ -28,11 +28,11 @@ export function Navbar() {
           <LanguageSelector />
           {session ? (
             <>
-              {session.user?.role === "ADMIN" && (
+              {session.user?.isOwner && (
                 <Link href="/admin">
                   <Button variant="outline" size="sm">
                     <Shield className="mr-2 h-4 w-4" />
-                    Admin
+                    Painel Owner
                   </Button>
                 </Link>
               )}

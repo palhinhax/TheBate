@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -45,37 +45,47 @@ type Comment = {
   };
 };
 
+type User = {
+  id: string;
+  username: string;
+  email: string;
+  name: string | null;
+  role: string;
+  isOwner: boolean;
+  createdAt: string;
+  _count: {
+    topics: number;
+    comments: number;
+    votes: number;
+    topicVotes: number;
+  };
+};
+
 export default function AdminPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState<"topics" | "comments">("topics");
+  const [activeTab, setActiveTab] = useState<"topics" | "comments" | "users">(
+    "topics"
+  );
   const [topics, setTopics] = useState<Topic[]>([]);
   const [comments, setComments] = useState<Comment[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (status === "loading") return;
-
-    if (!session?.user || session.user.role !== "ADMIN") {
-      router.push("/");
-      return;
-    }
-
-    loadData();
-  }, [status, session, router]);
-
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     setLoading(true);
     try {
-      const [topicsRes, commentsRes] = await Promise.all([
+      const [topicsRes, commentsRes, usersRes] = await Promise.all([
         fetch("/api/admin/topics"),
         fetch("/api/admin/comments"),
+        fetch("/api/admin/users"),
       ]);
 
       if (topicsRes.ok) setTopics(await topicsRes.json());
       if (commentsRes.ok) setComments(await commentsRes.json());
-    } catch (error) {
+      if (usersRes.ok) setUsers(await usersRes.json());
+    } catch {
       toast({
         title: "Erro",
         description: "Falha ao carregar dados",
@@ -84,7 +94,18 @@ export default function AdminPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    if (status === "loading") return;
+
+    if (!session?.user || !session.user.isOwner) {
+      router.push("/");
+      return;
+    }
+
+    loadData();
+  }, [status, session, router, loadData]);
 
   const deleteTopic = async (id: string) => {
     if (!confirm("Tem certeza que deseja deletar este tópico?")) return;
@@ -115,9 +136,7 @@ export default function AdminPage() {
       });
 
       if (res.ok) {
-        setTopics(
-          topics.map((t) => (t.id === id ? { ...t, status } : t))
-        );
+        setTopics(topics.map((t) => (t.id === id ? { ...t, status } : t)));
         toast({ title: "Status atualizado" });
       }
     } catch {
@@ -157,14 +176,97 @@ export default function AdminPage() {
       });
 
       if (res.ok) {
-        setComments(
-          comments.map((c) => (c.id === id ? { ...c, status } : c))
-        );
+        setComments(comments.map((c) => (c.id === id ? { ...c, status } : c)));
         toast({ title: "Status atualizado" });
       }
     } catch {
       toast({
         title: "Erro ao atualizar status",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const deleteUser = async (id: string) => {
+    if (
+      !confirm(
+        "Tem certeza que deseja deletar este usuário? Todos os seus conteúdos serão removidos."
+      )
+    )
+      return;
+
+    try {
+      const res = await fetch(`/api/admin/users/${id}`, {
+        method: "DELETE",
+      });
+
+      if (res.ok) {
+        setUsers(users.filter((u) => u.id !== id));
+        toast({ title: "Usuário deletado com sucesso" });
+      } else {
+        const error = await res.json();
+        toast({
+          title: "Erro ao deletar usuário",
+          description: error.error,
+          variant: "destructive",
+        });
+      }
+    } catch {
+      toast({
+        title: "Erro ao deletar usuário",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const updateUserRole = async (id: string, role: string) => {
+    try {
+      const res = await fetch(`/api/admin/users/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ role }),
+      });
+
+      if (res.ok) {
+        const updatedUser = await res.json();
+        setUsers(users.map((u) => (u.id === id ? updatedUser : u)));
+        toast({ title: "Role atualizada" });
+      }
+    } catch {
+      toast({
+        title: "Erro ao atualizar role",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const toggleOwnerStatus = async (id: string, currentStatus: boolean) => {
+    try {
+      const res = await fetch(`/api/admin/users/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isOwner: !currentStatus }),
+      });
+
+      if (res.ok) {
+        const updatedUser = await res.json();
+        setUsers(users.map((u) => (u.id === id ? updatedUser : u)));
+        toast({
+          title: !currentStatus
+            ? "Usuário promovido a Owner"
+            : "Status de Owner removido",
+        });
+      } else {
+        const error = await res.json();
+        toast({
+          title: "Erro",
+          description: error.error,
+          variant: "destructive",
+        });
+      }
+    } catch {
+      toast({
+        title: "Erro ao atualizar status de owner",
         variant: "destructive",
       });
     }
@@ -178,13 +280,13 @@ export default function AdminPage() {
     );
   }
 
-  if (!session?.user || session.user.role !== "ADMIN") {
+  if (!session?.user || !session.user.isOwner) {
     return null;
   }
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="mb-8 text-3xl font-bold">Painel de Administração</h1>
+      <h1 className="mb-8 text-3xl font-bold">Painel do Owner</h1>
 
       <div className="mb-6 flex gap-4 border-b">
         <button
@@ -206,6 +308,16 @@ export default function AdminPage() {
           }`}
         >
           Comentários ({comments.length})
+        </button>
+        <button
+          onClick={() => setActiveTab("users")}
+          className={`px-4 py-2 ${
+            activeTab === "users"
+              ? "border-b-2 border-primary font-semibold"
+              : "text-muted-foreground"
+          }`}
+        >
+          Usuários ({users.length})
         </button>
       </div>
 
@@ -342,6 +454,88 @@ export default function AdminPage() {
                     onClick={() => deleteComment(comment.id)}
                   >
                     <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      )}
+
+      {activeTab === "users" && (
+        <div className="space-y-4">
+          {users.map((user) => (
+            <Card key={user.id} className="p-4">
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-lg font-semibold">
+                      {user.name || user.username}
+                    </h3>
+                    {user.isOwner && (
+                      <span className="rounded bg-purple-100 px-2 py-1 text-xs font-semibold text-purple-800">
+                        OWNER
+                      </span>
+                    )}
+                    <span
+                      className={`rounded px-2 py-1 text-xs font-semibold ${
+                        user.role === "ADMIN"
+                          ? "bg-red-100 text-red-800"
+                          : user.role === "MOD"
+                            ? "bg-blue-100 text-blue-800"
+                            : "bg-gray-100 text-gray-800"
+                      }`}
+                    >
+                      {user.role}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    @{user.username} • {user.email}
+                  </p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    Membro desde{" "}
+                    {new Date(user.createdAt).toLocaleDateString("pt-PT")}
+                  </p>
+                  <div className="mt-2 flex gap-4 text-sm">
+                    <span>{user._count.topics} tópicos</span>
+                    <span>{user._count.comments} comentários</span>
+                    <span>{user._count.topicVotes} votos em tópicos</span>
+                    <span>{user._count.votes} votos em comentários</span>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <div className="flex gap-2">
+                    <select
+                      value={user.role}
+                      onChange={(e) => updateUserRole(user.id, e.target.value)}
+                      className="rounded border px-2 py-1 text-sm"
+                      disabled={user.id === session.user.id}
+                    >
+                      <option value="USER">USER</option>
+                      <option value="MOD">MOD</option>
+                      <option value="ADMIN">ADMIN</option>
+                    </select>
+                    <Button
+                      size="sm"
+                      variant={user.isOwner ? "default" : "outline"}
+                      onClick={() => toggleOwnerStatus(user.id, user.isOwner)}
+                      disabled={user.id === session.user.id}
+                      title={
+                        user.isOwner ? "Remover Owner" : "Promover a Owner"
+                      }
+                    >
+                      👑
+                    </Button>
+                  </div>
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    onClick={() => deleteUser(user.id)}
+                    disabled={user.id === session.user.id}
+                    className="w-full"
+                  >
+                    <Trash2 className="mr-2 h-4 w-4" />
+                    Deletar
                   </Button>
                 </div>
               </div>

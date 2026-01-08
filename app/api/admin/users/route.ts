@@ -10,24 +10,22 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
-    const comments = await prisma.comment.findMany({
-      include: {
-        user: {
-          select: {
-            username: true,
-            name: true,
-          },
-        },
-        topic: {
-          select: {
-            title: true,
-            slug: true,
-          },
-        },
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        name: true,
+        role: true,
+        isOwner: true,
+        createdAt: true,
+        image: true,
         _count: {
           select: {
-            replies: true,
+            topics: true,
+            comments: true,
             votes: true,
+            topicVotes: true,
           },
         },
       },
@@ -36,11 +34,11 @@ export async function GET() {
       },
     });
 
-    return NextResponse.json(comments);
+    return NextResponse.json(users);
   } catch (error) {
-    console.error("Admin comments fetch error:", error);
+    console.error("Admin users fetch error:", error);
     return NextResponse.json(
-      { error: "Failed to fetch comments" },
+      { error: "Failed to fetch users" },
       { status: 500 }
     );
   }
