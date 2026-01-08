@@ -1,12 +1,12 @@
-# Thebate - Plataforma de Debates
+# Thebate - Plataforma de Discussão
 
-Uma plataforma pública de debates construída com Next.js 14, PostgreSQL e Prisma, focada em SEO e discussões de qualidade.
+Uma plataforma pública de discussões construída com Next.js 14, PostgreSQL e Prisma, focada em SEO e conversas de qualidade.
 
 ## 🚀 Funcionalidades
 
-### Temas e Debates
+### Temas e Discussões
 
-- **Criação de Temas**: Usuários autenticados podem criar novos temas de debate
+- **Criação de Temas**: Usuários autenticados podem criar novos temas de discussão
 - **Páginas Públicas**: Todos os temas são indexáveis pelos motores de busca
 - **Tags**: Cada tema pode ter até 5 tags para categorização
 - **Status**: Temas podem estar ativos, ocultos ou bloqueados (moderação)

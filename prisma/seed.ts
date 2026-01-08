@@ -88,7 +88,7 @@ async function main() {
       slug: "ia-vai-substituir-programadores",
       title: "IA vai substituir programadores?",
       description:
-        "Com o avanço de ferramentas como ChatGPT e GitHub Copilot, há um debate crescente sobre o futuro da profissão de programador. Será que a IA vai substituir completamente os desenvolvedores ou apenas vai mudar a forma como trabalhamos?",
+        "Com o avanço de ferramentas como ChatGPT e GitHub Copilot, há uma discussão crescente sobre o futuro da profissão de programador. Será que a IA vai substituir completamente os desenvolvedores ou apenas vai mudar a forma como trabalhamos?",
       tags: ["tecnologia", "ia", "programação", "futuro"],
     },
     {

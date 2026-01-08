@@ -75,16 +75,16 @@ export default async function Home() {
       <section className="border-b bg-muted/50 py-12">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            Plataforma de <span className="text-primary">Debates</span>
+            Plataforma de <span className="text-primary">Discussão</span>
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
             Participe de discussões inteligentes sobre tecnologia, sociedade e
-            cultura. Compartilhe ideias, aprenda e debata com respeito.
+            cultura. Compartilhe ideias, aprenda e conecte-se com respeito.
           </p>
           {!session?.user && (
             <div className="mt-6">
               <Link href="/auth/register">
-                <Button size="lg">Começar a Debater</Button>
+                <Button size="lg">Começar Agora</Button>
               </Link>
             </div>
           )}
@@ -94,7 +94,7 @@ export default async function Home() {
       {/* Topics List */}
       <section className="container mx-auto px-4 py-8">
         <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-2xl font-bold">Debates Recentes</h2>
+          <h2 className="text-2xl font-bold">Tópicos Recentes</h2>
           <div className="flex gap-2">
             <Button variant="ghost" size="sm">
               <TrendingUp className="mr-2 h-4 w-4" />
@@ -164,7 +164,7 @@ export default async function Home() {
       {/* Footer */}
       <footer className="mt-12 border-t py-8">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          <p>Thebate - Plataforma de debates públicos</p>
+          <p>Thebate - Plataforma de discussões públicas</p>
         </div>
       </footer>
     </div>

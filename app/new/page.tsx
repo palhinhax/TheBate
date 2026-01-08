@@ -4,7 +4,7 @@ import NewTopicForm from "@/features/topics/components/new-topic-form";
 
 export const metadata = {
   title: "Criar Novo Tema - Thebate",
-  description: "Crie um novo tema de debate na plataforma Thebate",
+  description: "Crie um novo tema de discussão na plataforma Thebate",
 };
 
 export default async function NewTopicPage() {

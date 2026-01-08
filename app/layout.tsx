@@ -16,9 +16,9 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Thebate - Plataforma de Debates",
+  title: "Thebate - Plataforma de Discussão",
   description:
-    "Participe de discussões inteligentes sobre tecnologia, sociedade e cultura. Compartilhe ideias, aprenda e debata com respeito.",
+    "Participe de discussões inteligentes sobre tecnologia, sociedade e cultura. Compartilhe ideias, aprenda e conecte-se com respeito.",
 };
 
 export default function RootLayout({
