@@ -4,8 +4,9 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { MessageSquare, TrendingUp, Clock } from "lucide-react";
 import { AdContainer } from "@/components/ad-container";
+import { getUserLanguages } from "@/lib/language";
 
-async function getTopics(sort: "trending" | "new" = "new", language?: string) {
+async function getTopics(sort: "trending" | "new" = "new", languages: string[]) {
   const orderBy =
     sort === "new"
       ? { createdAt: "desc" as const }
@@ -14,10 +15,10 @@ async function getTopics(sort: "trending" | "new" = "new", language?: string) {
   const topics = await prisma.topic.findMany({
     where: { 
       status: "ACTIVE" as const,
-      ...(language ? { language } : {}),
+      language: { in: languages },
     },
     orderBy,
-    take: 20,
+    take: 30,
     include: {
       createdBy: {
         select: {
@@ -42,8 +43,10 @@ export default async function Home({
   searchParams: { lang?: string };
 }) {
   const session = await auth();
-  const language = searchParams.lang;
-  const topics = await getTopics("new", language);
+  
+  // Intelligently detect user's languages
+  const userLanguages = await getUserLanguages(searchParams);
+  const topics = await getTopics("new", userLanguages);
 
   return (
     <div className="min-h-screen">

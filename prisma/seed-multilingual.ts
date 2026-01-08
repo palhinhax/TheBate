@@ -3,143 +3,191 @@ import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
-// Multilingual topics data
+// Multilingual topics data - Controversial & Current Topics
 const multilingualTopics = [
-  // Portuguese
+  // English - Controversial Current Topics
   {
-    slug: "ia-vai-substituir-programadores",
+    slug: "trump-2025-presidency-democracy",
+    title: "Trump's 2025 Return: Threat to Democracy or Restoration?",
+    description:
+      "With Trump back in power, debates rage about the future of American democracy. Some see authoritarian tendencies, others see a necessary correction. What's your take?",
+    tags: ["politics", "usa", "democracy", "trump"],
+    language: "en",
+  },
+  {
+    slug: "maduro-venezuela-dictatorship-or-resistance",
+    title: "Maduro's Venezuela: Dictatorship or Anti-Imperialist Resistance?",
+    description:
+      "The debate over Venezuela's government continues. Is Maduro a dictator destroying his country, or is he resisting foreign intervention? International perspectives vary wildly.",
+    tags: ["venezuela", "maduro", "politics", "latin-america"],
+    language: "en",
+  },
+  {
+    slug: "taiwan-china-conflict-inevitable",
+    title: "Is War Between China and Taiwan Inevitable?",
+    description:
+      "Tensions escalate as China increases military pressure on Taiwan. With US involvement likely, could this spark a global conflict? Or is peaceful resolution still possible?",
+    tags: ["china", "taiwan", "geopolitics", "war"],
+    language: "en",
+  },
+  {
+    slug: "ai-replacing-human-creativity",
+    title: "AI Art & Music: Death of Human Creativity?",
+    description:
+      "AI can now create art, music, and writing indistinguishable from humans. Are we witnessing the end of human creative value, or just a new tool for artists?",
+    tags: ["ai", "art", "technology", "creativity"],
+    language: "en",
+  },
+  {
+    slug: "climate-activists-too-extreme",
+    title: "Are Climate Activists Going Too Far?",
+    description:
+      "From blocking roads to vandalizing art, climate protesters face backlash. Are these tactics necessary to save the planet, or do they harm the cause?",
+    tags: ["climate", "activism", "environment", "protest"],
+    language: "en",
+  },
+  {
+    slug: "universal-basic-income-solution",
+    title: "Universal Basic Income: Solution or Socialist Fantasy?",
+    description:
+      "As automation threatens jobs, UBI gains support. Critics call it unrealistic and lazy. Would it free humanity or destroy work ethic?",
+    tags: ["ubi", "economy", "automation", "policy"],
+    language: "en",
+  },
+  
+  // Portuguese - Tópicos Polêmicos
+  {
+    slug: "trump-ameaca-democracia-2025",
+    title: "Trump em 2025: Ameaça à Democracia ou Restauração?",
+    description:
+      "Com Trump de volta ao poder, os debates sobre o futuro da democracia americana intensificam-se. Uns veem tendências autoritárias, outros veem uma correção necessária.",
+    tags: ["política", "eua", "democracia", "trump"],
+    language: "pt",
+  },
+  {
+    slug: "maduro-venezuela-ditadura-resistencia",
+    title: "Venezuela de Maduro: Ditadura ou Resistência Anti-Imperialista?",
+    description:
+      "O debate sobre o governo venezuelano continua. Maduro é um ditador ou está a resistir à intervenção estrangeira? As perspetivas internacionais variam muito.",
+    tags: ["venezuela", "maduro", "política", "américa-latina"],
+    language: "pt",
+  },
+  {
+    slug: "conflito-china-taiwan-inevitavel",
+    title: "Guerra entre China e Taiwan é Inevitável?",
+    description:
+      "As tensões aumentam com a China a pressionar Taiwan militarmente. Com envolvimento provável dos EUA, isto pode desencadear um conflito global?",
+    tags: ["china", "taiwan", "geopolítica", "guerra"],
+    language: "pt",
+  },
+  {
+    slug: "ia-substituir-programadores",
     title: "IA vai substituir programadores?",
     description:
       "Com o avanço de ferramentas como ChatGPT e GitHub Copilot, há uma discussão crescente sobre o futuro da profissão de programador.",
     tags: ["tecnologia", "ia", "programação"],
     language: "pt",
   },
-  {
-    slug: "trabalho-remoto-futuro",
-    title: "O futuro do trabalho remoto",
-    description:
-      "Após a pandemia, muitas empresas adotaram o trabalho remoto. Será este o futuro do trabalho?",
-    tags: ["trabalho", "remoto", "tecnologia"],
-    language: "pt",
-  },
-  {
-    slug: "privacidade-vs-seguranca-digital",
-    title: "Privacidade vs Segurança Digital",
-    description:
-      "Devemos sacrificar privacidade em nome da segurança online? Um debate sobre direitos digitais.",
-    tags: ["privacidade", "segurança", "direitos"],
-    language: "pt",
-  },
   
-  // English
+  // Spanish - Temas Polémicos
   {
-    slug: "will-ai-replace-software-developers",
-    title: "Will AI Replace Software Developers?",
+    slug: "trump-amenaza-democracia-2025",
+    title: "Trump en 2025: ¿Amenaza a la Democracia o Restauración?",
     description:
-      "With the advancement of tools like ChatGPT and GitHub Copilot, there's a growing discussion about the future of the programming profession.",
-    tags: ["technology", "ai", "programming"],
-    language: "en",
-  },
-  {
-    slug: "remote-work-revolution",
-    title: "The Remote Work Revolution",
-    description:
-      "After the pandemic, many companies adopted remote work. Is this the future of work?",
-    tags: ["work", "remote", "technology"],
-    language: "en",
-  },
-  {
-    slug: "cryptocurrency-future-of-money",
-    title: "Is Cryptocurrency the Future of Money?",
-    description:
-      "Bitcoin, Ethereum, and other cryptocurrencies are changing how we think about money. But are they really the future?",
-    tags: ["crypto", "blockchain", "finance"],
-    language: "en",
-  },
-  {
-    slug: "climate-change-technology-solutions",
-    title: "Can Technology Solve Climate Change?",
-    description:
-      "From renewable energy to carbon capture, technology offers many solutions to climate change. But is it enough?",
-    tags: ["climate", "technology", "environment"],
-    language: "en",
-  },
-  
-  // Spanish
-  {
-    slug: "ia-reemplazara-desarrolladores",
-    title: "¿La IA reemplazará a los desarrolladores?",
-    description:
-      "Con el avance de herramientas como ChatGPT y GitHub Copilot, hay una discusión creciente sobre el futuro de la profesión de programador.",
-    tags: ["tecnología", "ia", "programación"],
+      "Con Trump de vuelta en el poder, los debates sobre el futuro de la democracia estadounidense se intensifican. Algunos ven tendencias autoritarias, otros una corrección necesaria.",
+    tags: ["política", "eeuu", "democracia", "trump"],
     language: "es",
   },
   {
-    slug: "trabajo-remoto-futuro",
-    title: "El futuro del trabajo remoto",
+    slug: "maduro-venezuela-dictadura-resistencia",
+    title: "Venezuela de Maduro: ¿Dictadura o Resistencia Anti-Imperialista?",
     description:
-      "Después de la pandemia, muchas empresas adoptaron el trabajo remoto. ¿Es este el futuro del trabajo?",
-    tags: ["trabajo", "remoto", "tecnología"],
+      "El debate sobre el gobierno venezolano continúa. ¿Maduro es un dictador o está resistiendo la intervención extranjera? Las perspectivas internacionales varían mucho.",
+    tags: ["venezuela", "maduro", "política", "latinoamérica"],
     language: "es",
   },
   {
-    slug: "energia-renovable-futuro",
-    title: "Energía Renovable: ¿El Futuro Sostenible?",
+    slug: "conflicto-china-taiwan-inevitable",
+    title: "¿Es Inevitable la Guerra entre China y Taiwán?",
     description:
-      "Solar, eólica y otras fuentes renovables están cambiando el panorama energético. ¿Son la solución al cambio climático?",
-    tags: ["energía", "sostenibilidad", "medio ambiente"],
+      "Las tensiones aumentan con China presionando militarmente a Taiwán. Con la probable participación de EE.UU., ¿podría esto desencadenar un conflicto global?",
+    tags: ["china", "taiwán", "geopolítica", "guerra"],
+    language: "es",
+  },
+  {
+    slug: "migracion-crisis-o-oportunidad",
+    title: "Migración: ¿Crisis Humanitaria o Oportunidad Económica?",
+    description:
+      "La migración divide opiniones. ¿Es una crisis que amenaza identidades nacionales o una oportunidad para economías envejecidas?",
+    tags: ["migración", "política", "economía", "sociedad"],
     language: "es",
   },
   
-  // French
+  // French - Sujets Polémiques
   {
-    slug: "ia-remplacera-developpeurs",
-    title: "L'IA remplacera-t-elle les développeurs ?",
+    slug: "trump-menace-democratie-2025",
+    title: "Trump en 2025: Menace pour la Démocratie ou Restauration?",
     description:
-      "Avec l'avancement d'outils comme ChatGPT et GitHub Copilot, il y a une discussion croissante sur l'avenir de la profession de programmeur.",
-    tags: ["technologie", "ia", "programmation"],
+      "Avec Trump de retour au pouvoir, les débats sur l'avenir de la démocratie américaine s'intensifient. Certains voient des tendances autoritaires, d'autres une correction nécessaire.",
+    tags: ["politique", "usa", "démocratie", "trump"],
     language: "fr",
   },
   {
-    slug: "travail-distance-revolution",
-    title: "La révolution du travail à distance",
+    slug: "maduro-venezuela-dictature-resistance",
+    title: "Venezuela de Maduro: Dictature ou Résistance Anti-Impérialiste?",
     description:
-      "Après la pandémie, de nombreuses entreprises ont adopté le travail à distance. Est-ce l'avenir du travail?",
-    tags: ["travail", "distance", "technologie"],
+      "Le débat sur le gouvernement vénézuélien continue. Maduro est-il un dictateur ou résiste-t-il à l'intervention étrangère? Les perspectives internationales varient énormément.",
+    tags: ["venezuela", "maduro", "politique", "amérique-latine"],
     language: "fr",
   },
   {
-    slug: "intelligence-artificielle-ethique",
-    title: "L'éthique de l'intelligence artificielle",
+    slug: "conflit-chine-taiwan-inevitable",
+    title: "La Guerre entre Chine et Taïwan est-elle Inévitable?",
     description:
-      "L'IA soulève de nombreuses questions éthiques. Comment garantir que l'IA soit développée de manière responsable?",
-    tags: ["ia", "éthique", "société"],
+      "Les tensions augmentent avec la pression militaire chinoise sur Taïwan. Avec l'implication probable des États-Unis, cela pourrait-il déclencher un conflit mondial?",
+    tags: ["chine", "taïwan", "géopolitique", "guerre"],
+    language: "fr",
+  },
+  {
+    slug: "immigration-europe-debat",
+    title: "Immigration en Europe: Enrichissement ou Menace?",
+    description:
+      "L'immigration divise l'Europe. Est-ce un enrichissement culturel et économique ou une menace pour l'identité européenne?",
+    tags: ["immigration", "europe", "politique", "société"],
     language: "fr",
   },
   
-  // German
+  // German - Kontroverse Themen
   {
-    slug: "wird-ki-entwickler-ersetzen",
-    title: "Wird KI Entwickler ersetzen?",
+    slug: "trump-bedrohung-demokratie-2025",
+    title: "Trump 2025: Bedrohung für Demokratie oder Wiederherstellung?",
     description:
-      "Mit dem Fortschritt von Tools wie ChatGPT und GitHub Copilot gibt es eine wachsende Diskussion über die Zukunft des Programmierberufs.",
-    tags: ["technologie", "ki", "programmierung"],
+      "Mit Trumps Rückkehr an die Macht intensivieren sich die Debatten über die Zukunft der amerikanischen Demokratie. Manche sehen autoritäre Tendenzen, andere eine notwendige Korrektur.",
+    tags: ["politik", "usa", "demokratie", "trump"],
     language: "de",
   },
   {
-    slug: "homeoffice-zukunft-arbeit",
-    title: "Homeoffice: Die Zukunft der Arbeit?",
+    slug: "maduro-venezuela-diktatur-widerstand",
+    title: "Maduros Venezuela: Diktatur oder Anti-Imperialistischer Widerstand?",
     description:
-      "Nach der Pandemie haben viele Unternehmen Homeoffice eingeführt. Ist dies die Zukunft der Arbeit?",
-    tags: ["arbeit", "homeoffice", "technologie"],
+      "Die Debatte über die venezolanische Regierung geht weiter. Ist Maduro ein Diktator oder leistet er Widerstand gegen ausländische Einmischung?",
+    tags: ["venezuela", "maduro", "politik", "lateinamerika"],
     language: "de",
   },
   {
-    slug: "digitale-privatsphare-grundrecht",
-    title: "Digitale Privatsphäre als Grundrecht",
+    slug: "konflikt-china-taiwan-unvermeidlich",
+    title: "Ist Krieg zwischen China und Taiwan Unvermeidlich?",
     description:
-      "In einer zunehmend digitalen Welt wird der Schutz der Privatsphäre immer wichtiger. Sollte sie ein Grundrecht sein?",
-    tags: ["privatsphäre", "datenschutz", "rechte"],
+      "Die Spannungen steigen, da China militärischen Druck auf Taiwan ausübt. Könnte dies mit wahrscheinlicher US-Beteiligung einen globalen Konflikt auslösen?",
+    tags: ["china", "taiwan", "geopolitik", "krieg"],
+    language: "de",
+  },
+  {
+    slug: "migration-deutschland-herausforderung",
+    title: "Migration in Deutschland: Bereicherung oder Überforderung?",
+    description:
+      "Migration spaltet die Gesellschaft. Ist sie eine kulturelle und wirtschaftliche Bereicherung oder überfordert sie das Sozialsystem?",
+    tags: ["migration", "deutschland", "politik", "gesellschaft"],
     language: "de",
   },
 ];
