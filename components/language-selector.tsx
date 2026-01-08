@@ -18,7 +18,7 @@ export function LanguageSelector() {
 
   // Load saved preferences on mount
   useEffect(() => {
-    const saved = localStorage.getItem('preferredLanguages');
+    const saved = localStorage.getItem("preferredLanguages");
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -33,23 +33,24 @@ export function LanguageSelector() {
 
   const handleLanguageToggle = (code: string) => {
     let newSelection: string[];
-    
+
     if (selectedLangs.includes(code)) {
       // Don't allow deselecting all languages
       if (selectedLangs.length === 1) return;
-      newSelection = selectedLangs.filter(l => l !== code);
+      newSelection = selectedLangs.filter((l) => l !== code);
     } else {
       newSelection = [...selectedLangs, code];
     }
-    
+
     setSelectedLangs(newSelection);
-    localStorage.setItem('preferredLanguages', JSON.stringify(newSelection));
+    localStorage.setItem("preferredLanguages", JSON.stringify(newSelection));
     window.location.reload();
   };
 
-  const displayText = selectedLangs.length === 1 
-    ? languages.find(l => l.code === selectedLangs[0])?.name || 'Idioma'
-    : `${selectedLangs.length} idiomas`;
+  const displayText =
+    selectedLangs.length === 1
+      ? languages.find((l) => l.code === selectedLangs[0])?.name || "Idioma"
+      : `${selectedLangs.length} idiomas`;
 
   return (
     <div className="relative">
@@ -65,25 +66,25 @@ export function LanguageSelector() {
 
       {isOpen && (
         <>
-          <div 
-            className="fixed inset-0 z-40" 
+          <div
+            className="fixed inset-0 z-40"
             onClick={() => setIsOpen(false)}
           />
-          <div className="absolute right-0 top-full mt-2 w-64 max-w-[calc(100vw-2rem)] rounded-md border bg-background shadow-lg z-50">
-            <div className="py-2 px-3 border-b">
-              <p className="text-xs text-muted-foreground font-medium">
+          <div className="absolute right-0 top-full z-50 mt-2 w-64 max-w-[calc(100vw-2rem)] rounded-md border bg-background shadow-lg">
+            <div className="border-b px-3 py-2">
+              <p className="text-xs font-medium text-muted-foreground">
                 Selecione as línguas que prefere ver:
               </p>
             </div>
-            <div className="py-1 max-h-[60vh] overflow-y-auto">
+            <div className="max-h-[60vh] overflow-y-auto py-1">
               {languages.map((lang) => {
                 const isSelected = selectedLangs.includes(lang.code);
                 return (
                   <button
                     key={lang.code}
                     onClick={() => handleLanguageToggle(lang.code)}
-                    className={`w-full px-4 py-2 text-left text-sm hover:bg-muted flex items-center gap-2 ${
-                      isSelected ? 'bg-muted/50' : ''
+                    className={`flex w-full items-center gap-2 px-4 py-2 text-left text-sm hover:bg-muted ${
+                      isSelected ? "bg-muted/50" : ""
                     }`}
                   >
                     <span className="text-lg">{lang.flag}</span>
