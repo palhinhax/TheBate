@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/palhinhax/TheBate/compare/v1.0.0...v1.0.1) (2026-01-08)
+
+
+### Bug Fixes
+
+* **release:** add npm plugin to update package.json version ([7734577](https://github.com/palhinhax/TheBate/commit/7734577531a34fd126b93ebb052b80565c4d4bd9))
+
 # 1.0.0 (2026-01-08)
 
 
