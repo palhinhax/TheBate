@@ -5,6 +5,8 @@ import { GoogleAdSense } from "./google-adsense";
 interface AdContainerProps {
   className?: string;
   adSlot?: string;
+  adLayout?: string;
+  adFormat?: string;
 }
 
 /**
@@ -17,7 +19,12 @@ interface AdContainerProps {
  * - Responsivo para desktop e mobile
  * - Máximo de 1 anúncio por página
  */
-export function AdContainer({ className, adSlot }: AdContainerProps) {
+export function AdContainer({ 
+  className, 
+  adSlot = "5814797320",
+  adLayout = "in-article",
+  adFormat = "fluid"
+}: AdContainerProps) {
   return (
     <aside
       className={cn(
@@ -37,7 +44,8 @@ export function AdContainer({ className, adSlot }: AdContainerProps) {
           {adSlot ? (
             <GoogleAdSense
               adSlot={adSlot}
-              adFormat="auto"
+              adFormat={adFormat}
+              adLayout={adLayout}
               fullWidthResponsive={true}
             />
           ) : (

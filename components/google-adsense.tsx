@@ -51,10 +51,14 @@ export function GoogleAdSense({
     );
   }
 
+  const inlineStyle = adLayout === "in-article" 
+    ? { display: "block", textAlign: "center" as const }
+    : { display: "block" };
+
   return (
     <ins
       className={`adsbygoogle ${className}`}
-      style={{ display: "block" }}
+      style={inlineStyle}
       data-ad-client={adClient}
       data-ad-slot={adSlot}
       data-ad-format={adFormat}
