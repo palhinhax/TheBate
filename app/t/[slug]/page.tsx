@@ -83,7 +83,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!topic) {
     return {
-      title: "Tema não encontrado",
+      title: "Topic not found",
     };
   }
 
