@@ -39,38 +39,6 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen">
-      {/* Header */}
-      <header className="border-b">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <Link href="/" className="text-xl font-bold">
-            Thebate
-          </Link>
-          <div className="flex items-center gap-4">
-            {session?.user ? (
-              <>
-                <Link href="/new">
-                  <Button>Novo Tema</Button>
-                </Link>
-                <Link href={`/u/${session.user.username}`}>
-                  <Button variant="ghost">
-                    {session.user.name || session.user.username}
-                  </Button>
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link href="/auth/login">
-                  <Button variant="ghost">Entrar</Button>
-                </Link>
-                <Link href="/auth/register">
-                  <Button>Registrar</Button>
-                </Link>
-              </>
-            )}
-          </div>
-        </div>
-      </header>
-
       {/* Hero Section */}
       <section className="border-b bg-muted/50 py-12">
         <div className="container mx-auto px-4 text-center">

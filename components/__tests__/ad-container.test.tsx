@@ -15,11 +15,6 @@ describe("AdContainer", () => {
 
     // Check that the placeholder text is present
     expect(screen.getByText("Espaço reservado para anúncio")).toBeInTheDocument();
-
-    // Check that the descriptive text is present
-    expect(
-      screen.getByText("Anúncios ajudam a manter a plataforma gratuita")
-    ).toBeInTheDocument();
   });
 
   it("applies custom className when provided", () => {

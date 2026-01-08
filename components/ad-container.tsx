@@ -1,8 +1,10 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
+import { GoogleAdSense } from "./google-adsense";
 
 interface AdContainerProps {
   className?: string;
+  adSlot?: string;
 }
 
 /**
@@ -15,7 +17,7 @@ interface AdContainerProps {
  * - Responsivo para desktop e mobile
  * - Máximo de 1 anúncio por página
  */
-export function AdContainer({ className }: AdContainerProps) {
+export function AdContainer({ className, adSlot }: AdContainerProps) {
   return (
     <aside
       className={cn(
@@ -27,18 +29,17 @@ export function AdContainer({ className }: AdContainerProps) {
       )}
       aria-label="Publicidade"
     >
-      <div className="text-center">
+      <div className="w-full text-center">
         <p className="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
           Publicidade
         </p>
-        <div className="flex h-[180px] w-full max-w-[728px] items-center justify-center rounded border border-dashed border-muted-foreground/30 bg-background/50 px-4 sm:h-[150px]">
-          <p className="text-sm text-muted-foreground">
-            Espaço reservado para anúncio
-          </p>
+        <div className="mx-auto w-full max-w-[728px]">
+          <GoogleAdSense
+            adSlot={adSlot || "0000000000"}
+            adFormat="auto"
+            fullWidthResponsive={true}
+          />
         </div>
-        <p className="mt-2 text-xs text-muted-foreground">
-          Anúncios ajudam a manter a plataforma gratuita
-        </p>
       </div>
     </aside>
   );
