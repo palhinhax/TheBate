@@ -133,7 +133,7 @@ export default function CommentItem({
           >
             <ThumbsUp className="h-5 w-5" />
           </button>
-          <span className="text-sm font-medium">{comment.score}</span>
+          <span className="text-sm font-medium">{comment._count?.votes || 0}</span>
         </div>
 
         {/* Comment Content */}
