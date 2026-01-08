@@ -87,40 +87,6 @@ export default function NewCommentForm({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      {/* Side selector - only for top-level comments */}
-      {!isReply && (
-        <div>
-          <Label className="mb-2 block">Escolha seu lado</Label>
-          <div className="flex gap-2">
-            <label className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-md border border-input bg-background px-4 py-3 text-sm font-medium transition-colors hover:bg-accent has-[:checked]:border-green-600 has-[:checked]:bg-green-50 has-[:checked]:text-green-700 dark:has-[:checked]:bg-green-950 dark:has-[:checked]:text-green-300">
-              <input
-                type="radio"
-                value="AFAVOR"
-                {...(register("side" as "side"))}
-                className="sr-only"
-              />
-              <span className="text-lg">👍</span>
-              <span>A Favor</span>
-            </label>
-            <label className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-md border border-input bg-background px-4 py-3 text-sm font-medium transition-colors hover:bg-accent has-[:checked]:border-red-600 has-[:checked]:bg-red-50 has-[:checked]:text-red-700 dark:has-[:checked]:bg-red-950 dark:has-[:checked]:text-red-300">
-              <input
-                type="radio"
-                value="CONTRA"
-                {...(register("side" as "side"))}
-                className="sr-only"
-              />
-              <span className="text-lg">👎</span>
-              <span>Contra</span>
-            </label>
-          </div>
-          {"side" in errors && errors.side && (
-            <p className="mt-1 text-sm text-destructive">
-              {errors.side.message}
-            </p>
-          )}
-        </div>
-      )}
-
       <div>
         <Label htmlFor="content">
           {isReply ? "Escreva sua resposta" : "Escreva seu argumento"}

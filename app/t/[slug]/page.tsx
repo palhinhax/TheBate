@@ -256,12 +256,7 @@ export default async function TopicPage({ params, searchParams }: Props) {
           {topic.status !== "LOCKED" && (
             <div className="mb-8">
               {session?.user ? (
-                <>
-                  <h2 className="mb-4 text-xl font-semibold">
-                    Adicionar argumento
-                  </h2>
-                  <NewCommentForm topicId={topic.id} />
-                </>
+                <NewCommentForm topicId={topic.id} />
               ) : (
                 <div className="rounded-lg border bg-muted/50 px-6 py-8 text-center">
                   <p className="mb-4 text-muted-foreground">
