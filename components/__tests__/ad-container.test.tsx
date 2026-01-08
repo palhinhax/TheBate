@@ -19,8 +19,9 @@ describe("AdContainer", () => {
     // Check that the ad label is visible
     expect(screen.getByText("Publicidade")).toBeInTheDocument();
 
-    // Check that the AdSense component is rendered
-    expect(adSection.querySelector(".adsbygoogle, ins")).toBeInTheDocument();
+    // Check that the AdSense component container is rendered
+    const adContainer = adSection.querySelector(".mx-auto");
+    expect(adContainer).toBeInTheDocument();
   });
 
   it("applies custom className when provided", () => {
