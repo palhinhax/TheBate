@@ -2,6 +2,12 @@ import { render, screen } from "@testing-library/react";
 import { AdContainer } from "../ad-container";
 
 describe("AdContainer", () => {
+  const originalEnv = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ID;
+
+  afterEach(() => {
+    process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_ID = originalEnv;
+  });
+
   it("renders the ad container with proper structure", () => {
     render(<AdContainer />);
 
@@ -13,10 +19,8 @@ describe("AdContainer", () => {
     // Check that the ad label is visible
     expect(screen.getByText("Publicidade")).toBeInTheDocument();
 
-    // Check that the placeholder text is present
-    expect(
-      screen.getByText("Espaço reservado para anúncio")
-    ).toBeInTheDocument();
+    // Check that the AdSense component is rendered
+    expect(adSection.querySelector(".adsbygoogle, ins")).toBeInTheDocument();
   });
 
   it("applies custom className when provided", () => {
