@@ -59,6 +59,7 @@ model Topic {
   slug        String       @unique
   title       String
   description String       @db.Text
+  language    String       @default("pt") // ISO 639-1: pt, en, es, fr, de, etc.
   tags        String[]
   status      TopicStatus  @default(ACTIVE)
   createdById String
@@ -71,6 +72,7 @@ model Topic {
   @@index([slug])
   @@index([createdAt(sort: Desc)])
   @@index([status])
+  @@index([language])
 }
 
 model Comment {

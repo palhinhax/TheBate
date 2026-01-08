@@ -1,0 +1,46 @@
+{
+  "common": {
+    "home": "Home",
+    "new_topic": "New Topic",
+    "login": "Sign In",
+    "register": "Sign Up",
+    "logout": "Sign Out",
+    "loading": "Loading...",
+    "error": "Error",
+    "search": "Search"
+  },
+  "hero": {
+    "title": "Global Discussion Platform",
+    "subtitle": "Join intelligent discussions about technology, society, and culture. Share ideas, learn, and connect with respect.",
+    "cta": "Get Started"
+  },
+  "topics": {
+    "recent": "Recent Topics",
+    "trending": "Trending",
+    "new": "New",
+    "no_topics": "No topics found",
+    "create": "Create New Topic",
+    "title": "Title",
+    "description": "Description",
+    "tags": "Tags",
+    "language": "Language"
+  },
+  "comments": {
+    "title": "Comments",
+    "add": "Add Comment",
+    "reply": "Reply",
+    "for": "For",
+    "against": "Against",
+    "neutral": "Neutral"
+  },
+  "languages": {
+    "pt": "Português",
+    "en": "English",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch"
+  },
+  "footer": {
+    "tagline": "Global public discussions"
+  }
+}

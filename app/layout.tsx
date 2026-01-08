@@ -19,9 +19,34 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Thebate",
+  title: "Thebate - Global Discussion Platform",
   description:
-    "Participe de discussões inteligentes sobre tecnologia, sociedade e cultura. Compartilhe ideias, aprenda e conecte-se com respeito.",
+    "Join intelligent discussions about technology, society, and culture from around the world. Share ideas, learn, and connect with respect.",
+  alternates: {
+    languages: {
+      en: "https://thebatee.com?lang=en",
+      pt: "https://thebatee.com?lang=pt",
+      es: "https://thebatee.com?lang=es",
+      fr: "https://thebatee.com?lang=fr",
+      de: "https://thebatee.com?lang=de",
+    },
+  },
+  openGraph: {
+    title: "Thebate - Global Discussion Platform",
+    description:
+      "Join intelligent discussions about technology, society, and culture from around the world.",
+    url: "https://thebatee.com",
+    siteName: "Thebate",
+    locale: "en_US",
+    alternateLocale: ["pt_PT", "es_ES", "fr_FR", "de_DE"],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Thebate - Global Discussion Platform",
+    description:
+      "Join intelligent discussions about technology, society, and culture from around the world.",
+  },
 };
 
 export default function RootLayout({

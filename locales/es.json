@@ -1,0 +1,46 @@
+{
+  "common": {
+    "home": "Inicio",
+    "new_topic": "Nuevo Tema",
+    "login": "Iniciar Sesión",
+    "register": "Registrarse",
+    "logout": "Cerrar Sesión",
+    "loading": "Cargando...",
+    "error": "Error",
+    "search": "Buscar"
+  },
+  "hero": {
+    "title": "Plataforma Global de Discusión",
+    "subtitle": "Participa en discusiones inteligentes sobre tecnología, sociedad y cultura. Comparte ideas, aprende y conéctate con respeto.",
+    "cta": "Comenzar Ahora"
+  },
+  "topics": {
+    "recent": "Temas Recientes",
+    "trending": "Tendencias",
+    "new": "Nuevos",
+    "no_topics": "No se encontraron temas",
+    "create": "Crear Nuevo Tema",
+    "title": "Título",
+    "description": "Descripción",
+    "tags": "Etiquetas",
+    "language": "Idioma"
+  },
+  "comments": {
+    "title": "Comentarios",
+    "add": "Añadir Comentario",
+    "reply": "Responder",
+    "for": "A Favor",
+    "against": "En Contra",
+    "neutral": "Neutral"
+  },
+  "languages": {
+    "pt": "Português",
+    "en": "English",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch"
+  },
+  "footer": {
+    "tagline": "Discusiones públicas globales"
+  }
+}

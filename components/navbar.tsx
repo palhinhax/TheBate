@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { LogOut, User, Plus } from "lucide-react";
+import { LanguageSelector } from "./language-selector";
 
 export function Navbar() {
   const { data: session } = useSession();
@@ -16,6 +17,7 @@ export function Navbar() {
         </Link>
 
         <div className="flex items-center gap-4">
+          <LanguageSelector />
           {session ? (
             <>
               <Link href="/new">

@@ -2,17 +2,20 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
-import { MessageSquare, TrendingUp, Clock } from "lucide-react";
+import { MessageSquare, TrendingUp, Clock, Globe } from "lucide-react";
 import { AdContainer } from "@/components/ad-container";
 
-async function getTopics(sort: "trending" | "new" = "new") {
+async function getTopics(sort: "trending" | "new" = "new", language?: string) {
   const orderBy =
     sort === "new"
       ? { createdAt: "desc" as const }
       : { createdAt: "desc" as const }; // TODO: implement real trending algorithm
 
   const topics = await prisma.topic.findMany({
-    where: { status: "ACTIVE" as const },
+    where: { 
+      status: "ACTIVE" as const,
+      ...(language ? { language } : {}),
+    },
     orderBy,
     take: 20,
     include: {
@@ -33,9 +36,22 @@ async function getTopics(sort: "trending" | "new" = "new") {
   return topics;
 }
 
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { lang?: string };
+}) {
   const session = await auth();
-  const topics = await getTopics("new");
+  const language = searchParams.lang;
+  const topics = await getTopics("new", language);
+
+  const languageNames: Record<string, string> = {
+    pt: "🇵🇹 Português",
+    en: "🇬🇧 English",
+    es: "🇪🇸 Español",
+    fr: "🇫🇷 Français",
+    de: "🇩🇪 Deutsch",
+  };
 
   return (
     <div className="min-h-screen">
