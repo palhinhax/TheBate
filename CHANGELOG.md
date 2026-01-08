@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/palhinhax/TheBate/compare/v1.1.2...v1.2.0) (2026-01-08)
+
+
+### Features
+
+* **ads:** configure in-article AdSense with real slot ID ([a24da51](https://github.com/palhinhax/TheBate/commit/a24da51450739092afe27c8c3ed8bc54fa0d78a2))
+
 ## [1.1.2](https://github.com/palhinhax/TheBate/compare/v1.1.1...v1.1.2) (2026-01-08)
 
 
