@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/palhinhax/TheBate/compare/v2.2.0...v2.3.0) (2026-01-09)
+
+
+### Features
+
+* **i18n:** add 5 new languages with UI support and 50 controversial topics ([bc06564](https://github.com/palhinhax/TheBate/commit/bc065649cf768d443646bf35b20bc26c1a0a75e3))
+
 # [2.2.0](https://github.com/palhinhax/TheBate/compare/v2.1.0...v2.2.0) (2026-01-09)
 
 
