@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/palhinhax/TheBate/compare/v1.5.0...v1.5.1) (2026-01-09)
+
+
+### Bug Fixes
+
+* **db:** add automatic migration deployment for production ([eee13a4](https://github.com/palhinhax/TheBate/commit/eee13a4de2d4148dad6074bf114f94e1f4c60324))
+
 # [1.5.0](https://github.com/palhinhax/TheBate/compare/v1.4.0...v1.5.0) (2026-01-09)
 
 
