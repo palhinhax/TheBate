@@ -298,9 +298,7 @@ export default async function TopicPage({ params, searchParams }: Props) {
                   url={topicUrl}
                   hashtags={topic.tags.slice(0, 3)}
                 />
-                {session?.user && (
-                  <ReportTopicButton slug={topic.slug} />
-                )}
+                {session?.user && <ReportTopicButton slug={topic.slug} />}
               </div>
             </div>
 
@@ -328,9 +326,9 @@ export default async function TopicPage({ params, searchParams }: Props) {
               >
                 @{topic.createdBy.username}
               </Link>
-              
+
               <span className="hidden sm:inline">•</span>
-              
+
               <span className="flex items-center gap-1">
                 <Clock className="h-4 w-4" />
                 <span className="hidden sm:inline">
@@ -348,9 +346,9 @@ export default async function TopicPage({ params, searchParams }: Props) {
                   })}
                 </span>
               </span>
-              
+
               <span className="hidden sm:inline">•</span>
-              
+
               <span className="flex items-center gap-1">
                 <MessageSquare className="h-4 w-4" />
                 {topic._count.comments}

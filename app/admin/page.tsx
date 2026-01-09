@@ -65,12 +65,14 @@ export default function AdminPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState<"topics" | "comments" | "users">(
-    "topics"
-  );
+  const [activeTab, setActiveTab] = useState<
+    "topics" | "comments" | "users" | "reports"
+  >("topics");
   const [topics, setTopics] = useState<Topic[]>([]);
   const [comments, setComments] = useState<Comment[]>([]);
   const [users, setUsers] = useState<User[]>([]);
+  const [reportedTopics, setReportedTopics] = useState<Topic[]>([]);
+  const [reportedComments, setReportedComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
   const [topicsPage, setTopicsPage] = useState(1);
   const [topicsPagination, setTopicsPagination] = useState({
@@ -83,10 +85,18 @@ export default function AdminPage() {
     async (page: number = topicsPage) => {
       setLoading(true);
       try {
-        const [topicsRes, commentsRes, usersRes] = await Promise.all([
+        const [
+          topicsRes,
+          commentsRes,
+          usersRes,
+          reportedTopicsRes,
+          reportedCommentsRes,
+        ] = await Promise.all([
           fetch(`/api/admin/topics?page=${page}&limit=50`),
           fetch("/api/admin/comments"),
           fetch("/api/admin/users"),
+          fetch("/api/admin/topics?reported=true"),
+          fetch("/api/admin/comments?reported=true"),
         ]);
 
         if (topicsRes.ok) {
@@ -96,6 +106,12 @@ export default function AdminPage() {
         }
         if (commentsRes.ok) setComments(await commentsRes.json());
         if (usersRes.ok) setUsers(await usersRes.json());
+        if (reportedTopicsRes.ok) {
+          const data = await reportedTopicsRes.json();
+          setReportedTopics(data.topics || data);
+        }
+        if (reportedCommentsRes.ok)
+          setReportedComments(await reportedCommentsRes.json());
       } catch {
         toast({
           title: "Erro",
@@ -199,7 +215,37 @@ export default function AdminPage() {
       });
     }
   };
+  const clearReports = async (type: "topic" | "comment", id: string) => {
+    if (!confirm("Limpar denúncias deste conteúdo?")) return;
 
+    try {
+      const endpoint =
+        type === "topic"
+          ? `/api/admin/topics/${id}`
+          : `/api/admin/comments/${id}`;
+
+      const res = await fetch(endpoint, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ clearReports: true }),
+      });
+
+      if (res.ok) {
+        if (type === "topic") {
+          setReportedTopics(reportedTopics.filter((t) => t.id !== id));
+        } else {
+          setReportedComments(reportedComments.filter((c) => c.id !== id));
+        }
+        toast({ title: "Denúncias limpas com sucesso" });
+        loadData();
+      }
+    } catch {
+      toast({
+        title: "Erro ao limpar denúncias",
+        variant: "destructive",
+      });
+    }
+  };
   const deleteUser = async (id: string) => {
     if (
       !confirm(
@@ -331,6 +377,16 @@ export default function AdminPage() {
           }`}
         >
           Utilizadores ({users.length})
+        </button>
+        <button
+          onClick={() => setActiveTab("reports")}
+          className={`px-4 py-2 ${
+            activeTab === "reports"
+              ? "border-b-2 border-primary font-semibold"
+              : "text-muted-foreground"
+          }`}
+        >
+          Denúncias ({reportedTopics.length + reportedComments.length})
         </button>
       </div>
 
@@ -586,6 +642,188 @@ export default function AdminPage() {
               </div>
             </Card>
           ))}
+        </div>
+      )}
+
+      {activeTab === "reports" && (
+        <div className="space-y-6">
+          {reportedTopics.length === 0 && reportedComments.length === 0 ? (
+            <Card className="p-8 text-center">
+              <p className="text-muted-foreground">
+                Nenhum conteúdo denunciado
+              </p>
+            </Card>
+          ) : (
+            <>
+              {reportedTopics.length > 0 && (
+                <div>
+                  <h2 className="mb-4 text-xl font-bold">
+                    Temas Denunciados ({reportedTopics.length})
+                  </h2>
+                  <div className="space-y-4">
+                    {reportedTopics.map((topic) => (
+                      <Card key={topic.id} className="border-red-200 p-4">
+                        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                          <div className="min-w-0 flex-1">
+                            <Link
+                              href={`/t/${topic.slug}`}
+                              className="break-words text-lg font-semibold hover:underline"
+                              target="_blank"
+                            >
+                              {topic.title}
+                            </Link>
+                            <p className="mt-1 break-words text-sm text-muted-foreground">
+                              Por{" "}
+                              {topic.createdBy.name || topic.createdBy.username}{" "}
+                              •{" "}
+                              {new Date(topic.createdAt).toLocaleDateString(
+                                "pt-PT"
+                              )}
+                            </p>
+                            <div className="mt-2">
+                              <span className="inline-block rounded bg-red-100 px-2 py-1 text-xs font-semibold text-red-800">
+                                🚨 DENUNCIADO
+                              </span>
+                            </div>
+                          </div>
+                          <div className="flex w-full shrink-0 flex-col gap-2 sm:w-auto">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => clearReports("topic", topic.id)}
+                              className="w-full"
+                            >
+                              Limpar Denúncias
+                            </Button>
+                            <div className="flex gap-2">
+                              <Button
+                                size="sm"
+                                variant="secondary"
+                                onClick={() =>
+                                  updateTopicStatus(
+                                    topic.id,
+                                    topic.status === "HIDDEN"
+                                      ? "ACTIVE"
+                                      : "HIDDEN"
+                                  )
+                                }
+                                className="flex-1"
+                              >
+                                {topic.status === "HIDDEN" ? (
+                                  <>
+                                    <Eye className="mr-2 h-4 w-4" />
+                                    Mostrar
+                                  </>
+                                ) : (
+                                  <>
+                                    <EyeOff className="mr-2 h-4 w-4" />
+                                    Ocultar
+                                  </>
+                                )}
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="destructive"
+                                onClick={() => deleteTopic(topic.id)}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {reportedComments.length > 0 && (
+                <div>
+                  <h2 className="mb-4 text-xl font-bold">
+                    Argumentos Denunciados ({reportedComments.length})
+                  </h2>
+                  <div className="space-y-4">
+                    {reportedComments.map((comment) => (
+                      <Card key={comment.id} className="border-red-200 p-4">
+                        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                          <div className="min-w-0 flex-1">
+                            <p className="break-words">{comment.content}</p>
+                            <p className="mt-1 break-words text-sm text-muted-foreground">
+                              Por {comment.user.name || comment.user.username}{" "}
+                              em{" "}
+                              <Link
+                                href={`/t/${comment.topic.slug}`}
+                                className="hover:underline"
+                                target="_blank"
+                              >
+                                {comment.topic.title}
+                              </Link>
+                            </p>
+                            <p className="mt-1 text-xs text-muted-foreground">
+                              {new Date(comment.createdAt).toLocaleDateString(
+                                "pt-PT"
+                              )}
+                            </p>
+                            <div className="mt-2">
+                              <span className="inline-block rounded bg-red-100 px-2 py-1 text-xs font-semibold text-red-800">
+                                🚨 DENUNCIADO
+                              </span>
+                            </div>
+                          </div>
+                          <div className="flex w-full shrink-0 flex-col gap-2 sm:w-auto">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() =>
+                                clearReports("comment", comment.id)
+                              }
+                              className="w-full"
+                            >
+                              Limpar Denúncias
+                            </Button>
+                            <div className="flex gap-2">
+                              <Button
+                                size="sm"
+                                variant="secondary"
+                                onClick={() =>
+                                  updateCommentStatus(
+                                    comment.id,
+                                    comment.status === "HIDDEN"
+                                      ? "ACTIVE"
+                                      : "HIDDEN"
+                                  )
+                                }
+                                className="flex-1"
+                              >
+                                {comment.status === "HIDDEN" ? (
+                                  <>
+                                    <Eye className="mr-2 h-4 w-4" />
+                                    Mostrar
+                                  </>
+                                ) : (
+                                  <>
+                                    <EyeOff className="mr-2 h-4 w-4" />
+                                    Ocultar
+                                  </>
+                                )}
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="destructive"
+                                onClick={() => deleteComment(comment.id)}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
+          )}
         </div>
       )}
     </div>

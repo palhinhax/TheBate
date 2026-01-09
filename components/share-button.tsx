@@ -59,7 +59,11 @@ export function ShareButton({
   };
 
   const handleShare = (platform: keyof typeof shareLinks) => {
-    window.open(shareLinks[platform], "_blank", "noopener,noreferrer,width=600,height=600");
+    window.open(
+      shareLinks[platform],
+      "_blank",
+      "noopener,noreferrer,width=600,height=600"
+    );
     setOpen(false);
   };
 

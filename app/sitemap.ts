@@ -38,7 +38,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.warn("Could not fetch topics for sitemap:", error);
   }
 
-  const languages = ["en", "pt", "es", "fr", "de", "hi", "zh", "ar", "bn", "ru", "id", "ja"];
+  const languages = [
+    "en",
+    "pt",
+    "es",
+    "fr",
+    "de",
+    "hi",
+    "zh",
+    "ar",
+    "bn",
+    "ru",
+    "id",
+    "ja",
+  ];
   const languageUrls: MetadataRoute.Sitemap = languages.map((lang) => ({
     url: `${baseUrl}?lang=${lang}`,
     lastModified: new Date(),

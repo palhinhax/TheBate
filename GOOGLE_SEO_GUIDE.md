@@ -17,6 +17,7 @@
 #### 1.1 Adicionar Google Site Verification
 
 No teu ficheiro `.env.local` adiciona:
+
 ```bash
 NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=teu_codigo_aqui
 ```
@@ -60,6 +61,7 @@ Dentro do Google Search Console:
 2. Cria uma propriedade nova
 3. Copia o "Measurement ID" (formato: `G-XXXXXXXXXX`)
 4. Adiciona ao `.env.local`:
+
    ```bash
    NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
    ```
@@ -85,6 +87,7 @@ Dentro do Google Search Console:
 Usa esta ferramenta: **https://metatags.io/?url=https://thebatee.com**
 
 Deve mostrar:
+
 - Título: "TheBatee - Global Discussion Platform"
 - Descrição com 12 línguas
 - Imagem OG: ⚠️ **FALTA CRIAR** (ver secção abaixo)
@@ -137,6 +140,7 @@ Adicionar JSON-LD para melhorar aparência no Google. Vou criar um componente pa
 ### 4. Conteúdo Regular
 
 O Google gosta de sites ativos:
+
 - Adiciona 3-5 tópicos novos por semana
 - Incentiva comentários (quanto mais atividade, melhor)
 - Tópicos sobre notícias recentes têm mais visitas
@@ -175,6 +179,7 @@ O Google gosta de sites ativos:
 ### "Site não aparece no Google"
 
 **Teste**: Pesquisa `site:thebatee.com` no Google
+
 - Se aparecer: **Está indexado!** Só falta rankar melhor
 - Se não aparecer: Verifica robots.txt e repete passos do Search Console
 
@@ -191,7 +196,6 @@ O Google gosta de sites ativos:
    - "SNS deve ser privatizado?"
    - "Touradas devem ser proibidas em Portugal?"
    - "Construção de aeroporto no Montijo"
-   
 2. Usa palavras em português nos títulos e descrições
 
 3. Partilha em comunidades PT: Reddit r/portugal, Twitter PT

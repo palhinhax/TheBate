@@ -84,24 +84,26 @@ model Topic {
 }
 
 model Comment {
-  id        String        @id @default(cuid())
-  content   String        @db.Text
-  side      CommentSide?  // A FAVOR or CONTRA (null for replies)
-  status    CommentStatus @default(ACTIVE)
-  topicId   String
-  topic     Topic         @relation(fields: [topicId], references: [id], onDelete: Cascade)
-  userId    String
-  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  parentId  String?
-  parent    Comment?      @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
-  replies   Comment[]     @relation("CommentReplies")
-  votes     Vote[]
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+  id          String        @id @default(cuid())
+  content     String        @db.Text
+  side        CommentSide?  // A FAVOR or CONTRA (null for replies)
+  status      CommentStatus @default(ACTIVE)
+  reportCount Int           @default(0) // Number of reports for moderation
+  topicId     String
+  topic       Topic         @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parentId    String?
+  parent      Comment?      @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies     Comment[]     @relation("CommentReplies")
+  votes       Vote[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 
   @@index([topicId, createdAt(sort: Desc)])
   @@index([topicId, side])
   @@index([userId])
+  @@index([reportCount(sort: Desc)])
 }
 
 model Vote {

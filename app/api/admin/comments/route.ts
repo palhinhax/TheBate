@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
+import { Prisma } from "@prisma/client";
 import { auth } from "@/lib/auth/config";
 import { prisma } from "@/lib/prisma";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     const session = await auth();
 
@@ -10,7 +11,15 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
+    const { searchParams } = new URL(request.url);
+    const reported = searchParams.get("reported") === "true";
+
+    const where: Prisma.CommentWhereInput = reported
+      ? { reportCount: { gt: 0 } }
+      : {};
+
     const comments = await prisma.comment.findMany({
+      where,
       include: {
         user: {
           select: {

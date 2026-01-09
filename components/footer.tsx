@@ -21,13 +21,13 @@ export function Footer() {
             <p>© 2026 TheBatee. All rights reserved.</p>
             <Link
               href="/legal/terms"
-              className="hover:text-foreground transition-colors underline-offset-4 hover:underline"
+              className="underline-offset-4 transition-colors hover:text-foreground hover:underline"
             >
               Terms
             </Link>
             <Link
               href="/legal/privacy"
-              className="hover:text-foreground transition-colors underline-offset-4 hover:underline"
+              className="underline-offset-4 transition-colors hover:text-foreground hover:underline"
             >
               Privacy
             </Link>
