@@ -129,25 +129,26 @@ export default async function Home({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbList) }}
       />
       <div className="min-h-screen">
-        {/* Hero Section */}
-        <section className="border-b bg-muted/50 py-12">
-          <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-              Plataforma de <span className="text-primary">Discussão</span>
-            </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-              Participe de discussões inteligentes sobre tecnologia, sociedade e
-              cultura. Compartilhe ideias, aprenda e conecte-se com respeito.
-            </p>
-            {!session?.user && (
+        {/* Hero Section - Only show for non-logged-in users */}
+        {!session?.user && (
+          <section className="border-b bg-muted/50 py-12">
+            <div className="container mx-auto px-4 text-center">
+              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+                Plataforma de <span className="text-primary">Discussão</span>
+              </h1>
+              <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
+                Participe de discussões inteligentes sobre tecnologia, sociedade
+                e cultura. Compartilhe ideias, aprenda e conecte-se com
+                respeito.
+              </p>
               <div className="mt-6">
                 <Link href="/auth/register">
                   <Button size="lg">Começar Agora</Button>
                 </Link>
               </div>
-            )}
-          </div>
-        </section>
+            </div>
+          </section>
+        )}
 
         {/* Topics List */}
         <section className="container mx-auto px-4 py-8">
