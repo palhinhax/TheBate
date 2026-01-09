@@ -72,19 +72,19 @@ export async function sendPasswordResetEmail(
     { subject: string; getText: (url: string) => string }
   > = {
     pt: {
-      subject: "Recuperar Senha - TheBate",
+      subject: "Recuperar Palavra-passe - TheBate",
       getText: (url: string) =>
         `
 Olá,
 
-Recebemos um pedido para recuperar a sua senha.
+Recebemos um pedido para recuperar a sua palavra-passe.
 
-Clique no link abaixo para criar uma nova senha:
+Clique no link abaixo para criar uma nova palavra-passe:
 ${url}
 
 Este link expira em 15 minutos.
 
-Se não foi você que solicitou esta recuperação, pode ignorar este email.
+Se não foi o utilizador que solicitou esta recuperação, pode ignorar este email.
 
 Atenciosamente,
 Equipa TheBate
@@ -160,14 +160,14 @@ export async function sendEmailVerificationEmail(
         `
 Olá,
 
-Bem-vindo ao TheBate! Para completar o seu registo, precisa verificar o seu email.
+Bem-vindo ao TheBate! Para completar o seu registo, precisa de verificar o seu email.
 
 Clique no link abaixo para confirmar o seu email:
 ${url}
 
 Este link expira em 24 horas.
 
-Se não foi você que se registou, pode ignorar este email.
+Se não foi o utilizador que se registou, pode ignorar este email.
 
 Atenciosamente,
 Equipa TheBate
@@ -247,25 +247,6 @@ Falls Sie sich nicht bei TheBate registriert haben, können Sie diese E-Mail ign
 
 Mit freundlichen Grüßen,
 TheBate Team
-      `.trim(),
-    },
-    pt_BR: {
-      subject: "Verificar Email - TheBate",
-      getText: (url: string) =>
-        `
-Olá,
-
-Bem-vindo ao TheBate! Para completar seu cadastro, você precisa verificar seu email.
-
-Clique no link abaixo para confirmar seu email:
-${url}
-
-Este link expira em 24 horas.
-
-Se você não se cadastrou no TheBate, pode ignorar este email.
-
-Atenciosamente,
-Time TheBate
       `.trim(),
     },
   };

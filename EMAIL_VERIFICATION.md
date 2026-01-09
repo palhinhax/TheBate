@@ -51,6 +51,7 @@ Resend a verification email to the authenticated user.
 **Authentication**: Required (user must be logged in)
 
 **Success Response (200):**
+
 ```json
 {
   "success": true,
@@ -59,6 +60,7 @@ Resend a verification email to the authenticated user.
 ```
 
 **Rate Limit Response (429):**
+
 ```json
 {
   "message": "Muitas tentativas. Tente novamente mais tarde.",
@@ -67,6 +69,7 @@ Resend a verification email to the authenticated user.
 ```
 
 **Error Response (400):**
+
 ```json
 {
   "message": "Email já verificado"
@@ -74,6 +77,7 @@ Resend a verification email to the authenticated user.
 ```
 
 **Error Response (401):**
+
 ```json
 {
   "message": "Não autenticado"
@@ -89,6 +93,7 @@ Resend a verification email to the authenticated user.
 Verify the email using the token from the email.
 
 **Request Body:**
+
 ```json
 {
   "token": "abc123..."
@@ -96,6 +101,7 @@ Verify the email using the token from the email.
 ```
 
 **Success Response (200):**
+
 ```json
 {
   "success": true,
@@ -104,6 +110,7 @@ Verify the email using the token from the email.
 ```
 
 **Error Responses (400):**
+
 ```json
 // Invalid/expired token
 {
@@ -156,6 +163,7 @@ The email verification system uses **Resend** for email delivery, same as the pa
 ### Development Mode
 
 In development (when `RESEND_API_KEY` is not set):
+
 - Emails are logged to the console
 - No actual email is sent
 - Check terminal output for the verification link
@@ -172,6 +180,7 @@ Uses Resend API for reliable email delivery.
    - Verify your domain (or use the test domain for development)
 
 2. **Configure Environment Variables**:
+
    ```env
    RESEND_API_KEY="re_..."
    EMAIL_FROM="noreply@yourdomain.com"
@@ -185,23 +194,25 @@ Uses Resend API for reliable email delivery.
 #### Email Template
 
 Emails are sent with:
+
 - **From**: Value from `EMAIL_FROM` env variable (default: `onboarding@resend.dev`)
 - **Subject**: Localized based on user's language (pt/en/es/fr/de)
 - **Content**: Plain text with verification link
 - **Link expiration**: Clearly stated (24 hours)
 
 Example email (Portuguese):
+
 ```
 Olá,
 
-Bem-vindo ao TheBate! Para completar o seu registo, precisa verificar o seu email.
+Bem-vindo ao TheBate! Para completar o seu registo, precisa de verificar o seu email.
 
 Clique no link abaixo para confirmar o seu email:
 https://yourdomain.com/auth/verify-email?token=abc123...
 
 Este link expira em 24 horas.
 
-Se não foi você que se registou, pode ignorar este email.
+Se não foi o utilizador que se registou, pode ignorar este email.
 
 Atenciosamente,
 Equipa TheBate
@@ -220,6 +231,7 @@ The email verification is automatically integrated with the registration process
 5. User sees success message
 
 If email sending fails:
+
 - Registration still succeeds
 - Error is logged
 - User can resend verification email later from `/auth/resend-verification`
@@ -233,6 +245,7 @@ If email sending fails:
 **Route**: `/auth/verify-email`
 
 Features:
+
 - Automatic verification on page load
 - Loading state while verifying
 - Success message with redirect countdown
@@ -243,6 +256,7 @@ Features:
 **Route**: `/auth/resend-verification`
 
 Features:
+
 - Simple button to resend verification email
 - Success/error messages
 - Link back to login page
@@ -254,6 +268,7 @@ Features:
 ### Manual Testing
 
 1. **Register New User**:
+
    ```bash
    curl -X POST http://localhost:3000/api/auth/register \
      -H "Content-Type: application/json" \
@@ -268,6 +283,7 @@ Features:
 2. **Check Console**: Look for the email with the verification token
 
 3. **Verify Email**:
+
    ```bash
    curl -X POST http://localhost:3000/api/auth/email-verification/confirm \
      -H "Content-Type: application/json" \
@@ -320,6 +336,7 @@ Or manually apply the SQL:
 ## Translations
 
 The system supports multiple languages. Current translations:
+
 - Portuguese (pt)
 - English (en)
 - Spanish (es)
@@ -327,6 +344,7 @@ The system supports multiple languages. Current translations:
 - German (de)
 
 To add more languages, update:
+
 1. `locales/{locale}.json` - UI translations
 2. `lib/email.ts` - Email templates
 

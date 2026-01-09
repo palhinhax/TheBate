@@ -6,7 +6,7 @@ export const commentSchema = z.object({
     .min(20, "O comentário deve ter pelo menos 20 caracteres")
     .max(800, "O comentário não pode ter mais de 800 caracteres"),
   side: z.enum(["AFAVOR", "CONTRA"], {
-    message: "Você deve escolher um lado (A Favor ou Contra)",
+    message: "Deve escolher um lado (A Favor ou Contra)",
   }),
   topicId: z.string(),
   parentId: z.string().optional(),

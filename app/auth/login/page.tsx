@@ -74,7 +74,7 @@ export default function LoginPage() {
             Entrar
           </CardTitle>
           <CardDescription className="text-center">
-            Digite suas credenciais para acessar sua conta
+            Introduza as suas credenciais para aceder à sua conta
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)}>

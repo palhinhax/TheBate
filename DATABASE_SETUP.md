@@ -2,7 +2,7 @@
 
 ## Problema Atual
 
-Você está usando `db.prisma.io` que é apenas para demonstração e não funciona em produção.
+Está a usar `db.prisma.io` que é apenas para demonstração e não funciona em produção.
 
 ## Solução: Configurar Banco de Dados Real
 

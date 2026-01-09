@@ -36,7 +36,7 @@ export async function POST(
     // Users can't vote on their own comments
     if (comment.userId === session.user.id) {
       return NextResponse.json(
-        { error: "Você não pode votar no seu próprio comentário" },
+        { error: "Não pode votar no seu próprio comentário" },
         { status: 400 }
       );
     }

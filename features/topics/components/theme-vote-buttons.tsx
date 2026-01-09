@@ -29,7 +29,7 @@ export default function ThemeVoteButtons({
     if (!session?.user) {
       toast({
         title: "Entre para votar",
-        description: "Você precisa estar logado para votar.",
+        description: "Precisa de iniciar sessão para votar.",
         variant: "destructive",
       });
       return;
