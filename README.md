@@ -26,6 +26,11 @@ Uma plataforma pública de discussões construída com Next.js 14, PostgreSQL e 
   - `USER`: Usuário padrão
   - `MOD`: Moderador com poderes de moderação
   - `ADMIN`: Administrador com acesso total
+- **Password Reset**: Sistema de recuperação de senha com magic link
+  - Tokens únicos com expiração de 15 minutos
+  - Rate limiting (IP e email)
+  - Sem exposição de emails existentes
+  - Ver [PASSWORD_RESET.md](./PASSWORD_RESET.md) para detalhes
 
 ### SEO e Performance
 
