@@ -398,9 +398,6 @@ export default async function TopicPage({ params, searchParams }: Props) {
             </div>
           )}
 
-          {/* Advertisement - Between content and comments */}
-          <AdContainer />
-
           {/* Comments Section */}
           <div>
             <div className="mb-6">
@@ -497,6 +494,9 @@ export default async function TopicPage({ params, searchParams }: Props) {
 
           {/* Next Topic Navigation */}
           <NextTopicNavigation currentSlug={topic.slug} />
+
+          {/* Advertisement - At the end of all content */}
+          <AdContainer />
         </main>
       </div>
     </>
