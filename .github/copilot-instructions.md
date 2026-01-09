@@ -1,5 +1,27 @@
 # GitHub Copilot Instructions - TheBate
 
+## Language and Internationalization Requirements
+
+**CRITICAL**: This project is multilingual and must support all configured languages.
+
+### Translation Rules
+
+1. **Always provide translations in ALL supported languages**: English (en), Portuguese (pt), Spanish (es), French (fr), German (de)
+2. **Portuguese variant**: ALWAYS use **European Portuguese (pt-PT)**, never Brazilian Portuguese
+   - Use "tu" instead of "você"
+   - Use European Portuguese vocabulary and expressions
+   - Examples: "ecrã" not "tela", "telemóvel" not "celular", "autocarro" not "ônibus"
+3. **Translation files**: When adding or modifying UI text, update ALL locale files:
+   - `/locales/en.json`
+   - `/locales/pt.json` (European Portuguese)
+   - `/locales/es.json`
+   - `/locales/fr.json`
+   - `/locales/de.json`
+4. **Never hardcode text**: Always use translation keys with the `useTranslations` hook
+5. **Consistency**: Keep translation keys organized and consistent across all language files
+
+---
+
 ## Conventional Commits Standard
 
 This repository follows [Conventional Commits](https://www.conventionalcommits.org/) specification to enable automated semantic versioning and changelog generation via `semantic-release`.
@@ -314,3 +336,15 @@ Every commit and PR title in this repository must:
 6. Reference issues when applicable
 
 **GitHub Copilot must strictly follow these rules when suggesting commits.**
+
+---
+
+## GitHub Copilot Development Rules
+
+When developing features or fixing issues:
+
+1. **Translations**: Always provide translations in ALL supported languages (en, pt, es, fr, de)
+2. **Portuguese**: Use European Portuguese (pt-PT) exclusively, never Brazilian Portuguese
+3. **Locale files**: Update all locale files when adding or modifying user-facing text
+4. **Translation keys**: Never hardcode text - always use translation keys with `useTranslations` hook
+5. **Consistency**: Maintain consistent translation key structure across all language files
