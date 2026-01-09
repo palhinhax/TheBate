@@ -1,3 +1,20 @@
+# [1.8.0](https://github.com/palhinhax/TheBate/compare/v1.7.1...v1.8.0) (2026-01-09)
+
+
+### Bug Fixes
+
+* **adsense:** improve ad loading debug and troubleshooting ([c18f5e5](https://github.com/palhinhax/TheBate/commit/c18f5e51d65bc2ac369b1b6ff961c4ba72704b76)), closes [#adsense-blank-ads](https://github.com/palhinhax/TheBate/issues/adsense-blank-ads)
+* **ui:** wrap content language filter in suspense boundary ([a3bbad8](https://github.com/palhinhax/TheBate/commit/a3bbad89f4fdccc2f94985cb309064a2bddfe97f))
+
+
+### Features
+
+* **i18n:** separate UI language settings from content language filter ([ff8c699](https://github.com/palhinhax/TheBate/commit/ff8c699431488aaeded927dcb216a02300760629))
+* **moderation:** add topic reporting system ([64d708c](https://github.com/palhinhax/TheBate/commit/64d708ca851b61490be9664736917b25e7378979))
+* **profile:** add user self-deletion functionality ([a75a818](https://github.com/palhinhax/TheBate/commit/a75a81876b789dbe53a71a9a2fe938e683426f13))
+* **seo:** enhance multilingual SEO for international discoverability ([f1984b7](https://github.com/palhinhax/TheBate/commit/f1984b735ca9a4dee7a547dbe8ac8b966752295c))
+* **settings:** add comprehensive user settings page ([a3e3167](https://github.com/palhinhax/TheBate/commit/a3e3167433f2b96920be9e81f2a89c4b9fb067f8))
+
 ## [1.7.1](https://github.com/palhinhax/TheBate/compare/v1.7.0...v1.7.1) (2026-01-09)
 
 
