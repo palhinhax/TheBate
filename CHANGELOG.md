@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/palhinhax/TheBate/compare/v2.1.0...v2.2.0) (2026-01-09)
+
+
+### Features
+
+* **topics:** add controversial gun control topics in all languages ([bbf57d7](https://github.com/palhinhax/TheBate/commit/bbf57d78ea8a0bdf6a78fb934a1137d8dcdb65a2))
+
 # [2.1.0](https://github.com/palhinhax/TheBate/compare/v2.0.2...v2.1.0) (2026-01-09)
 
 
