@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/palhinhax/TheBate/compare/v2.3.0...v2.4.0) (2026-01-09)
+
+
+### Features
+
+* **search:** add search functionality with language filtering ([9142ef3](https://github.com/palhinhax/TheBate/commit/9142ef3cc0cb24c7dacd48e3c7e8251432f5e8ac))
+
 # [2.3.0](https://github.com/palhinhax/TheBate/compare/v2.2.0...v2.3.0) (2026-01-09)
 
 
