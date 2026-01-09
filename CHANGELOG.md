@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/palhinhax/TheBate/compare/v2.0.2...v2.1.0) (2026-01-09)
+
+
+### Features
+
+* **i18n:** add Hindi and Chinese language support ([3773192](https://github.com/palhinhax/TheBate/commit/3773192b1766e8ecda320b286b57bf4ab6d459f5))
+
 ## [2.0.2](https://github.com/palhinhax/TheBate/compare/v2.0.1...v2.0.2) (2026-01-09)
 
 
