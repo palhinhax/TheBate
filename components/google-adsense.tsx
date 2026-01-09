@@ -41,24 +41,6 @@ export function GoogleAdSense({
       }
 
       (window.adsbygoogle = window.adsbygoogle || []).push({});
-
-      // Debug: verificar se o ad foi carregado
-      setTimeout(() => {
-        if (adRef.current) {
-          const status = adRef.current.getAttribute("data-ad-status");
-          if (status === "unfilled") {
-            console.warn(
-              "⚠️ Google AdSense: Nenhum anúncio disponível para mostrar. Pode demorar 24-48h após verificação do site."
-            );
-          } else if (!status) {
-            console.warn(
-              "⚠️ Google AdSense: Anúncio ainda a carregar ou bloqueado por ad blocker."
-            );
-          } else {
-            console.log("✅ Google AdSense: Anúncio carregado com sucesso!");
-          }
-        }
-      }, 2000);
     } catch (err) {
       console.error("❌ AdSense error:", err);
     }
