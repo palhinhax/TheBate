@@ -9,6 +9,8 @@ import CommentsList from "@/features/comments/components/comments-list";
 import NewCommentForm from "@/features/comments/components/new-comment-form";
 import ThemeVoteButtons from "@/features/topics/components/theme-vote-buttons";
 import ThemeVoteResults from "@/features/topics/components/theme-vote-results";
+import MultiChoiceVoteButtons from "@/features/topics/components/multi-choice-vote-buttons";
+import MultiChoiceVoteResults from "@/features/topics/components/multi-choice-vote-results";
 import { AdContainer } from "@/components/ad-container";
 import { ReportTopicButton } from "@/features/topics/components/report-topic-button";
 import { ShareButton } from "@/components/share-button";
@@ -411,14 +413,36 @@ export default async function TopicPage({ params, searchParams }: Props) {
           {/* Theme Voting Section */}
           <div className="mb-8 rounded-lg border bg-card p-6">
             <h2 className="mb-4 text-xl font-semibold">Vote no tema</h2>
-            <div className="mb-6">
-              <ThemeVoteButtons
-                topicSlug={topic.slug}
-                userVote={topic.userVote}
-                disabled={false}
-              />
-            </div>
-            <ThemeVoteResults voteStats={topic.voteStats} />
+            {topic.type === "YES_NO" ? (
+              <>
+                <div className="mb-6">
+                  <ThemeVoteButtons
+                    topicSlug={topic.slug}
+                    userVote={topic.userVote}
+                    disabled={false}
+                  />
+                </div>
+                <ThemeVoteResults voteStats={topic.voteStats} />
+              </>
+            ) : (
+              <>
+                <div className="mb-6">
+                  <MultiChoiceVoteButtons
+                    topicSlug={topic.slug}
+                    options={topic.options}
+                    userVoteOptions={topic.userVoteOptions}
+                    allowMultipleVotes={topic.allowMultipleVotes}
+                    maxChoices={topic.maxChoices}
+                    disabled={false}
+                  />
+                </div>
+                <MultiChoiceVoteResults
+                  options={topic.options}
+                  optionVoteStats={topic.optionVoteStats}
+                  totalVotes={topic.voteStats.total}
+                />
+              </>
+            )}
           </div>
 
           {/* New Comment Form */}
