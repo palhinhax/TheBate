@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/palhinhax/TheBate/compare/v1.7.0...v1.7.1) (2026-01-09)
+
+
+### Bug Fixes
+
+* **i18n:** eliminate all Brazilian Portuguese terms from documentation ([b8954bc](https://github.com/palhinhax/TheBate/commit/b8954bc83ecda03963650007d45ab97843f38786))
+
 # [1.7.0](https://github.com/palhinhax/TheBate/compare/v1.6.1...v1.7.0) (2026-01-09)
 
 
