@@ -190,7 +190,7 @@ export default function AdminPage() {
   const deleteUser = async (id: string) => {
     if (
       !confirm(
-        "Tem certeza que deseja deletar este usuário? Todos os seus conteúdos serão removidos."
+        "Tem a certeza que deseja eliminar este utilizador? Todos os seus conteúdos serão removidos."
       )
     )
       return;
@@ -202,18 +202,18 @@ export default function AdminPage() {
 
       if (res.ok) {
         setUsers(users.filter((u) => u.id !== id));
-        toast({ title: "Usuário deletado com sucesso" });
+        toast({ title: "Utilizador eliminado com sucesso" });
       } else {
         const error = await res.json();
         toast({
-          title: "Erro ao deletar usuário",
+          title: "Erro ao eliminar utilizador",
           description: error.error,
           variant: "destructive",
         });
       }
     } catch {
       toast({
-        title: "Erro ao deletar usuário",
+        title: "Erro ao eliminar utilizador",
         variant: "destructive",
       });
     }
@@ -253,7 +253,7 @@ export default function AdminPage() {
         setUsers(users.map((u) => (u.id === id ? updatedUser : u)));
         toast({
           title: !currentStatus
-            ? "Usuário promovido a Owner"
+            ? "Utilizador promovido a Owner"
             : "Status de Owner removido",
         });
       } else {
@@ -317,7 +317,7 @@ export default function AdminPage() {
               : "text-muted-foreground"
           }`}
         >
-          Usuários ({users.length})
+          Utilizadores ({users.length})
         </button>
       </div>
 
@@ -325,15 +325,15 @@ export default function AdminPage() {
         <div className="space-y-4">
           {topics.map((topic) => (
             <Card key={topic.id} className="p-4">
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex-1">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                <div className="flex-1 min-w-0">
                   <Link
                     href={`/t/${topic.slug}`}
-                    className="text-lg font-semibold hover:underline"
+                    className="text-lg font-semibold hover:underline break-words"
                   >
                     {topic.title}
                   </Link>
-                  <p className="mt-1 text-sm text-muted-foreground">
+                  <p className="mt-1 text-sm text-muted-foreground break-words">
                     Por {topic.createdBy.name || topic.createdBy.username} •{" "}
                     {new Date(topic.createdAt).toLocaleDateString("pt-PT")} •{" "}
                     {topic._count.comments} comentários •{" "}
@@ -353,7 +353,7 @@ export default function AdminPage() {
                     </span>
                   </div>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 shrink-0">
                   {topic.status === "ACTIVE" && (
                     <Button
                       size="sm"
@@ -397,9 +397,9 @@ export default function AdminPage() {
         <div className="space-y-4">
           {comments.map((comment) => (
             <Card key={comment.id} className="p-4">
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex-1">
-                  <p className="text-sm">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm break-words">
                     {comment.content.length > 200
                       ? comment.content.substring(0, 200) + "..."
                       : comment.content}
@@ -429,7 +429,7 @@ export default function AdminPage() {
                     </span>
                   </div>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 shrink-0">
                   {comment.status === "ACTIVE" && (
                     <Button
                       size="sm"
@@ -466,9 +466,9 @@ export default function AdminPage() {
         <div className="space-y-4">
           {users.map((user) => (
             <Card key={user.id} className="p-4">
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-wrap items-center gap-2">
                     <h3 className="text-lg font-semibold">
                       {user.name || user.username}
                     </h3>
@@ -489,26 +489,26 @@ export default function AdminPage() {
                       {user.role}
                     </span>
                   </div>
-                  <p className="mt-1 text-sm text-muted-foreground">
+                  <p className="mt-1 text-sm text-muted-foreground break-words">
                     @{user.username} • {user.email}
                   </p>
                   <p className="mt-1 text-xs text-muted-foreground">
                     Membro desde{" "}
                     {new Date(user.createdAt).toLocaleDateString("pt-PT")}
                   </p>
-                  <div className="mt-2 flex gap-4 text-sm">
+                  <div className="mt-2 flex flex-wrap gap-2 sm:gap-4 text-xs sm:text-sm">
                     <span>{user._count.topics} tópicos</span>
                     <span>{user._count.comments} comentários</span>
                     <span>{user._count.topicVotes} votos em tópicos</span>
                     <span>{user._count.votes} votos em comentários</span>
                   </div>
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 shrink-0 w-full sm:w-auto">
                   <div className="flex gap-2">
                     <select
                       value={user.role}
                       onChange={(e) => updateUserRole(user.id, e.target.value)}
-                      className="rounded border px-2 py-1 text-sm"
+                      className="rounded border px-2 py-1 text-sm flex-1 sm:flex-none"
                       disabled={user.id === session.user.id}
                     >
                       <option value="USER">USER</option>
@@ -535,7 +535,7 @@ export default function AdminPage() {
                     className="w-full"
                   >
                     <Trash2 className="mr-2 h-4 w-4" />
-                    Deletar
+                    Eliminar
                   </Button>
                 </div>
               </div>
