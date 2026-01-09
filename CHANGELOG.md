@@ -1,3 +1,10 @@
+## [2.5.1](https://github.com/palhinhax/TheBate/compare/v2.5.0...v2.5.1) (2026-01-09)
+
+
+### Bug Fixes
+
+* **ui:** improve mobile responsiveness for topic pages ([cf210b2](https://github.com/palhinhax/TheBate/commit/cf210b246f99a1beb64f08599c74ff83cf3b74fe))
+
 # [2.5.0](https://github.com/palhinhax/TheBate/compare/v2.4.0...v2.5.0) (2026-01-09)
 
 
