@@ -317,7 +317,7 @@ export default async function TopicPage({ params, searchParams }: Props) {
                     </Link>
                   </div>
                 </div>
-                
+
                 {/* Side filter buttons */}
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                   <span className="text-sm font-medium text-muted-foreground">
@@ -367,8 +367,8 @@ export default async function TopicPage({ params, searchParams }: Props) {
               </div>
             </div>
 
-            <CommentsList 
-              topicSlug={topic.slug} 
+            <CommentsList
+              topicSlug={topic.slug}
               sort={sort as "top" | "new"}
               side={side}
             />

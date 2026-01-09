@@ -3,6 +3,7 @@
 ## Problem
 
 The production database is missing required tables:
+
 - `PasswordResetToken`
 - `EmailVerificationToken`
 
@@ -15,26 +16,31 @@ You need to run Prisma migrations on your production database. Here are the step
 ### Option 1: Manual Migration via Vercel CLI (Recommended)
 
 1. **Install Vercel CLI** (if not already installed):
+
 ```bash
 pnpm add -g vercel
 ```
 
 2. **Login to Vercel**:
+
 ```bash
 vercel login
 ```
 
 3. **Link your project**:
+
 ```bash
 vercel link
 ```
 
 4. **Pull production environment variables**:
+
 ```bash
 vercel env pull .env.production
 ```
 
 5. **Run migrations against production database**:
+
 ```bash
 DATABASE_URL="$(grep DATABASE_URL .env.production | cut -d '=' -f2-)" npx prisma migrate deploy
 ```
@@ -44,6 +50,7 @@ DATABASE_URL="$(grep DATABASE_URL .env.production | cut -d '=' -f2-)" npx prisma
 Add a build script to automatically run migrations during deployment.
 
 Update `package.json`:
+
 ```json
 {
   "scripts": {
@@ -61,11 +68,13 @@ If you have direct access to your PostgreSQL database:
 
 1. Get your production `DATABASE_URL` from Vercel dashboard
 2. Set it locally:
+
 ```bash
 export DATABASE_URL="your_production_database_url"
 ```
 
 3. Run migrations:
+
 ```bash
 npx prisma migrate deploy
 ```
@@ -80,6 +89,7 @@ SELECT tablename FROM pg_tables WHERE schemaname = 'public';
 ```
 
 You should see:
+
 - `User`
 - `Topic`
 - `Comment`
@@ -91,6 +101,7 @@ You should see:
 ## Existing Migrations
 
 The following migrations need to be applied:
+
 1. `20260108094102_init` - Initial schema
 2. `20260108112142_add_language_to_topics` - Add language field
 3. `20260108125538_remove_comment_score` - Remove score
@@ -126,11 +137,13 @@ echo "✓ Migrations completed successfully!"
 ```
 
 Make it executable:
+
 ```bash
 chmod +x scripts/migrate-production.sh
 ```
 
 Run it:
+
 ```bash
 ./scripts/migrate-production.sh
 ```
@@ -138,6 +151,7 @@ Run it:
 ## Need Help?
 
 If you encounter issues:
+
 1. Check Vercel logs for detailed error messages
 2. Verify DATABASE_URL is correctly set in Vercel environment variables
 3. Ensure your database user has CREATE TABLE permissions

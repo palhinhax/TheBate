@@ -16,7 +16,7 @@ export function Navbar() {
     <nav className="border-b bg-background">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center shrink-0">
+          <Link href="/" className="flex shrink-0 items-center">
             <Image
               src="/logo_no_bg.png"
               alt="Thebate"
@@ -110,8 +110,15 @@ export function Navbar() {
                     </Button>
                   </Link>
                   {session.user?.isOwner && (
-                    <Link href="/admin" onClick={() => setIsMobileMenuOpen(false)}>
-                      <Button variant="outline" size="sm" className="w-full justify-start">
+                    <Link
+                      href="/admin"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full justify-start"
+                      >
                         <Shield className="mr-2 h-4 w-4" />
                         Painel Owner
                       </Button>
@@ -121,7 +128,11 @@ export function Navbar() {
                     href={`/u/${session.user?.username}`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    <Button variant="ghost" size="sm" className="w-full justify-start">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="w-full justify-start"
+                    >
                       <User className="mr-2 h-4 w-4" />
                       {session.user?.name || session.user?.username}
                     </Button>
@@ -141,12 +152,22 @@ export function Navbar() {
                 </>
               ) : (
                 <>
-                  <Link href="/auth/login" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Button variant="ghost" size="sm" className="w-full justify-start">
+                  <Link
+                    href="/auth/login"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="w-full justify-start"
+                    >
                       Entrar
                     </Button>
                   </Link>
-                  <Link href="/auth/register" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Link
+                    href="/auth/register"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
                     <Button size="sm" className="w-full justify-start">
                       Registrar
                     </Button>
