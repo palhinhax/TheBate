@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/palhinhax/TheBate/compare/v1.6.0...v1.6.1) (2026-01-09)
+
+
+### Bug Fixes
+
+* **admin:** improve responsiveness and use European Portuguese ([0c500b8](https://github.com/palhinhax/TheBate/commit/0c500b8a9e14022d4914c28bbdf93fe59c226b57))
+
 # [1.6.0](https://github.com/palhinhax/TheBate/compare/v1.5.3...v1.6.0) (2026-01-09)
 
 
