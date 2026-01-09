@@ -1,3 +1,10 @@
+## [1.5.3](https://github.com/palhinhax/TheBate/compare/v1.5.2...v1.5.3) (2026-01-09)
+
+
+### Bug Fixes
+
+* **ui:** make comment sort and filter buttons responsive ([c89c418](https://github.com/palhinhax/TheBate/commit/c89c418319d29c58b6e16f4a7b0a4207e398a3b3))
+
 ## [1.5.2](https://github.com/palhinhax/TheBate/compare/v1.5.1...v1.5.2) (2026-01-09)
 
 
