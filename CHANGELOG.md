@@ -1,3 +1,10 @@
+## [2.12.1](https://github.com/palhinhax/TheBate/compare/v2.12.0...v2.12.1) (2026-01-09)
+
+
+### Bug Fixes
+
+* **ui:** move share and report buttons above title on mobile ([11b87a1](https://github.com/palhinhax/TheBate/commit/11b87a181970ab9fc90910c8da86e21856c20609))
+
 # [2.12.0](https://github.com/palhinhax/TheBate/compare/v2.11.2...v2.12.0) (2026-01-09)
 
 
