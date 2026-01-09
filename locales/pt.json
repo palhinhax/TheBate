@@ -42,7 +42,10 @@
     "cancel": "Cancelar",
     "created_success": "Tema criado!",
     "created_description": "O seu tema foi criado com sucesso.",
-    "create_error": "Erro ao criar tema"
+    "create_error": "Erro ao criar tema",
+    "next_topic": "Próximo tema",
+    "next_topic_loading": "A carregar próximo tema...",
+    "no_more_topics": "Não há mais temas disponíveis"
   },
   "profile": {
     "delete_account": "Eliminar Conta",
