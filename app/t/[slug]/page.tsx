@@ -282,64 +282,87 @@ export default async function TopicPage({ params, searchParams }: Props) {
 
           {/* Comments Section */}
           <div>
-            <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <h2 className="text-2xl font-bold">Argumentos</h2>
-              <div className="flex flex-wrap gap-2">
+            <div className="mb-6">
+              <h2 className="mb-4 text-2xl font-bold">Argumentos</h2>
+              <div className="flex flex-col gap-3">
                 {/* Sort buttons */}
-                <div className="flex gap-2">
-                  <Link
-                    href={`/t/${topic.slug}?sort=top${side ? `&side=${side}` : ""}`}
-                  >
-                    <Button
-                      variant={sort === "top" ? "default" : "ghost"}
-                      size="sm"
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                  <span className="text-sm font-medium text-muted-foreground">
+                    Ordenar:
+                  </span>
+                  <div className="flex gap-2">
+                    <Link
+                      href={`/t/${topic.slug}?sort=top${side ? `&side=${side}` : ""}`}
+                      className="flex-1 sm:flex-none"
                     >
-                      Top
-                    </Button>
-                  </Link>
-                  <Link
-                    href={`/t/${topic.slug}?sort=new${side ? `&side=${side}` : ""}`}
-                  >
-                    <Button
-                      variant={sort === "new" ? "default" : "ghost"}
-                      size="sm"
+                      <Button
+                        variant={sort === "top" ? "default" : "outline"}
+                        size="sm"
+                        className="w-full sm:w-auto"
+                      >
+                        Top
+                      </Button>
+                    </Link>
+                    <Link
+                      href={`/t/${topic.slug}?sort=new${side ? `&side=${side}` : ""}`}
+                      className="flex-1 sm:flex-none"
                     >
-                      Novos
-                    </Button>
-                  </Link>
+                      <Button
+                        variant={sort === "new" ? "default" : "outline"}
+                        size="sm"
+                        className="w-full sm:w-auto"
+                      >
+                        Novos
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
+                
                 {/* Side filter buttons */}
-                <div className="flex gap-2">
-                  <Link
-                    href={`/t/${topic.slug}?sort=${sort}`}
-                  >
-                    <Button
-                      variant={!side ? "default" : "ghost"}
-                      size="sm"
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                  <span className="text-sm font-medium text-muted-foreground">
+                    Filtrar:
+                  </span>
+                  <div className="flex gap-2">
+                    <Link
+                      href={`/t/${topic.slug}?sort=${sort}`}
+                      className="flex-1 sm:flex-none"
                     >
-                      Todos
-                    </Button>
-                  </Link>
-                  <Link
-                    href={`/t/${topic.slug}?sort=${sort}&side=AFAVOR`}
-                  >
-                    <Button
-                      variant={side === "AFAVOR" ? "default" : "ghost"}
-                      size="sm"
+                      <Button
+                        variant={!side ? "default" : "outline"}
+                        size="sm"
+                        className="w-full sm:w-auto"
+                      >
+                        Todos
+                      </Button>
+                    </Link>
+                    <Link
+                      href={`/t/${topic.slug}?sort=${sort}&side=AFAVOR`}
+                      className="flex-1 sm:flex-none"
                     >
-                      👍 A Favor
-                    </Button>
-                  </Link>
-                  <Link
-                    href={`/t/${topic.slug}?sort=${sort}&side=CONTRA`}
-                  >
-                    <Button
-                      variant={side === "CONTRA" ? "default" : "ghost"}
-                      size="sm"
+                      <Button
+                        variant={side === "AFAVOR" ? "default" : "outline"}
+                        size="sm"
+                        className="w-full sm:w-auto"
+                      >
+                        <span className="hidden sm:inline">👍 A Favor</span>
+                        <span className="sm:hidden">👍</span>
+                      </Button>
+                    </Link>
+                    <Link
+                      href={`/t/${topic.slug}?sort=${sort}&side=CONTRA`}
+                      className="flex-1 sm:flex-none"
                     >
-                      👎 Contra
-                    </Button>
-                  </Link>
+                      <Button
+                        variant={side === "CONTRA" ? "default" : "outline"}
+                        size="sm"
+                        className="w-full sm:w-auto"
+                      >
+                        <span className="hidden sm:inline">👎 Contra</span>
+                        <span className="sm:hidden">👎</span>
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
