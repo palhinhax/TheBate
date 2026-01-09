@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/palhinhax/TheBate/compare/v2.0.0...v2.0.1) (2026-01-09)
+
+
+### Bug Fixes
+
+* **i18n:** add robust array validation for preferredContentLanguages ([a271fab](https://github.com/palhinhax/TheBate/commit/a271fab1ab3f5254c7bde535b26ecd0af34a17d4))
+
 # [2.0.0](https://github.com/palhinhax/TheBate/compare/v1.9.0...v2.0.0) (2026-01-09)
 
 
