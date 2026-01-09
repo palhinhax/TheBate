@@ -7,7 +7,11 @@
     "logout": "Sair",
     "loading": "A carregar...",
     "error": "Erro",
-    "search": "Pesquisar"
+    "search": "Pesquisar",
+    "delete_confirm": "Tem a certeza que deseja eliminar?",
+    "deleted_success": "Eliminado com sucesso",
+    "delete_error": "Erro ao eliminar",
+    "load_error": "Falha ao carregar dados"
   },
   "hero": {
     "title": "Plataforma Global de Discussão",
@@ -20,10 +24,25 @@
     "new": "Novos",
     "no_topics": "Nenhum tópico encontrado",
     "create": "Criar Novo Tema",
+    "create_new_topic": "Criar Novo Tema",
+    "create_topic_description": "Inicie uma nova discussão sobre um tema que considera relevante.",
     "title": "Título",
+    "title_placeholder": "Ex: IA vai substituir programadores?",
     "description": "Descrição",
+    "description_placeholder": "Descreva o tema em detalhes...",
     "tags": "Tags",
-    "language": "Idioma"
+    "tags_placeholder": "Ex: tecnologia, ia, programação",
+    "tags_help": "Adicione de 1 a 5 tags para categorizar o seu tema",
+    "add_tag": "Adicionar",
+    "language": "Idioma",
+    "language_label": "Idioma do Tema",
+    "language_help": "Escolha o idioma em que vai escrever este tema",
+    "creating": "A criar...",
+    "create_button": "Criar Tema",
+    "cancel": "Cancelar",
+    "created_success": "Tema criado!",
+    "created_description": "O seu tema foi criado com sucesso.",
+    "create_error": "Erro ao criar tema"
   },
   "comments": {
     "title": "Comentários",
