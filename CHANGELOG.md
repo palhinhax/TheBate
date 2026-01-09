@@ -1,3 +1,10 @@
+# [2.5.0](https://github.com/palhinhax/TheBate/compare/v2.4.0...v2.5.0) (2026-01-09)
+
+
+### Features
+
+* **legal:** add Terms of Service and Privacy Policy pages ([5941885](https://github.com/palhinhax/TheBate/commit/59418854e7aca2556eb3f7bf5ea3a35533781306))
+
 # [2.4.0](https://github.com/palhinhax/TheBate/compare/v2.3.0...v2.4.0) (2026-01-09)
 
 
