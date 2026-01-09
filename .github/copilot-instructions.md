@@ -348,3 +348,98 @@ When developing features or fixing issues:
 3. **Locale files**: Update all locale files when adding or modifying user-facing text
 4. **Translation keys**: Never hardcode text - always use translation keys with `useTranslations` hook
 5. **Consistency**: Maintain consistent translation key structure across all language files
+
+---
+
+## TypeScript and Code Quality Standards
+
+**CRITICAL**: This project maintains strict TypeScript standards for code safety and maintainability.
+
+### TypeScript Rules
+
+1. **NEVER use `any` type**: Always use proper types or generics
+   - ❌ Bad: `const data: any = await fetch(...)`
+   - ✅ Good: `const data: User = await fetch(...)`
+   - ✅ Good: `const data: User[] = await fetch(...)`
+   - ✅ Good: `function process<T>(data: T): T { ... }`
+
+2. **NEVER use `unknown` unnecessarily**: Use specific types whenever possible
+   - ❌ Bad: `const error: unknown = e`
+   - ✅ Good: `const error: Error = e`
+   - ✅ Good: `if (error instanceof Error) { ... }`
+
+3. **Use strict type definitions**: Define interfaces and types for all data structures
+   ```typescript
+   // ✅ Good
+   interface UserProfile {
+     id: string;
+     name: string;
+     email: string;
+     role: "USER" | "ADMIN" | "MOD";
+   }
+   
+   // ❌ Bad
+   const user: any = { id: "1", name: "John" };
+   ```
+
+4. **Proper error handling with types**:
+   ```typescript
+   // ✅ Good
+   try {
+     // ...
+   } catch (error) {
+     if (error instanceof Error) {
+       console.error(error.message);
+     }
+   }
+   
+   // ❌ Bad
+   try {
+     // ...
+   } catch (error: any) {
+     console.error(error.message);
+   }
+   ```
+
+### Pre-Commit Requirements
+
+**MANDATORY**: Before EVERY commit, you MUST run:
+
+1. **Lint check**: `pnpm lint`
+   - Fix all ESLint warnings and errors
+   - Ensure code follows project style guidelines
+
+2. **Type check**: `pnpm typecheck`
+   - Verify no TypeScript errors exist
+   - Ensure all types are properly defined
+
+3. **Build verification**: `pnpm build`
+   - Confirm the project builds successfully
+   - Catch any build-time errors
+
+**Commit Workflow**:
+```bash
+# 1. Run quality checks
+pnpm lint
+pnpm typecheck
+pnpm build
+
+# 2. Only commit if all checks pass
+git add .
+git commit -m "feat(scope): description"
+```
+
+### Code Quality Checklist
+
+Before committing, verify:
+- [ ] No `any` types used anywhere
+- [ ] No `unknown` types used unnecessarily
+- [ ] All functions have proper return types
+- [ ] All parameters have explicit types
+- [ ] `pnpm lint` passes with no errors
+- [ ] `pnpm typecheck` passes with no errors
+- [ ] `pnpm build` completes successfully
+- [ ] All translations are complete for all languages
+- [ ] Conventional commit format is followed
+
+**GitHub Copilot must enforce these standards in all code suggestions and verify compliance before commits.**
