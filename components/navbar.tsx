@@ -27,23 +27,21 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden items-center gap-2 lg:flex">
+          <div className="hidden items-center gap-2 xl:flex">
             {session ? (
               <>
                 {session.user?.isOwner && (
                   <Link href="/admin">
                     <Button variant="outline" size="sm">
                       <Shield className="mr-2 h-4 w-4" />
-                      <span className="hidden xl:inline">Painel Owner</span>
-                      <span className="xl:hidden">Admin</span>
+                      Painel Owner
                     </Button>
                   </Link>
                 )}
                 <Link href="/new">
                   <Button size="sm">
                     <Plus className="mr-2 h-4 w-4" />
-                    <span className="hidden xl:inline">Novo Tema</span>
-                    <span className="xl:hidden">Novo</span>
+                    Novo Tema
                   </Button>
                 </Link>
                 <Link href={`/u/${session.user?.username}`}>
@@ -56,8 +54,8 @@ export function Navbar() {
                 </Link>
                 <Link href="/settings">
                   <Button variant="ghost" size="sm">
-                    <Settings className="h-4 w-4 xl:mr-2" />
-                    <span className="hidden xl:inline">Configurações</span>
+                    <Settings className="mr-2 h-4 w-4" />
+                    Configurações
                   </Button>
                 </Link>
                 <Button
@@ -65,8 +63,8 @@ export function Navbar() {
                   size="sm"
                   onClick={() => signOut({ callbackUrl: "/" })}
                 >
-                  <LogOut className="h-4 w-4 xl:mr-2" />
-                  <span className="hidden xl:inline">Sair</span>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Sair
                 </Button>
               </>
             ) : (
@@ -84,7 +82,7 @@ export function Navbar() {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex items-center gap-2 lg:hidden">
+          <div className="flex items-center gap-2 xl:hidden">
             <Button
               variant="ghost"
               size="sm"
@@ -102,7 +100,7 @@ export function Navbar() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="border-t py-4 lg:hidden">
+          <div className="border-t py-4 xl:hidden">
             <div className="flex flex-col gap-2">
               {session ? (
                 <>
