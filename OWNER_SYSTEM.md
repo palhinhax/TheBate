@@ -2,7 +2,7 @@
 
 ## Visão Geral
 
-O sistema de Owner é uma camada adicional de controle administrativo que permite a um usuário específico (o "dono" da plataforma) ter acesso exclusivo ao painel administrativo.
+O sistema de Owner é uma camada adicional de controle administrativo que permite a um utilizador específico (o "dono" da plataforma) ter acesso exclusivo ao painel administrativo.
 
 ## Características
 
@@ -10,7 +10,7 @@ O sistema de Owner é uma camada adicional de controle administrativo que permit
 
 - Adicionado campo booleano `isOwner` ao modelo `User` no Prisma
 - Valor padrão: `false`
-- Apenas um ou poucos usuários devem ter este status
+- Apenas um ou poucos utilizadores devem ter este status
 
 ### 2. Autenticação e Sessão
 
@@ -30,7 +30,7 @@ O painel do owner fornece:
   - `ACTIVE` - Visível para todos
   - `HIDDEN` - Oculto da listagem pública
   - `LOCKED` - Não aceita novos comentários
-- Deletar tópicos permanentemente
+- Eliminar tópicos permanentemente
 
 #### Gestão de Comentários
 
@@ -39,23 +39,23 @@ O painel do owner fornece:
 - Alterar status dos comentários:
   - `ACTIVE` - Visível para todos
   - `HIDDEN` - Oculto da visualização pública
-  - `DELETED` - Marcado como deletado
-- Deletar comentários permanentemente
+  - `DELETED` - Marcado como eliminado
+- Eliminar comentários permanentemente
 
 ### 4. Segurança
 
 - Todas as rotas `/api/admin/*` verificam `session.user.isOwner`
-- Acesso negado (403) se o usuário não for owner
-- A página `/admin` redireciona para home se o usuário não for owner
-- O link do painel só aparece na navbar se o usuário for owner
+- Acesso negado (403) se o utilizador não for owner
+- A página `/admin` redireciona para home se o utilizador não for owner
+- O link do painel só aparece na navbar se o utilizador for owner
 - **Proteções de segurança:**
-  - Owner não pode deletar a si mesmo
+  - Owner não pode eliminar a si mesmo
   - Owner não pode remover seu próprio status de owner
-  - Validação de roles ao atualizar usuários
+  - Validação de roles ao atualizar utilizadores
 
 ## Como Usar
 
-### Tornar um Usuário Owner
+### Tornar um Utilizador Owner
 
 Use o script `make-owner.ts` para conceder status de owner:
 
@@ -72,8 +72,8 @@ npx tsx scripts/make-owner.ts joao
 **Saída esperada:**
 
 ```
-✅ Usuário 'joao' agora é OWNER
-   Esse usuário tem acesso completo ao painel administrativo
+✅ Utilizador 'joao' agora é OWNER
+   Esse utilizador tem acesso completo ao painel administrativo
 ```
 
 ### Verificar Status
@@ -81,16 +81,16 @@ npx tsx scripts/make-owner.ts joao
 O script informa se o usuário já é owner:
 
 ```bash
-ℹ️  Usuário 'joao' já é OWNER
+ℹ️  Utilizador 'joao' já é OWNER
 ```
 
 ### Erros Comuns
 
 ```bash
-❌ Usuário 'username' não encontrado
+❌ Utilizador 'username' não encontrado
 ```
 
-- O usuário não existe no banco de dados
+- O utilizador não existe na base de dados
 - Verifique se o username está correto
 
 ## Estrutura de Arquivos
@@ -135,7 +135,7 @@ O script informa se o usuário já é owner:
 | Acesso ao painel      | ❌ Não | ✅ Sim |
 | Gerenciar tópicos     | ❌ Não | ✅ Sim |
 | Gerenciar comentários | ❌ Não | ✅ Sim |
-| Deletar conteúdo      | ❌ Não | ✅ Sim |
+| Eliminar conteúdo     | ❌ Não | ✅ Sim |
 | Moderar conteúdo      | Futuro | ✅ Sim |
 
 **Nota:** O campo `role` ainda existe mas não é mais usado para acesso ao painel. O `isOwner` é a verificação principal.
@@ -218,7 +218,7 @@ Atualiza o status de um comentário.
 
 ### GET /api/admin/users
 
-Lista todos os usuários do sistema.
+Lista todos os utilizadores do sistema.
 
 **Autenticação:** Requer `isOwner = true`
 
@@ -246,15 +246,15 @@ Lista todos os usuários do sistema.
 
 ### DELETE /api/admin/users/:id
 
-Deleta um usuário permanentemente (incluindo todo seu conteúdo).
+Elimina um utilizador permanentemente (incluindo todo seu conteúdo).
 
 **Autenticação:** Requer `isOwner = true`
 
-**Restrição:** Não pode deletar a si mesmo
+**Restrição:** Não pode eliminar a si mesmo
 
 ### PATCH /api/admin/users/:id
 
-Atualiza role ou status de owner de um usuário.
+Atualiza role ou status de owner de um utilizador.
 
 **Autenticação:** Requer `isOwner = true`
 
@@ -279,7 +279,7 @@ Atualiza role ou status de owner de um usuário.
 3. **Permissões Granulares**: Diferentes níveis de acesso admin
 4. **Dashboard Analytics**: Estatísticas e métricas do sistema
 5. **Moderação em Lote**: Ações em múltiplos itens de uma vez
-6. **Sistema de Reports**: Usuários podem reportar conteúdo
+6. **Sistema de Reports**: Utilizadores podem reportar conteúdo
 7. **Auto-moderação**: Regras automáticas baseadas em comportamento
 
 ## Segurança
@@ -290,13 +290,13 @@ Atualiza role ou status de owner de um usuário.
 - Nunca exponha o script `make-owner.ts` em produção
 - Considere adicionar 2FA para contas owner
 - Monitore logs de acesso ao painel administrativo
-- Faça backup regular do banco de dados antes de deletar conteúdo
+- Faça backup regular da base de dados antes de eliminar conteúdo
 
 ## Suporte
 
 Para questões ou problemas:
 
 1. Verifique os logs do servidor
-2. Confirme que o usuário está autenticado
-3. Verifique o campo `isOwner` no banco de dados
+2. Confirme que o utilizador está autenticado
+3. Verifique o campo `isOwner` na base de dados
 4. Teste os endpoints com ferramentas como Postman

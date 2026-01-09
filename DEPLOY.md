@@ -30,7 +30,7 @@ NODE_ENV="production"
 
 ## 🗄️ Database Migrations
 
-Quando houver mudanças no schema do banco de dados, é necessário executar as migrações:
+Quando houver mudanças no schema da base de dados, é necessário executar as migrações:
 
 ### Opção 1: Usando Prisma Migrate (Recomendado)
 
@@ -39,7 +39,7 @@ Quando houver mudanças no schema do banco de dados, é necessário executar as 
 npx prisma migrate deploy
 ```
 
-Este comando aplica todas as migrações pendentes ao banco de dados de produção.
+Este comando aplica todas as migrações pendentes à base de dados de produção.
 
 ### Opção 2: Via Vercel Build (Automático)
 

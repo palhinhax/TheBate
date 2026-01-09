@@ -14,7 +14,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
-    // Prevenir que o owner delete a si mesmo
+    // Prevenir que o owner elimine a si mesmo
     if (params.id === session.user.id) {
       return NextResponse.json(
         { error: "Cannot delete your own account" },

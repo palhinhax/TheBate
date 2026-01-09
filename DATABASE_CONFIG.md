@@ -1,8 +1,8 @@
-# Configuração do Banco de Dados - Neon PostgreSQL
+# Configuração da Base de Dados - Neon PostgreSQL
 
 ## ✅ Banco Atual: Neon PostgreSQL
 
-Este projeto usa [Neon](https://neon.tech) como banco de dados PostgreSQL serverless.
+Este projeto usa [Neon](https://neon.tech) como base de dados PostgreSQL serverless.
 
 ## Setup Local
 

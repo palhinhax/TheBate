@@ -1,12 +1,12 @@
-# Guia de Deploy - Configuração do Banco de Dados
+# Guia de Deploy - Configuração da Base de Dados
 
 ## Problema Atual
 
 Está a usar `db.prisma.io` que é apenas para demonstração e não funciona em produção.
 
-## Solução: Configurar Banco de Dados Real
+## Solução: Configurar Base de Dados Real
 
-### 1. Escolha um Provedor de Banco de Dados
+### 1. Escolha um Provedor de Base de Dados
 
 #### Opção A: Neon (Recomendado)
 
@@ -163,7 +163,7 @@ datasource db {
 ## Próximos Passos
 
 1. ✅ Escolher provedor de banco
-2. ✅ Criar banco de dados
+2. ✅ Criar base de dados
 3. ✅ Copiar connection string
 4. ✅ Adicionar no Vercel (Environment Variables)
 5. ✅ Executar migrations

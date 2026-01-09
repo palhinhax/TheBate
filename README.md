@@ -6,7 +6,7 @@ Uma plataforma pública de discussões construída com Next.js 14, PostgreSQL e 
 
 ### Temas e Discussões
 
-- **Criação de Temas**: Usuários autenticados podem criar novos temas de discussão
+- **Criação de Temas**: Utilizadores autenticados podem criar novos temas de discussão
 - **Páginas Públicas**: Todos os temas são indexáveis pelos motores de busca
 - **Tags**: Cada tema pode ter até 5 tags para categorização
 - **Status**: Temas podem estar ativos, ocultos ou bloqueados (moderação)
@@ -16,14 +16,14 @@ Uma plataforma pública de discussões construída com Next.js 14, PostgreSQL e 
 - **Comentários em Thread**: Sistema de comentários com respostas (nested)
 - **Sistema de Votos**: Upvote/Downvote para comentários
 - **Ordenação**: Comentários podem ser ordenados por Top (mais votados) ou New (mais recentes)
-- **Edição e Moderação**: Autores podem editar, moderadores podem ocultar/deletar
+- **Edição e Moderação**: Autores podem editar, moderadores podem ocultar/eliminar
 
 ### Autenticação e Permissões
 
 - **Leitura Pública**: Qualquer pessoa pode ler temas e comentários sem login
 - **Interação Autenticada**: Login obrigatório para criar temas, comentar e votar
 - **Sistema de Roles**:
-  - `USER`: Usuário padrão
+  - `USER`: Utilizador padrão
   - `MOD`: Moderador com poderes de moderação
   - `ADMIN`: Administrador com acesso total
 - **Password Reset**: Sistema de recuperação de senha com magic link
@@ -51,7 +51,7 @@ Uma plataforma pública de discussões construída com Next.js 14, PostgreSQL e 
 │   ├── auth/                # Páginas de login/registro
 │   ├── new/                 # Criar novo tema
 │   ├── t/[slug]/            # Página de tema individual
-│   ├── u/[username]/        # Perfil de usuário
+│   ├── u/[username]/        # Perfil de utilizador
 │   ├── sitemap.ts           # Sitemap dinâmico
 │   └── robots.ts            # Robots.txt
 ├── components/              # Componentes UI (shadcn/ui)
@@ -151,7 +151,7 @@ Após executar o seed:
 
 - **Admin**: `admin@thebate.com` / `password123`
 - **Moderador**: `mod@thebate.com` / `password123`
-- **Usuários**: `maria@example.com`, `joao@example.com`, etc. / `password123`
+- **Utilizadores**: `maria@example.com`, `joao@example.com`, etc. / `password123`
 
 ## 📝 API Endpoints
 
