@@ -1,6 +1,10 @@
 import { z } from "zod";
 import { SUPPORTED_LANGUAGES } from "@/lib/language-shared";
 
+// Topic types matching Prisma schema
+export const TOPIC_TYPES = ["YES_NO", "MULTI_CHOICE"] as const;
+export type TopicType = (typeof TOPIC_TYPES)[number];
+
 export const topicOptionSchema = z.object({
   label: z
     .string()
@@ -28,7 +32,7 @@ export const topicSchema = z
       .array(z.string().min(2).max(30))
       .min(1, "Adicione pelo menos uma tag")
       .max(5, "Máximo de 5 tags permitidas"),
-    type: z.enum(["YES_NO", "MULTI_CHOICE"]),
+    type: z.enum(TOPIC_TYPES),
     allowMultipleVotes: z.boolean(),
     maxChoices: z.number().int().min(1).max(10),
     options: z.array(topicOptionSchema).optional(),

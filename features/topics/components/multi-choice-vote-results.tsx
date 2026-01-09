@@ -74,7 +74,7 @@ export default function MultiChoiceVoteResults({
               <div
                 className="h-full rounded-full bg-primary transition-all duration-300"
                 style={{
-                  width: `${totalVotes > 0 ? (result.voteCount / maxVotes) * 100 : 0}%`,
+                  width: `${totalVotes > 0 ? result.percentage : 0}%`,
                 }}
               />
             </div>
