@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/palhinhax/TheBate/compare/v1.5.1...v1.5.2) (2026-01-09)
+
+
+### Bug Fixes
+
+* **ui:** make navbar responsive for mobile devices ([431ac37](https://github.com/palhinhax/TheBate/commit/431ac37f879b4d13ea31acc196b78214f059b36a))
+
 ## [1.5.1](https://github.com/palhinhax/TheBate/compare/v1.5.0...v1.5.1) (2026-01-09)
 
 
