@@ -288,11 +288,11 @@ export default async function TopicPage({ params, searchParams }: Props) {
               </div>
             )}
 
-            <div className="mb-4 flex items-start justify-between gap-4">
+            <div className="mb-4 flex flex-col-reverse items-start gap-4 sm:flex-row sm:justify-between">
               <h1 className="text-2xl font-bold leading-tight sm:text-3xl">
                 {topic.title}
               </h1>
-              <div className="flex gap-2">
+              <div className="flex gap-2 self-end sm:self-start">
                 <ShareButton
                   title={topic.title}
                   description={topic.description.substring(0, 200)}
