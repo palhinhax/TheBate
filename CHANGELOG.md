@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/palhinhax/TheBate/compare/v1.5.3...v1.6.0) (2026-01-09)
+
+
+### Features
+
+* **profile:** create comprehensive user profile page ([17cbc49](https://github.com/palhinhax/TheBate/commit/17cbc497afba0f8380696d7dacf7fabf633fe447))
+
 ## [1.5.3](https://github.com/palhinhax/TheBate/compare/v1.5.2...v1.5.3) (2026-01-09)
 
 
