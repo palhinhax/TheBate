@@ -1,6 +1,6 @@
 {
   "name": "next-prisma-saas-template",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -17,6 +17,7 @@
     "db:migrate": "prisma migrate dev",
     "db:push": "prisma db push",
     "db:seed": "npx tsx prisma/seed.ts",
+    "db:seed-topics": "npx tsx scripts/seed-hot-topics.ts",
     "db:studio": "prisma studio",
     "prepare": "husky",
     "semantic-release": "semantic-release"
