@@ -3,8 +3,8 @@ import { auth } from "@/lib/auth";
 import NewTopicForm from "@/features/topics/components/new-topic-form";
 
 export const metadata = {
-  title: "Criar Novo Tema - Thebatee",
-  description: "Crie um novo tema de discussão na plataforma Thebatee",
+  title: "Criar Novo Tema - TheBatee",
+  description: "Crie um novo tema de discussão na plataforma TheBatee",
 };
 
 export default async function NewTopicPage() {
@@ -19,7 +19,7 @@ export default async function NewTopicPage() {
       <header className="border-b">
         <div className="container mx-auto flex h-16 items-center px-4">
           <a href="/" className="text-xl font-bold">
-            Thebatee
+            TheBatee
           </a>
         </div>
       </header>

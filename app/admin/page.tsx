@@ -72,29 +72,42 @@ export default function AdminPage() {
   const [comments, setComments] = useState<Comment[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+  const [topicsPage, setTopicsPage] = useState(1);
+  const [topicsPagination, setTopicsPagination] = useState({
+    total: 0,
+    totalPages: 0,
+    limit: 50,
+  });
 
-  const loadData = useCallback(async () => {
-    setLoading(true);
-    try {
-      const [topicsRes, commentsRes, usersRes] = await Promise.all([
-        fetch("/api/admin/topics"),
-        fetch("/api/admin/comments"),
-        fetch("/api/admin/users"),
-      ]);
+  const loadData = useCallback(
+    async (page: number = topicsPage) => {
+      setLoading(true);
+      try {
+        const [topicsRes, commentsRes, usersRes] = await Promise.all([
+          fetch(`/api/admin/topics?page=${page}&limit=50`),
+          fetch("/api/admin/comments"),
+          fetch("/api/admin/users"),
+        ]);
 
-      if (topicsRes.ok) setTopics(await topicsRes.json());
-      if (commentsRes.ok) setComments(await commentsRes.json());
-      if (usersRes.ok) setUsers(await usersRes.json());
-    } catch {
-      toast({
-        title: "Erro",
-        description: "Falha ao carregar dados",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  }, [toast]);
+        if (topicsRes.ok) {
+          const data = await topicsRes.json();
+          setTopics(data.topics);
+          setTopicsPagination(data.pagination);
+        }
+        if (commentsRes.ok) setComments(await commentsRes.json());
+        if (usersRes.ok) setUsers(await usersRes.json());
+      } catch {
+        toast({
+          title: "Erro",
+          description: "Falha ao carregar dados",
+          variant: "destructive",
+        });
+      } finally {
+        setLoading(false);
+      }
+    },
+    [toast, topicsPage]
+  );
 
   useEffect(() => {
     if (status === "loading") return;
@@ -297,7 +310,7 @@ export default function AdminPage() {
               : "text-muted-foreground"
           }`}
         >
-          Temas ({topics.length})
+          Temas ({topicsPagination.total || 0})
         </button>
         <button
           onClick={() => setActiveTab("comments")}
@@ -390,6 +403,38 @@ export default function AdminPage() {
               </div>
             </Card>
           ))}
+          {topicsPagination.totalPages > 1 && (
+            <div className="mt-6 flex items-center justify-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const newPage = topicsPage - 1;
+                  setTopicsPage(newPage);
+                  loadData(newPage);
+                }}
+                disabled={topicsPage === 1}
+              >
+                Anterior
+              </Button>
+              <span className="text-sm text-muted-foreground">
+                Página {topicsPage} de {topicsPagination.totalPages} (
+                {topicsPagination.total} temas)
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const newPage = topicsPage + 1;
+                  setTopicsPage(newPage);
+                  loadData(newPage);
+                }}
+                disabled={topicsPage === topicsPagination.totalPages}
+              >
+                Próxima
+              </Button>
+            </div>
+          )}
         </div>
       )}
 

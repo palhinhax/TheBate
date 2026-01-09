@@ -18,7 +18,7 @@ export function Navbar() {
           <Link href="/" className="flex shrink-0 items-center">
             <Image
               src="/logo_no_bg.png"
-              alt="Thebatee"
+              alt="TheBatee"
               width={120}
               height={40}
               className="h-8 w-auto sm:h-10"

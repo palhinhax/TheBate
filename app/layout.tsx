@@ -24,8 +24,8 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://thebatee.com"),
   title: {
     default:
-      "Thebatee - Global Discussion Platform | Multilingual Debate Forum",
-    template: "%s | Thebatee",
+      "TheBatee - Global Discussion Platform | Multilingual Debate Forum",
+    template: "%s | TheBatee",
   },
   description:
     "Join intelligent discussions about technology, society, and culture from around the world. Share ideas, learn, and connect with respect. Available in English, Portuguese, Spanish, French, and German.",
@@ -53,9 +53,9 @@ export const metadata: Metadata = {
     "discusión",
     "discussão",
   ],
-  authors: [{ name: "Thebatee Team" }],
-  creator: "Thebatee",
-  publisher: "Thebatee",
+  authors: [{ name: "TheBatee Team" }],
+  creator: "TheBatee",
+  publisher: "TheBatee",
   formatDetection: {
     email: false,
     address: false,
@@ -73,11 +73,11 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Thebatee - Global Discussion Platform",
+    title: "TheBatee - Global Discussion Platform",
     description:
       "Join intelligent discussions about technology, society, and culture in multiple languages.",
     url: "https://thebatee.com",
-    siteName: "Thebatee",
+    siteName: "TheBatee",
     locale: "en_US",
     alternateLocale: ["pt_PT", "es_ES", "fr_FR", "de_DE"],
     type: "website",
@@ -86,13 +86,13 @@ export const metadata: Metadata = {
         url: "https://thebatee.com/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Thebatee - Global Discussion Platform",
+        alt: "TheBatee - Global Discussion Platform",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Thebatee - Global Discussion Platform",
+    title: "TheBatee - Global Discussion Platform",
     description:
       "Join intelligent discussions about technology, society, and culture in multiple languages.",
     creator: "@thebatee",

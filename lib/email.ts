@@ -72,7 +72,7 @@ export async function sendPasswordResetEmail(
     { subject: string; getText: (url: string) => string }
   > = {
     pt: {
-      subject: "Recuperar Palavra-passe - Thebatee",
+      subject: "Recuperar Palavra-passe - TheBatee",
       getText: (url: string) =>
         `
 Olá,
@@ -87,11 +87,11 @@ Este link expira em 15 minutos.
 Se não foi o utilizador que solicitou esta recuperação, pode ignorar este email.
 
 Atenciosamente,
-Equipa Thebatee
+Equipa TheBatee
       `.trim(),
     },
     en: {
-      subject: "Password Reset - Thebatee",
+      subject: "Password Reset - TheBatee",
       getText: (url: string) =>
         `
 Hello,
@@ -106,11 +106,11 @@ This link expires in 15 minutes.
 If you didn't request this reset, you can safely ignore this email.
 
 Best regards,
-Thebatee Team
+TheBatee Team
       `.trim(),
     },
     es: {
-      subject: "Recuperar Contraseña - Thebatee",
+      subject: "Recuperar Contraseña - TheBatee",
       getText: (url: string) =>
         `
 Hola,
@@ -125,7 +125,7 @@ Este enlace expira en 15 minutos.
 Si no solicitaste esta recuperación, puedes ignorar este correo.
 
 Saludos,
-Equipo Thebatee
+Equipo TheBatee
       `.trim(),
     },
   };
@@ -179,55 +179,55 @@ Equipa TheBate
         `
 Hello,
 
-Welcome to Thebatee! To complete your registration, you need to verify your email.
+Welcome to TheBatee! To complete your registration, you need to verify your email.
 
 Click the link below to verify your email:
 ${url}
 
 This link expires in 24 hours.
 
-If you didn't sign up for Thebatee, you can safely ignore this email.
+If you didn't sign up for TheBatee, you can safely ignore this email.
 
 Best regards,
-Thebatee Team
+TheBatee Team
       `.trim(),
     },
     es: {
-      subject: "Verificar Email - Thebatee",
+      subject: "Verificar Email - TheBatee",
       getText: (url: string) =>
         `
 Hola,
 
-¡Bienvenido a Thebatee! Para completar tu registro, necesitas verificar tu email.
+¡Bienvenido a TheBatee! Para completar tu registro, necesitas verificar tu email.
 
 Haz clic en el enlace a continuación para verificar tu email:
 ${url}
 
 Este enlace expira en 24 horas.
 
-Si no te registraste en Thebatee, puedes ignorar este correo.
+Si no te registraste en TheBatee, puedes ignorar este correo.
 
 Saludos,
-Equipo Thebatee
+Equipo TheBatee
       `.trim(),
     },
     fr: {
-      subject: "Vérifier Email - Thebatee",
+      subject: "Vérifier Email - TheBatee",
       getText: (url: string) =>
         `
 Bonjour,
 
-Bienvenue sur Thebatee ! Pour terminer votre inscription, vous devez vérifier votre adresse e-mail.
+Bienvenue sur TheBatee ! Pour terminer votre inscription, vous devez vérifier votre adresse e-mail.
 
 Cliquez sur le lien ci-dessous pour confirmer votre email :
 ${url}
 
 Ce lien expire dans 24 heures.
 
-Si vous ne vous êtes pas inscrit sur Thebatee, vous pouvez ignorer cet e-mail.
+Si vous ne vous êtes pas inscrit sur TheBatee, vous pouvez ignorer cet e-mail.
 
 Cordialement,
-Équipe Thebatee
+Équipe TheBatee
       `.trim(),
     },
     de: {

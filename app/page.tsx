@@ -57,7 +57,7 @@ export default async function Home({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Thebatee",
+    name: "TheBatee",
     url: baseUrl,
     description:
       "Global discussion platform for intelligent debates about technology, society, and culture in multiple languages.",
@@ -72,7 +72,7 @@ export default async function Home({
     },
     publisher: {
       "@type": "Organization",
-      name: "Thebatee",
+      name: "TheBatee",
       url: baseUrl,
       logo: {
         "@type": "ImageObject",
@@ -199,7 +199,7 @@ export default async function Home({
         {/* Footer */}
         <footer className="mt-12 border-t py-8">
           <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-            <p>Thebatee - Plataforma de discussões públicas</p>
+            <p>TheBatee - Plataforma de discussões públicas</p>
           </div>
         </footer>
       </div>

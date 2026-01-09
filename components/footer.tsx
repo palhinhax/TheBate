@@ -16,7 +16,7 @@ export function Footer() {
     <footer className="mt-auto border-t bg-background">
       <div className="container mx-auto px-4 py-4">
         <div className="flex flex-col items-center justify-center gap-2 text-xs text-muted-foreground/60 sm:flex-row sm:justify-between">
-          <p>© 2026 Thebatee. All rights reserved.</p>
+          <p>© 2026 TheBatee. All rights reserved.</p>
           {version && <p className="font-mono">v{version}</p>}
         </div>
       </div>

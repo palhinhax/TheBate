@@ -84,7 +84,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!topic) {
     return {
-      title: "Topic not found - Thebatee",
+      title: "Topic not found - TheBatee",
       description:
         "The topic you are looking for does not exist or has been removed.",
     };
@@ -133,7 +133,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       authors: [topic.createdBy.username],
       tags: topic.tags,
       url: topicUrl,
-      siteName: "Thebatee",
+      siteName: "TheBatee",
       locale: localeMap[topic.language] || "en_US",
       images: [
         {
