@@ -286,7 +286,9 @@ export default async function TopicPage({ params, searchParams }: Props) {
               </div>
             )}
 
-            <h1 className="mb-4 text-3xl font-bold">{topic.title}</h1>
+            <h1 className="mb-4 text-2xl font-bold leading-tight sm:text-3xl">
+              {topic.title}
+            </h1>
 
             <div className="mb-4 flex flex-wrap gap-2">
               {topic.tags.map((tag) => (
@@ -304,31 +306,48 @@ export default async function TopicPage({ params, searchParams }: Props) {
               {topic.description}
             </p>
 
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+            {/* Topic metadata - responsive layout */}
+            <div className="flex flex-col gap-3 text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
               <Link
                 href={`/u/${topic.createdBy.username}`}
                 className="hover:underline"
               >
                 @{topic.createdBy.username}
               </Link>
-              <span>•</span>
+              
+              <span className="hidden sm:inline">•</span>
+              
               <span className="flex items-center gap-1">
                 <Clock className="h-4 w-4" />
-                {new Date(topic.createdAt).toLocaleDateString("pt-BR", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })}
+                <span className="hidden sm:inline">
+                  {new Date(topic.createdAt).toLocaleDateString("pt-BR", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </span>
+                <span className="sm:hidden">
+                  {new Date(topic.createdAt).toLocaleDateString("pt-BR", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                  })}
+                </span>
               </span>
-              <span>•</span>
+              
+              <span className="hidden sm:inline">•</span>
+              
               <span className="flex items-center gap-1">
                 <MessageSquare className="h-4 w-4" />
-                {topic._count.comments} comentário
-                {topic._count.comments !== 1 ? "s" : ""}
+                {topic._count.comments}
+                <span className="hidden sm:inline">
+                  comentário{topic._count.comments !== 1 ? "s" : ""}
+                </span>
               </span>
+              
               {session?.user && (
                 <>
-                  <span>•</span>
+                  <span className="hidden sm:inline">•</span>
                   <ReportTopicButton slug={topic.slug} />
                 </>
               )}
