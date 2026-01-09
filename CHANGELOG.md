@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/palhinhax/TheBate/compare/v2.0.1...v2.0.2) (2026-01-09)
+
+
+### Bug Fixes
+
+* **build:** remove database migration from vercel-build script ([b03d42d](https://github.com/palhinhax/TheBate/commit/b03d42d59e116af6d773deeeba31d1d7afcf775d))
+
 ## [2.0.1](https://github.com/palhinhax/TheBate/compare/v2.0.0...v2.0.1) (2026-01-09)
 
 
