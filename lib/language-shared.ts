@@ -3,9 +3,9 @@
  * Safe for both client and server components
  */
 
-export type SupportedLanguage = "en" | "pt" | "es" | "fr" | "de";
+export type SupportedLanguage = "en" | "pt" | "es" | "fr" | "de" | "hi" | "zh";
 
-export const SUPPORTED_LANGUAGES = ["en", "pt", "es", "fr", "de"] as const;
+export const SUPPORTED_LANGUAGES = ["en", "pt", "es", "fr", "de", "hi", "zh"] as const;
 
 /**
  * Language metadata for SEO and display
@@ -48,6 +48,18 @@ export const LANGUAGE_METADATA: Record<
     nativeName: "Deutsch",
     flag: "🇩🇪",
     locale: "de_DE",
+  },
+  hi: {
+    name: "Hindi",
+    nativeName: "हिन्दी",
+    flag: "🇮🇳",
+    locale: "hi_IN",
+  },
+  zh: {
+    name: "Chinese",
+    nativeName: "中文",
+    flag: "🇨🇳",
+    locale: "zh_CN",
   },
 };
 
