@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/spinner";
 import { useToast } from "@/components/ui/use-toast";
-import { Trash2, Eye, EyeOff, Lock } from "lucide-react";
+import { Trash2, Eye, EyeOff, Lock, Unlock } from "lucide-react";
 
 type Topic = {
   id: string;
@@ -441,13 +441,23 @@ export default function AdminPage() {
                       <Eye className="h-4 w-4" />
                     </Button>
                   )}
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => updateTopicStatus(topic.id, "LOCKED")}
-                  >
-                    <Lock className="h-4 w-4" />
-                  </Button>
+                  {topic.status === "LOCKED" ? (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => updateTopicStatus(topic.id, "ACTIVE")}
+                    >
+                      <Unlock className="h-4 w-4" />
+                    </Button>
+                  ) : (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => updateTopicStatus(topic.id, "LOCKED")}
+                    >
+                      <Lock className="h-4 w-4" />
+                    </Button>
+                  )}
                   <Button
                     size="sm"
                     variant="destructive"
