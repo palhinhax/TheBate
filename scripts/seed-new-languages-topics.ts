@@ -67,8 +67,7 @@ const arabicTopics = [
 // Controversial topics for Bengali-speaking regions
 const bengaliTopics = [
   {
-    title:
-      "বাংলাদেশে ধর্মনিরপেক্ষতা বনাম ইসলাম: কোন পথে এগোনো উচিত?",
+    title: "বাংলাদেশে ধর্মনিরপেক্ষতা বনাম ইসলাম: কোন পথে এগোনো উচিত?",
     description:
       "সংবিধানে ধর্মনিরপেক্ষতা আছে, কিন্তু ইসলাম রাষ্ট্রধর্ম। এই দ্বৈততা কি দেশের অগ্রগতির পথে বাধা? নাকি বৈচিত্র্যের প্রতীক?",
   },
@@ -176,8 +175,7 @@ const russianTopics = [
 // Controversial topics for Indonesian-speaking regions
 const indonesianTopics = [
   {
-    title:
-      "Papua Merdeka: Separatisme atau Perjuangan Hak Asasi?",
+    title: "Papua Merdeka: Separatisme atau Perjuangan Hak Asasi?",
     description:
       "Konflik di Papua berlangsung puluhan tahun. Pemerintah menyebut OPM sebagai teroris, tapi aktivis HAM menyebut ini perjuangan kemerdekaan. Siapa yang benar?",
   },
@@ -283,7 +281,9 @@ const japaneseTopics = [
 ];
 
 async function main() {
-  console.log("🌍 Starting to seed controversial topics for new languages...\n");
+  console.log(
+    "🌍 Starting to seed controversial topics for new languages...\n"
+  );
 
   const userId = "cmk72akli0000s909y8a2mm9t"; // joao.mduart
 

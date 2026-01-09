@@ -522,7 +522,9 @@ export default function SettingsPage() {
                               className="h-4 w-4 rounded border-gray-300"
                             />
                             <span className="text-2xl">{metadata.flag}</span>
-                            <span className="flex-1">{metadata.nativeName}</span>
+                            <span className="flex-1">
+                              {metadata.nativeName}
+                            </span>
                           </label>
                         );
                       })}

@@ -3,9 +3,34 @@
  * Safe for both client and server components
  */
 
-export type SupportedLanguage = "en" | "pt" | "es" | "fr" | "de" | "hi" | "zh" | "ar" | "bn" | "ru" | "id" | "ja";
+export type SupportedLanguage =
+  | "en"
+  | "pt"
+  | "es"
+  | "fr"
+  | "de"
+  | "hi"
+  | "zh"
+  | "ar"
+  | "bn"
+  | "ru"
+  | "id"
+  | "ja";
 
-export const SUPPORTED_LANGUAGES = ["en", "pt", "es", "fr", "de", "hi", "zh", "ar", "bn", "ru", "id", "ja"] as const;
+export const SUPPORTED_LANGUAGES = [
+  "en",
+  "pt",
+  "es",
+  "fr",
+  "de",
+  "hi",
+  "zh",
+  "ar",
+  "bn",
+  "ru",
+  "id",
+  "ja",
+] as const;
 
 /**
  * Language metadata for SEO and display
