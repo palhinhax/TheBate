@@ -12,10 +12,13 @@ const profileSchema = z.object({
     .regex(
       /^[a-zA-Z0-9_]+$/,
       "Username só pode conter letras, números e underscore"
-    ).optional(),
+    )
+    .optional(),
   email: z.string().email("Email inválido").optional(),
   preferredLanguage: z.enum(["pt", "en", "es", "fr", "de"]).optional(),
-  preferredContentLanguages: z.array(z.enum(["pt", "en", "es", "fr", "de"])).optional(),
+  preferredContentLanguages: z
+    .array(z.enum(["pt", "en", "es", "fr", "de"]))
+    .optional(),
 });
 
 /**

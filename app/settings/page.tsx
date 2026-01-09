@@ -55,9 +55,9 @@ export default function SettingsPage() {
   });
 
   // Content languages state
-  const [preferredContentLanguages, setPreferredContentLanguages] = useState<string[]>([
-    "pt", "en", "es", "fr", "de"
-  ]);
+  const [preferredContentLanguages, setPreferredContentLanguages] = useState<
+    string[]
+  >(["pt", "en", "es", "fr", "de"]);
 
   // Password form state
   const [passwordForm, setPasswordForm] = useState({
@@ -204,7 +204,9 @@ export default function SettingsPage() {
     if (preferredContentLanguages.includes(lang)) {
       // Don't allow removing the last language
       if (preferredContentLanguages.length > 1) {
-        setPreferredContentLanguages(preferredContentLanguages.filter(l => l !== lang));
+        setPreferredContentLanguages(
+          preferredContentLanguages.filter((l) => l !== lang)
+        );
       }
     } else {
       setPreferredContentLanguages([...preferredContentLanguages, lang]);
@@ -220,7 +222,7 @@ export default function SettingsPage() {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          preferredContentLanguages
+          preferredContentLanguages,
         }),
       });
 
@@ -479,7 +481,9 @@ export default function SettingsPage() {
                   </div>
 
                   <Button type="submit" disabled={loading} className="w-full">
-                    {loading ? t("settings.saving") : t("settings.save_changes")}
+                    {loading
+                      ? t("settings.saving")
+                      : t("settings.save_changes")}
                   </Button>
                 </form>
               </CardContent>
@@ -494,10 +498,13 @@ export default function SettingsPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleContentLanguagesSubmit} className="space-y-6">
+                <form
+                  onSubmit={handleContentLanguagesSubmit}
+                  className="space-y-6"
+                >
                   <div className="space-y-4">
                     <div className="grid gap-3">
-                      <label className="flex items-center gap-3 rounded-lg border p-4 cursor-pointer hover:bg-accent">
+                      <label className="flex cursor-pointer items-center gap-3 rounded-lg border p-4 hover:bg-accent">
                         <input
                           type="checkbox"
                           checked={preferredContentLanguages.includes("pt")}
@@ -507,7 +514,7 @@ export default function SettingsPage() {
                         <span className="text-2xl">🇵🇹</span>
                         <span className="flex-1">Português</span>
                       </label>
-                      <label className="flex items-center gap-3 rounded-lg border p-4 cursor-pointer hover:bg-accent">
+                      <label className="flex cursor-pointer items-center gap-3 rounded-lg border p-4 hover:bg-accent">
                         <input
                           type="checkbox"
                           checked={preferredContentLanguages.includes("en")}
@@ -517,7 +524,7 @@ export default function SettingsPage() {
                         <span className="text-2xl">🇬🇧</span>
                         <span className="flex-1">English</span>
                       </label>
-                      <label className="flex items-center gap-3 rounded-lg border p-4 cursor-pointer hover:bg-accent">
+                      <label className="flex cursor-pointer items-center gap-3 rounded-lg border p-4 hover:bg-accent">
                         <input
                           type="checkbox"
                           checked={preferredContentLanguages.includes("es")}
@@ -527,7 +534,7 @@ export default function SettingsPage() {
                         <span className="text-2xl">🇪🇸</span>
                         <span className="flex-1">Español</span>
                       </label>
-                      <label className="flex items-center gap-3 rounded-lg border p-4 cursor-pointer hover:bg-accent">
+                      <label className="flex cursor-pointer items-center gap-3 rounded-lg border p-4 hover:bg-accent">
                         <input
                           type="checkbox"
                           checked={preferredContentLanguages.includes("fr")}
@@ -537,7 +544,7 @@ export default function SettingsPage() {
                         <span className="text-2xl">🇫🇷</span>
                         <span className="flex-1">Français</span>
                       </label>
-                      <label className="flex items-center gap-3 rounded-lg border p-4 cursor-pointer hover:bg-accent">
+                      <label className="flex cursor-pointer items-center gap-3 rounded-lg border p-4 hover:bg-accent">
                         <input
                           type="checkbox"
                           checked={preferredContentLanguages.includes("de")}
@@ -554,7 +561,9 @@ export default function SettingsPage() {
                   </div>
 
                   <Button type="submit" disabled={loading} className="w-full">
-                    {loading ? t("settings.saving") : t("settings.save_changes")}
+                    {loading
+                      ? t("settings.saving")
+                      : t("settings.save_changes")}
                   </Button>
                 </form>
               </CardContent>

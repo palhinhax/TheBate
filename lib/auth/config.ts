@@ -74,7 +74,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.role = token.role as string;
         session.user.isOwner = token.isOwner as boolean;
         session.user.preferredLanguage = token.preferredLanguage as string;
-        session.user.preferredContentLanguages = token.preferredContentLanguages as string[];
+        session.user.preferredContentLanguages =
+          token.preferredContentLanguages as string[];
       }
       return session;
     },

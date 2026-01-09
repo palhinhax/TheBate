@@ -9,7 +9,7 @@ export async function GET() {
 
     return NextResponse.json({
       version: packageJson.version || "0.1.0",
-      name: packageJson.name || "TheBate",
+      name: packageJson.name || "Thebatee",
     });
   } catch {
     return NextResponse.json(

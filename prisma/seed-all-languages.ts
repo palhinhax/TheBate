@@ -307,7 +307,8 @@ const topicsFr: TopicData[] = [
   },
   {
     slug: "education-ligne-vs-presentielle-fr",
-    title: "L'éducation en ligne est-elle aussi efficace que l'enseignement en classe?",
+    title:
+      "L'éducation en ligne est-elle aussi efficace que l'enseignement en classe?",
     description:
       "Les plateformes d'apprentissage en ligne ont beaucoup grandi ces dernières années. Mais l'apprentissage à distance est-il aussi efficace que l'enseignement en classe traditionnel?",
     tags: ["éducation", "en-ligne", "apprentissage"],
@@ -449,7 +450,7 @@ async function main() {
   console.log("👥 Creating users...");
   const admin = await prisma.user.create({
     data: {
-      email: "admin@thebate.com",
+      email: "admin@thebatee.com",
       username: "admin",
       name: "Admin User",
       passwordHash,
@@ -461,7 +462,7 @@ async function main() {
 
   const mod = await prisma.user.create({
     data: {
-      email: "mod@thebate.com",
+      email: "mod@thebatee.com",
       username: "moderator",
       name: "Moderator",
       passwordHash,
@@ -522,16 +523,26 @@ async function main() {
 
   // Create all topics from all languages
   console.log("📝 Creating topics in all languages...");
-  const allTopics = [...topicsPt, ...topicsEn, ...topicsEs, ...topicsFr, ...topicsDe];
-  
+  const allTopics = [
+    ...topicsPt,
+    ...topicsEn,
+    ...topicsEs,
+    ...topicsFr,
+    ...topicsDe,
+  ];
+
   let createdCount = 0;
   for (const topic of allTopics) {
     // Assign user based on language
     let userId: string;
-    if (topic.language === "pt") userId = users[0].id; // Maria Silva
-    else if (topic.language === "en") userId = users[1].id; // John Smith
-    else if (topic.language === "es") userId = users[2].id; // Carlos García
-    else if (topic.language === "fr") userId = users[3].id; // Marie Dubois
+    if (topic.language === "pt")
+      userId = users[0].id; // Maria Silva
+    else if (topic.language === "en")
+      userId = users[1].id; // John Smith
+    else if (topic.language === "es")
+      userId = users[2].id; // Carlos García
+    else if (topic.language === "fr")
+      userId = users[3].id; // Marie Dubois
     else userId = users[4].id; // Hans Müller
 
     await prisma.topic.create({
@@ -545,10 +556,12 @@ async function main() {
       },
     });
     createdCount++;
-    
+
     // Show progress
     if (createdCount % 10 === 0) {
-      console.log(`   📊 Created ${createdCount}/${allTopics.length} topics...`);
+      console.log(
+        `   📊 Created ${createdCount}/${allTopics.length} topics...`
+      );
     }
   }
 

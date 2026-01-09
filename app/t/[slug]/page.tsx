@@ -84,24 +84,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!topic) {
     return {
-      title: "Topic not found - Thebate",
-      description: "The topic you are looking for does not exist or has been removed.",
+      title: "Topic not found - Thebatee",
+      description:
+        "The topic you are looking for does not exist or has been removed.",
     };
   }
 
   const baseUrl = process.env.NEXTAUTH_URL || "https://thebatee.com";
   const topicUrl = `${baseUrl}/t/${topic.slug}`;
-  
+
   // Generate keywords from tags and content
   const keywords = [
     ...topic.tags,
-    "debate", "discussion", "forum",
+    "debate",
+    "discussion",
+    "forum",
     topic.language === "pt" ? "debate" : "",
     topic.language === "en" ? "debate" : "",
     topic.language === "es" ? "debate" : "",
     topic.language === "fr" ? "débat" : "",
     topic.language === "de" ? "Debatte" : "",
-  ].filter(Boolean).join(", ");
+  ]
+    .filter(Boolean)
+    .join(", ");
 
   // Language-specific locale mapping
   const localeMap: Record<string, string> = {
@@ -128,7 +133,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       authors: [topic.createdBy.username],
       tags: topic.tags,
       url: topicUrl,
-      siteName: "Thebate",
+      siteName: "Thebatee",
       locale: localeMap[topic.language] || "en_US",
       images: [
         {
@@ -143,8 +148,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: "summary_large_image",
       title: topic.title,
       description: topic.description.substring(0, 160),
-      creator: "@thebate",
-      site: "@thebate",
+      creator: "@thebatee",
+      site: "@thebatee",
       images: [`${baseUrl}/og-image.png`],
     },
     alternates: {

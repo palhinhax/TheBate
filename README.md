@@ -1,4 +1,4 @@
-# Thebate
+# Thebatee
 
 Uma plataforma pública de discussões construída com Next.js 14, PostgreSQL e Prisma, focada em SEO e conversas de qualidade.
 
@@ -149,8 +149,8 @@ Acesse [http://localhost:3000](http://localhost:3000) para ver a aplicação.
 
 Após executar o seed:
 
-- **Admin**: `admin@thebate.com` / `password123`
-- **Moderador**: `mod@thebate.com` / `password123`
+- **Admin**: `admin@thebatee.com` / `password123`
+- **Moderador**: `mod@thebatee.com` / `password123`
 - **Utilizadores**: `maria@example.com`, `joao@example.com`, etc. / `password123`
 
 ## 📝 API Endpoints
