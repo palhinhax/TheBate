@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 
 const profileSchema = z.object({
-  name: z.string().min(1, "Nome é obrigatório").max(100),
+  name: z.string().min(1, "Nome é obrigatório").max(100).optional(),
   username: z
     .string()
     .min(3, "Username deve ter pelo menos 3 caracteres")
@@ -12,9 +12,10 @@ const profileSchema = z.object({
     .regex(
       /^[a-zA-Z0-9_]+$/,
       "Username só pode conter letras, números e underscore"
-    ),
-  email: z.string().email("Email inválido"),
+    ).optional(),
+  email: z.string().email("Email inválido").optional(),
   preferredLanguage: z.enum(["pt", "en", "es", "fr", "de"]).optional(),
+  preferredContentLanguages: z.array(z.enum(["pt", "en", "es", "fr", "de"])).optional(),
 });
 
 /**
@@ -41,9 +42,10 @@ export async function PATCH(request: Request) {
 
     const { name, username, email } = validation.data;
     const preferredLanguage = validation.data.preferredLanguage;
+    const preferredContentLanguages = validation.data.preferredContentLanguages;
 
     // Verificar se username já existe (exceto para o próprio utilizador)
-    if (username !== session.user.username) {
+    if (username && username !== session.user.username) {
       const existingUsername = await prisma.user.findUnique({
         where: { username },
       });
@@ -57,7 +59,7 @@ export async function PATCH(request: Request) {
     }
 
     // Verificar se email já existe (exceto para o próprio utilizador)
-    if (email !== session.user.email) {
+    if (email && email !== session.user.email) {
       const existingEmail = await prisma.user.findUnique({
         where: { email },
       });
@@ -74,10 +76,11 @@ export async function PATCH(request: Request) {
     const updatedUser = await prisma.user.update({
       where: { id: session.user.id },
       data: {
-        name,
-        username,
-        email,
+        ...(name && { name }),
+        ...(username && { username }),
+        ...(email && { email }),
         ...(preferredLanguage && { preferredLanguage }),
+        ...(preferredContentLanguages && { preferredContentLanguages }),
       },
       select: {
         id: true,
@@ -85,6 +88,7 @@ export async function PATCH(request: Request) {
         username: true,
         email: true,
         preferredLanguage: true,
+        preferredContentLanguages: true,
       },
     });
 

@@ -50,6 +50,7 @@ model User {
   role                 UserRole              @default(USER)
   isOwner              Boolean               @default(false)
   preferredLanguage    String                @default("pt") // UI language preference
+  preferredContentLanguages String[]         @default(["pt", "en", "es", "fr", "de"]) // Content languages to show
   createdAt            DateTime              @default(now())
   topics               Topic[]
   comments             Comment[]

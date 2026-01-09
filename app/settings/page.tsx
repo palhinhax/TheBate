@@ -54,6 +54,11 @@ export default function SettingsPage() {
     preferredLanguage: "pt",
   });
 
+  // Content languages state
+  const [preferredContentLanguages, setPreferredContentLanguages] = useState<string[]>([
+    "pt", "en", "es", "fr", "de"
+  ]);
+
   // Password form state
   const [passwordForm, setPasswordForm] = useState({
     currentPassword: "",
@@ -71,6 +76,9 @@ export default function SettingsPage() {
         email: session.user.email || "",
         preferredLanguage: session.user.preferredLanguage || "pt",
       });
+      setPreferredContentLanguages(
+        session.user.preferredContentLanguages || ["pt", "en", "es", "fr", "de"]
+      );
     }
   }, [status, session, router]);
 
@@ -189,6 +197,55 @@ export default function SettingsPage() {
     } finally {
       setDeleting(false);
       setShowDeleteDialog(false);
+    }
+  };
+
+  const handleLanguageToggle = (lang: string) => {
+    if (preferredContentLanguages.includes(lang)) {
+      // Don't allow removing the last language
+      if (preferredContentLanguages.length > 1) {
+        setPreferredContentLanguages(preferredContentLanguages.filter(l => l !== lang));
+      }
+    } else {
+      setPreferredContentLanguages([...preferredContentLanguages, lang]);
+    }
+  };
+
+  const handleContentLanguagesSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/users/me/profile", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          preferredContentLanguages
+        }),
+      });
+
+      if (response.ok) {
+        toast({
+          title: t("settings.changes_saved"),
+        });
+        // Recarregar sessão para atualizar dados
+        window.location.reload();
+      } else {
+        const data = await response.json();
+        toast({
+          title: t("settings.changes_error"),
+          description: data.error,
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error("Content languages update error:", error);
+      toast({
+        title: t("settings.changes_error"),
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -384,48 +441,125 @@ export default function SettingsPage() {
 
         {/* Preferences Tab */}
         {activeTab === "preferences" && (
-          <Card>
-            <CardHeader>
-              <CardTitle>{t("settings.language_preferences")}</CardTitle>
-              <CardDescription>
-                {t("settings.ui_language_description")}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleProfileSubmit} className="space-y-6">
-                <div className="space-y-2">
-                  <Label htmlFor="preferredLanguage">
-                    {t("settings.ui_language")}
-                  </Label>
-                  <select
-                    id="preferredLanguage"
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    value={profileForm.preferredLanguage}
-                    onChange={(e) =>
-                      setProfileForm({
-                        ...profileForm,
-                        preferredLanguage: e.target.value,
-                      })
-                    }
-                  >
-                    <option value="pt">🇵🇹 Português</option>
-                    <option value="en">🇬🇧 English</option>
-                    <option value="es">🇪🇸 Español</option>
-                    <option value="fr">🇫🇷 Français</option>
-                    <option value="de">🇩🇪 Deutsch</option>
-                  </select>
-                  <p className="text-sm text-muted-foreground">
-                    A língua em que vê botões, menus e toda a interface da
-                    plataforma.
-                  </p>
-                </div>
+          <div className="space-y-6">
+            {/* UI Language */}
+            <Card>
+              <CardHeader>
+                <CardTitle>{t("settings.ui_language")}</CardTitle>
+                <CardDescription>
+                  {t("settings.ui_language_description")}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleProfileSubmit} className="space-y-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="preferredLanguage">
+                      {t("settings.ui_language")}
+                    </Label>
+                    <select
+                      id="preferredLanguage"
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      value={profileForm.preferredLanguage}
+                      onChange={(e) =>
+                        setProfileForm({
+                          ...profileForm,
+                          preferredLanguage: e.target.value,
+                        })
+                      }
+                    >
+                      <option value="pt">🇵🇹 Português</option>
+                      <option value="en">🇬🇧 English</option>
+                      <option value="es">🇪🇸 Español</option>
+                      <option value="fr">🇫🇷 Français</option>
+                      <option value="de">🇩🇪 Deutsch</option>
+                    </select>
+                    <p className="text-sm text-muted-foreground">
+                      {t("settings.ui_language_description")}
+                    </p>
+                  </div>
 
-                <Button type="submit" disabled={loading} className="w-full">
-                  {loading ? t("settings.saving") : t("settings.save_changes")}
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
+                  <Button type="submit" disabled={loading} className="w-full">
+                    {loading ? t("settings.saving") : t("settings.save_changes")}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+
+            {/* Content Languages */}
+            <Card>
+              <CardHeader>
+                <CardTitle>{t("settings.content_language")}</CardTitle>
+                <CardDescription>
+                  {t("settings.content_language_description")}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleContentLanguagesSubmit} className="space-y-6">
+                  <div className="space-y-4">
+                    <div className="grid gap-3">
+                      <label className="flex items-center gap-3 rounded-lg border p-4 cursor-pointer hover:bg-accent">
+                        <input
+                          type="checkbox"
+                          checked={preferredContentLanguages.includes("pt")}
+                          onChange={() => handleLanguageToggle("pt")}
+                          className="h-4 w-4 rounded border-gray-300"
+                        />
+                        <span className="text-2xl">🇵🇹</span>
+                        <span className="flex-1">Português</span>
+                      </label>
+                      <label className="flex items-center gap-3 rounded-lg border p-4 cursor-pointer hover:bg-accent">
+                        <input
+                          type="checkbox"
+                          checked={preferredContentLanguages.includes("en")}
+                          onChange={() => handleLanguageToggle("en")}
+                          className="h-4 w-4 rounded border-gray-300"
+                        />
+                        <span className="text-2xl">🇬🇧</span>
+                        <span className="flex-1">English</span>
+                      </label>
+                      <label className="flex items-center gap-3 rounded-lg border p-4 cursor-pointer hover:bg-accent">
+                        <input
+                          type="checkbox"
+                          checked={preferredContentLanguages.includes("es")}
+                          onChange={() => handleLanguageToggle("es")}
+                          className="h-4 w-4 rounded border-gray-300"
+                        />
+                        <span className="text-2xl">🇪🇸</span>
+                        <span className="flex-1">Español</span>
+                      </label>
+                      <label className="flex items-center gap-3 rounded-lg border p-4 cursor-pointer hover:bg-accent">
+                        <input
+                          type="checkbox"
+                          checked={preferredContentLanguages.includes("fr")}
+                          onChange={() => handleLanguageToggle("fr")}
+                          className="h-4 w-4 rounded border-gray-300"
+                        />
+                        <span className="text-2xl">🇫🇷</span>
+                        <span className="flex-1">Français</span>
+                      </label>
+                      <label className="flex items-center gap-3 rounded-lg border p-4 cursor-pointer hover:bg-accent">
+                        <input
+                          type="checkbox"
+                          checked={preferredContentLanguages.includes("de")}
+                          onChange={() => handleLanguageToggle("de")}
+                          className="h-4 w-4 rounded border-gray-300"
+                        />
+                        <span className="text-2xl">🇩🇪</span>
+                        <span className="flex-1">Deutsch</span>
+                      </label>
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      {t("settings.content_language_description")}
+                    </p>
+                  </div>
+
+                  <Button type="submit" disabled={loading} className="w-full">
+                    {loading ? t("settings.saving") : t("settings.save_changes")}
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
         )}
 
         {/* Account Tab */}

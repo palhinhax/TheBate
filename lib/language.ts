@@ -1,4 +1,5 @@
 import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
 import { SUPPORTED_LANGUAGES, type SupportedLanguage } from "./language-shared";
 
 // Re-export for convenience
@@ -61,25 +62,17 @@ export async function detectUserLanguage(searchParams?: {
 
 /**
  * Gets languages user prefers to see
- * Checks searchParams for language filter
- * - If "all", returns all supported languages
- * - If specific language, returns only that language
- * - Otherwise, returns detected language
+ * Priority:
+ * 1. User's saved preferences in database (from settings)
+ * 2. All supported languages by default
  */
-export async function getUserLanguages(searchParams?: {
+export async function getUserLanguages(_searchParams?: {
   lang?: string;
 }): Promise<SupportedLanguage[]> {
-  // If "all" is specified, return all supported languages
-  if (searchParams?.lang === "all") {
-    return [...SUPPORTED_LANGUAGES];
-  }
-
-  // If specific language is specified in URL
-  if (searchParams?.lang) {
-    const lang = searchParams.lang.toLowerCase().slice(0, 2);
-    if (SUPPORTED_LANGUAGES.includes(lang as SupportedLanguage)) {
-      return [lang as SupportedLanguage];
-    }
+  // Get user's saved preferences from session
+  const session = await auth();
+  if (session?.user?.preferredContentLanguages && session.user.preferredContentLanguages.length > 0) {
+    return session.user.preferredContentLanguages as SupportedLanguage[];
   }
 
   // Check if running on client and has saved preferences
@@ -97,7 +90,6 @@ export async function getUserLanguages(searchParams?: {
     }
   }
 
-  // Default to only the detected language (NO forced English)
-  const primaryLang = await detectUserLanguage(searchParams);
-  return [primaryLang];
+  // Default to all languages for better discovery
+  return [...SUPPORTED_LANGUAGES];
 }
