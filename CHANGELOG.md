@@ -1,3 +1,10 @@
+# [2.10.0](https://github.com/palhinhax/TheBate/compare/v2.9.0...v2.10.0) (2026-01-09)
+
+
+### Features
+
+* **admin:** add reports management dashboard ([2e77e75](https://github.com/palhinhax/TheBate/commit/2e77e75e1d8d6f9be90144288c08ecdbfe8cfe3c))
+
 # [2.9.0](https://github.com/palhinhax/TheBate/compare/v2.8.0...v2.9.0) (2026-01-09)
 
 
