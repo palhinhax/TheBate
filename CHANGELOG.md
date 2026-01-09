@@ -1,3 +1,10 @@
+# [2.8.0](https://github.com/palhinhax/TheBate/compare/v2.7.0...v2.8.0) (2026-01-09)
+
+
+### Features
+
+* **seo:** add og-image for social sharing ([91b7e71](https://github.com/palhinhax/TheBate/commit/91b7e7179fc0abf39299719e3c52d240db94ecc8))
+
 # [2.7.0](https://github.com/palhinhax/TheBate/compare/v2.6.0...v2.7.0) (2026-01-09)
 
 
