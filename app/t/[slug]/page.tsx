@@ -11,6 +11,7 @@ import ThemeVoteButtons from "@/features/topics/components/theme-vote-buttons";
 import ThemeVoteResults from "@/features/topics/components/theme-vote-results";
 import { AdContainer } from "@/components/ad-container";
 import { ReportTopicButton } from "@/features/topics/components/report-topic-button";
+import { ShareButton } from "@/components/share-button";
 
 type Props = {
   params: { slug: string };
@@ -286,9 +287,22 @@ export default async function TopicPage({ params, searchParams }: Props) {
               </div>
             )}
 
-            <h1 className="mb-4 text-2xl font-bold leading-tight sm:text-3xl">
-              {topic.title}
-            </h1>
+            <div className="mb-4 flex items-start justify-between gap-4">
+              <h1 className="text-2xl font-bold leading-tight sm:text-3xl">
+                {topic.title}
+              </h1>
+              <div className="flex gap-2">
+                <ShareButton
+                  title={topic.title}
+                  description={topic.description.substring(0, 200)}
+                  url={topicUrl}
+                  hashtags={topic.tags.slice(0, 3)}
+                />
+                {session?.user && (
+                  <ReportTopicButton slug={topic.slug} />
+                )}
+              </div>
+            </div>
 
             <div className="mb-4 flex flex-wrap gap-2">
               {topic.tags.map((tag) => (
@@ -344,13 +358,6 @@ export default async function TopicPage({ params, searchParams }: Props) {
                   comentário{topic._count.comments !== 1 ? "s" : ""}
                 </span>
               </span>
-              
-              {session?.user && (
-                <>
-                  <span className="hidden sm:inline">•</span>
-                  <ReportTopicButton slug={topic.slug} />
-                </>
-              )}
             </div>
           </div>
 
