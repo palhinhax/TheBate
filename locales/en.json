@@ -23,7 +23,10 @@
     "title": "Title",
     "description": "Description",
     "tags": "Tags",
-    "language": "Language"
+    "language": "Language",
+    "next_topic": "Next topic",
+    "next_topic_loading": "Loading next topic...",
+    "no_more_topics": "No more topics available"
   },
   "profile": {
     "delete_account": "Delete Account",

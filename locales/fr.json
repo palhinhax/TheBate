@@ -23,7 +23,10 @@
     "title": "Titre",
     "description": "Description",
     "tags": "Tags",
-    "language": "Langue"
+    "language": "Langue",
+    "next_topic": "Sujet suivant",
+    "next_topic_loading": "Chargement du sujet suivant...",
+    "no_more_topics": "Plus de sujets disponibles"
   },
   "profile": {
     "delete_account": "Supprimer le compte",

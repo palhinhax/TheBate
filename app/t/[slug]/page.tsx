@@ -12,6 +12,7 @@ import ThemeVoteResults from "@/features/topics/components/theme-vote-results";
 import { AdContainer } from "@/components/ad-container";
 import { ReportTopicButton } from "@/features/topics/components/report-topic-button";
 import { ShareButton } from "@/components/share-button";
+import NextTopicNavigation from "@/features/topics/components/next-topic-navigation";
 
 type Props = {
   params: { slug: string };
@@ -493,6 +494,9 @@ export default async function TopicPage({ params, searchParams }: Props) {
               side={side}
             />
           </div>
+
+          {/* Next Topic Navigation */}
+          <NextTopicNavigation currentSlug={topic.slug} />
         </main>
       </div>
     </>
