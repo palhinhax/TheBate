@@ -15,7 +15,7 @@ export async function getNextTopic(
   currentTopicId: string,
   currentTopicTags: string[],
   language: string
-) {
+): Promise<{ slug: string; title: string } | null> {
   try {
     // First, try to find a related topic (same tags)
     if (currentTopicTags.length > 0) {
@@ -79,7 +79,10 @@ export async function getNextTopic(
 
     return fallbackTopic;
   } catch (error) {
-    console.error("Error fetching next topic:", error);
+    console.error(
+      "Error fetching next topic:",
+      error instanceof Error ? error.message : String(error)
+    );
     return null;
   }
 }

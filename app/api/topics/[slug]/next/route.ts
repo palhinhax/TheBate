@@ -2,6 +2,17 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getNextTopic } from "@/lib/get-next-topic";
 
+/**
+ * GET /api/topics/[slug]/next
+ *
+ * Fetches the next recommended topic based on priority algorithm:
+ * 1. Related topics (same tags)
+ * 2. Recent topics (same language)
+ * 3. Any recent topic (fallback)
+ *
+ * @param params.slug - The slug of the current topic
+ * @returns JSON response with nextTopic object or null
+ */
 export async function GET(
   req: NextRequest,
   { params }: { params: { slug: string } }
@@ -19,7 +30,7 @@ export async function GET(
 
     if (!currentTopic) {
       return NextResponse.json(
-        { error: "Tema não encontrado" },
+        { error: "Topic not found" },
         { status: 404 }
       );
     }
@@ -37,9 +48,12 @@ export async function GET(
 
     return NextResponse.json({ nextTopic });
   } catch (error) {
-    console.error("Error fetching next topic:", error);
+    console.error(
+      "Error fetching next topic:",
+      error instanceof Error ? error.message : String(error)
+    );
     return NextResponse.json(
-      { error: "Erro ao buscar próximo tema" },
+      { error: "Failed to fetch next topic" },
       { status: 500 }
     );
   }

@@ -33,7 +33,8 @@ describe("getNextTopic", () => {
       title: "Related Topic Title",
     };
 
-    mockFindFirst.mockResolvedValueOnce(mockRelatedTopic);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    mockFindFirst.mockResolvedValueOnce(mockRelatedTopic as any);
 
     const result = await getNextTopic(
       currentTopicId,
@@ -74,7 +75,8 @@ describe("getNextTopic", () => {
     // First call returns null (no related topics)
     mockFindFirst.mockResolvedValueOnce(null);
     // Second call returns recent topic
-    mockFindFirst.mockResolvedValueOnce(mockRecentTopic);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    mockFindFirst.mockResolvedValueOnce(mockRecentTopic as any);
 
     const result = await getNextTopic(
       currentTopicId,
@@ -101,7 +103,8 @@ describe("getNextTopic", () => {
     // Second call returns null (no same-language topics)
     mockFindFirst.mockResolvedValueOnce(null);
     // Third call returns fallback topic
-    mockFindFirst.mockResolvedValueOnce(mockFallbackTopic);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    mockFindFirst.mockResolvedValueOnce(mockFallbackTopic as any);
 
     const result = await getNextTopic(
       currentTopicId,
@@ -141,7 +144,8 @@ describe("getNextTopic", () => {
       title: "Recent Topic Title",
     };
 
-    mockFindFirst.mockResolvedValueOnce(mockRecentTopic);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    mockFindFirst.mockResolvedValueOnce(mockRecentTopic as any);
 
     const result = await getNextTopic(
       currentTopicId,

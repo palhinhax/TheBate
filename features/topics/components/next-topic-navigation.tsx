@@ -31,13 +31,16 @@ export default function NextTopicNavigation({
       try {
         const response = await fetch(`/api/topics/${currentSlug}/next`);
         if (response.ok) {
-          const data = await response.json();
+          const data: { nextTopic: NextTopic | null } = await response.json();
           setNextTopic(data.nextTopic);
         } else {
           setNextTopic(null);
         }
       } catch (error) {
-        console.error("Error fetching next topic:", error);
+        console.error(
+          "Error fetching next topic:",
+          error instanceof Error ? error.message : String(error)
+        );
         setNextTopic(null);
       } finally {
         setIsLoading(false);
