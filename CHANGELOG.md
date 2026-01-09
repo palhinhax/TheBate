@@ -1,3 +1,15 @@
+# [1.7.0](https://github.com/palhinhax/TheBate/compare/v1.6.1...v1.7.0) (2026-01-09)
+
+
+### Bug Fixes
+
+* **admin:** convert all text to European Portuguese ([605b9df](https://github.com/palhinhax/TheBate/commit/605b9dfd47e454550676dfceb45df0a7bef02ce1))
+
+
+### Features
+
+* **data:** add hot topics seed script for multiple languages ([a9fbf32](https://github.com/palhinhax/TheBate/commit/a9fbf322b127400bb96c9437f8e164ae3c73a5be))
+
 ## [1.6.1](https://github.com/palhinhax/TheBate/compare/v1.6.0...v1.6.1) (2026-01-09)
 
 
