@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/palhinhax/TheBate/compare/v1.8.0...v1.9.0) (2026-01-09)
+
+
+### Features
+
+* **i18n:** add missing settings translations for es, fr, de ([4c51f3c](https://github.com/palhinhax/TheBate/commit/4c51f3c9658f358b253ec04eba87e592b7f9a92c))
+
 # [1.8.0](https://github.com/palhinhax/TheBate/compare/v1.7.1...v1.8.0) (2026-01-09)
 
 
