@@ -3,9 +3,9 @@
  * Safe for both client and server components
  */
 
-export type SupportedLanguage = "en" | "pt" | "es" | "fr" | "de" | "hi" | "zh";
+export type SupportedLanguage = "en" | "pt" | "es" | "fr" | "de" | "hi" | "zh" | "ar" | "bn" | "ru" | "id" | "ja";
 
-export const SUPPORTED_LANGUAGES = ["en", "pt", "es", "fr", "de", "hi", "zh"] as const;
+export const SUPPORTED_LANGUAGES = ["en", "pt", "es", "fr", "de", "hi", "zh", "ar", "bn", "ru", "id", "ja"] as const;
 
 /**
  * Language metadata for SEO and display
@@ -60,6 +60,36 @@ export const LANGUAGE_METADATA: Record<
     nativeName: "中文",
     flag: "🇨🇳",
     locale: "zh_CN",
+  },
+  ar: {
+    name: "Arabic",
+    nativeName: "العربية",
+    flag: "🇸🇦",
+    locale: "ar_SA",
+  },
+  bn: {
+    name: "Bengali",
+    nativeName: "বাংলা",
+    flag: "🇧🇩",
+    locale: "bn_BD",
+  },
+  ru: {
+    name: "Russian",
+    nativeName: "Русский",
+    flag: "🇷🇺",
+    locale: "ru_RU",
+  },
+  id: {
+    name: "Indonesian",
+    nativeName: "Bahasa Indonesia",
+    flag: "🇮🇩",
+    locale: "id_ID",
+  },
+  ja: {
+    name: "Japanese",
+    nativeName: "日本語",
+    flag: "🇯🇵",
+    locale: "ja_JP",
   },
 };
 

@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/ui/password-input";
 import { useToast } from "@/components/ui/use-toast";
 import { useTranslations } from "@/lib/use-translations";
+import { SUPPORTED_LANGUAGES, LANGUAGE_METADATA } from "@/lib/language-shared";
 import {
   User,
   Lock,
@@ -469,11 +470,14 @@ export default function SettingsPage() {
                         })
                       }
                     >
-                      <option value="pt">🇵🇹 Português</option>
-                      <option value="en">🇬🇧 English</option>
-                      <option value="es">🇪🇸 Español</option>
-                      <option value="fr">🇫🇷 Français</option>
-                      <option value="de">🇩🇪 Deutsch</option>
+                      {SUPPORTED_LANGUAGES.map((lang) => {
+                        const metadata = LANGUAGE_METADATA[lang];
+                        return (
+                          <option key={lang} value={lang}>
+                            {metadata.flag} {metadata.nativeName}
+                          </option>
+                        );
+                      })}
                     </select>
                     <p className="text-sm text-muted-foreground">
                       {t("settings.ui_language_description")}
@@ -504,56 +508,24 @@ export default function SettingsPage() {
                 >
                   <div className="space-y-4">
                     <div className="grid gap-3">
-                      <label className="flex cursor-pointer items-center gap-3 rounded-lg border p-4 hover:bg-accent">
-                        <input
-                          type="checkbox"
-                          checked={preferredContentLanguages.includes("pt")}
-                          onChange={() => handleLanguageToggle("pt")}
-                          className="h-4 w-4 rounded border-gray-300"
-                        />
-                        <span className="text-2xl">🇵🇹</span>
-                        <span className="flex-1">Português</span>
-                      </label>
-                      <label className="flex cursor-pointer items-center gap-3 rounded-lg border p-4 hover:bg-accent">
-                        <input
-                          type="checkbox"
-                          checked={preferredContentLanguages.includes("en")}
-                          onChange={() => handleLanguageToggle("en")}
-                          className="h-4 w-4 rounded border-gray-300"
-                        />
-                        <span className="text-2xl">🇬🇧</span>
-                        <span className="flex-1">English</span>
-                      </label>
-                      <label className="flex cursor-pointer items-center gap-3 rounded-lg border p-4 hover:bg-accent">
-                        <input
-                          type="checkbox"
-                          checked={preferredContentLanguages.includes("es")}
-                          onChange={() => handleLanguageToggle("es")}
-                          className="h-4 w-4 rounded border-gray-300"
-                        />
-                        <span className="text-2xl">🇪🇸</span>
-                        <span className="flex-1">Español</span>
-                      </label>
-                      <label className="flex cursor-pointer items-center gap-3 rounded-lg border p-4 hover:bg-accent">
-                        <input
-                          type="checkbox"
-                          checked={preferredContentLanguages.includes("fr")}
-                          onChange={() => handleLanguageToggle("fr")}
-                          className="h-4 w-4 rounded border-gray-300"
-                        />
-                        <span className="text-2xl">🇫🇷</span>
-                        <span className="flex-1">Français</span>
-                      </label>
-                      <label className="flex cursor-pointer items-center gap-3 rounded-lg border p-4 hover:bg-accent">
-                        <input
-                          type="checkbox"
-                          checked={preferredContentLanguages.includes("de")}
-                          onChange={() => handleLanguageToggle("de")}
-                          className="h-4 w-4 rounded border-gray-300"
-                        />
-                        <span className="text-2xl">🇩🇪</span>
-                        <span className="flex-1">Deutsch</span>
-                      </label>
+                      {SUPPORTED_LANGUAGES.map((lang) => {
+                        const metadata = LANGUAGE_METADATA[lang];
+                        return (
+                          <label
+                            key={lang}
+                            className="flex cursor-pointer items-center gap-3 rounded-lg border p-4 hover:bg-accent"
+                          >
+                            <input
+                              type="checkbox"
+                              checked={preferredContentLanguages.includes(lang)}
+                              onChange={() => handleLanguageToggle(lang)}
+                              className="h-4 w-4 rounded border-gray-300"
+                            />
+                            <span className="text-2xl">{metadata.flag}</span>
+                            <span className="flex-1">{metadata.nativeName}</span>
+                          </label>
+                        );
+                      })}
                     </div>
                     <p className="text-sm text-muted-foreground">
                       {t("settings.content_language_description")}
