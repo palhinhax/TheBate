@@ -1,3 +1,10 @@
+# [2.12.0](https://github.com/palhinhax/TheBate/compare/v2.11.2...v2.12.0) (2026-01-09)
+
+
+### Features
+
+* **ui:** hide hero section for logged-in users ([8d4158e](https://github.com/palhinhax/TheBate/commit/8d4158e1e2114a901d3d659be9cc60a5a8b31057))
+
 ## [2.11.2](https://github.com/palhinhax/TheBate/compare/v2.11.1...v2.11.2) (2026-01-09)
 
 
