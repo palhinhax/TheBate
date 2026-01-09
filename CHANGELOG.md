@@ -1,3 +1,22 @@
+# [2.0.0](https://github.com/palhinhax/TheBate/compare/v1.9.0...v2.0.0) (2026-01-09)
+
+
+### Bug Fixes
+
+* **i18n:** sync public locale files with updated translations ([4d35f5c](https://github.com/palhinhax/TheBate/commit/4d35f5cb53985ec425f67aea4116f0b2d9419dcc))
+
+
+### Features
+
+* **admin:** add pagination to admin panel and fix language filtering ([fefab55](https://github.com/palhinhax/TheBate/commit/fefab556f28f8e974d03a876dc286e37e38f19c1))
+* **settings:** add multi-language content preferences ([a4afaec](https://github.com/palhinhax/TheBate/commit/a4afaec0af80560c46349f0a5565ae8ffaeea4fe))
+
+
+### BREAKING CHANGES
+
+* **admin:** Admin topics API now returns object with {topics, pagination} instead of array
+* **settings:** Content language filtering moved from navbar to user settings. All users will see all languages by default until they configure their preferences in settings.
+
 # [1.9.0](https://github.com/palhinhax/TheBate/compare/v1.8.0...v1.9.0) (2026-01-09)
 
 
