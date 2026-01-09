@@ -65,8 +65,10 @@
     "delete_account_description": "Ihr Konto und alle zugehörigen Daten dauerhaft löschen",
     "preferences_tab": "Einstellungen",
     "language_preferences": "Spracheinstellungen",
-    "language_preferences_description": "Wählen Sie die Sprache der Benutzeroberfläche",
-    "ui_language": "Sprache der Benutzeroberfläche"
+    "ui_language": "Sprache der Benutzeroberfläche",
+    "ui_language_description": "Wählen Sie die Sprache, in der Sie die Plattform sehen möchten",
+    "content_language": "Inhaltssprachen",
+    "content_language_description": "Filtern Sie, welche Beitragssprachen Sie auf der Startseite sehen möchten"
   },
   "comments": {
     "title": "Kommentare",

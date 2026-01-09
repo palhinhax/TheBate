@@ -65,8 +65,10 @@
     "delete_account_description": "Eliminar permanentemente tu cuenta y todos los datos asociados",
     "preferences_tab": "Preferencias",
     "language_preferences": "Preferencias de Idioma",
-    "language_preferences_description": "Elige el idioma de la interfaz",
-    "ui_language": "Idioma de la Interfaz"
+    "ui_language": "Idioma de la Interfaz",
+    "ui_language_description": "Elige el idioma en el que quieres ver la plataforma",
+    "content_language": "Idiomas de Contenido",
+    "content_language_description": "Filtra qué idiomas de publicaciones quieres ver en la página principal"
   },
   "comments": {
     "title": "Comentarios",
