@@ -2,15 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { topicSchema, type TopicFormData } from "@/features/topics/schemas";
+import { topicSchema, type TopicFormData, type TopicOptionData } from "@/features/topics/schemas";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { useTranslations } from "@/lib/use-translations";
-import { X, Globe } from "lucide-react";
+import { X, Globe, Plus, GripVertical } from "lucide-react";
 import { LANGUAGES, type SupportedLanguage } from "@/lib/language-shared";
 
 export default function NewTopicForm() {
@@ -21,12 +21,17 @@ export default function NewTopicForm() {
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState<SupportedLanguage>("pt");
+  const [selectedType, setSelectedType] = useState<"YES_NO" | "MULTI_CHOICE">("YES_NO");
+  const [options, setOptions] = useState<TopicOptionData[]>([]);
+  const [optionInput, setOptionInput] = useState("");
+  const [optionDescInput, setOptionDescInput] = useState("");
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
+    control,
   } = useForm<TopicFormData>({
     resolver: zodResolver(topicSchema),
     defaultValues: {
@@ -37,6 +42,9 @@ export default function NewTopicForm() {
       tags: [],
     },
   });
+
+  const watchType = useWatch({ control, name: "type" });
+  const watchAllowMultipleVotes = useWatch({ control, name: "allowMultipleVotes" });
 
   // Detect user's preferred language on mount
   useEffect(() => {
@@ -77,6 +85,48 @@ export default function NewTopicForm() {
     }
   };
 
+  const handleAddOption = () => {
+    const label = optionInput.trim();
+    if (!label) {
+      toast({
+        title: "Erro",
+        description: "O rótulo da opção não pode estar vazio",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (options.length >= 10) {
+      toast({
+        title: "Limite atingido",
+        description: "Máximo de 10 opções permitidas",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const newOption: TopicOptionData = {
+      label,
+      description: optionDescInput.trim() || undefined,
+      order: options.length,
+    };
+
+    const newOptions = [...options, newOption];
+    setOptions(newOptions);
+    setValue("options", newOptions);
+    setOptionInput("");
+    setOptionDescInput("");
+  };
+
+  const handleRemoveOption = (index: number) => {
+    const newOptions = options.filter((_, i) => i !== index).map((opt, i) => ({
+      ...opt,
+      order: i,
+    }));
+    setOptions(newOptions);
+    setValue("options", newOptions);
+  };
+
   const onSubmit = async (data: TopicFormData) => {
     setIsSubmitting(true);
     try {
@@ -97,18 +147,21 @@ export default function NewTopicForm() {
         description: t("topics.created_description", "O seu tema foi criado com sucesso."),
       });
       router.push(`/t/${topic.slug}`);
-    } catch (error: any) {
-      toast({
-        title: t("common.error", "Erro"),
-        description: error.message,
-        variant: "destructive",
-      });
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({
+          title: t("common.error", "Erro"),
+          description: error.message,
+          variant: "destructive",
+        });
+      }
       setIsSubmitting(false);
     }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      {/* Title */}
       <div>
         <Label htmlFor="title">{t("topics.title", "Título")}</Label>
         <Input
@@ -124,6 +177,7 @@ export default function NewTopicForm() {
         )}
       </div>
 
+      {/* Description */}
       <div>
         <Label htmlFor="description">{t("topics.description", "Descrição")}</Label>
         <textarea
@@ -139,6 +193,148 @@ export default function NewTopicForm() {
         )}
       </div>
 
+      {/* Topic Type */}
+      <div>
+        <Label htmlFor="type">{t("topics.type", "Tipo de Tema")}</Label>
+        <select
+          id="type"
+          value={selectedType}
+          onChange={(e) => {
+            const type = e.target.value as "YES_NO" | "MULTI_CHOICE";
+            setSelectedType(type);
+            setValue("type", type);
+            if (type === "YES_NO") {
+              setOptions([]);
+              setValue("options", undefined);
+            }
+          }}
+          className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        >
+          <option value="YES_NO">{t("topics.type_yes_no", "Sim/Não")}</option>
+          <option value="MULTI_CHOICE">{t("topics.type_multi_choice", "Múltipla Escolha")}</option>
+        </select>
+        <p className="mt-1 text-xs text-muted-foreground">
+          {selectedType === "YES_NO" 
+            ? "Tema tradicional de votação Sim/Não/Depende" 
+            : "Tema com múltiplas opções para votação"}
+        </p>
+      </div>
+
+      {/* Multi-choice Options */}
+      {selectedType === "MULTI_CHOICE" && (
+        <div className="space-y-4 rounded-lg border p-4">
+          <div>
+            <Label>Opções de Votação</Label>
+            <p className="text-xs text-muted-foreground">
+              Adicione pelo menos 2 opções para o seu tema de múltipla escolha
+            </p>
+          </div>
+
+          {/* Add Option Form */}
+          <div className="space-y-3">
+            <div>
+              <Input
+                placeholder="Nome da opção (ex: Messi, Ronaldo, Pelé)"
+                value={optionInput}
+                onChange={(e) => setOptionInput(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    handleAddOption();
+                  }
+                }}
+              />
+            </div>
+            <div>
+              <Input
+                placeholder="Descrição (opcional)"
+                value={optionDescInput}
+                onChange={(e) => setOptionDescInput(e.target.value)}
+              />
+            </div>
+            <Button
+              type="button"
+              onClick={handleAddOption}
+              disabled={!optionInput.trim()}
+              variant="outline"
+              size="sm"
+            >
+              <Plus className="mr-2 h-4 w-4" />
+              Adicionar Opção
+            </Button>
+          </div>
+
+          {/* Options List */}
+          {options.length > 0 && (
+            <div className="space-y-2">
+              {options.map((option, index) => (
+                <div
+                  key={index}
+                  className="flex items-start gap-2 rounded-md border bg-muted/50 p-3"
+                >
+                  <GripVertical className="mt-1 h-4 w-4 text-muted-foreground" />
+                  <div className="flex-1 min-w-0">
+                    <div className="font-medium">{option.label}</div>
+                    {option.description && (
+                      <div className="text-sm text-muted-foreground">
+                        {option.description}
+                      </div>
+                    )}
+                  </div>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleRemoveOption(index)}
+                    className="shrink-0"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {errors.options && (
+            <p className="text-sm text-destructive">{errors.options.message}</p>
+          )}
+
+          {/* Allow Multiple Votes */}
+          <div className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              id="allowMultipleVotes"
+              {...register("allowMultipleVotes")}
+              className="h-4 w-4 rounded border-gray-300"
+            />
+            <Label htmlFor="allowMultipleVotes" className="cursor-pointer">
+              Permitir seleção de múltiplas opções
+            </Label>
+          </div>
+
+          {/* Max Choices */}
+          {watchAllowMultipleVotes && (
+            <div>
+              <Label htmlFor="maxChoices">Número máximo de opções</Label>
+              <Input
+                type="number"
+                id="maxChoices"
+                {...register("maxChoices", { valueAsNumber: true })}
+                min="1"
+                max={options.length || 10}
+                className="mt-1"
+              />
+              {errors.maxChoices && (
+                <p className="mt-1 text-sm text-destructive">
+                  {errors.maxChoices.message}
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Tags */}
       <div>
         <Label htmlFor="tags">{t("topics.tags", "Tags")}</Label>
         <div className="mt-1 flex gap-2">
@@ -185,6 +381,7 @@ export default function NewTopicForm() {
         </p>
       </div>
 
+      {/* Language */}
       <div>
         <Label htmlFor="language">
           <Globe className="inline h-4 w-4 mr-1" />
@@ -211,6 +408,7 @@ export default function NewTopicForm() {
         </p>
       </div>
 
+      {/* Submit Buttons */}
       <div className="flex gap-4">
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? t("topics.creating", "A criar...") : t("topics.create_button", "Criar Tema")}
