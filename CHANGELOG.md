@@ -1,3 +1,16 @@
+# [2.11.0](https://github.com/palhinhax/TheBate/compare/v2.10.0...v2.11.0) (2026-01-09)
+
+
+### Bug Fixes
+
+* address code review feedback - add types, docs, and proper error handling ([405c878](https://github.com/palhinhax/TheBate/commit/405c878479624924d366e67a664d5df45346031f))
+* **tests:** correct TypeScript types for mocked Prisma client ([665c86c](https://github.com/palhinhax/TheBate/commit/665c86c7f36a12c5d1fd8810e84cadd82232b923))
+
+
+### Features
+
+* **topics:** add next topic navigation component ([9b97e64](https://github.com/palhinhax/TheBate/commit/9b97e64125373c7ee0560b60f0fb71f0714e5de9))
+
 # [2.10.0](https://github.com/palhinhax/TheBate/compare/v2.9.0...v2.10.0) (2026-01-09)
 
 
