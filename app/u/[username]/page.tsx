@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import {
   Calendar,
@@ -9,6 +10,8 @@ import {
   ThumbsUp,
   Clock,
   User as UserIcon,
+  Trash2,
+  AlertTriangle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +21,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { useToast } from "@/components/ui/use-toast";
+import { useTranslations } from "@/lib/use-translations";
 
 type UserData = {
   id: string;
@@ -56,10 +69,19 @@ type UserData = {
 
 export default function UserProfilePage() {
   const params = useParams();
+  const router = useRouter();
+  const { data: session } = useSession();
+  const { toast } = useToast();
+  const { t } = useTranslations();
   const username = params.username as string;
   const [user, setUser] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"topics" | "comments">("topics");
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+
+  // Verificar se o utilizador está a ver o próprio perfil
+  const isOwnProfile = session?.user?.username === username;
 
   useEffect(() => {
     async function fetchUser() {
@@ -78,6 +100,40 @@ export default function UserProfilePage() {
 
     fetchUser();
   }, [username]);
+
+  const handleDeleteAccount = async () => {
+    if (!isOwnProfile) return;
+
+    setDeleting(true);
+    try {
+      const response = await fetch("/api/users/me", {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        toast({
+          title: t("profile.delete_account_success"),
+        });
+        // Fazer logout e redirecionar
+        await signOut({ redirect: false });
+        router.push("/");
+      } else {
+        toast({
+          title: t("profile.delete_account_error"),
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      toast({
+        title: t("profile.delete_account_error"),
+        variant: "destructive",
+      });
+    } finally {
+      setDeleting(false);
+      setShowDeleteDialog(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -146,6 +202,21 @@ export default function UserProfilePage() {
                 </div>
               </div>
             </div>
+
+            {/* Botão de eliminar conta (apenas no próprio perfil) */}
+            {isOwnProfile && (
+              <div className="mt-6 border-t pt-6">
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => setShowDeleteDialog(true)}
+                  className="w-full sm:w-auto"
+                >
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  {t("profile.delete_account")}
+                </Button>
+              </div>
+            )}
 
             {/* Stats */}
             <div className="mt-6 grid grid-cols-2 gap-4 border-t pt-6 sm:grid-cols-3">
@@ -344,6 +415,47 @@ export default function UserProfilePage() {
           </div>
         )}
       </main>
+
+      {/* Dialog de confirmação de eliminação */}
+      <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2 text-destructive">
+              <AlertTriangle className="h-5 w-5" />
+              {t("profile.delete_account")}
+            </DialogTitle>
+            <DialogDescription className="pt-4">
+              {t("profile.delete_account_confirm")}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button
+              variant="outline"
+              onClick={() => setShowDeleteDialog(false)}
+              disabled={deleting}
+            >
+              {t("topics.cancel")}
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleDeleteAccount}
+              disabled={deleting}
+            >
+              {deleting ? (
+                <>
+                  <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+                  {t("common.loading")}
+                </>
+              ) : (
+                <>
+                  <Trash2 className="mr-2 h-4 w-4" />
+                  {t("profile.delete_account")}
+                </>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

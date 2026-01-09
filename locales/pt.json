@@ -44,6 +44,12 @@
     "created_description": "O seu tema foi criado com sucesso.",
     "create_error": "Erro ao criar tema"
   },
+  "profile": {
+    "delete_account": "Eliminar Conta",
+    "delete_account_confirm": "Tem a certeza que deseja eliminar a sua conta? Esta ação é irreversível e todos os seus dados serão permanentemente removidos.",
+    "delete_account_success": "Conta eliminada com sucesso",
+    "delete_account_error": "Erro ao eliminar conta"
+  },
   "comments": {
     "title": "Comentários",
     "add": "Adicionar Comentário",

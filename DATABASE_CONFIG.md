@@ -35,11 +35,13 @@ npx prisma db seed
 ## Criar Novo Banco Neon (Se Necessário)
 
 ### Passo 1: Criar Conta
+
 1. Acesse https://neon.tech
 2. Faça login com GitHub
 3. Crie um novo projeto
 
 ### Passo 2: Copiar Connection String
+
 1. No dashboard do projeto
 2. Copie a **Connection String** (com pooler)
 3. Formato: `postgresql://user:pass@host/db?sslmode=require`
@@ -47,11 +49,13 @@ npx prisma db seed
 ### Passo 3: Configurar no Projeto
 
 **Local (.env):**
+
 ```env
 DATABASE_URL="sua_connection_string_aqui"
 ```
 
 **Vercel (Production):**
+
 1. Projeto → Settings → Environment Variables
 2. Adicione `DATABASE_URL` = sua connection string
 3. Selecione "Production" e "Preview"
@@ -61,16 +65,19 @@ DATABASE_URL="sua_connection_string_aqui"
 ## Migrations
 
 ### Criar nova migration
+
 ```bash
 npx prisma migrate dev --name nome_da_migration
 ```
 
 ### Aplicar migrations em produção
+
 ```bash
 npx prisma migrate deploy
 ```
 
 ### Resetar banco (CUIDADO - apaga tudo)
+
 ```bash
 npx prisma migrate reset
 ```
@@ -78,17 +85,20 @@ npx prisma migrate reset
 ## Seeds
 
 ### Popular banco com dados de exemplo
+
 ```bash
 npx prisma db seed
 ```
 
 Isso cria:
+
 - 7 usuários (incluindo admin e moderadores)
 - 10 tópicos de exemplo
 - 90 comentários e respostas
 - Votos de exemplo
 
 ### Credenciais padrão após seed:
+
 - **Admin:** admin@thebate.com / password123
 - **Mod:** mod@thebate.com / password123
 - **Users:** maria@example.com / password123
@@ -100,6 +110,7 @@ npx tsx scripts/make-owner.ts email@exemplo.com
 ```
 
 Exemplo:
+
 ```bash
 npx tsx scripts/make-owner.ts joao.mduart@gmail.com
 ```
@@ -121,6 +132,7 @@ Abre interface visual em: http://localhost:5555
 ### Erro: SSL connection required
 
 **Solução:** Adicione `?sslmode=require` no final da URL:
+
 ```
 postgresql://...?sslmode=require
 ```
@@ -128,6 +140,7 @@ postgresql://...?sslmode=require
 ### Erro: Schema out of sync
 
 **Solução:** Execute:
+
 ```bash
 npx prisma generate
 npx prisma db push
@@ -136,6 +149,7 @@ npx prisma db push
 ### Erro: Too many connections
 
 **Solução:** Use connection pooling. No Neon, sempre use a URL com `-pooler`:
+
 ```
 ep-xxx-pooler.region.aws.neon.tech
 ```
@@ -155,6 +169,7 @@ NEXT_PUBLIC_GOOGLE_ADSENSE_ID=ca-pub-... # (opcional)
 ### Deploy workflow:
 
 1. **Push para GitHub**
+
    ```bash
    git add .
    git commit -m "feat: ..."
@@ -176,11 +191,13 @@ NEXT_PUBLIC_GOOGLE_ADSENSE_ID=ca-pub-... # (opcional)
 ## Backup e Restauração
 
 ### Backup
+
 ```bash
 pg_dump $DATABASE_URL > backup.sql
 ```
 
 ### Restore
+
 ```bash
 psql $DATABASE_URL < backup.sql
 ```
@@ -197,20 +214,24 @@ psql $DATABASE_URL < backup.sql
 Se preferir outro provedor:
 
 ### Supabase
+
 - Free tier: 500MB
 - URL: https://supabase.com
 - Similar ao Neon
 
 ### Railway
+
 - $5 crédito/mês
 - URL: https://railway.app
 - PostgreSQL standalone
 
 ### PlanetScale
+
 - MySQL (requer mudança no schema)
 - URL: https://planetscale.com
 
 ### Configurar alternativa:
+
 1. Criar banco no provedor escolhido
 2. Copiar connection string
 3. Atualizar DATABASE_URL

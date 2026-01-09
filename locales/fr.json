@@ -24,8 +24,12 @@
     "description": "Description",
     "tags": "Tags",
     "language": "Langue"
-  },
-  "comments": {
+  },  "profile": {
+    "delete_account": "Supprimer le compte",
+    "delete_account_confirm": "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible et toutes vos données seront définitivement supprimées.",
+    "delete_account_success": "Compte supprimé avec succès",
+    "delete_account_error": "Erreur lors de la suppression du compte"
+  },  "comments": {
     "title": "Commentaires",
     "add": "Ajouter un Commentaire",
     "reply": "Répondre",

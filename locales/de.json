@@ -24,8 +24,12 @@
     "description": "Beschreibung",
     "tags": "Tags",
     "language": "Sprache"
-  },
-  "comments": {
+  },  "profile": {
+    "delete_account": "Konto löschen",
+    "delete_account_confirm": "Sind Sie sicher, dass Sie Ihr Konto löschen möchten? Diese Aktion ist unwiderruflich und alle Ihre Daten werden dauerhaft entfernt.",
+    "delete_account_success": "Konto erfolgreich gelöscht",
+    "delete_account_error": "Fehler beim Löschen des Kontos"
+  },  "comments": {
     "title": "Kommentare",
     "add": "Kommentar Hinzufügen",
     "reply": "Antworten",

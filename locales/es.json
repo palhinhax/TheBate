@@ -25,6 +25,12 @@
     "tags": "Etiquetas",
     "language": "Idioma"
   },
+  "profile": {
+    "delete_account": "Eliminar Cuenta",
+    "delete_account_confirm": "¿Está seguro de que desea eliminar su cuenta? Esta acción es irreversible y todos sus datos se eliminarán permanentemente.",
+    "delete_account_success": "Cuenta eliminada exitosamente",
+    "delete_account_error": "Error al eliminar cuenta"
+  },
   "comments": {
     "title": "Comentarios",
     "add": "Añadir Comentario",

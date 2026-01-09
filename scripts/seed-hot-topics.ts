@@ -51,7 +51,8 @@ const topics = [
   },
   {
     language: "en",
-    title: "Should social media companies be liable for content posted by users?",
+    title:
+      "Should social media companies be liable for content posted by users?",
     description:
       "As misinformation spreads rapidly online, calls grow for platform accountability. Should companies face legal consequences for user-generated content? How do we balance free speech with safety?",
     tags: ["social-media", "law", "free-speech", "technology"],
@@ -159,13 +160,10 @@ async function main() {
   try {
     // Get user by username or email
     const identifier = process.argv[2] || "admin"; // Use first command line argument or default to 'admin'
-    
+
     const user = await prisma.user.findFirst({
       where: {
-        OR: [
-          { username: identifier },
-          { email: identifier }
-        ]
+        OR: [{ username: identifier }, { email: identifier }],
       },
       select: { id: true, username: true, email: true },
     });
@@ -176,7 +174,7 @@ async function main() {
       const allUsers = await prisma.user.findMany({
         select: { username: true, email: true },
       });
-      allUsers.forEach(u => console.log(`   - ${u.username} (${u.email})`));
+      allUsers.forEach((u) => console.log(`   - ${u.username} (${u.email})`));
       console.log("\nUsage: pnpm db:seed-topics [username or email]");
       console.log("Example: pnpm db:seed-topics admin");
       process.exit(1);
@@ -214,7 +212,9 @@ async function main() {
         },
       });
 
-      console.log(`✅ Created [${topic.language.toUpperCase()}]: ${topic.title}`);
+      console.log(
+        `✅ Created [${topic.language.toUpperCase()}]: ${topic.title}`
+      );
       created++;
     }
 
