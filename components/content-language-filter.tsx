@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Globe } from "lucide-react";
 import {
@@ -19,7 +20,7 @@ const languages = [
   { value: "de", label: "Deutsch", flag: "🇩🇪" },
 ];
 
-export function ContentLanguageFilter() {
+function ContentLanguageFilterInner() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -56,5 +57,22 @@ export function ContentLanguageFilter() {
         ))}
       </SelectContent>
     </Select>
+  );
+}
+
+export function ContentLanguageFilter() {
+  return (
+    <Suspense
+      fallback={
+        <Select value="all" disabled>
+          <SelectTrigger className="w-[180px]">
+            <Globe className="mr-2 h-4 w-4" />
+            <SelectValue />
+          </SelectTrigger>
+        </Select>
+      }
+    >
+      <ContentLanguageFilterInner />
+    </Suspense>
   );
 }
