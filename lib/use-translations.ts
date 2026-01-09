@@ -23,7 +23,7 @@ export function useTranslations() {
       // Supported languages
       const supportedLangs = ["pt", "en", "es", "fr", "de"];
 
-      let selectedLang = "pt";
+      let selectedLang: string;
 
       // First priority: user's preferred language from session
       if (session?.user?.preferredLanguage) {
