@@ -11,17 +11,30 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: "*",
-        allow: ["/", "/t/"],
+        allow: ["/", "/t/", "/u/"],
         disallow: [
           "/api/",
           "/auth/",
           "/new",
           "/admin/",
-          "/mod/",
-          "/dashboard/",
+          "/settings/",
+          "/*?side=*", // Don't index filtered views
         ],
+      },
+      {
+        userAgent: "Googlebot",
+        allow: ["/", "/t/", "/u/"],
+        disallow: ["/api/", "/auth/", "/new", "/admin/", "/settings/"],
+        crawlDelay: 0,
+      },
+      {
+        userAgent: "Bingbot",
+        allow: ["/", "/t/", "/u/"],
+        disallow: ["/api/", "/auth/", "/new", "/admin/", "/settings/"],
+        crawlDelay: 0,
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
+    host: baseUrl,
   };
 }

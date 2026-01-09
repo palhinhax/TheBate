@@ -21,33 +21,79 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Thebate - Global Discussion Platform",
+  metadataBase: new URL("https://thebatee.com"),
+  title: {
+    default: "Thebate - Global Discussion Platform | Multilingual Debate Forum",
+    template: "%s | Thebate",
+  },
   description:
-    "Join intelligent discussions about technology, society, and culture from around the world. Share ideas, learn, and connect with respect.",
+    "Join intelligent discussions about technology, society, and culture from around the world. Share ideas, learn, and connect with respect. Available in English, Portuguese, Spanish, French, and German.",
+  keywords: [
+    "debate", "discussion", "forum", "global", "multilingual",
+    "technology", "society", "culture", "AI", "politics",
+    "debate forum", "online discussion", "community",
+    "português", "english", "español", "français", "deutsch",
+    "debatte", "débat", "discusión", "discussão",
+  ],
+  authors: [{ name: "Thebate Team" }],
+  creator: "Thebate",
+  publisher: "Thebate",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   alternates: {
+    canonical: "https://thebatee.com",
     languages: {
-      en: "https://thebatee.com?lang=en",
-      pt: "https://thebatee.com?lang=pt",
-      es: "https://thebatee.com?lang=es",
-      fr: "https://thebatee.com?lang=fr",
-      de: "https://thebatee.com?lang=de",
+      "en-US": "https://thebatee.com?lang=en",
+      "pt-PT": "https://thebatee.com?lang=pt",
+      "es-ES": "https://thebatee.com?lang=es",
+      "fr-FR": "https://thebatee.com?lang=fr",
+      "de-DE": "https://thebatee.com?lang=de",
+      "x-default": "https://thebatee.com",
     },
   },
   openGraph: {
     title: "Thebate - Global Discussion Platform",
     description:
-      "Join intelligent discussions about technology, society, and culture from around the world.",
+      "Join intelligent discussions about technology, society, and culture from around the world. Available in 5 languages.",
     url: "https://thebatee.com",
     siteName: "Thebate",
     locale: "en_US",
     alternateLocale: ["pt_PT", "es_ES", "fr_FR", "de_DE"],
     type: "website",
+    images: [
+      {
+        url: "https://thebatee.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Thebate - Global Discussion Platform",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Thebate - Global Discussion Platform",
     description:
       "Join intelligent discussions about technology, society, and culture from around the world.",
+    creator: "@thebate",
+    site: "@thebate",
+    images: ["https://thebatee.com/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
   },
 };
 

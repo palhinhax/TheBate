@@ -48,10 +48,62 @@ export default async function Home({
   const userLanguages = await getUserLanguages(searchParams);
   const topics = await getTopics("new", userLanguages);
 
+  const baseUrl = process.env.NEXTAUTH_URL || "https://thebatee.com";
+
+  // JSON-LD structured data for homepage
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Thebate",
+    url: baseUrl,
+    description: "Global discussion platform for intelligent debates about technology, society, and culture in multiple languages.",
+    inLanguage: ["pt", "en", "es", "fr", "de"],
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: baseUrl + "?lang={language}",
+      },
+      "query-input": "required name=language",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Thebate",
+      url: baseUrl,
+      logo: {
+        "@type": "ImageObject",
+        url: baseUrl + "/logo_no_bg.png",
+      },
+    },
+  };
+
+  // BreadcrumbList for better SEO
+  const breadcrumbList = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: baseUrl,
+      },
+    ],
+  };
+
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="border-b bg-muted/50 py-12">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbList) }}
+      />
+      <div className="min-h-screen">
+        {/* Hero Section */}
+        <section className="border-b bg-muted/50 py-12">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
             Plataforma de <span className="text-primary">Discussão</span>
@@ -146,6 +198,7 @@ export default async function Home({
           <p>Thebate - Plataforma de discussões públicas</p>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   );
 }

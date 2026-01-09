@@ -17,6 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       select: {
         slug: true,
         updatedAt: true,
+        language: true,
       },
     });
 
@@ -25,11 +26,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: topic.updatedAt,
       changeFrequency: "daily" as const,
       priority: 0.8,
+      // Language alternatives for better SEO
+      alternates: {
+        languages: {
+          [topic.language]: `${baseUrl}/t/${topic.slug}`,
+        },
+      },
     }));
   } catch (error) {
     // Database may not be available during build time
     console.warn("Could not fetch topics for sitemap:", error);
   }
+
+  const languages = ["en", "pt", "es", "fr", "de"];
+  const languageUrls: MetadataRoute.Sitemap = languages.map((lang) => ({
+    url: `${baseUrl}?lang=${lang}`,
+    lastModified: new Date(),
+    changeFrequency: "hourly" as const,
+    priority: 0.9,
+  }));
 
   return [
     {
@@ -38,6 +53,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "hourly",
       priority: 1,
     },
+    ...languageUrls,
     {
       url: `${baseUrl}/new`,
       lastModified: new Date(),
