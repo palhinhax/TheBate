@@ -108,7 +108,7 @@ export default function AdminPage() {
   }, [status, session, router, loadData]);
 
   const deleteTopic = async (id: string) => {
-    if (!confirm("Tem certeza que deseja deletar este tópico?")) return;
+    if (!confirm("Tem a certeza que deseja eliminar este tema?")) return;
 
     try {
       const res = await fetch(`/api/admin/topics/${id}`, {
@@ -117,11 +117,11 @@ export default function AdminPage() {
 
       if (res.ok) {
         setTopics(topics.filter((t) => t.id !== id));
-        toast({ title: "Tópico deletado com sucesso" });
+        toast({ title: "Tema eliminado com sucesso" });
       }
     } catch {
       toast({
-        title: "Erro ao deletar tópico",
+        title: "Erro ao eliminar tema",
         variant: "destructive",
       });
     }
@@ -148,7 +148,7 @@ export default function AdminPage() {
   };
 
   const deleteComment = async (id: string) => {
-    if (!confirm("Tem certeza que deseja deletar este comentário?")) return;
+    if (!confirm("Tem a certeza que deseja eliminar este argumento?")) return;
 
     try {
       const res = await fetch(`/api/admin/comments/${id}`, {
@@ -157,11 +157,11 @@ export default function AdminPage() {
 
       if (res.ok) {
         setComments(comments.filter((c) => c.id !== id));
-        toast({ title: "Comentário deletado com sucesso" });
+        toast({ title: "Argumento eliminado com sucesso" });
       }
     } catch {
       toast({
-        title: "Erro ao deletar comentário",
+        title: "Erro ao eliminar argumento",
         variant: "destructive",
       });
     }
@@ -297,7 +297,7 @@ export default function AdminPage() {
               : "text-muted-foreground"
           }`}
         >
-          Tópicos ({topics.length})
+          Temas ({topics.length})
         </button>
         <button
           onClick={() => setActiveTab("comments")}
@@ -307,7 +307,7 @@ export default function AdminPage() {
               : "text-muted-foreground"
           }`}
         >
-          Comentários ({comments.length})
+          Argumentos ({comments.length})
         </button>
         <button
           onClick={() => setActiveTab("users")}
@@ -326,17 +326,17 @@ export default function AdminPage() {
           {topics.map((topic) => (
             <Card key={topic.id} className="p-4">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                <div className="flex-1 min-w-0">
+                <div className="min-w-0 flex-1">
                   <Link
                     href={`/t/${topic.slug}`}
-                    className="text-lg font-semibold hover:underline break-words"
+                    className="break-words text-lg font-semibold hover:underline"
                   >
                     {topic.title}
                   </Link>
-                  <p className="mt-1 text-sm text-muted-foreground break-words">
+                  <p className="mt-1 break-words text-sm text-muted-foreground">
                     Por {topic.createdBy.name || topic.createdBy.username} •{" "}
                     {new Date(topic.createdAt).toLocaleDateString("pt-PT")} •{" "}
-                    {topic._count.comments} comentários •{" "}
+                    {topic._count.comments} argumentos •{" "}
                     {topic._count.topicVotes} votos
                   </p>
                   <div className="mt-2">
@@ -353,7 +353,7 @@ export default function AdminPage() {
                     </span>
                   </div>
                 </div>
-                <div className="flex gap-2 shrink-0">
+                <div className="flex shrink-0 gap-2">
                   {topic.status === "ACTIVE" && (
                     <Button
                       size="sm"
@@ -398,8 +398,8 @@ export default function AdminPage() {
           {comments.map((comment) => (
             <Card key={comment.id} className="p-4">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm break-words">
+                <div className="min-w-0 flex-1">
+                  <p className="break-words text-sm">
                     {comment.content.length > 200
                       ? comment.content.substring(0, 200) + "..."
                       : comment.content}
@@ -429,7 +429,7 @@ export default function AdminPage() {
                     </span>
                   </div>
                 </div>
-                <div className="flex gap-2 shrink-0">
+                <div className="flex shrink-0 gap-2">
                   {comment.status === "ACTIVE" && (
                     <Button
                       size="sm"
@@ -467,7 +467,7 @@ export default function AdminPage() {
           {users.map((user) => (
             <Card key={user.id} className="p-4">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                <div className="flex-1 min-w-0">
+                <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
                     <h3 className="text-lg font-semibold">
                       {user.name || user.username}
@@ -489,26 +489,26 @@ export default function AdminPage() {
                       {user.role}
                     </span>
                   </div>
-                  <p className="mt-1 text-sm text-muted-foreground break-words">
+                  <p className="mt-1 break-words text-sm text-muted-foreground">
                     @{user.username} • {user.email}
                   </p>
                   <p className="mt-1 text-xs text-muted-foreground">
                     Membro desde{" "}
                     {new Date(user.createdAt).toLocaleDateString("pt-PT")}
                   </p>
-                  <div className="mt-2 flex flex-wrap gap-2 sm:gap-4 text-xs sm:text-sm">
-                    <span>{user._count.topics} tópicos</span>
-                    <span>{user._count.comments} comentários</span>
-                    <span>{user._count.topicVotes} votos em tópicos</span>
-                    <span>{user._count.votes} votos em comentários</span>
+                  <div className="mt-2 flex flex-wrap gap-2 text-xs sm:gap-4 sm:text-sm">
+                    <span>{user._count.topics} temas</span>
+                    <span>{user._count.comments} argumentos</span>
+                    <span>{user._count.topicVotes} votos em temas</span>
+                    <span>{user._count.votes} votos em argumentos</span>
                   </div>
                 </div>
-                <div className="flex flex-col gap-2 shrink-0 w-full sm:w-auto">
+                <div className="flex w-full shrink-0 flex-col gap-2 sm:w-auto">
                   <div className="flex gap-2">
                     <select
                       value={user.role}
                       onChange={(e) => updateUserRole(user.id, e.target.value)}
-                      className="rounded border px-2 py-1 text-sm flex-1 sm:flex-none"
+                      className="flex-1 rounded border px-2 py-1 text-sm sm:flex-none"
                       disabled={user.id === session.user.id}
                     >
                       <option value="USER">USER</option>

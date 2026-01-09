@@ -3,9 +3,21 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { Calendar, MessageSquare, ThumbsUp, Clock, User as UserIcon } from "lucide-react";
+import {
+  Calendar,
+  MessageSquare,
+  ThumbsUp,
+  Clock,
+  User as UserIcon,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 type UserData = {
   id: string;
@@ -71,7 +83,7 @@ export default function UserProfilePage() {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent mx-auto"></div>
+          <div className="mx-auto h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
           <p className="mt-4 text-muted-foreground">A carregar perfil...</p>
         </div>
       </div>
@@ -142,7 +154,8 @@ export default function UserProfilePage() {
                   {user.stats.totalTopics}
                 </div>
                 <div className="text-sm text-muted-foreground">
-                  Tema{user.stats.totalTopics !== 1 ? "s" : ""} criado{user.stats.totalTopics !== 1 ? "s" : ""}
+                  Tema{user.stats.totalTopics !== 1 ? "s" : ""} criado
+                  {user.stats.totalTopics !== 1 ? "s" : ""}
                 </div>
               </div>
               <div className="text-center">
@@ -158,7 +171,8 @@ export default function UserProfilePage() {
                   {user.stats.totalVotesReceived}
                 </div>
                 <div className="text-sm text-muted-foreground">
-                  Voto{user.stats.totalVotesReceived !== 1 ? "s" : ""} recebido{user.stats.totalVotesReceived !== 1 ? "s" : ""}
+                  Voto{user.stats.totalVotesReceived !== 1 ? "s" : ""} recebido
+                  {user.stats.totalVotesReceived !== 1 ? "s" : ""}
                 </div>
               </div>
             </div>
@@ -199,19 +213,24 @@ export default function UserProfilePage() {
                       <CardDescription className="flex flex-wrap items-center gap-4">
                         <span className="flex items-center gap-1">
                           <Clock className="h-3 w-3" />
-                          {new Date(topic.createdAt).toLocaleDateString("pt-PT", {
-                            day: "numeric",
-                            month: "short",
-                            year: "numeric",
-                          })}
+                          {new Date(topic.createdAt).toLocaleDateString(
+                            "pt-PT",
+                            {
+                              day: "numeric",
+                              month: "short",
+                              year: "numeric",
+                            }
+                          )}
                         </span>
                         <span className="flex items-center gap-1">
                           <MessageSquare className="h-3 w-3" />
-                          {topic._count.comments} argumento{topic._count.comments !== 1 ? "s" : ""}
+                          {topic._count.comments} argumento
+                          {topic._count.comments !== 1 ? "s" : ""}
                         </span>
                         <span className="flex items-center gap-1">
                           <ThumbsUp className="h-3 w-3" />
-                          {topic._count.topicVotes} voto{topic._count.topicVotes !== 1 ? "s" : ""}
+                          {topic._count.topicVotes} voto
+                          {topic._count.topicVotes !== 1 ? "s" : ""}
                         </span>
                       </CardDescription>
                     </CardHeader>
@@ -272,7 +291,9 @@ export default function UserProfilePage() {
                               : "bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-200"
                           }`}
                         >
-                          {comment.side === "AFAVOR" ? "👍 A Favor" : "👎 Contra"}
+                          {comment.side === "AFAVOR"
+                            ? "👍 A Favor"
+                            : "👎 Contra"}
                         </span>
                       )}
                     </div>
@@ -286,11 +307,14 @@ export default function UserProfilePage() {
                     <div className="flex items-center justify-between text-xs text-muted-foreground">
                       <span className="flex items-center gap-1">
                         <Clock className="h-3 w-3" />
-                        {new Date(comment.createdAt).toLocaleDateString("pt-PT", {
-                          day: "numeric",
-                          month: "short",
-                          year: "numeric",
-                        })}
+                        {new Date(comment.createdAt).toLocaleDateString(
+                          "pt-PT",
+                          {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          }
+                        )}
                       </span>
                       <span className="flex items-center gap-1">
                         <ThumbsUp className="h-3 w-3" />
