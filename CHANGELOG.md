@@ -1,3 +1,10 @@
+## [2.12.2](https://github.com/palhinhax/TheBate/compare/v2.12.1...v2.12.2) (2026-01-09)
+
+
+### Bug Fixes
+
+* **ui:** improve mobile navbar layout by adjusting breakpoint ([810ae1e](https://github.com/palhinhax/TheBate/commit/810ae1e9d8e28ce65993de01fbcb47b53b855cfa))
+
 ## [2.12.1](https://github.com/palhinhax/TheBate/compare/v2.12.0...v2.12.1) (2026-01-09)
 
 
