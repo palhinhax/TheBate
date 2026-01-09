@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/palhinhax/TheBate/compare/v2.5.1...v2.6.0) (2026-01-09)
+
+
+### Features
+
+* **seo:** update metadata with all 12 languages and improve keywords ([d7f3744](https://github.com/palhinhax/TheBate/commit/d7f3744610503aa5c2fa5a6663f0e55c8fae9c00))
+
 ## [2.5.1](https://github.com/palhinhax/TheBate/compare/v2.5.0...v2.5.1) (2026-01-09)
 
 
