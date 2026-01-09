@@ -15,7 +15,9 @@ jest.mock("@/lib/prisma", () => ({
 }));
 
 describe("getNextTopic", () => {
-  const mockPrisma = prisma as jest.Mocked<typeof prisma>;
+  const mockFindFirst = prisma.topic.findFirst as jest.MockedFunction<
+    typeof prisma.topic.findFirst
+  >;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -31,7 +33,7 @@ describe("getNextTopic", () => {
       title: "Related Topic Title",
     };
 
-    mockPrisma.topic.findFirst.mockResolvedValueOnce(mockRelatedTopic);
+    mockFindFirst.mockResolvedValueOnce(mockRelatedTopic);
 
     const result = await getNextTopic(
       currentTopicId,
@@ -40,7 +42,7 @@ describe("getNextTopic", () => {
     );
 
     expect(result).toEqual(mockRelatedTopic);
-    expect(mockPrisma.topic.findFirst).toHaveBeenCalledWith({
+    expect(mockFindFirst).toHaveBeenCalledWith({
       where: {
         id: { not: currentTopicId },
         status: "ACTIVE",
@@ -70,9 +72,9 @@ describe("getNextTopic", () => {
     };
 
     // First call returns null (no related topics)
-    mockPrisma.topic.findFirst.mockResolvedValueOnce(null);
+    mockFindFirst.mockResolvedValueOnce(null);
     // Second call returns recent topic
-    mockPrisma.topic.findFirst.mockResolvedValueOnce(mockRecentTopic);
+    mockFindFirst.mockResolvedValueOnce(mockRecentTopic);
 
     const result = await getNextTopic(
       currentTopicId,
@@ -81,7 +83,7 @@ describe("getNextTopic", () => {
     );
 
     expect(result).toEqual(mockRecentTopic);
-    expect(mockPrisma.topic.findFirst).toHaveBeenCalledTimes(2);
+    expect(mockFindFirst).toHaveBeenCalledTimes(2);
   });
 
   it("should return fallback topic regardless of language if no same-language topics", async () => {
@@ -95,11 +97,11 @@ describe("getNextTopic", () => {
     };
 
     // First call returns null (no related topics)
-    mockPrisma.topic.findFirst.mockResolvedValueOnce(null);
+    mockFindFirst.mockResolvedValueOnce(null);
     // Second call returns null (no same-language topics)
-    mockPrisma.topic.findFirst.mockResolvedValueOnce(null);
+    mockFindFirst.mockResolvedValueOnce(null);
     // Third call returns fallback topic
-    mockPrisma.topic.findFirst.mockResolvedValueOnce(mockFallbackTopic);
+    mockFindFirst.mockResolvedValueOnce(mockFallbackTopic);
 
     const result = await getNextTopic(
       currentTopicId,
@@ -108,7 +110,7 @@ describe("getNextTopic", () => {
     );
 
     expect(result).toEqual(mockFallbackTopic);
-    expect(mockPrisma.topic.findFirst).toHaveBeenCalledTimes(3);
+    expect(mockFindFirst).toHaveBeenCalledTimes(3);
   });
 
   it("should return null if no topics available at all", async () => {
@@ -117,7 +119,7 @@ describe("getNextTopic", () => {
     const language = "pt";
 
     // All calls return null
-    mockPrisma.topic.findFirst.mockResolvedValue(null);
+    mockFindFirst.mockResolvedValue(null);
 
     const result = await getNextTopic(
       currentTopicId,
@@ -126,7 +128,7 @@ describe("getNextTopic", () => {
     );
 
     expect(result).toBeNull();
-    expect(mockPrisma.topic.findFirst).toHaveBeenCalledTimes(3);
+    expect(mockFindFirst).toHaveBeenCalledTimes(3);
   });
 
   it("should handle empty tags array", async () => {
@@ -139,7 +141,7 @@ describe("getNextTopic", () => {
       title: "Recent Topic Title",
     };
 
-    mockPrisma.topic.findFirst.mockResolvedValueOnce(mockRecentTopic);
+    mockFindFirst.mockResolvedValueOnce(mockRecentTopic);
 
     const result = await getNextTopic(
       currentTopicId,
@@ -149,8 +151,8 @@ describe("getNextTopic", () => {
 
     expect(result).toEqual(mockRecentTopic);
     // Should skip related topics query and go straight to recent topics
-    expect(mockPrisma.topic.findFirst).toHaveBeenCalledTimes(1);
-    expect(mockPrisma.topic.findFirst).toHaveBeenCalledWith({
+    expect(mockFindFirst).toHaveBeenCalledTimes(1);
+    expect(mockFindFirst).toHaveBeenCalledWith({
       where: {
         id: { not: currentTopicId },
         status: "ACTIVE",
@@ -174,7 +176,7 @@ describe("getNextTopic", () => {
     const consoleErrorSpy = jest
       .spyOn(console, "error")
       .mockImplementation(() => {});
-    mockPrisma.topic.findFirst.mockRejectedValueOnce(
+    mockFindFirst.mockRejectedValueOnce(
       new Error("Database error")
     );
 
