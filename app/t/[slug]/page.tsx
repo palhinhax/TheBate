@@ -17,7 +17,7 @@ type Props = {
   searchParams: { sort?: string; side?: string };
 };
 
-async function getTopic(slug: string, userId?: string) {
+async function getTopicData(slug: string, userId?: string) {
   const topic = await prisma.topic.findUnique({
     where: { slug },
     include: {
@@ -80,7 +80,7 @@ async function getTopic(slug: string, userId?: string) {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const topic = await getTopic(params.slug);
+  const topic = await getTopicData(params.slug);
 
   if (!topic) {
     return {
@@ -175,7 +175,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function TopicPage({ params, searchParams }: Props) {
   const session = await auth();
-  const topic = await getTopic(params.slug, session?.user?.id);
+  const topic = await getTopicData(params.slug, session?.user?.id);
 
   if (!topic) {
     notFound();
