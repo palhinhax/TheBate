@@ -21,6 +21,7 @@ import {
   Lock,
   AlertTriangle,
   Settings as SettingsIcon,
+  Globe,
 } from "lucide-react";
 import {
   Dialog,
@@ -32,7 +33,7 @@ import {
 } from "@/components/ui/dialog";
 import { signOut } from "next-auth/react";
 
-type TabType = "profile" | "security" | "account";
+type TabType = "profile" | "security" | "preferences" | "account";
 
 export default function SettingsPage() {
   const { data: session, status } = useSession();
@@ -50,6 +51,7 @@ export default function SettingsPage() {
     name: "",
     username: "",
     email: "",
+    preferredLanguage: "pt",
   });
 
   // Password form state
@@ -67,6 +69,7 @@ export default function SettingsPage() {
         name: session.user.name || "",
         username: session.user.username || "",
         email: session.user.email || "",
+        preferredLanguage: session.user.preferredLanguage || "pt",
       });
     }
   }, [status, session, router]);
@@ -231,6 +234,14 @@ export default function SettingsPage() {
               {t("settings.security_tab")}
             </Button>
             <Button
+              variant={activeTab === "preferences" ? "default" : "ghost"}
+              className={`rounded-b-none ${activeTab === "preferences" ? "border-b-2 border-primary" : ""}`}
+              onClick={() => setActiveTab("preferences")}
+            >
+              <Globe className="mr-2 h-4 w-4" />
+              {t("settings.preferences_tab")}
+            </Button>
+            <Button
               variant={activeTab === "account" ? "default" : "ghost"}
               className={`rounded-b-none ${activeTab === "account" ? "border-b-2 border-primary" : ""}`}
               onClick={() => setActiveTab("account")}
@@ -365,6 +376,52 @@ export default function SettingsPage() {
                   {loading
                     ? t("settings.saving")
                     : t("settings.change_password")}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Preferences Tab */}
+        {activeTab === "preferences" && (
+          <Card>
+            <CardHeader>
+              <CardTitle>{t("settings.language_preferences")}</CardTitle>
+              <CardDescription>
+                {t("settings.ui_language_description")}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleProfileSubmit} className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="preferredLanguage">
+                    {t("settings.ui_language")}
+                  </Label>
+                  <select
+                    id="preferredLanguage"
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    value={profileForm.preferredLanguage}
+                    onChange={(e) =>
+                      setProfileForm({
+                        ...profileForm,
+                        preferredLanguage: e.target.value,
+                      })
+                    }
+                  >
+                    <option value="pt">🇵🇹 Português</option>
+                    <option value="en">🇬🇧 English</option>
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="fr">🇫🇷 Français</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                  </select>
+                  <p className="text-sm text-muted-foreground">
+                    A língua em que vê botões, menus e toda a interface da
+                    plataforma.
+                  </p>
+                </div>
+
+                <Button type="submit" disabled={loading} className="w-full">
+                  {loading ? t("settings.saving") : t("settings.save_changes")}
                 </Button>
               </form>
             </CardContent>

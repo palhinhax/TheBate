@@ -62,7 +62,11 @@
     "danger_zone": "Zone de Danger",
     "danger_zone_description": "Actions irréversibles",
     "delete_account_title": "Supprimer le Compte",
-    "delete_account_description": "Supprimer définitivement votre compte et toutes les données associées"
+    "delete_account_description": "Supprimer définitivement votre compte et toutes les données associées",
+    "preferences_tab": "Préférences",
+    "language_preferences": "Préférences de Langue",
+    "language_preferences_description": "Choisissez la langue de l'interface",
+    "ui_language": "Langue de l'Interface"
   },
   "comments": {
     "title": "Commentaires",
@@ -78,6 +82,17 @@
     "es": "Español",
     "fr": "Français",
     "de": "Deutsch"
+  },
+  "reports": {
+    "report": "Signaler",
+    "report_topic": "Signaler le Sujet",
+    "report_topic_description": "Ce sujet contient-il du contenu inapproprié?",
+    "report_topic_confirm": "Êtes-vous sûr de vouloir signaler ce sujet? Les modérateurs l'examineront.",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "reporting": "Signalement...",
+    "success": "Sujet signalé avec succès",
+    "error": "Erreur lors du signalement du sujet"
   },
   "footer": {
     "tagline": "Discussions publiques mondiales"

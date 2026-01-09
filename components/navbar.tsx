@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { LogOut, User, Plus, Shield, Menu, X, Settings } from "lucide-react";
-import { LanguageSelector } from "./language-selector";
+import { ContentLanguageFilter } from "./content-language-filter";
 import { useState } from "react";
 
 export function Navbar() {
@@ -29,7 +29,7 @@ export function Navbar() {
 
           {/* Desktop Menu */}
           <div className="hidden items-center gap-2 lg:flex">
-            <LanguageSelector />
+            <ContentLanguageFilter />
             {session ? (
               <>
                 {session.user?.isOwner && (
@@ -87,7 +87,6 @@ export function Navbar() {
 
           {/* Mobile Menu Button */}
           <div className="flex items-center gap-2 lg:hidden">
-            <LanguageSelector />
             <Button
               variant="ghost"
               size="sm"
@@ -106,6 +105,9 @@ export function Navbar() {
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="border-t py-4 lg:hidden">
+            <div className="mb-4 px-2">
+              <ContentLanguageFilter />
+            </div>
             <div className="flex flex-col gap-2">
               {session ? (
                 <>

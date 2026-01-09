@@ -74,7 +74,8 @@ export function ReportTopicButton({ slug, className }: ReportTopicButtonProps) {
               {t("reports.report_topic")}
             </DialogTitle>
             <DialogDescription className="pt-4">
-              Tem a certeza que deseja reportar este tema? O nosso painel de moderação vai analisar.
+              Tem a certeza que deseja reportar este tema? O nosso painel de
+              moderação vai analisar.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="gap-2 sm:gap-0">

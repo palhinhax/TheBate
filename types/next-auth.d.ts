@@ -7,6 +7,7 @@ declare module "next-auth" {
       username: string;
       role: string;
       isOwner: boolean;
+      preferredLanguage?: string;
     } & DefaultSession["user"];
   }
 
@@ -15,6 +16,7 @@ declare module "next-auth" {
     username: string;
     role: string;
     isOwner: boolean;
+    preferredLanguage?: string;
   }
 }
 
@@ -24,5 +26,6 @@ declare module "next-auth/jwt" {
     username: string;
     role: string;
     isOwner: boolean;
+    preferredLanguage?: string;
   }
 }

@@ -14,6 +14,7 @@ const profileSchema = z.object({
       "Username só pode conter letras, números e underscore"
     ),
   email: z.string().email("Email inválido"),
+  preferredLanguage: z.enum(["pt", "en", "es", "fr", "de"]).optional(),
 });
 
 /**
@@ -39,6 +40,7 @@ export async function PATCH(request: Request) {
     }
 
     const { name, username, email } = validation.data;
+    const preferredLanguage = validation.data.preferredLanguage;
 
     // Verificar se username já existe (exceto para o próprio utilizador)
     if (username !== session.user.username) {
@@ -75,12 +77,14 @@ export async function PATCH(request: Request) {
         name,
         username,
         email,
+        ...(preferredLanguage && { preferredLanguage }),
       },
       select: {
         id: true,
         name: true,
         username: true,
         email: true,
+        preferredLanguage: true,
       },
     });
 

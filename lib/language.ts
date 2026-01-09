@@ -3,7 +3,11 @@ import { SUPPORTED_LANGUAGES, type SupportedLanguage } from "./language-shared";
 
 // Re-export for convenience
 export type { SupportedLanguage } from "./language-shared";
-export { SUPPORTED_LANGUAGES, LANGUAGE_METADATA, LANGUAGES } from "./language-shared";
+export {
+  SUPPORTED_LANGUAGES,
+  LANGUAGE_METADATA,
+  LANGUAGES,
+} from "./language-shared";
 
 /**
  * Detects user's preferred language based on:
@@ -12,9 +16,9 @@ export { SUPPORTED_LANGUAGES, LANGUAGE_METADATA, LANGUAGES } from "./language-sh
  * 3. Accept-Language header
  * 4. Default to English
  */
-export async function detectUserLanguage(
-  searchParams?: { lang?: string }
-): Promise<SupportedLanguage> {
+export async function detectUserLanguage(searchParams?: {
+  lang?: string;
+}): Promise<SupportedLanguage> {
   // 1. Check URL parameter first (highest priority)
   if (searchParams?.lang) {
     const lang = searchParams.lang.toLowerCase().slice(0, 2);
@@ -57,15 +61,30 @@ export async function detectUserLanguage(
 
 /**
  * Gets languages user prefers to see
- * Checks localStorage for saved preferences, falls back to detected language
- * NO automatic English fallback - users see only their chosen languages
+ * Checks searchParams for language filter
+ * - If "all", returns all supported languages
+ * - If specific language, returns only that language
+ * - Otherwise, returns detected language
  */
-export async function getUserLanguages(
-  searchParams?: { lang?: string }
-): Promise<SupportedLanguage[]> {
+export async function getUserLanguages(searchParams?: {
+  lang?: string;
+}): Promise<SupportedLanguage[]> {
+  // If "all" is specified, return all supported languages
+  if (searchParams?.lang === "all") {
+    return [...SUPPORTED_LANGUAGES];
+  }
+
+  // If specific language is specified in URL
+  if (searchParams?.lang) {
+    const lang = searchParams.lang.toLowerCase().slice(0, 2);
+    if (SUPPORTED_LANGUAGES.includes(lang as SupportedLanguage)) {
+      return [lang as SupportedLanguage];
+    }
+  }
+
   // Check if running on client and has saved preferences
-  if (typeof window !== 'undefined') {
-    const saved = localStorage.getItem('preferredLanguages');
+  if (typeof window !== "undefined") {
+    const saved = localStorage.getItem("preferredLanguages");
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -77,7 +96,7 @@ export async function getUserLanguages(
       }
     }
   }
-  
+
   // Default to only the detected language (NO forced English)
   const primaryLang = await detectUserLanguage(searchParams);
   return [primaryLang];

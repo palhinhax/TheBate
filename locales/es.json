@@ -62,7 +62,11 @@
     "danger_zone": "Zona de Peligro",
     "danger_zone_description": "Acciones irreversibles",
     "delete_account_title": "Eliminar Cuenta",
-    "delete_account_description": "Eliminar permanentemente tu cuenta y todos los datos asociados"
+    "delete_account_description": "Eliminar permanentemente tu cuenta y todos los datos asociados",
+    "preferences_tab": "Preferencias",
+    "language_preferences": "Preferencias de Idioma",
+    "language_preferences_description": "Elige el idioma de la interfaz",
+    "ui_language": "Idioma de la Interfaz"
   },
   "comments": {
     "title": "Comentarios",
@@ -78,6 +82,17 @@
     "es": "Español",
     "fr": "Français",
     "de": "Deutsch"
+  },
+  "reports": {
+    "report": "Reportar",
+    "report_topic": "Reportar Tema",
+    "report_topic_description": "Este tema contiene contenido inapropiado?",
+    "report_topic_confirm": "¿Estás seguro de que deseas reportar este tema? Los moderadores lo revisarán.",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "reporting": "Reportando...",
+    "success": "Tema reportado exitosamente",
+    "error": "Error al reportar tema"
   },
   "footer": {
     "tagline": "Discusiones públicas globales"

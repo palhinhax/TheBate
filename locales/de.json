@@ -62,7 +62,11 @@
     "danger_zone": "Gefahrenzone",
     "danger_zone_description": "Unwiderrufliche Aktionen",
     "delete_account_title": "Konto Löschen",
-    "delete_account_description": "Ihr Konto und alle zugehörigen Daten dauerhaft löschen"
+    "delete_account_description": "Ihr Konto und alle zugehörigen Daten dauerhaft löschen",
+    "preferences_tab": "Einstellungen",
+    "language_preferences": "Spracheinstellungen",
+    "language_preferences_description": "Wählen Sie die Sprache der Benutzeroberfläche",
+    "ui_language": "Sprache der Benutzeroberfläche"
   },
   "comments": {
     "title": "Kommentare",
@@ -78,6 +82,17 @@
     "es": "Español",
     "fr": "Français",
     "de": "Deutsch"
+  },
+  "reports": {
+    "report": "Melden",
+    "report_topic": "Thema Melden",
+    "report_topic_description": "Enthält dieses Thema unangemessene Inhalte?",
+    "report_topic_confirm": "Sind Sie sicher, dass Sie dieses Thema melden möchten? Moderatoren werden es überprüfen.",
+    "cancel": "Abbrechen",
+    "confirm": "Bestätigen",
+    "reporting": "Melden...",
+    "success": "Thema erfolgreich gemeldet",
+    "error": "Fehler beim Melden des Themas"
   },
   "footer": {
     "tagline": "Globale öffentliche Diskussionen"
