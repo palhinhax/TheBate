@@ -1,3 +1,24 @@
+# [1.5.0](https://github.com/palhinhax/TheBate/compare/v1.4.0...v1.5.0) (2026-01-09)
+
+
+### Bug Fixes
+
+* **auth:** address security and code quality issues ([31815b9](https://github.com/palhinhax/TheBate/commit/31815b9d39ee9a397ca2ba9e77b25fea44c50605))
+* **auth:** improve rate limiting for serverless and add tests ([7740e26](https://github.com/palhinhax/TheBate/commit/7740e26e868d014e8f7415130cd3a055b91d04d5))
+* **i18n:** convert Brazilian Portuguese to European Portuguese ([32b6280](https://github.com/palhinhax/TheBate/commit/32b6280b828cb3763bd246365def9282e8a50e97))
+* **i18n:** replace hardcoded strings with translations in topic form ([69f5a21](https://github.com/palhinhax/TheBate/commit/69f5a21acf29dc2a399cf107c52e376afc620c0a))
+* resolve linting and build errors ([29e5cb2](https://github.com/palhinhax/TheBate/commit/29e5cb2c736df6d7187355c7ddae7eee3837a24a))
+* **tests:** use proper type assertion for Request mocks ([790cc97](https://github.com/palhinhax/TheBate/commit/790cc97ecf37b073f1eb18acb2867f40de30eab7))
+
+
+### Features
+
+* **auth:** implement email verification with Resend ([314b4df](https://github.com/palhinhax/TheBate/commit/314b4dffc1444a431f47103765ae62a834e68a68))
+* **auth:** implement password reset with magic link ([2998103](https://github.com/palhinhax/TheBate/commit/29981030ca8d7966202c1ad0ffa5aab67270ef51))
+* **database:** update environment configuration for Neon PostgreSQL and add setup guide ([d0735d0](https://github.com/palhinhax/TheBate/commit/d0735d07ee77591204305a5ecbb920e34eeb8304))
+* **email:** integrate Resend for production email delivery ([048b4e9](https://github.com/palhinhax/TheBate/commit/048b4e9056fbb929f360a2d54cefa77f821767ef))
+* **i18n:** add translation support for password reset pages ([3824d8c](https://github.com/palhinhax/TheBate/commit/3824d8c5aa6e0e953d2736b2460f768da396499c))
+
 # [1.4.0](https://github.com/palhinhax/TheBate/compare/v1.3.0...v1.4.0) (2026-01-08)
 
 
