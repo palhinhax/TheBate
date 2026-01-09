@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export function Footer() {
@@ -16,7 +17,21 @@ export function Footer() {
     <footer className="mt-auto border-t bg-background">
       <div className="container mx-auto px-4 py-4">
         <div className="flex flex-col items-center justify-center gap-2 text-xs text-muted-foreground/60 sm:flex-row sm:justify-between">
-          <p>© 2026 TheBatee. All rights reserved.</p>
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+            <p>© 2026 TheBatee. All rights reserved.</p>
+            <Link
+              href="/legal/terms"
+              className="hover:text-foreground transition-colors underline-offset-4 hover:underline"
+            >
+              Terms
+            </Link>
+            <Link
+              href="/legal/privacy"
+              className="hover:text-foreground transition-colors underline-offset-4 hover:underline"
+            >
+              Privacy
+            </Link>
+          </div>
           {version && <p className="font-mono">v{version}</p>}
         </div>
       </div>
