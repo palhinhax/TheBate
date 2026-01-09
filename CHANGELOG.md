@@ -1,3 +1,10 @@
+# [2.9.0](https://github.com/palhinhax/TheBate/compare/v2.8.0...v2.9.0) (2026-01-09)
+
+
+### Features
+
+* **analytics:** add Google Analytics 4 integration ([55263e7](https://github.com/palhinhax/TheBate/commit/55263e70a612ea1c5c8af4ab90bef13921331a21))
+
 # [2.8.0](https://github.com/palhinhax/TheBate/compare/v2.7.0...v2.8.0) (2026-01-09)
 
 
