@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "@/lib/use-translations";
 import {
@@ -10,7 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 
 function VerifyEmailContent() {
@@ -54,7 +53,7 @@ function VerifyEmailContent() {
         setTimeout(() => {
           router.push("/");
         }, 3000);
-      } catch (err) {
+      } catch {
         setError(t("common.error", "Ocorreu um erro inesperado"));
       } finally {
         setIsLoading(false);
@@ -139,5 +138,24 @@ function VerifyEmailContent() {
 }
 
 export default function VerifyEmailPage() {
-  return <VerifyEmailContent />;
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center px-4">
+          <Card className="w-full max-w-md">
+            <CardHeader className="space-y-1">
+              <CardTitle className="text-center text-2xl font-bold">
+                Verificando Email
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="flex justify-center">
+              <Spinner size="lg" />
+            </CardContent>
+          </Card>
+        </div>
+      }
+    >
+      <VerifyEmailContent />
+    </Suspense>
+  );
 }

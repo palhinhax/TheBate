@@ -26,8 +26,6 @@ export async function POST(request: Request) {
       );
     }
 
-    const body = await request.json();
-
     // Get user from session
     const sessionUser = await getCurrentUser();
 
