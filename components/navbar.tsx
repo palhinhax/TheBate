@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
-import { LogOut, User, Plus, Shield, Menu, X } from "lucide-react";
+import { LogOut, User, Plus, Shield, Menu, X, Settings } from "lucide-react";
 import { LanguageSelector } from "./language-selector";
 import { useState } from "react";
 
@@ -54,6 +54,12 @@ export function Navbar() {
                     <span className="max-w-[100px] truncate">
                       {session.user?.name || session.user?.username}
                     </span>
+                  </Button>
+                </Link>
+                <Link href="/settings">
+                  <Button variant="ghost" size="sm">
+                    <Settings className="h-4 w-4 xl:mr-2" />
+                    <span className="hidden xl:inline">Configurações</span>
                   </Button>
                 </Link>
                 <Button
@@ -135,6 +141,19 @@ export function Navbar() {
                     >
                       <User className="mr-2 h-4 w-4" />
                       {session.user?.name || session.user?.username}
+                    </Button>
+                  </Link>
+                  <Link
+                    href="/settings"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="w-full justify-start"
+                    >
+                      <Settings className="mr-2 h-4 w-4" />
+                      Configurações
                     </Button>
                   </Link>
                   <Button
