@@ -1,3 +1,10 @@
+## [2.11.2](https://github.com/palhinhax/TheBate/compare/v2.11.1...v2.11.2) (2026-01-09)
+
+
+### Bug Fixes
+
+* **admin:** add unlock button for locked topics ([201e0c9](https://github.com/palhinhax/TheBate/commit/201e0c925614776b0c64e80e2588509c234c3924))
+
 ## [2.11.1](https://github.com/palhinhax/TheBate/compare/v2.11.0...v2.11.1) (2026-01-09)
 
 
