@@ -30,6 +30,9 @@ async function getTopicData(slug: string, userId?: string) {
           name: true,
         },
       },
+      options: {
+        orderBy: { order: "asc" },
+      },
       _count: {
         select: {
           comments: true,
@@ -40,45 +43,90 @@ async function getTopicData(slug: string, userId?: string) {
 
   if (!topic) return null;
 
-  // Get vote statistics
-  const voteStats = await prisma.topicVote.groupBy({
-    by: ["vote"],
-    where: { topicId: topic.id },
-    _count: true,
-  });
+  if (topic.type === "YES_NO") {
+    // Get vote statistics for YES_NO topics
+    const voteStats = await prisma.topicVote.groupBy({
+      by: ["vote"],
+      where: { topicId: topic.id, vote: { not: null } },
+      _count: true,
+    });
 
-  const voteCounts = {
-    SIM: 0,
-    NAO: 0,
-    DEPENDE: 0,
-    total: 0,
-  };
+    const voteCounts = {
+      SIM: 0,
+      NAO: 0,
+      DEPENDE: 0,
+      total: 0,
+    };
 
-  voteStats.forEach((stat) => {
-    voteCounts[stat.vote] = stat._count;
-    voteCounts.total += stat._count;
-  });
+    voteStats.forEach((stat) => {
+      if (stat.vote) {
+        voteCounts[stat.vote] = stat._count;
+        voteCounts.total += stat._count;
+      }
+    });
 
-  // Get user's vote if authenticated
-  let userVote = null;
-  if (userId) {
-    const vote = await prisma.topicVote.findUnique({
-      where: {
-        userId_topicId: {
+    // Get user's vote if authenticated
+    let userVote = null;
+    if (userId) {
+      const vote = await prisma.topicVote.findFirst({
+        where: {
           userId,
           topicId: topic.id,
+          vote: { not: null },
         },
-      },
-      select: { vote: true },
-    });
-    userVote = vote?.vote || null;
-  }
+        select: { vote: true },
+      });
+      userVote = vote?.vote || null;
+    }
 
-  return {
-    ...topic,
-    voteStats: voteCounts,
-    userVote,
-  };
+    return {
+      ...topic,
+      voteStats: voteCounts,
+      userVote,
+      userVoteOptions: [],
+      optionVoteStats: [],
+    };
+  } else {
+    // Get vote statistics for MULTI_CHOICE topics
+    const optionVotes = await prisma.topicVote.groupBy({
+      by: ["optionId"],
+      where: { topicId: topic.id, optionId: { not: null } },
+      _count: true,
+    });
+
+    const optionVoteStats = optionVotes.map((stat) => ({
+      optionId: stat.optionId as string,
+      count: stat._count,
+    }));
+
+    const totalVotes = await prisma.topicVote.count({
+      where: { topicId: topic.id, optionId: { not: null } },
+    });
+
+    // Get user's selected options if authenticated
+    let userVoteOptions: string[] = [];
+    if (userId) {
+      const userVotes = await prisma.topicVote.findMany({
+        where: {
+          userId,
+          topicId: topic.id,
+          optionId: { not: null },
+        },
+        select: { optionId: true },
+      });
+      userVoteOptions = userVotes
+        .map((v) => v.optionId)
+        .filter((id): id is string => id !== null);
+    }
+
+    return {
+      ...topic,
+      voteStats: { SIM: 0, NAO: 0, DEPENDE: 0, total: totalVotes },
+      userVote: null,
+      userVoteOptions,
+      optionVoteStats,
+    };
+  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

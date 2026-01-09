@@ -31,6 +31,10 @@ export default function NewTopicForm() {
     resolver: zodResolver(topicSchema),
     defaultValues: {
       language: "pt",
+      type: "YES_NO",
+      allowMultipleVotes: false,
+      maxChoices: 1,
+      tags: [],
     },
   });
 

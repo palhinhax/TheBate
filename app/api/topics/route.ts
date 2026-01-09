@@ -92,6 +92,7 @@ export async function POST(req: NextRequest) {
       return !!existing;
     });
 
+    // Create topic with options if MULTI_CHOICE
     const topic = await prisma.topic.create({
       data: {
         slug,
@@ -99,7 +100,26 @@ export async function POST(req: NextRequest) {
         description: validated.description,
         language: validated.language,
         tags: validated.tags,
+        type: validated.type,
+        allowMultipleVotes:
+          validated.type === "MULTI_CHOICE"
+            ? validated.allowMultipleVotes
+            : false,
+        maxChoices:
+          validated.type === "MULTI_CHOICE" ? validated.maxChoices : 1,
         createdById: session.user.id,
+        ...(validated.type === "MULTI_CHOICE" &&
+          validated.options && {
+            options: {
+              createMany: {
+                data: validated.options.map((option) => ({
+                  label: option.label,
+                  description: option.description || null,
+                  order: option.order,
+                })),
+              },
+            },
+          }),
       },
       include: {
         createdBy: {
@@ -109,6 +129,7 @@ export async function POST(req: NextRequest) {
             name: true,
           },
         },
+        options: true,
       },
     });
 
