@@ -1,3 +1,10 @@
+## [2.11.1](https://github.com/palhinhax/TheBate/compare/v2.11.0...v2.11.1) (2026-01-09)
+
+
+### Bug Fixes
+
+* **ui:** move advertisement to end of topic page ([889124a](https://github.com/palhinhax/TheBate/commit/889124a844340d01dcb21ba83437c8f8d8ef162a))
+
 # [2.11.0](https://github.com/palhinhax/TheBate/compare/v2.10.0...v2.11.0) (2026-01-09)
 
 
