@@ -10,6 +10,7 @@ import NewCommentForm from "@/features/comments/components/new-comment-form";
 import ThemeVoteButtons from "@/features/topics/components/theme-vote-buttons";
 import ThemeVoteResults from "@/features/topics/components/theme-vote-results";
 import { AdContainer } from "@/components/ad-container";
+import { ReportTopicButton } from "@/features/topics/components/report-topic-button";
 
 type Props = {
   params: { slug: string };
@@ -236,6 +237,12 @@ export default async function TopicPage({ params, searchParams }: Props) {
                 {topic._count.comments} comentário
                 {topic._count.comments !== 1 ? "s" : ""}
               </span>
+              {session?.user && (
+                <>
+                  <span>•</span>
+                  <ReportTopicButton slug={topic.slug} />
+                </>
+              )}
             </div>
           </div>
 

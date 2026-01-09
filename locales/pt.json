@@ -54,6 +54,7 @@
     "title": "Configurações",
     "profile_tab": "Perfil",
     "security_tab": "Segurança",
+    "preferences_tab": "Preferências",
     "account_tab": "Conta",
     "profile_info": "Informações do Perfil",
     "profile_info_description": "Atualize as suas informações pessoais",
@@ -81,7 +82,25 @@
     "danger_zone": "Zona de Perigo",
     "danger_zone_description": "Ações irreversíveis",
     "delete_account_title": "Eliminar Conta",
-    "delete_account_description": "Eliminar permanentemente a sua conta e todos os dados associados"
+    "delete_account_description": "Eliminar permanentemente a sua conta e todos os dados associados",
+    "language_preferences": "Preferências de Língua",
+    "ui_language": "Língua da Interface",
+    "ui_language_description": "Escolha a língua em que quer ver a plataforma",
+    "content_language": "Línguas de Conteúdo",
+    "content_language_description": "Filtre que línguas de posts quer ver na página inicial"
+  },
+  "reports": {
+    "report_topic": "Reportar Tema",
+    "report_reason": "Motivo do report",
+    "report_spam": "Spam",
+    "report_inappropriate": "Conteúdo Inapropriado",
+    "report_misinformation": "Desinformação",
+    "report_harassment": "Assédio",
+    "report_other": "Outro",
+    "report_success": "Tema reportado com sucesso",
+    "report_error": "Erro ao reportar tema",
+    "cancel": "Cancelar",
+    "submit_report": "Enviar Report"
   },
   "comments": {
     "title": "Comentários",

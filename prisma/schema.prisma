@@ -49,6 +49,7 @@ model User {
   image                String?
   role                 UserRole              @default(USER)
   isOwner              Boolean               @default(false)
+  preferredLanguage    String                @default("pt") // UI language preference
   createdAt            DateTime              @default(now())
   topics               Topic[]
   comments             Comment[]
@@ -66,6 +67,7 @@ model Topic {
   language    String       @default("pt") // ISO 639-1: pt, en, es, fr, de, etc.
   tags        String[]
   status      TopicStatus  @default(ACTIVE)
+  reportCount Int          @default(0) // Number of reports for moderation
   createdById String
   createdBy   User         @relation(fields: [createdById], references: [id], onDelete: Cascade)
   createdAt   DateTime     @default(now())
@@ -77,6 +79,7 @@ model Topic {
   @@index([createdAt(sort: Desc)])
   @@index([status])
   @@index([language])
+  @@index([reportCount(sort: Desc)])
 }
 
 model Comment {

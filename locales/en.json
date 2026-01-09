@@ -35,6 +35,7 @@
     "title": "Settings",
     "profile_tab": "Profile",
     "security_tab": "Security",
+    "preferences_tab": "Preferences",
     "account_tab": "Account",
     "profile_info": "Profile Information",
     "profile_info_description": "Update your personal information",
@@ -62,7 +63,25 @@
     "danger_zone": "Danger Zone",
     "danger_zone_description": "Irreversible actions",
     "delete_account_title": "Delete Account",
-    "delete_account_description": "Permanently delete your account and all associated data"
+    "delete_account_description": "Permanently delete your account and all associated data",
+    "language_preferences": "Language Preferences",
+    "ui_language": "Interface Language",
+    "ui_language_description": "Choose the language you want to see the platform in",
+    "content_language": "Content Languages",
+    "content_language_description": "Filter which post languages you want to see on the homepage"
+  },
+  "reports": {
+    "report_topic": "Report Topic",
+    "report_reason": "Report reason",
+    "report_spam": "Spam",
+    "report_inappropriate": "Inappropriate Content",
+    "report_misinformation": "Misinformation",
+    "report_harassment": "Harassment",
+    "report_other": "Other",
+    "report_success": "Topic reported successfully",
+    "report_error": "Error reporting topic",
+    "cancel": "Cancel",
+    "submit_report": "Submit Report"
   },
   "comments": {
     "title": "Comments",
