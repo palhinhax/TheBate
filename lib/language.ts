@@ -71,7 +71,7 @@ export async function getUserLanguages(_searchParams?: {
 }): Promise<SupportedLanguage[]> {
   // Get user's saved preferences from session
   const session = await auth();
-  
+
   // Check if user has valid preferences (not null, is array, has items)
   if (
     session?.user?.preferredContentLanguages &&

@@ -31,7 +31,7 @@ async function testLanguageFilter() {
   ptTopics.forEach((t) => console.log(`    - [${t.language}] ${t.title}`));
 
   // Test 3: Empty array (this might be the issue!)
-  console.log('\n📝 Test 3: Filter with empty array []');
+  console.log("\n📝 Test 3: Filter with empty array []");
   const emptyTopics = await prisma.topic.findMany({
     where: {
       status: "ACTIVE",

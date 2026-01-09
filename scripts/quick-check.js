@@ -11,15 +11,15 @@ async function check() {
         preferredContentLanguages: true,
       },
     });
-    
+
     console.log('User:', JSON.stringify(user, null, 2));
-    
+
     const topics = await prisma.topic.count({
       where: { status: 'ACTIVE' }
     });
-    
+
     console.log('Active topics:', topics);
-    
+
   } finally {
     await prisma.$disconnect();
   }
