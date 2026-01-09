@@ -45,6 +45,7 @@ model User {
   username             String                @unique
   email                String                @unique
   passwordHash         String
+  emailVerified        DateTime?
   image                String?
   role                 UserRole              @default(USER)
   isOwner              Boolean               @default(false)
@@ -54,6 +55,7 @@ model User {
   votes                Vote[]
   topicVotes           TopicVote[]
   passwordResetTokens  PasswordResetToken[]
+  emailVerificationTokens EmailVerificationToken[]
 }
 
 model Topic {
@@ -126,6 +128,20 @@ model TopicVote {
 }
 
 model PasswordResetToken {
+  id        String    @id @default(cuid())
+  userId    String
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model EmailVerificationToken {
   id        String    @id @default(cuid())
   userId    String
   tokenHash String    @unique

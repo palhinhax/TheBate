@@ -45,6 +45,41 @@
   },
   "auth": {
     "show_password": "Mostrar contraseña",
-    "hide_password": "Ocultar contraseña"
+    "hide_password": "Ocultar contraseña",
+    "forgot_password": "¿Olvidaste tu contraseña?",
+    "reset_password": "Recuperar Contraseña",
+    "reset_password_title": "Crear Nueva Contraseña",
+    "reset_password_description": "Ingresa tu nueva contraseña a continuación",
+    "forgot_password_description": "Ingresa tu email para recibir un enlace de recuperación",
+    "send_reset_link": "Enviar Enlace de Recuperación",
+    "email_sent": "Email Enviado",
+    "check_inbox": "Verifica tu bandeja de entrada",
+    "reset_email_sent_message": "Si el email existe en nuestra base de datos, recibirás un enlace para recuperar tu contraseña en los próximos minutos.",
+    "check_spam": "No olvides verificar tu carpeta de spam.",
+    "password_changed": "Contraseña Cambiada",
+    "password_changed_success": "Tu contraseña ha sido cambiada con éxito",
+    "redirecting_to_login": "Redirigiendo al login...",
+    "remembered_password": "¿Recordaste tu contraseña?",
+    "back_to_login": "Volver al Login",
+    "new_password": "Nueva Contraseña",
+    "confirm_password": "Confirmar Contraseña",
+    "verify_email": "Verificar Email",
+    "verify_email_description": "Te reenviaremos un enlace para verificar tu email",
+    "verify_email_prompt": "Haz clic en el botón a continuación para reenviar el email de verificación",
+    "verify_email_error": "Error de Verificación",
+    "verify_email_error_message": "No pudimos verificar tu email. El enlace puede haber expirado.",
+    "verifying_email": "Verificando Email",
+    "email_verified": "Email Verificado",
+    "email_verified_success": "¡Tu email ha sido verificado con éxito!",
+    "email_verified_message": "Ahora puedes disfrutar de todas las funciones de la plataforma.",
+    "redirecting": "Redirigiendo en unos segundos...",
+    "resend_verification": "Reenviar Email de Verificación",
+    "verification_email_sent_message": "Si el email está asociado a una cuenta, recibirás un enlace de verificación en unos minutos.",
+    "password_requirements": {
+      "min_length": "Mínimo de 8 caracteres",
+      "uppercase": "Al menos una letra mayúscula",
+      "lowercase": "Al menos una letra minúscula",
+      "number": "Al menos un número"
+    }
   }
 }

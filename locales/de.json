@@ -45,6 +45,41 @@
   },
   "auth": {
     "show_password": "Passwort anzeigen",
-    "hide_password": "Passwort verbergen"
+    "hide_password": "Passwort verbergen",
+    "forgot_password": "Passwort vergessen?",
+    "reset_password": "Passwort Zurücksetzen",
+    "reset_password_title": "Neues Passwort Erstellen",
+    "reset_password_description": "Geben Sie unten Ihr neues Passwort ein",
+    "forgot_password_description": "Geben Sie Ihre E-Mail ein, um einen Zurücksetzungslink zu erhalten",
+    "send_reset_link": "Zurücksetzungslink Senden",
+    "email_sent": "E-Mail Gesendet",
+    "check_inbox": "Überprüfen Sie Ihren Posteingang",
+    "reset_email_sent_message": "Wenn die E-Mail in unserer Datenbank existiert, erhalten Sie in wenigen Minuten einen Link zum Zurücksetzen Ihres Passworts.",
+    "check_spam": "Vergessen Sie nicht, Ihren Spam-Ordner zu überprüfen.",
+    "password_changed": "Passwort Geändert",
+    "password_changed_success": "Ihr Passwort wurde erfolgreich geändert",
+    "redirecting_to_login": "Weiterleitung zur Anmeldung...",
+    "remembered_password": "Haben Sie sich an Ihr Passwort erinnert?",
+    "back_to_login": "Zurück zur Anmeldung",
+    "new_password": "Neues Passwort",
+    "confirm_password": "Passwort Bestätigen",
+    "verify_email": "E-Mail Verifizieren",
+    "verify_email_description": "Wir senden Ihnen einen Link zur E-Mail-Verifizierung",
+    "verify_email_prompt": "Klicken Sie auf die Schaltfläche unten, um die Verifizierungs-E-Mail erneut zu senden",
+    "verify_email_error": "Verifizierungsfehler",
+    "verify_email_error_message": "Wir konnten Ihre E-Mail nicht verifizieren. Der Link ist möglicherweise abgelaufen.",
+    "verifying_email": "E-Mail wird verifiziert",
+    "email_verified": "E-Mail Verifiziert",
+    "email_verified_success": "Ihre E-Mail wurde erfolgreich verifiziert!",
+    "email_verified_message": "Sie können jetzt alle Funktionen der Plattform nutzen.",
+    "redirecting": "Weiterleitung in wenigen Sekunden...",
+    "resend_verification": "Verifizierungs-E-Mail erneut senden",
+    "verification_email_sent_message": "Wenn die E-Mail mit einem Konto verknüpft ist, erhalten Sie in wenigen Minuten einen Verifizierungslink.",
+    "password_requirements": {
+      "min_length": "Mindestens 8 Zeichen",
+      "uppercase": "Mindestens ein Großbuchstabe",
+      "lowercase": "Mindestens ein Kleinbuchstabe",
+      "number": "Mindestens eine Zahl"
+    }
   }
 }

@@ -45,6 +45,41 @@
   },
   "auth": {
     "show_password": "Afficher le mot de passe",
-    "hide_password": "Masquer le mot de passe"
+    "hide_password": "Masquer le mot de passe",
+    "forgot_password": "Mot de passe oublié ?",
+    "reset_password": "Réinitialiser le Mot de Passe",
+    "reset_password_title": "Créer un Nouveau Mot de Passe",
+    "reset_password_description": "Entrez votre nouveau mot de passe ci-dessous",
+    "forgot_password_description": "Entrez votre email pour recevoir un lien de réinitialisation",
+    "send_reset_link": "Envoyer le Lien de Réinitialisation",
+    "email_sent": "Email Envoyé",
+    "check_inbox": "Vérifiez votre boîte de réception",
+    "reset_email_sent_message": "Si l'email existe dans notre base de données, vous recevrez un lien pour réinitialiser votre mot de passe dans quelques minutes.",
+    "check_spam": "N'oubliez pas de vérifier votre dossier spam.",
+    "password_changed": "Mot de Passe Modifié",
+    "password_changed_success": "Votre mot de passe a été modifié avec succès",
+    "redirecting_to_login": "Redirection vers la connexion...",
+    "remembered_password": "Vous vous souvenez de votre mot de passe ?",
+    "back_to_login": "Retour à la Connexion",
+    "new_password": "Nouveau Mot de Passe",
+    "confirm_password": "Confirmer le Mot de Passe",
+    "verify_email": "Vérifier l'Email",
+    "verify_email_description": "Nous vous renverrons un lien pour vérifier votre email",
+    "verify_email_prompt": "Cliquez sur le bouton ci-dessous pour renvoyer l'email de vérification",
+    "verify_email_error": "Erreur de Vérification",
+    "verify_email_error_message": "Nous n'avons pas pu vérifier votre email. Le lien a peut-être expiré.",
+    "verifying_email": "Vérification de l'Email",
+    "email_verified": "Email Vérifié",
+    "email_verified_success": "Votre email a été vérifié avec succès !",
+    "email_verified_message": "Vous pouvez maintenant profiter de toutes les fonctionnalités de la plateforme.",
+    "redirecting": "Redirection dans quelques secondes...",
+    "resend_verification": "Renvoyer l'Email de Vérification",
+    "verification_email_sent_message": "Si l'email est associé à un compte, vous recevrez un lien de vérification dans quelques minutes.",
+    "password_requirements": {
+      "min_length": "Au moins 8 caractères",
+      "uppercase": "Au moins une lettre majuscule",
+      "lowercase": "Au moins une lettre minuscule",
+      "number": "Au moins un chiffre"
+    }
   }
 }

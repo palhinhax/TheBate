@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
+import { generateResetToken, hashToken } from "@/lib/password";
+import { sendEmailVerificationEmail } from "@/lib/email";
 
 const registerSchema = z.object({
   name: z.string().min(2, "O nome deve ter pelo menos 2 caracteres"),
@@ -70,7 +72,38 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json(user, { status: 201 });
+    // Generate and send email verification token
+    try {
+      const rawToken = generateResetToken();
+      const tokenHash = hashToken(rawToken);
+      const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+
+      // Store token in database
+      await prisma.emailVerificationToken.create({
+        data: {
+          userId: user.id,
+          tokenHash,
+          expiresAt,
+        },
+      });
+
+      // Send verification email
+      // TODO: Get user's preferred language from request or browser
+      const locale = "pt";
+      await sendEmailVerificationEmail(user.email, rawToken, locale);
+    } catch (emailError) {
+      console.error("Failed to send verification email:", emailError);
+      // Don't fail registration if email fails - user can resend later
+    }
+
+    return NextResponse.json(
+      {
+        ...user,
+        message:
+          "Registo concluído! Verifique o seu email para confirmar a conta.",
+      },
+      { status: 201 }
+    );
   } catch (error) {
     console.error("Registration error:", error);
     return NextResponse.json(
