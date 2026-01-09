@@ -1,3 +1,10 @@
+# [2.7.0](https://github.com/palhinhax/TheBate/compare/v2.6.0...v2.7.0) (2026-01-09)
+
+
+### Features
+
+* **topics:** add social share button for discussions ([6837708](https://github.com/palhinhax/TheBate/commit/683770885949bf3c53c26db4c17b07072eab90cd))
+
 # [2.6.0](https://github.com/palhinhax/TheBate/compare/v2.5.1...v2.6.0) (2026-01-09)
 
 
