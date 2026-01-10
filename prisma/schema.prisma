@@ -33,6 +33,11 @@ enum CommentSide {
   CONTRA
 }
 
+enum TopicType {
+  YES_NO
+  MULTI_CHOICE
+}
+
 enum ThemeVote {
   SIM
   NAO
@@ -62,32 +67,55 @@ model User {
 }
 
 model Topic {
-  id          String       @id @default(cuid())
-  slug        String       @unique
-  title       String
-  description String       @db.Text
-  language    String       @default("pt") // ISO 639-1: pt, en, es, fr, de, etc.
-  tags        String[]
-  status      TopicStatus  @default(ACTIVE)
-  reportCount Int          @default(0) // Number of reports for moderation
-  createdById String
-  createdBy   User         @relation(fields: [createdById], references: [id], onDelete: Cascade)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  comments    Comment[]
-  topicVotes  TopicVote[]
+  id                 String        @id @default(cuid())
+  slug               String        @unique
+  title              String
+  description        String        @db.Text
+  type               TopicType     @default(YES_NO) // Type of topic: YES_NO or MULTI_CHOICE
+  allowMultipleVotes Boolean       @default(false) // For MULTI_CHOICE: allow voting for multiple options
+  maxChoices         Int           @default(1) // For MULTI_CHOICE: max number of options user can vote for
+  language           String        @default("pt") // ISO 639-1: pt, en, es, fr, de, etc.
+  tags               String[]
+  status             TopicStatus   @default(ACTIVE)
+  reportCount        Int           @default(0) // Number of reports for moderation
+  createdById        String
+  createdBy          User          @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+  comments           Comment[]
+  topicVotes         TopicVote[]
+  options            TopicOption[] // Options for MULTI_CHOICE topics
 
   @@index([slug])
   @@index([createdAt(sort: Desc)])
   @@index([status])
   @@index([language])
   @@index([reportCount(sort: Desc)])
+  @@index([type])
+}
+
+model TopicOption {
+  id          String      @id @default(cuid())
+  label       String      // Option label (e.g., "Messi", "Ronaldo")
+  description String?     @db.Text // Optional description
+  order       Int         @default(0) // Display order
+  topicId     String
+  topic       Topic       @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  votes       TopicVote[] // Votes for this option
+  comments    Comment[]   // Comments associated with this option
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([topicId, order])
+  @@index([topicId])
 }
 
 model Comment {
   id          String        @id @default(cuid())
   content     String        @db.Text
-  side        CommentSide?  // A FAVOR or CONTRA (null for replies)
+  side        CommentSide?  // A FAVOR or CONTRA (null for replies or MULTI_CHOICE)
+  optionId    String?       // For MULTI_CHOICE topics: associated option
+  option      TopicOption?  @relation(fields: [optionId], references: [id], onDelete: Cascade)
   status      CommentStatus @default(ACTIVE)
   reportCount Int           @default(0) // Number of reports for moderation
   isSeed      Boolean       @default(false) // Mark seed comments for cleanup
@@ -104,6 +132,7 @@ model Comment {
 
   @@index([topicId, createdAt(sort: Desc)])
   @@index([topicId, side])
+  @@index([topicId, optionId])
   @@index([userId])
   @@index([reportCount(sort: Desc)])
 }
@@ -123,17 +152,20 @@ model Vote {
 }
 
 model TopicVote {
-  id        String    @id @default(cuid())
-  vote      ThemeVote // SIM, NAO, or DEPENDE
+  id        String     @id @default(cuid())
+  vote      ThemeVote? // SIM, NAO, or DEPENDE (for YES_NO topics)
+  optionId  String?    // For MULTI_CHOICE topics: selected option
+  option    TopicOption? @relation(fields: [optionId], references: [id], onDelete: Cascade)
   topicId   String
-  topic     Topic     @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  topic     Topic      @relation(fields: [topicId], references: [id], onDelete: Cascade)
   userId    String
-  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 
-  @@unique([userId, topicId])
+  @@unique([userId, topicId, optionId]) // Allow multiple votes per topic if options differ
   @@index([topicId])
+  @@index([optionId])
 }
 
 model PasswordResetToken {
