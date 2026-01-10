@@ -23,6 +23,11 @@
     "prepare": "husky",
     "semantic-release": "semantic-release"
   },
+  "pnpm": {
+    "overrides": {
+      "@auth/core": "0.41.0"
+    }
+  },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix",
