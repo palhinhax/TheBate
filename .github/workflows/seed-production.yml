@@ -64,13 +64,17 @@ jobs:
           if [ "${{ inputs.allow_seed }}" != "true" ]; then
             echo "⚠️ Seed was NOT run because allow_seed was not set to 'true'"
             echo "This is expected behavior - no action needed."
+            exit 0
           elif [ "${{ steps.seed.outcome }}" == "success" ]; then
             echo "✅ Seed execution completed successfully"
+            exit 0
           elif [ "${{ steps.seed.outcome }}" == "skipped" ]; then
             echo "⚠️ Seed step was skipped"
+            exit 0
           elif [ "${{ steps.seed.outcome }}" == "failure" ]; then
             echo "❌ Seed execution failed"
             exit 1
           else
             echo "⚠️ Seed step outcome: ${{ steps.seed.outcome }}"
+            exit 0
           fi
