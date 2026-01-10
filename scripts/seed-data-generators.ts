@@ -53,7 +53,8 @@ const names = {
 function generateUsername(name: string, index: number): string {
   const parts = name.toLowerCase().split(' ');
   const base = parts.join('_');
-  return `${base}${index > 0 ? index + 10 : ''}`;
+  // Add suffix for uniqueness: maria_silva, maria_silva2, maria_silva3, etc.
+  return `${base}${index > 0 ? (index + 1) : ''}`;
 }
 
 // Generate email from username
@@ -362,7 +363,7 @@ export function getLongTailVoteCount(maxVotes: number = 50): number {
   const random = Math.random();
   if (random < 0.5) return 0; // 50% no votes
   if (random < 0.75) return 1; // 25% one vote
-  if (random < 0.9) return Math.floor(Math.random() * 3) + 2; // 15% 2-4 votes
-  if (random < 0.97) return Math.floor(Math.random() * 10) + 5; // 7% 5-14 votes
-  return Math.floor(Math.random() * (maxVotes - 15)) + 15; // 3% 15+ votes
+  if (random < 0.9) return Math.floor(Math.random() * 3) + 2; // 15% get 2, 3, or 4 votes
+  if (random < 0.97) return Math.floor(Math.random() * 10) + 5; // 7% get 5-14 votes
+  return Math.floor(Math.random() * (maxVotes - 15)) + 15; // 3% get 15+ votes
 }

@@ -25,6 +25,7 @@ const COMMENTS_PER_TOPIC_MIN = 8;
 const COMMENTS_PER_TOPIC_MAX = 20;
 const REPLY_PROBABILITY = 0.4; // 40% chance a comment gets replies
 const MAX_REPLIES_PER_COMMENT = 3;
+const ONE_HOUR_MS = 60 * 60 * 1000; // 1 hour in milliseconds
 
 // Check if seed has already been run
 async function checkIfSeeded(): Promise<boolean> {
@@ -176,7 +177,7 @@ async function main() {
 
       // Make sure comment is after topic creation
       const finalCommentDate =
-        commentDate > topic.createdAt ? commentDate : new Date(topic.createdAt.getTime() + 3600000);
+        commentDate > topic.createdAt ? commentDate : new Date(topic.createdAt.getTime() + ONE_HOUR_MS);
 
       try {
         const comment = await prisma.comment.create({
@@ -312,9 +313,12 @@ async function main() {
           },
         });
         totalVotes++;
-      } catch (error) {
-        // Ignore duplicate vote errors (unique constraint)
-        // This can happen if the same user is selected twice
+      } catch (error: unknown) {
+        // Ignore duplicate vote errors (unique constraint on userId + commentId)
+        // This can happen if the same user is selected twice randomly
+        if (error instanceof Error && !error.message.includes("unique constraint")) {
+          console.error(`   ⚠️  Unexpected error creating vote:`, error.message);
+        }
       }
     }
   }
