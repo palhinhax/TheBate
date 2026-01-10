@@ -51,6 +51,7 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Run seed (one-off)
+        id: seed
         if: ${{ inputs.allow_seed == 'true' }}
         run: pnpm run seed:engagement
         env:
@@ -58,9 +59,17 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Seed status
+        if: always()
         run: |
           if [ "${{ inputs.allow_seed }}" != "true" ]; then
             echo "⚠️ Seed was NOT run because allow_seed was not set to 'true'"
+            exit 1
+          elif [ "${{ steps.seed.outcome }}" == "success" ]; then
+            echo "✅ Seed execution completed successfully"
+          elif [ "${{ steps.seed.outcome }}" == "skipped" ]; then
+            echo "⚠️ Seed was skipped"
+            exit 1
           else
-            echo "✅ Seed execution completed"
+            echo "❌ Seed execution failed"
+            exit 1
           fi
