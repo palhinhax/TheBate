@@ -1,3 +1,18 @@
+# [2.16.0](https://github.com/palhinhax/TheBate/compare/v2.15.0...v2.16.0) (2026-01-10)
+
+
+### Bug Fixes
+
+* resolve TypeScript type errors in multi-choice implementation ([071a653](https://github.com/palhinhax/TheBate/commit/071a6537a2e90ca3c0e6ccec0041f89363457ef3))
+
+
+### Features
+
+* **admin:** add UI for creating multi-choice topics ([9c0bda3](https://github.com/palhinhax/TheBate/commit/9c0bda3ebb65a25f13f1b1163a2e8e4900348ad4))
+* **api:** update voting and comment APIs for multi-choice support ([623f2f1](https://github.com/palhinhax/TheBate/commit/623f2f13d2375700dfab25eab489e11fbc5576ec))
+* **db:** add multi-choice topic support to schema ([4cc5a55](https://github.com/palhinhax/TheBate/commit/4cc5a55c527fe57877050a82c31e55b4dc7d0471))
+* **ui:** add multi-choice voting and comment UI components ([6c6df68](https://github.com/palhinhax/TheBate/commit/6c6df68549deec50ecea8ef8cf40a4e0d4b0ccd0))
+
 # [2.15.0](https://github.com/palhinhax/TheBate/compare/v2.14.0...v2.15.0) (2026-01-10)
 
 
