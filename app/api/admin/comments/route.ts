@@ -13,39 +13,55 @@ export async function GET(request: Request) {
 
     const { searchParams } = new URL(request.url);
     const reported = searchParams.get("reported") === "true";
+    const page = parseInt(searchParams.get("page") || "1");
+    const limit = parseInt(searchParams.get("limit") || "50");
+    const skip = (page - 1) * limit;
 
     const where: Prisma.CommentWhereInput = reported
       ? { reportCount: { gt: 0 } }
       : {};
 
-    const comments = await prisma.comment.findMany({
-      where,
-      include: {
-        user: {
-          select: {
-            username: true,
-            name: true,
+    const [comments, total] = await Promise.all([
+      prisma.comment.findMany({
+        where,
+        include: {
+          user: {
+            select: {
+              username: true,
+              name: true,
+            },
+          },
+          topic: {
+            select: {
+              title: true,
+              slug: true,
+            },
+          },
+          _count: {
+            select: {
+              replies: true,
+              votes: true,
+            },
           },
         },
-        topic: {
-          select: {
-            title: true,
-            slug: true,
-          },
+        orderBy: {
+          createdAt: "desc",
         },
-        _count: {
-          select: {
-            replies: true,
-            votes: true,
-          },
-        },
-      },
-      orderBy: {
-        createdAt: "desc",
+        skip: reported ? undefined : skip,
+        take: reported ? undefined : limit,
+      }),
+      prisma.comment.count({ where }),
+    ]);
+
+    return NextResponse.json({
+      comments,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
       },
     });
-
-    return NextResponse.json(comments);
   } catch (error) {
     console.error("Admin comments fetch error:", error);
     return NextResponse.json(

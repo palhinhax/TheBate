@@ -80,9 +80,25 @@ export default function AdminPage() {
     totalPages: 0,
     limit: 50,
   });
+  const [commentsPage, setCommentsPage] = useState(1);
+  const [commentsPagination, setCommentsPagination] = useState({
+    total: 0,
+    totalPages: 0,
+    limit: 50,
+  });
+  const [usersPage, setUsersPage] = useState(1);
+  const [usersPagination, setUsersPagination] = useState({
+    total: 0,
+    totalPages: 0,
+    limit: 50,
+  });
 
   const loadData = useCallback(
-    async (page: number = topicsPage) => {
+    async (
+      topicPage: number = topicsPage,
+      commentPage: number = commentsPage,
+      userPage: number = usersPage
+    ) => {
       setLoading(true);
       try {
         const [
@@ -92,9 +108,9 @@ export default function AdminPage() {
           reportedTopicsRes,
           reportedCommentsRes,
         ] = await Promise.all([
-          fetch(`/api/admin/topics?page=${page}&limit=50`),
-          fetch("/api/admin/comments"),
-          fetch("/api/admin/users"),
+          fetch(`/api/admin/topics?page=${topicPage}&limit=50`),
+          fetch(`/api/admin/comments?page=${commentPage}&limit=50`),
+          fetch(`/api/admin/users?page=${userPage}&limit=50`),
           fetch("/api/admin/topics?reported=true"),
           fetch("/api/admin/comments?reported=true"),
         ]);
@@ -104,14 +120,24 @@ export default function AdminPage() {
           setTopics(data.topics);
           setTopicsPagination(data.pagination);
         }
-        if (commentsRes.ok) setComments(await commentsRes.json());
-        if (usersRes.ok) setUsers(await usersRes.json());
+        if (commentsRes.ok) {
+          const data = await commentsRes.json();
+          setComments(data.comments);
+          setCommentsPagination(data.pagination);
+        }
+        if (usersRes.ok) {
+          const data = await usersRes.json();
+          setUsers(data.users);
+          setUsersPagination(data.pagination);
+        }
         if (reportedTopicsRes.ok) {
           const data = await reportedTopicsRes.json();
           setReportedTopics(data.topics || data);
         }
-        if (reportedCommentsRes.ok)
-          setReportedComments(await reportedCommentsRes.json());
+        if (reportedCommentsRes.ok) {
+          const data = await reportedCommentsRes.json();
+          setReportedComments(data.comments || data);
+        }
       } catch {
         toast({
           title: "Erro",
@@ -122,7 +148,7 @@ export default function AdminPage() {
         setLoading(false);
       }
     },
-    [toast, topicsPage]
+    [toast, topicsPage, commentsPage, usersPage]
   );
 
   useEffect(() => {
@@ -347,10 +373,10 @@ export default function AdminPage() {
     <div className="container mx-auto px-4 py-8">
       <h1 className="mb-8 text-3xl font-bold">Painel do Owner</h1>
 
-      <div className="mb-6 flex gap-4 border-b">
+      <div className="mb-6 flex flex-wrap gap-2 border-b sm:gap-4">
         <button
           onClick={() => setActiveTab("topics")}
-          className={`px-4 py-2 ${
+          className={`whitespace-nowrap px-3 py-2 text-sm sm:px-4 sm:text-base ${
             activeTab === "topics"
               ? "border-b-2 border-primary font-semibold"
               : "text-muted-foreground"
@@ -360,27 +386,27 @@ export default function AdminPage() {
         </button>
         <button
           onClick={() => setActiveTab("comments")}
-          className={`px-4 py-2 ${
+          className={`whitespace-nowrap px-3 py-2 text-sm sm:px-4 sm:text-base ${
             activeTab === "comments"
               ? "border-b-2 border-primary font-semibold"
               : "text-muted-foreground"
           }`}
         >
-          Argumentos ({comments.length})
+          Argumentos ({commentsPagination.total || 0})
         </button>
         <button
           onClick={() => setActiveTab("users")}
-          className={`px-4 py-2 ${
+          className={`whitespace-nowrap px-3 py-2 text-sm sm:px-4 sm:text-base ${
             activeTab === "users"
               ? "border-b-2 border-primary font-semibold"
               : "text-muted-foreground"
           }`}
         >
-          Utilizadores ({users.length})
+          Utilizadores ({usersPagination.total || 0})
         </button>
         <button
           onClick={() => setActiveTab("reports")}
-          className={`px-4 py-2 ${
+          className={`whitespace-nowrap px-3 py-2 text-sm sm:px-4 sm:text-base ${
             activeTab === "reports"
               ? "border-b-2 border-primary font-semibold"
               : "text-muted-foreground"
@@ -477,7 +503,7 @@ export default function AdminPage() {
                 onClick={() => {
                   const newPage = topicsPage - 1;
                   setTopicsPage(newPage);
-                  loadData(newPage);
+                  loadData(newPage, commentsPage, usersPage);
                 }}
                 disabled={topicsPage === 1}
               >
@@ -493,7 +519,7 @@ export default function AdminPage() {
                 onClick={() => {
                   const newPage = topicsPage + 1;
                   setTopicsPage(newPage);
-                  loadData(newPage);
+                  loadData(newPage, commentsPage, usersPage);
                 }}
                 disabled={topicsPage === topicsPagination.totalPages}
               >
@@ -570,6 +596,38 @@ export default function AdminPage() {
               </div>
             </Card>
           ))}
+          {commentsPagination.totalPages > 1 && (
+            <div className="mt-6 flex items-center justify-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const newPage = commentsPage - 1;
+                  setCommentsPage(newPage);
+                  loadData(topicsPage, newPage, usersPage);
+                }}
+                disabled={commentsPage === 1}
+              >
+                Anterior
+              </Button>
+              <span className="text-sm text-muted-foreground">
+                Página {commentsPage} de {commentsPagination.totalPages} (
+                {commentsPagination.total} argumentos)
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const newPage = commentsPage + 1;
+                  setCommentsPage(newPage);
+                  loadData(topicsPage, newPage, usersPage);
+                }}
+                disabled={commentsPage === commentsPagination.totalPages}
+              >
+                Próxima
+              </Button>
+            </div>
+          )}
         </div>
       )}
 
@@ -652,6 +710,38 @@ export default function AdminPage() {
               </div>
             </Card>
           ))}
+          {usersPagination.totalPages > 1 && (
+            <div className="mt-6 flex items-center justify-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const newPage = usersPage - 1;
+                  setUsersPage(newPage);
+                  loadData(topicsPage, commentsPage, newPage);
+                }}
+                disabled={usersPage === 1}
+              >
+                Anterior
+              </Button>
+              <span className="text-sm text-muted-foreground">
+                Página {usersPage} de {usersPagination.totalPages} (
+                {usersPagination.total} utilizadores)
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const newPage = usersPage + 1;
+                  setUsersPage(newPage);
+                  loadData(topicsPage, commentsPage, newPage);
+                }}
+                disabled={usersPage === usersPagination.totalPages}
+              >
+                Próxima
+              </Button>
+            </div>
+          )}
         </div>
       )}
 
