@@ -1,0 +1,66 @@
+name: Seed Production (One-off)
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_migrate:
+        description: "Run prisma migrate deploy before seed"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "true"
+          - "false"
+      allow_seed:
+        description: "Must be true to run seed"
+        required: true
+        default: "true"
+        type: choice
+        options:
+          - "true"
+          - "false"
+
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Prisma generate
+        run: pnpm prisma generate
+
+      - name: Prisma migrate deploy (optional)
+        if: ${{ inputs.run_migrate == 'true' }}
+        run: pnpm prisma migrate deploy
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Run seed (one-off)
+        if: ${{ inputs.allow_seed == 'true' }}
+        run: pnpm run seed:engagement
+        env:
+          NODE_ENV: production
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Seed status
+        run: |
+          if [ "${{ inputs.allow_seed }}" != "true" ]; then
+            echo "⚠️ Seed was NOT run because allow_seed was not set to 'true'"
+          else
+            echo "✅ Seed execution completed"
+          fi
