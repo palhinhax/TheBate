@@ -59,8 +59,8 @@ export default function NewCommentForm({
   });
 
   const content = watch("content") || "";
-  const selectedSide = watch("side" as keyof (CommentFormData | ReplyFormData));
-  const selectedOptionId = watch("optionId" as keyof (CommentFormData | ReplyFormData));
+  const selectedSide = watch("side" as never) as unknown;
+  const selectedOptionId = watch("optionId" as never) as unknown;
 
   const onSubmit = async (data: CommentFormData | ReplyFormData) => {
     setIsSubmitting(true);
@@ -109,7 +109,7 @@ export default function NewCommentForm({
           <div className="mt-2 flex gap-3">
             <button
               type="button"
-              onClick={() => setValue("side" as keyof (CommentFormData | ReplyFormData), "AFAVOR")}
+              onClick={() => setValue("side" as never, "AFAVOR" as never)}
               className={`flex-1 rounded-lg border px-4 py-3 text-center transition-all ${
                 selectedSide === "AFAVOR"
                   ? "border-green-600 bg-green-50 text-green-700 ring-2 ring-green-600 dark:bg-green-950 dark:text-green-400"
@@ -121,7 +121,7 @@ export default function NewCommentForm({
             </button>
             <button
               type="button"
-              onClick={() => setValue("side" as keyof (CommentFormData | ReplyFormData), "CONTRA")}
+              onClick={() => setValue("side" as never, "CONTRA" as never)}
               className={`flex-1 rounded-lg border px-4 py-3 text-center transition-all ${
                 selectedSide === "CONTRA"
                   ? "border-red-600 bg-red-50 text-red-700 ring-2 ring-red-600 dark:bg-red-950 dark:text-red-400"
@@ -132,8 +132,8 @@ export default function NewCommentForm({
               <div className="text-sm font-medium">Contra</div>
             </button>
           </div>
-          {errors.side && (
-            <p className="mt-1 text-sm text-destructive">{errors.side.message}</p>
+          {"side" in errors && errors.side && (
+            <p className="mt-1 text-sm text-destructive">{errors.side.message as string}</p>
           )}
         </div>
       )}
@@ -144,7 +144,7 @@ export default function NewCommentForm({
           <Label htmlFor="optionId">Opção associada (opcional)</Label>
           <select
             id="optionId"
-            {...register("optionId" as keyof (CommentFormData | ReplyFormData))}
+            {...register("optionId" as never)}
             className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           >
             <option value="">Nenhuma opção específica</option>
@@ -154,8 +154,8 @@ export default function NewCommentForm({
               </option>
             ))}
           </select>
-          {errors.optionId && (
-            <p className="mt-1 text-sm text-destructive">{errors.optionId.message}</p>
+          {"optionId" in errors && errors.optionId && (
+            <p className="mt-1 text-sm text-destructive">{errors.optionId.message as string}</p>
           )}
         </div>
       )}

@@ -235,8 +235,8 @@ export default async function CommentsList({
 
   return (
     <div className="space-y-6">
-      {comments.map((comment: {id: string}) => (
-        <CommentItem key={comment.id} comment={comment} topicId={topicId!} />
+      {(comments as Array<{ id: string; [key: string]: unknown }>).map((comment) => (
+        <CommentItem key={comment.id} comment={comment as never} topicId={topicId!} />
       ))}
     </div>
   );

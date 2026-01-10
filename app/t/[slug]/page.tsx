@@ -70,13 +70,11 @@ async function getTopicData(slug: string, userId?: string) {
     // Get user's vote if authenticated
     let userVote = null;
     if (userId) {
-      const vote = await prisma.topicVote.findUnique({
+      const vote = await prisma.topicVote.findFirst({
         where: {
-          userId_topicId_optionId: {
-            userId,
-            topicId: topic.id,
-            optionId: null,
-          },
+          userId,
+          topicId: topic.id,
+          optionId: null,
         },
         select: { vote: true },
       });
@@ -285,7 +283,9 @@ export default async function TopicPage({ params, searchParams }: Props) {
       {
         "@type": "InteractionCounter",
         interactionType: "https://schema.org/VoteAction",
-        userInteractionCount: topic.voteStats.total,
+        userInteractionCount: topic.type === "YES_NO" 
+          ? ("voteStats" in topic ? topic.voteStats.total : 0)
+          : ("totalVotes" in topic ? topic.totalVotes : 0),
       },
     ],
     keywords: topic.tags.join(", "),

@@ -49,24 +49,31 @@ export async function POST(
     if (topic.type === "YES_NO") {
       const { vote } = yesNoVoteSchema.parse(body);
 
-      // Upsert vote (create or update)
-      await prisma.topicVote.upsert({
+      // Check if user already has a vote
+      const existingVote = await prisma.topicVote.findFirst({
         where: {
-          userId_topicId_optionId: {
-            userId: session.user.id,
-            topicId: topic.id,
-            optionId: null,
-          },
-        },
-        create: {
-          vote,
-          topicId: topic.id,
           userId: session.user.id,
-        },
-        update: {
-          vote,
+          topicId: topic.id,
+          optionId: null,
         },
       });
+
+      if (existingVote) {
+        // Update existing vote
+        await prisma.topicVote.update({
+          where: { id: existingVote.id },
+          data: { vote },
+        });
+      } else {
+        // Create new vote
+        await prisma.topicVote.create({
+          data: {
+            vote,
+            topicId: topic.id,
+            userId: session.user.id,
+          },
+        });
+      }
 
       // Get updated vote statistics
       const voteStats = await prisma.topicVote.groupBy({

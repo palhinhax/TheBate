@@ -28,9 +28,12 @@ export default function NewTopicForm() {
     formState: { errors },
     setValue,
   } = useForm<TopicFormData>({
-    resolver: zodResolver(topicSchema),
+    resolver: zodResolver(topicSchema) as never,
     defaultValues: {
       language: "pt",
+      type: "YES_NO",
+      allowMultipleVotes: false,
+      maxChoices: 1,
     },
   });
 

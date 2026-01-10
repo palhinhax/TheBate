@@ -28,9 +28,9 @@ export const topicSchema = z
       .array(z.string().min(2).max(30))
       .min(1, "Adicione pelo menos uma tag")
       .max(5, "Máximo de 5 tags permitidas"),
-    type: z.enum(["YES_NO", "MULTI_CHOICE"]).default("YES_NO"),
-    allowMultipleVotes: z.boolean().default(false),
-    maxChoices: z.number().int().min(1).max(10).default(1),
+    type: z.enum(["YES_NO", "MULTI_CHOICE"]).optional().default("YES_NO"),
+    allowMultipleVotes: z.boolean().optional().default(false),
+    maxChoices: z.number().int().min(1).max(10).optional().default(1),
     options: z.array(topicOptionSchema).optional(),
   })
   .refine(
