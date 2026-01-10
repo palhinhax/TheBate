@@ -1,3 +1,17 @@
+# [2.14.0](https://github.com/palhinhax/TheBate/compare/v2.13.0...v2.14.0) (2026-01-10)
+
+
+### Bug Fixes
+
+* **ci:** improve seed status step with outcome check ([2b542de](https://github.com/palhinhax/TheBate/commit/2b542de5b2caba352016316251ce273759462b0b))
+* **ci:** only fail workflow on actual seed errors ([ada80dc](https://github.com/palhinhax/TheBate/commit/ada80dc84dff477d5b73f7066da895d6b4fd9795))
+* **ci:** use Node 22 for consistency with other workflows ([cb06114](https://github.com/palhinhax/TheBate/commit/cb06114b8216181905a2d618b5540586e11d8d68))
+
+
+### Features
+
+* **ci:** add seed production workflow ([98eddee](https://github.com/palhinhax/TheBate/commit/98eddee6a9a394e397b7a3113ff4a80537633054))
+
 # [2.13.0](https://github.com/palhinhax/TheBate/compare/v2.12.3...v2.13.0) (2026-01-10)
 
 
