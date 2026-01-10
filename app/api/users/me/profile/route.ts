@@ -47,8 +47,21 @@ export async function PATCH(request: Request) {
     const preferredLanguage = validation.data.preferredLanguage;
     const preferredContentLanguages = validation.data.preferredContentLanguages;
 
-    // Verificar se username já existe (exceto para o próprio utilizador)
-    if (username && username !== session.user.username) {
+    // Get current user data to check what actually changed
+    const currentUser = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: { username: true, email: true },
+    });
+
+    if (!currentUser) {
+      return NextResponse.json(
+        { error: "Utilizador não encontrado" },
+        { status: 404 }
+      );
+    }
+
+    // Only validate username if it's actually being changed
+    if (username && username !== currentUser.username) {
       const existingUsername = await prisma.user.findUnique({
         where: { username },
       });
@@ -61,8 +74,8 @@ export async function PATCH(request: Request) {
       }
     }
 
-    // Verificar se email já existe (exceto para o próprio utilizador)
-    if (email && email !== session.user.email) {
+    // Only validate email if it's actually being changed
+    if (email && email !== currentUser.email) {
       const existingEmail = await prisma.user.findUnique({
         where: { email },
       });

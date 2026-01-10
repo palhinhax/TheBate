@@ -56,7 +56,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     signIn: "/auth/login",
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger }) {
       if (user) {
         token.id = user.id;
         token.username = user.username;
@@ -65,6 +65,32 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.preferredLanguage = user.preferredLanguage;
         token.preferredContentLanguages = user.preferredContentLanguages;
       }
+
+      // On token refresh or update, fetch latest user data from database
+      // This ensures language preferences are always up-to-date
+      if (trigger === "update" && token.id) {
+        const dbUser = await prisma.user.findUnique({
+          where: { id: token.id as string },
+          select: {
+            preferredLanguage: true,
+            preferredContentLanguages: true,
+            username: true,
+            name: true,
+            role: true,
+            isOwner: true,
+          },
+        });
+
+        if (dbUser) {
+          token.username = dbUser.username;
+          token.name = dbUser.name;
+          token.role = dbUser.role;
+          token.isOwner = dbUser.isOwner;
+          token.preferredLanguage = dbUser.preferredLanguage;
+          token.preferredContentLanguages = dbUser.preferredContentLanguages;
+        }
+      }
+
       return token;
     },
     async session({ session, token }) {

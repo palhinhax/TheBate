@@ -37,7 +37,7 @@ import { signOut } from "next-auth/react";
 type TabType = "profile" | "security" | "preferences" | "account";
 
 export default function SettingsPage() {
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
   const router = useRouter();
   const { toast } = useToast();
   const { t } = useTranslations();
@@ -98,7 +98,9 @@ export default function SettingsPage() {
         toast({
           title: t("settings.changes_saved"),
         });
-        // Recarregar sessão para atualizar dados
+        // Update the session with new data
+        await update();
+        // Reload to apply language changes
         window.location.reload();
       } else {
         const data = await response.json();
@@ -231,7 +233,9 @@ export default function SettingsPage() {
         toast({
           title: t("settings.changes_saved"),
         });
-        // Recarregar sessão para atualizar dados
+        // Update the session with new data
+        await update();
+        // Reload to apply language changes
         window.location.reload();
       } else {
         const data = await response.json();

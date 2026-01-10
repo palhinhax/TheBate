@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 type TranslationKey = string;
 type Translations = Record<string, unknown>;
@@ -9,26 +10,34 @@ const translationsCache: Record<string, Translations> = {};
 
 /**
  * Simple client-side translation hook
- * Detects browser language and loads appropriate translations
+ * Uses user's preferred language from session, or detects browser language
  */
 export function useTranslations() {
   const [translations, setTranslations] = useState<Translations>({});
   const [locale, setLocale] = useState<string>("pt");
   const [isLoading, setIsLoading] = useState(true);
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     async function loadTranslations() {
-      // Detect browser language
-      const browserLang =
-        typeof navigator !== "undefined"
-          ? navigator.language.split("-")[0]
-          : "pt";
-
       // Supported languages
       const supportedLangs = ["pt", "en", "es", "fr", "de"];
-      const selectedLang = supportedLangs.includes(browserLang)
-        ? browserLang
-        : "pt";
+
+      let selectedLang: string;
+
+      // First priority: user's preferred language from session
+      if (session?.user?.preferredLanguage) {
+        selectedLang = session.user.preferredLanguage;
+      } else {
+        // Second priority: detect browser language
+        const browserLang =
+          typeof navigator !== "undefined"
+            ? navigator.language.split("-")[0]
+            : "pt";
+        selectedLang = supportedLangs.includes(browserLang)
+          ? browserLang
+          : "pt";
+      }
 
       setLocale(selectedLang);
 
@@ -61,8 +70,11 @@ export function useTranslations() {
       }
     }
 
-    loadTranslations();
-  }, []);
+    // Wait for session to load before loading translations
+    if (status !== "loading") {
+      loadTranslations();
+    }
+  }, [session?.user?.preferredLanguage, status]);
 
   const t = (key: TranslationKey, fallback?: string): string => {
     const keys = key.split(".");
