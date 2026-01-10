@@ -19,6 +19,8 @@
     "db:push": "prisma db push",
     "db:seed": "npx tsx prisma/seed.ts",
     "db:seed-topics": "npx tsx scripts/seed-hot-topics.ts",
+    "seed:engagement": "npx tsx scripts/seed-engagement.ts",
+    "seed:cleanup": "npx tsx scripts/cleanup-seed-data.ts",
     "db:studio": "prisma studio",
     "prepare": "husky",
     "semantic-release": "semantic-release"

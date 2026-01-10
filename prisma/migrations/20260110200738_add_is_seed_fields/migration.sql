@@ -1,0 +1,8 @@
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN "isSeed" BOOLEAN NOT NULL DEFAULT false;
+
+-- AlterTable
+ALTER TABLE "Comment" ADD COLUMN "isSeed" BOOLEAN NOT NULL DEFAULT false;
+
+-- AlterTable
+ALTER TABLE "Vote" ADD COLUMN "isSeed" BOOLEAN NOT NULL DEFAULT false;
