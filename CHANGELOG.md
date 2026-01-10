@@ -1,3 +1,10 @@
+# [2.15.0](https://github.com/palhinhax/TheBate/compare/v2.14.0...v2.15.0) (2026-01-10)
+
+
+### Features
+
+* **admin:** add pagination and fix mobile responsiveness in owner panel ([50c546d](https://github.com/palhinhax/TheBate/commit/50c546deac0705e514ed95f384963d81efc6e43c))
+
 # [2.14.0](https://github.com/palhinhax/TheBate/compare/v2.13.0...v2.14.0) (2026-01-10)
 
 
