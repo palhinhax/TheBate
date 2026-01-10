@@ -259,3 +259,252 @@ TheBate Team
     text: message.getText(verifyUrl),
   });
 }
+
+/**
+ * Send magic link login email
+ */
+export async function sendMagicLinkEmail(
+  email: string,
+  url: string,
+  locale: string = "pt"
+): Promise<void> {
+  const messages: Record<
+    string,
+    { subject: string; getText: (url: string) => string; getHtml: (url: string) => string }
+  > = {
+    pt: {
+      subject: "Entrar no TheBate",
+      getText: (url: string) =>
+        `
+Olá,
+
+Clique no link abaixo para entrar no TheBate:
+
+${url}
+
+Se não foi o utilizador que solicitou este acesso, pode ignorar este email com segurança.
+
+Atenciosamente,
+Equipa TheBate
+      `.trim(),
+      getHtml: (url: string) =>
+        `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+    .button { display: inline-block; padding: 12px 24px; background-color: #0070f3; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
+    .footer { margin-top: 30px; font-size: 12px; color: #666; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Entrar no TheBate</h2>
+    <p>Olá,</p>
+    <p>Clique no botão abaixo para entrar no TheBate:</p>
+    <a href="${url}" class="button">Entrar</a>
+    <p>Ou copie e cole este link no seu navegador:</p>
+    <p style="word-break: break-all; color: #666;">${url}</p>
+    <div class="footer">
+      <p>Se não foi o utilizador que solicitou este acesso, pode ignorar este email com segurança.</p>
+      <p>Atenciosamente,<br>Equipa TheBate</p>
+    </div>
+  </div>
+</body>
+</html>
+      `.trim(),
+    },
+    en: {
+      subject: "Sign in to TheBate",
+      getText: (url: string) =>
+        `
+Hello,
+
+Click the link below to sign in to TheBate:
+
+${url}
+
+If you didn't request this, you can safely ignore this email.
+
+Best regards,
+TheBate Team
+      `.trim(),
+      getHtml: (url: string) =>
+        `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+    .button { display: inline-block; padding: 12px 24px; background-color: #0070f3; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
+    .footer { margin-top: 30px; font-size: 12px; color: #666; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Sign in to TheBate</h2>
+    <p>Hello,</p>
+    <p>Click the button below to sign in to TheBate:</p>
+    <a href="${url}" class="button">Sign In</a>
+    <p>Or copy and paste this link into your browser:</p>
+    <p style="word-break: break-all; color: #666;">${url}</p>
+    <div class="footer">
+      <p>If you didn't request this, you can safely ignore this email.</p>
+      <p>Best regards,<br>TheBate Team</p>
+    </div>
+  </div>
+</body>
+</html>
+      `.trim(),
+    },
+    es: {
+      subject: "Entrar en TheBate",
+      getText: (url: string) =>
+        `
+Hola,
+
+Haz clic en el enlace a continuación para entrar en TheBate:
+
+${url}
+
+Si no solicitaste esto, puedes ignorar este correo con seguridad.
+
+Saludos,
+Equipo TheBate
+      `.trim(),
+      getHtml: (url: string) =>
+        `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+    .button { display: inline-block; padding: 12px 24px; background-color: #0070f3; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
+    .footer { margin-top: 30px; font-size: 12px; color: #666; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Entrar en TheBate</h2>
+    <p>Hola,</p>
+    <p>Haz clic en el botón a continuación para entrar en TheBate:</p>
+    <a href="${url}" class="button">Entrar</a>
+    <p>O copia y pega este enlace en tu navegador:</p>
+    <p style="word-break: break-all; color: #666;">${url}</p>
+    <div class="footer">
+      <p>Si no solicitaste esto, puedes ignorar este correo con seguridad.</p>
+      <p>Saludos,<br>Equipo TheBate</p>
+    </div>
+  </div>
+</body>
+</html>
+      `.trim(),
+    },
+    fr: {
+      subject: "Se connecter à TheBate",
+      getText: (url: string) =>
+        `
+Bonjour,
+
+Cliquez sur le lien ci-dessous pour vous connecter à TheBate :
+
+${url}
+
+Si vous n'avez pas demandé cela, vous pouvez ignorer cet e-mail en toute sécurité.
+
+Cordialement,
+Équipe TheBate
+      `.trim(),
+      getHtml: (url: string) =>
+        `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+    .button { display: inline-block; padding: 12px 24px; background-color: #0070f3; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
+    .footer { margin-top: 30px; font-size: 12px; color: #666; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Se connecter à TheBate</h2>
+    <p>Bonjour,</p>
+    <p>Cliquez sur le bouton ci-dessous pour vous connecter à TheBate :</p>
+    <a href="${url}" class="button">Se connecter</a>
+    <p>Ou copiez et collez ce lien dans votre navigateur :</p>
+    <p style="word-break: break-all; color: #666;">${url}</p>
+    <div class="footer">
+      <p>Si vous n'avez pas demandé cela, vous pouvez ignorer cet e-mail en toute sécurité.</p>
+      <p>Cordialement,<br>Équipe TheBate</p>
+    </div>
+  </div>
+</body>
+</html>
+      `.trim(),
+    },
+    de: {
+      subject: "Bei TheBate anmelden",
+      getText: (url: string) =>
+        `
+Hallo,
+
+Klicken Sie auf den folgenden Link, um sich bei TheBate anzumelden:
+
+${url}
+
+Falls Sie dies nicht angefordert haben, können Sie diese E-Mail sicher ignorieren.
+
+Mit freundlichen Grüßen,
+TheBate Team
+      `.trim(),
+      getHtml: (url: string) =>
+        `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+    .button { display: inline-block; padding: 12px 24px; background-color: #0070f3; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
+    .footer { margin-top: 30px; font-size: 12px; color: #666; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Bei TheBate anmelden</h2>
+    <p>Hallo,</p>
+    <p>Klicken Sie auf die Schaltfläche unten, um sich bei TheBate anzumelden:</p>
+    <a href="${url}" class="button">Anmelden</a>
+    <p>Oder kopieren Sie diesen Link und fügen Sie ihn in Ihren Browser ein:</p>
+    <p style="word-break: break-all; color: #666;">${url}</p>
+    <div class="footer">
+      <p>Falls Sie dies nicht angefordert haben, können Sie diese E-Mail sicher ignorieren.</p>
+      <p>Mit freundlichen Grüßen,<br>TheBate Team</p>
+    </div>
+  </div>
+</body>
+</html>
+      `.trim(),
+    },
+  };
+
+  const message = messages[locale] || messages.pt;
+
+  await sendEmail({
+    to: email,
+    subject: message.subject,
+    text: message.getText(url),
+    html: message.getHtml(url),
+  });
+}

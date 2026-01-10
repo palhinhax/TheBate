@@ -7,7 +7,8 @@
     "logout": "Se Déconnecter",
     "loading": "Chargement...",
     "error": "Erreur",
-    "search": "Rechercher"
+    "search": "Rechercher",
+    "close": "Fermer"
   },
   "hero": {
     "title": "Plateforme Mondiale de Discussion",
@@ -141,6 +142,16 @@
       "uppercase": "Au moins une lettre majuscule",
       "lowercase": "Au moins une lettre minuscule",
       "number": "Au moins un chiffre"
-    }
+    },
+    "login_modal_title": "Se connecter pour continuer",
+    "login_modal_description": "Pour maintenir des débats justes, vous devez vous connecter.",
+    "sign_in_google": "Se connecter avec Google",
+    "sign_in_email": "Se connecter avec Email",
+    "or": "ou",
+    "email_placeholder": "votre@email.com",
+    "send_magic_link": "Envoyer le lien d'accès",
+    "magic_link_sent": "Lien envoyé",
+    "magic_link_sent_message": "Nous vous avons envoyé un lien pour vous connecter. Vérifiez votre email.",
+    "magic_link_error": "Erreur lors de l'envoi du lien"
   }
 }

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import Link from "next/link";
+import { AuthModal } from "@/components/auth-modal";
 
 type ThemeVote = "SIM" | "NAO" | "DEPENDE";
 
@@ -24,14 +24,11 @@ export default function ThemeVoteButtons({
   const { data: session } = useSession();
   const { toast } = useToast();
   const [isVoting, setIsVoting] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   const handleVote = async (vote: ThemeVote) => {
     if (!session?.user) {
-      toast({
-        title: "Entre para votar",
-        description: "Precisa de iniciar sessão para votar.",
-        variant: "destructive",
-      });
+      setShowAuthModal(true);
       return;
     }
 
@@ -75,48 +72,38 @@ export default function ThemeVoteButtons({
     }
   };
 
-  if (!session?.user) {
-    return (
-      <div className="rounded-lg border bg-muted/50 px-6 py-8 text-center">
-        <p className="mb-4 text-muted-foreground">
-          Entre para votar neste tema
-        </p>
-        <Link href={`/auth/login?callbackUrl=/t/${topicSlug}`}>
-          <Button>Entrar</Button>
-        </Link>
-      </div>
-    );
-  }
-
   return (
-    <div className="flex flex-col gap-4 sm:flex-row">
-      <Button
-        onClick={() => handleVote("SIM")}
-        disabled={isVoting || disabled}
-        variant={userVote === "SIM" ? "default" : "outline"}
-        className="flex-1"
-        size="lg"
-      >
-        {userVote === "SIM" ? "✓ " : ""}Sim
-      </Button>
-      <Button
-        onClick={() => handleVote("NAO")}
-        disabled={isVoting || disabled}
-        variant={userVote === "NAO" ? "default" : "outline"}
-        className="flex-1"
-        size="lg"
-      >
-        {userVote === "NAO" ? "✓ " : ""}Não
-      </Button>
-      <Button
-        onClick={() => handleVote("DEPENDE")}
-        disabled={isVoting || disabled}
-        variant={userVote === "DEPENDE" ? "default" : "outline"}
-        className="flex-1"
-        size="lg"
-      >
-        {userVote === "DEPENDE" ? "✓ " : ""}Depende
-      </Button>
-    </div>
+    <>
+      <div className="flex flex-col gap-4 sm:flex-row">
+        <Button
+          onClick={() => handleVote("SIM")}
+          disabled={isVoting || disabled}
+          variant={userVote === "SIM" ? "default" : "outline"}
+          className="flex-1"
+          size="lg"
+        >
+          {userVote === "SIM" ? "✓ " : ""}Sim
+        </Button>
+        <Button
+          onClick={() => handleVote("NAO")}
+          disabled={isVoting || disabled}
+          variant={userVote === "NAO" ? "default" : "outline"}
+          className="flex-1"
+          size="lg"
+        >
+          {userVote === "NAO" ? "✓ " : ""}Não
+        </Button>
+        <Button
+          onClick={() => handleVote("DEPENDE")}
+          disabled={isVoting || disabled}
+          variant={userVote === "DEPENDE" ? "default" : "outline"}
+          className="flex-1"
+          size="lg"
+        >
+          {userVote === "DEPENDE" ? "✓ " : ""}Depende
+        </Button>
+      </div>
+      <AuthModal open={showAuthModal} onOpenChange={setShowAuthModal} />
+    </>
   );
 }

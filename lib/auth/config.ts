@@ -1,12 +1,32 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google";
+import Resend from "next-auth/providers/resend";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { sendMagicLinkEmail } from "@/lib/email";
+import type { Adapter } from "@auth/core/adapters";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   secret: process.env.AUTH_SECRET,
   trustHost: true,
+  adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true, // Allow linking accounts with same email
+    }),
+    Resend({
+      apiKey: process.env.RESEND_API_KEY,
+      from: process.env.EMAIL_FROM || "noreply@thebate.com",
+      async sendVerificationRequest({ identifier: email, url }) {
+        // Use our custom email template with multi-language support
+        // Default to Portuguese, can be enhanced to detect user preference
+        await sendMagicLinkEmail(email, url, "pt");
+      },
+    }),
     Credentials({
       name: "credentials",
       credentials: {
@@ -54,9 +74,79 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   pages: {
     signIn: "/auth/login",
+    verifyRequest: "/auth/verify-request",
   },
   callbacks: {
-    async jwt({ token, user, trigger }) {
+    async signIn({ user, account, profile }) {
+      // For OAuth providers, ensure user has required fields
+      if (account?.provider === "google") {
+        const existingUser = await prisma.user.findUnique({
+          where: { email: user.email! },
+        });
+
+        if (existingUser && !existingUser.username) {
+          // Generate username from email if not set
+          const baseUsername = user.email!.split("@")[0];
+          let username = baseUsername;
+          let counter = 1;
+
+          // Ensure username is unique
+          while (
+            await prisma.user.findUnique({ where: { username } })
+          ) {
+            username = `${baseUsername}${counter}`;
+            counter++;
+          }
+
+          await prisma.user.update({
+            where: { id: existingUser.id },
+            data: {
+              username,
+              emailVerified: new Date(),
+            },
+          });
+        }
+      }
+
+      // For email magic link, mark email as verified
+      if (account?.provider === "resend" || account?.provider === "email") {
+        const existingUser = await prisma.user.findUnique({
+          where: { email: user.email! },
+        });
+
+        if (existingUser) {
+          // Generate username if not set
+          if (!existingUser.username) {
+            const baseUsername = user.email!.split("@")[0];
+            let username = baseUsername;
+            let counter = 1;
+
+            while (
+              await prisma.user.findUnique({ where: { username } })
+            ) {
+              username = `${baseUsername}${counter}`;
+              counter++;
+            }
+
+            await prisma.user.update({
+              where: { id: existingUser.id },
+              data: {
+                username,
+                emailVerified: new Date(),
+              },
+            });
+          } else if (!existingUser.emailVerified) {
+            await prisma.user.update({
+              where: { id: existingUser.id },
+              data: { emailVerified: new Date() },
+            });
+          }
+        }
+      }
+
+      return true;
+    },
+    async jwt({ token, user, trigger, account }) {
       if (user) {
         token.id = user.id;
         token.username = user.username;
@@ -68,16 +158,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       // On token refresh or update, fetch latest user data from database
       // This ensures language preferences are always up-to-date
-      if (trigger === "update" && token.id) {
+      if ((trigger === "update" || !token.username) && token.id) {
         const dbUser = await prisma.user.findUnique({
           where: { id: token.id as string },
           select: {
-            preferredLanguage: true,
-            preferredContentLanguages: true,
             username: true,
             name: true,
             role: true,
             isOwner: true,
+            preferredLanguage: true,
+            preferredContentLanguages: true,
           },
         });
 

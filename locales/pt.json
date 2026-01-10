@@ -11,7 +11,8 @@
     "delete_confirm": "Tem a certeza que deseja eliminar?",
     "deleted_success": "Eliminado com sucesso",
     "delete_error": "Erro ao eliminar",
-    "load_error": "Falha ao carregar dados"
+    "load_error": "Falha ao carregar dados",
+    "close": "Fechar"
   },
   "hero": {
     "title": "Plataforma Global de Discussão",
@@ -162,6 +163,16 @@
       "uppercase": "Pelo menos uma letra maiúscula",
       "lowercase": "Pelo menos uma letra minúscula",
       "number": "Pelo menos um número"
-    }
+    },
+    "login_modal_title": "Entrar para Continuar",
+    "login_modal_description": "Para manter debates justos, é preciso entrar.",
+    "sign_in_google": "Entrar com Google",
+    "sign_in_email": "Entrar com Email",
+    "or": "ou",
+    "email_placeholder": "o.teu@email.com",
+    "send_magic_link": "Enviar Link de Acesso",
+    "magic_link_sent": "Link Enviado",
+    "magic_link_sent_message": "Enviámos-te um link para entrares. Verifica o teu email.",
+    "magic_link_error": "Erro ao enviar link"
   }
 }
