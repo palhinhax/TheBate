@@ -9,6 +9,8 @@ import CommentsList from "@/features/comments/components/comments-list";
 import NewCommentForm from "@/features/comments/components/new-comment-form";
 import ThemeVoteButtons from "@/features/topics/components/theme-vote-buttons";
 import ThemeVoteResults from "@/features/topics/components/theme-vote-results";
+import MultiChoiceVoteButtons from "@/features/topics/components/multi-choice-vote-buttons";
+import MultiChoiceVoteResults from "@/features/topics/components/multi-choice-vote-results";
 import { AdContainer } from "@/components/ad-container";
 import { ReportTopicButton } from "@/features/topics/components/report-topic-button";
 import { ShareButton } from "@/components/share-button";
@@ -16,7 +18,7 @@ import NextTopicNavigation from "@/features/topics/components/next-topic-navigat
 
 type Props = {
   params: { slug: string };
-  searchParams: { sort?: string; side?: string };
+  searchParams: { sort?: string; side?: string; optionId?: string };
 };
 
 async function getTopicData(slug: string, userId?: string) {
@@ -30,6 +32,9 @@ async function getTopicData(slug: string, userId?: string) {
           name: true,
         },
       },
+      options: {
+        orderBy: { order: "asc" },
+      },
       _count: {
         select: {
           comments: true,
@@ -40,45 +45,94 @@ async function getTopicData(slug: string, userId?: string) {
 
   if (!topic) return null;
 
-  // Get vote statistics
-  const voteStats = await prisma.topicVote.groupBy({
-    by: ["vote"],
-    where: { topicId: topic.id },
-    _count: true,
-  });
+  if (topic.type === "YES_NO") {
+    // Get vote statistics for YES_NO topics
+    const voteStats = await prisma.topicVote.groupBy({
+      by: ["vote"],
+      where: { topicId: topic.id, optionId: null },
+      _count: true,
+    });
 
-  const voteCounts = {
-    SIM: 0,
-    NAO: 0,
-    DEPENDE: 0,
-    total: 0,
-  };
+    const voteCounts = {
+      SIM: 0,
+      NAO: 0,
+      DEPENDE: 0,
+      total: 0,
+    };
 
-  voteStats.forEach((stat) => {
-    voteCounts[stat.vote] = stat._count;
-    voteCounts.total += stat._count;
-  });
+    voteStats.forEach((stat) => {
+      if (stat.vote) {
+        voteCounts[stat.vote] = stat._count;
+        voteCounts.total += stat._count;
+      }
+    });
 
-  // Get user's vote if authenticated
-  let userVote = null;
-  if (userId) {
-    const vote = await prisma.topicVote.findUnique({
+    // Get user's vote if authenticated
+    let userVote = null;
+    if (userId) {
+      const vote = await prisma.topicVote.findUnique({
+        where: {
+          userId_topicId_optionId: {
+            userId,
+            topicId: topic.id,
+            optionId: null,
+          },
+        },
+        select: { vote: true },
+      });
+      userVote = vote?.vote || null;
+    }
+
+    return {
+      ...topic,
+      voteStats: voteCounts,
+      userVote,
+    };
+  } else {
+    // MULTI_CHOICE topic
+    // Get vote statistics per option
+    const voteStats = await prisma.topicVote.groupBy({
+      by: ["optionId"],
       where: {
-        userId_topicId: {
+        topicId: topic.id,
+        optionId: { not: null },
+      },
+      _count: true,
+    });
+
+    const optionVoteCounts: Record<string, number> = {};
+    let totalVotes = 0;
+
+    voteStats.forEach((stat) => {
+      if (stat.optionId) {
+        optionVoteCounts[stat.optionId] = stat._count;
+        totalVotes += stat._count;
+      }
+    });
+
+    // Get user's votes if authenticated
+    let userVotes: string[] = [];
+    if (userId) {
+      const votes = await prisma.topicVote.findMany({
+        where: {
           userId,
           topicId: topic.id,
+          optionId: { not: null },
         },
-      },
-      select: { vote: true },
-    });
-    userVote = vote?.vote || null;
-  }
+        select: { optionId: true },
+      });
+      userVotes = votes
+        .map((v) => v.optionId)
+        .filter((id): id is string => id !== null);
+    }
 
-  return {
-    ...topic,
-    voteStats: voteCounts,
-    userVote,
-  };
+    return {
+      ...topic,
+      optionVoteCounts,
+      totalVotes,
+      userVotes,
+    };
+  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -193,6 +247,7 @@ export default async function TopicPage({ params, searchParams }: Props) {
 
   const sort = searchParams.sort || "top";
   const side = searchParams.side as "AFAVOR" | "CONTRA" | undefined;
+  const optionId = searchParams.optionId;
   const baseUrl = process.env.NEXTAUTH_URL || "https://thebatee.com";
   const topicUrl = `${baseUrl}/t/${topic.slug}`;
 
@@ -364,20 +419,45 @@ export default async function TopicPage({ params, searchParams }: Props) {
           <div className="mb-8 rounded-lg border bg-card p-6">
             <h2 className="mb-4 text-xl font-semibold">Vote no tema</h2>
             <div className="mb-6">
-              <ThemeVoteButtons
-                topicSlug={topic.slug}
-                userVote={topic.userVote}
-                disabled={false}
-              />
+              {topic.type === "YES_NO" ? (
+                <ThemeVoteButtons
+                  topicSlug={topic.slug}
+                  userVote={"userVote" in topic ? topic.userVote : null}
+                  disabled={false}
+                />
+              ) : (
+                <MultiChoiceVoteButtons
+                  topicSlug={topic.slug}
+                  options={topic.options}
+                  userVotes={"userVotes" in topic ? topic.userVotes : []}
+                  allowMultipleVotes={topic.allowMultipleVotes}
+                  maxChoices={topic.maxChoices}
+                  disabled={false}
+                />
+              )}
             </div>
-            <ThemeVoteResults voteStats={topic.voteStats} />
+            {topic.type === "YES_NO" ? (
+              <ThemeVoteResults
+                voteStats={"voteStats" in topic ? topic.voteStats : { SIM: 0, NAO: 0, DEPENDE: 0, total: 0 }}
+              />
+            ) : (
+              <MultiChoiceVoteResults
+                options={topic.options}
+                optionVoteCounts={"optionVoteCounts" in topic ? topic.optionVoteCounts : {}}
+                totalVotes={"totalVotes" in topic ? topic.totalVotes : 0}
+              />
+            )}
           </div>
 
           {/* New Comment Form */}
           {topic.status !== "LOCKED" && (
             <div className="mb-8">
               {session?.user ? (
-                <NewCommentForm topicId={topic.id} />
+                <NewCommentForm
+                  topicId={topic.id}
+                  topicType={topic.type}
+                  options={topic.type === "MULTI_CHOICE" ? topic.options : undefined}
+                />
               ) : (
                 <div className="rounded-lg border bg-muted/50 px-6 py-8 text-center">
                   <p className="mb-4 text-muted-foreground">
@@ -436,52 +516,87 @@ export default async function TopicPage({ params, searchParams }: Props) {
                   </div>
                 </div>
 
-                {/* Side filter buttons */}
-                <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-                  <span className="text-sm font-medium text-muted-foreground">
-                    Filtrar:
-                  </span>
-                  <div className="flex gap-2">
-                    <Link
-                      href={`/t/${topic.slug}?sort=${sort}`}
-                      className="flex-1 sm:flex-none"
-                    >
-                      <Button
-                        variant={!side ? "default" : "outline"}
-                        size="sm"
-                        className="w-full sm:w-auto"
+                {/* Side/Option filter buttons */}
+                {topic.type === "YES_NO" ? (
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                    <span className="text-sm font-medium text-muted-foreground">
+                      Filtrar:
+                    </span>
+                    <div className="flex gap-2">
+                      <Link
+                        href={`/t/${topic.slug}?sort=${sort}`}
+                        className="flex-1 sm:flex-none"
                       >
-                        Todos
-                      </Button>
-                    </Link>
-                    <Link
-                      href={`/t/${topic.slug}?sort=${sort}&side=AFAVOR`}
-                      className="flex-1 sm:flex-none"
-                    >
-                      <Button
-                        variant={side === "AFAVOR" ? "default" : "outline"}
-                        size="sm"
-                        className="w-full sm:w-auto"
+                        <Button
+                          variant={!side ? "default" : "outline"}
+                          size="sm"
+                          className="w-full sm:w-auto"
+                        >
+                          Todos
+                        </Button>
+                      </Link>
+                      <Link
+                        href={`/t/${topic.slug}?sort=${sort}&side=AFAVOR`}
+                        className="flex-1 sm:flex-none"
                       >
-                        <span className="hidden sm:inline">👍 A Favor</span>
-                        <span className="sm:hidden">👍</span>
-                      </Button>
-                    </Link>
-                    <Link
-                      href={`/t/${topic.slug}?sort=${sort}&side=CONTRA`}
-                      className="flex-1 sm:flex-none"
-                    >
-                      <Button
-                        variant={side === "CONTRA" ? "default" : "outline"}
-                        size="sm"
-                        className="w-full sm:w-auto"
+                        <Button
+                          variant={side === "AFAVOR" ? "default" : "outline"}
+                          size="sm"
+                          className="w-full sm:w-auto"
+                        >
+                          <span className="hidden sm:inline">👍 A Favor</span>
+                          <span className="sm:hidden">👍</span>
+                        </Button>
+                      </Link>
+                      <Link
+                        href={`/t/${topic.slug}?sort=${sort}&side=CONTRA`}
+                        className="flex-1 sm:flex-none"
                       >
-                        <span className="hidden sm:inline">👎 Contra</span>
-                        <span className="sm:hidden">👎</span>
-                      </Button>
-                    </Link>
+                        <Button
+                          variant={side === "CONTRA" ? "default" : "outline"}
+                          size="sm"
+                          className="w-full sm:w-auto"
+                        >
+                          <span className="hidden sm:inline">👎 Contra</span>
+                          <span className="sm:hidden">👎</span>
+                        </Button>
+                      </Link>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+                    <span className="text-sm font-medium text-muted-foreground">
+                      Filtrar por opção:
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      <Link
+                        href={`/t/${topic.slug}?sort=${sort}`}
+                        className="flex-none"
+                      >
+                        <Button
+                          variant={!optionId ? "default" : "outline"}
+                          size="sm"
+                        >
+                          Todos
+                        </Button>
+                      </Link>
+                      {topic.options.map((option) => (
+                        <Link
+                          key={option.id}
+                          href={`/t/${topic.slug}?sort=${sort}&optionId=${option.id}`}
+                          className="flex-none"
+                        >
+                          <Button
+                            variant={optionId === option.id ? "default" : "outline"}
+                            size="sm"
+                          >
+                            {option.label}
+                          </Button>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -489,6 +604,7 @@ export default async function TopicPage({ params, searchParams }: Props) {
               topicSlug={topic.slug}
               sort={sort as "top" | "new"}
               side={side}
+              optionId={optionId}
             />
           </div>
 
