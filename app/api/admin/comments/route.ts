@@ -47,6 +47,7 @@ export async function GET(request: Request) {
         orderBy: {
           createdAt: "desc",
         },
+        // Skip pagination for reported comments to show all reports at once
         skip: reported ? undefined : skip,
         take: reported ? undefined : limit,
       }),
