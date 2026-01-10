@@ -8,15 +8,39 @@ After deploying the application for the first time, populate it with engagement 
 2. Database migrations applied
 3. Topics seeded (if using topic seed script)
 
-## Steps
+## Two Ways to Seed
 
-### 1. Run the engagement seed script
+### Option A: GitHub Actions (Recommended for Production)
+
+The easiest way to seed your production database is using the GitHub Actions workflow:
+
+1. Go to your GitHub repository
+2. Navigate to **Actions** > **Seed Production (One-off)**
+3. Click **Run workflow**
+4. Configure options:
+   - **Run prisma migrate deploy before seed**: Select `true` if you need to run migrations first
+   - **Must be true to run seed**: Keep as `true` to proceed
+5. Click **Run workflow**
+
+**Required GitHub Secret:**
+- `DATABASE_URL`: Your production database connection string (add in Settings > Secrets > Actions)
+
+The workflow will:
+- Install dependencies
+- Generate Prisma client
+- Optionally run migrations
+- Execute the seed script
+- Exit safely if data already exists (idempotent)
+
+### Option B: Local/Manual Seeding
+
+If running locally or from a server:
 
 ```bash
-npm run seed:engagement
+pnpm run seed:engagement
 ```
 
-This creates:
+Both methods create:
 - **60 users** across 6 languages (en, pt, es, fr, de, it)
 - **8-20 comments per topic** with realistic opinions
 - **Replies** to comments (max depth: 2 levels)
@@ -24,7 +48,7 @@ This creates:
 
 **Time:** Takes about 30-60 seconds depending on number of topics.
 
-### 2. Verify the results
+## Verify Results
 
 Visit the application and check:
 - Topics now have comments
@@ -33,18 +57,18 @@ Visit the application and check:
 - Vote counts vary realistically
 - Activity dates are spread over time
 
-### 3. (Optional) Clean up if needed
+## Clean Up (Optional)
 
 To remove all seed data:
 
 ```bash
-npm run seed:cleanup
+pnpm run seed:cleanup
 ```
 
 Then you can re-seed if desired:
 
 ```bash
-npm run seed:engagement
+pnpm run seed:engagement
 ```
 
 ## Notes
