@@ -4,7 +4,7 @@
  * - Comments and replies
  * - Votes with realistic distribution
  * 
- * Run with: pnpm seed:engagement
+ * Run with: npm run seed:engagement
  */
 
 import { PrismaClient, CommentSide } from "@prisma/client";
@@ -47,7 +47,7 @@ async function main() {
   const alreadySeeded = await checkIfSeeded();
   if (alreadySeeded) {
     console.log("⚠️  Seed data already exists!");
-    console.log("   Run 'pnpm seed:cleanup' first if you want to re-seed.");
+    console.log("   Run 'npm run seed:cleanup' first if you want to re-seed.");
     process.exit(0);
   }
 
@@ -332,7 +332,7 @@ async function main() {
   console.log(`   💬 Replies: ${totalReplies}`);
   console.log(`   👍 Votes: ${totalVotes}`);
   console.log("");
-  console.log("🧹 To remove seed data later, run: pnpm seed:cleanup");
+  console.log("🧹 To remove seed data later, run: npm run seed:cleanup");
 }
 
 main()

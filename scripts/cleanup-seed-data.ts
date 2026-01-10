@@ -1,6 +1,6 @@
 /**
  * Cleanup script to remove all seed data
- * Run with: pnpm seed:cleanup
+ * Run with: npm run seed:cleanup
  */
 
 import { PrismaClient } from "@prisma/client";
