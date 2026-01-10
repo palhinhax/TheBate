@@ -1,3 +1,10 @@
+## [2.12.3](https://github.com/palhinhax/TheBate/compare/v2.12.2...v2.12.3) (2026-01-10)
+
+
+### Bug Fixes
+
+* **i18n:** resolve language change errors and enable proper language switching ([bc3b677](https://github.com/palhinhax/TheBate/commit/bc3b677f270ac7c3aa17bdd61a428265d86501fc))
+
 ## [2.12.2](https://github.com/palhinhax/TheBate/compare/v2.12.1...v2.12.2) (2026-01-09)
 
 
