@@ -4,13 +4,13 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { topicSchema, type TopicFormData } from "@/features/topics/schemas";
+import { topicSchema, type TopicFormData, type TopicOptionData } from "@/features/topics/schemas";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { useTranslations } from "@/lib/use-translations";
-import { X, Globe } from "lucide-react";
+import { X, Globe, Plus, GripVertical, Trash2 } from "lucide-react";
 import { LANGUAGES, type SupportedLanguage } from "@/lib/language-shared";
 
 export default function NewTopicForm() {
@@ -21,6 +21,10 @@ export default function NewTopicForm() {
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState<SupportedLanguage>("pt");
+  const [topicType, setTopicType] = useState<"YES_NO" | "MULTI_CHOICE">("YES_NO");
+  const [options, setOptions] = useState<TopicOptionData[]>([]);
+  const [allowMultipleVotes, setAllowMultipleVotes] = useState(false);
+  const [maxChoices, setMaxChoices] = useState(1);
 
   const {
     register,
@@ -28,9 +32,12 @@ export default function NewTopicForm() {
     formState: { errors },
     setValue,
   } = useForm<TopicFormData>({
-    resolver: zodResolver(topicSchema),
+    resolver: zodResolver(topicSchema) as never,
     defaultValues: {
       language: "pt",
+      type: "YES_NO",
+      allowMultipleVotes: false,
+      maxChoices: 1,
     },
   });
 
@@ -73,13 +80,43 @@ export default function NewTopicForm() {
     }
   };
 
+  const handleAddOption = () => {
+    if (options.length < 10) {
+      setOptions([...options, { label: "", description: "", order: options.length }]);
+    }
+  };
+
+  const handleRemoveOption = (index: number) => {
+    const newOptions = options.filter((_, i) => i !== index);
+    // Reorder
+    const reordered = newOptions.map((opt, i) => ({ ...opt, order: i }));
+    setOptions(reordered);
+    setValue("options", reordered);
+  };
+
+  const handleOptionChange = (index: number, field: keyof TopicOptionData, value: string | number) => {
+    const newOptions = [...options];
+    newOptions[index] = { ...newOptions[index], [field]: value };
+    setOptions(newOptions);
+    setValue("options", newOptions);
+  };
+
   const onSubmit = async (data: TopicFormData) => {
     setIsSubmitting(true);
     try {
+      // Add options if multi-choice
+      const submitData = {
+        ...data,
+        type: topicType,
+        options: topicType === "MULTI_CHOICE" ? options : undefined,
+        allowMultipleVotes: topicType === "MULTI_CHOICE" ? allowMultipleVotes : false,
+        maxChoices: topicType === "MULTI_CHOICE" && allowMultipleVotes ? maxChoices : 1,
+      };
+
       const response = await fetch("/api/topics", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(submitData),
       });
 
       if (!response.ok) {
@@ -180,6 +217,177 @@ export default function NewTopicForm() {
           {t("topics.tags_help", "Adicione de 1 a 5 tags para categorizar o seu tema")}
         </p>
       </div>
+
+      {/* Topic Type Selection */}
+      <div>
+        <Label>Tipo de Tema</Label>
+        <div className="mt-2 grid grid-cols-2 gap-4">
+          <button
+            type="button"
+            onClick={() => {
+              setTopicType("YES_NO");
+              setValue("type", "YES_NO");
+            }}
+            className={`rounded-lg border-2 p-4 text-left transition-all ${
+              topicType === "YES_NO"
+                ? "border-primary bg-primary/10"
+                : "border-border hover:border-primary/50"
+            }`}
+          >
+            <div className="font-semibold">Sim/Não</div>
+            <div className="mt-1 text-sm text-muted-foreground">
+              Debate tradicional: A Favor vs Contra
+            </div>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setTopicType("MULTI_CHOICE");
+              setValue("type", "MULTI_CHOICE");
+              if (options.length === 0) {
+                setOptions([
+                  { label: "", description: "", order: 0 },
+                  { label: "", description: "", order: 1 },
+                ]);
+              }
+            }}
+            className={`rounded-lg border-2 p-4 text-left transition-all ${
+              topicType === "MULTI_CHOICE"
+                ? "border-primary bg-primary/10"
+                : "border-border hover:border-primary/50"
+            }`}
+          >
+            <div className="font-semibold">Múltipla Escolha</div>
+            <div className="mt-1 text-sm text-muted-foreground">
+              Votação em opções pré-definidas com ranking
+            </div>
+          </button>
+        </div>
+      </div>
+
+      {/* Multi-Choice Options */}
+      {topicType === "MULTI_CHOICE" && (
+        <>
+          <div>
+            <div className="mb-2 flex items-center justify-between">
+              <Label>Opções (mínimo 2, máximo 10)</Label>
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                onClick={handleAddOption}
+                disabled={options.length >= 10}
+              >
+                <Plus className="mr-1 h-4 w-4" />
+                Adicionar Opção
+              </Button>
+            </div>
+            {errors.options && (
+              <p className="mb-2 text-sm text-destructive">{errors.options.message as string}</p>
+            )}
+            <div className="space-y-3">
+              {options.map((option, index) => (
+                <div key={index} className="rounded-lg border bg-card p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="mt-2 flex-shrink-0">
+                      <GripVertical className="h-5 w-5 text-muted-foreground" />
+                    </div>
+                    <div className="flex-1 space-y-3">
+                      <div>
+                        <Label htmlFor={`option-${index}-label`} className="text-sm">
+                          Opção {index + 1} *
+                        </Label>
+                        <Input
+                          id={`option-${index}-label`}
+                          value={option.label}
+                          onChange={(e) => handleOptionChange(index, "label", e.target.value)}
+                          placeholder="Ex: Messi, Ronaldo, Pelé..."
+                          className="mt-1"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor={`option-${index}-description`} className="text-sm">
+                          Descrição (opcional)
+                        </Label>
+                        <Input
+                          id={`option-${index}-description`}
+                          value={option.description || ""}
+                          onChange={(e) => handleOptionChange(index, "description", e.target.value)}
+                          placeholder="Breve descrição da opção..."
+                          className="mt-1"
+                        />
+                      </div>
+                    </div>
+                    {options.length > 2 && (
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => handleRemoveOption(index)}
+                        className="mt-6 flex-shrink-0"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Multi-Vote Settings */}
+          <div className="rounded-lg border bg-muted/50 p-4">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label htmlFor="allowMultipleVotes" className="font-semibold">
+                    Permitir votos múltiplos
+                  </Label>
+                  <p className="text-sm text-muted-foreground">
+                    Utilizadores podem votar em mais de uma opção
+                  </p>
+                </div>
+                <input
+                  id="allowMultipleVotes"
+                  type="checkbox"
+                  checked={allowMultipleVotes}
+                  onChange={(e) => {
+                    setAllowMultipleVotes(e.target.checked);
+                    setValue("allowMultipleVotes", e.target.checked);
+                    if (!e.target.checked) {
+                      setMaxChoices(1);
+                      setValue("maxChoices", 1);
+                    }
+                  }}
+                  className="h-4 w-4"
+                />
+              </div>
+
+              {allowMultipleVotes && (
+                <div>
+                  <Label htmlFor="maxChoices">Número máximo de escolhas</Label>
+                  <Input
+                    id="maxChoices"
+                    type="number"
+                    min={1}
+                    max={Math.min(10, options.length)}
+                    value={maxChoices}
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value) || 1;
+                      setMaxChoices(value);
+                      setValue("maxChoices", value);
+                    }}
+                    className="mt-1 w-24"
+                  />
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    Cada utilizador pode selecionar até {maxChoices} opç{maxChoices === 1 ? "ão" : "ões"}
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        </>
+      )}
 
       <div>
         <Label htmlFor="language">

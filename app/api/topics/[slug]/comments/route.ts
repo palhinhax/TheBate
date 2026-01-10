@@ -10,6 +10,7 @@ export async function GET(
     const { searchParams } = new URL(req.url);
     const sort = searchParams.get("sort") || "top";
     const side = searchParams.get("side"); // AFAVOR, CONTRA, or null for all
+    const optionId = searchParams.get("optionId"); // For MULTI_CHOICE topics
     const page = parseInt(searchParams.get("page") || "1");
     const perPage = Math.min(
       parseInt(searchParams.get("perPage") || "50"),
@@ -21,7 +22,7 @@ export async function GET(
     // First, find the topic
     const topic = await prisma.topic.findUnique({
       where: { slug: params.slug },
-      select: { id: true, status: true },
+      select: { id: true, status: true, type: true },
     });
 
     if (!topic) {
@@ -36,6 +37,7 @@ export async function GET(
       parentId: null;
       status: "ACTIVE";
       side?: "AFAVOR" | "CONTRA";
+      optionId?: string | null;
     }
 
     const where: CommentWhere = {
@@ -44,9 +46,17 @@ export async function GET(
       status: "ACTIVE" as const,
     };
 
-    // Add side filter if specified
-    if (side === "AFAVOR" || side === "CONTRA") {
-      where.side = side;
+    // Add filters based on topic type
+    if (topic.type === "YES_NO") {
+      // For YES_NO topics, filter by side if specified
+      if (side === "AFAVOR" || side === "CONTRA") {
+        where.side = side;
+      }
+    } else if (topic.type === "MULTI_CHOICE") {
+      // For MULTI_CHOICE topics, filter by option if specified
+      if (optionId) {
+        where.optionId = optionId;
+      }
     }
 
     // For "top" sort, we need to order by vote count (calculated field)
@@ -59,6 +69,17 @@ export async function GET(
     let comments;
 
     if (sort === "top") {
+      // Build dynamic SQL conditions
+      let sideCondition = Prisma.empty;
+      if (topic.type === "YES_NO" && (side === "AFAVOR" || side === "CONTRA")) {
+        sideCondition = Prisma.sql`AND c.side = ${side}`;
+      }
+
+      let optionCondition = Prisma.empty;
+      if (topic.type === "MULTI_CHOICE" && optionId) {
+        optionCondition = Prisma.sql`AND c."optionId" = ${optionId}`;
+      }
+
       // Get comment IDs sorted by vote count
       const results = await prisma.$queryRaw<{ id: string }[]>`
         SELECT 
@@ -69,7 +90,8 @@ export async function GET(
         WHERE c."topicId" = ${topic.id}
           AND c."parentId" IS NULL
           AND c.status = 'ACTIVE'
-          ${side === "AFAVOR" || side === "CONTRA" ? Prisma.sql`AND c.side = ${side}` : Prisma.empty}
+          ${sideCondition}
+          ${optionCondition}
         GROUP BY c.id
         ORDER BY "voteCount" DESC, c."createdAt" DESC
         LIMIT ${perPage}
@@ -87,6 +109,12 @@ export async function GET(
               username: true,
               name: true,
               image: true,
+            },
+          },
+          option: {
+            select: {
+              id: true,
+              label: true,
             },
           },
           replies: {
@@ -129,6 +157,12 @@ export async function GET(
               username: true,
               name: true,
               image: true,
+            },
+          },
+          option: {
+            select: {
+              id: true,
+              label: true,
             },
           },
           replies: {

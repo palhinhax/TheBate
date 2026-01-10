@@ -7,43 +7,70 @@ type CommentsListProps = {
   topicSlug: string;
   sort: "top" | "new";
   side?: "AFAVOR" | "CONTRA" | null;
+  optionId?: string;
 };
 
 async function getComments(
   topicSlug: string,
   sort: "top" | "new",
-  side?: "AFAVOR" | "CONTRA" | null
+  side?: "AFAVOR" | "CONTRA" | null,
+  optionId?: string
 ) {
   // First, find the topic
   const topic = await prisma.topic.findUnique({
     where: { slug: topicSlug },
-    select: { id: true },
+    select: { id: true, type: true },
   });
 
   if (!topic) {
-    return { comments: [], topicId: null };
+    return { comments: [], topicId: null, topicType: null };
   }
 
   // Get current user session
   const session = await auth();
   const userId = session?.user?.id;
 
-  const where: any = {
+  const where: {
+    topicId: string;
+    parentId: null;
+    status: "ACTIVE";
+    side?: "AFAVOR" | "CONTRA";
+    optionId?: string | null;
+  } = {
     topicId: topic.id,
     parentId: null,
     status: "ACTIVE" as const,
   };
 
-  // Add side filter if specified
-  if (side === "AFAVOR" || side === "CONTRA") {
-    where.side = side;
+  // Add filters based on topic type
+  if (topic.type === "YES_NO") {
+    // For YES_NO topics, filter by side if specified
+    if (side === "AFAVOR" || side === "CONTRA") {
+      where.side = side;
+    }
+  } else if (topic.type === "MULTI_CHOICE") {
+    // For MULTI_CHOICE topics, filter by option if specified
+    if (optionId) {
+      where.optionId = optionId;
+    }
   }
 
   // For "top" sort, we use raw SQL for efficiency with vote count
   // For "new" sort, we use standard Prisma query
-  let comments: any[];
+  let comments: unknown[];
 
   if (sort === "top") {
+    // Build dynamic SQL conditions
+    let sideCondition = Prisma.empty;
+    if (topic.type === "YES_NO" && (side === "AFAVOR" || side === "CONTRA")) {
+      sideCondition = Prisma.sql`AND c.side = ${side}`;
+    }
+
+    let optionCondition = Prisma.empty;
+    if (topic.type === "MULTI_CHOICE" && optionId) {
+      optionCondition = Prisma.sql`AND c."optionId" = ${optionId}`;
+    }
+
     const results = await prisma.$queryRaw<{ id: string }[]>`
       SELECT 
         c.*,
@@ -53,7 +80,8 @@ async function getComments(
       WHERE c."topicId" = ${topic.id}
         AND c."parentId" IS NULL
         AND c.status = 'ACTIVE'
-        ${side === "AFAVOR" || side === "CONTRA" ? Prisma.sql`AND c.side = ${side}` : Prisma.empty}
+        ${sideCondition}
+        ${optionCondition}
       GROUP BY c.id
       ORDER BY "voteCount" DESC, c."createdAt" DESC
       LIMIT 50
@@ -73,6 +101,12 @@ async function getComments(
               username: true,
               name: true,
               image: true,
+            },
+          },
+          option: {
+            select: {
+              id: true,
+              label: true,
             },
           },
           votes: userId
@@ -128,6 +162,12 @@ async function getComments(
             image: true,
           },
         },
+        option: {
+          select: {
+            id: true,
+            label: true,
+          },
+        },
         votes: userId
           ? {
               where: { userId },
@@ -168,15 +208,16 @@ async function getComments(
     });
   }
 
-  return { comments, topicId: topic.id };
+  return { comments, topicId: topic.id, topicType: topic.type };
 }
 
 export default async function CommentsList({
   topicSlug,
   sort,
   side,
+  optionId,
 }: CommentsListProps) {
-  const { comments, topicId } = await getComments(topicSlug, sort, side);
+  const { comments, topicId, topicType } = await getComments(topicSlug, sort, side, optionId);
 
   if (comments.length === 0) {
     return (
@@ -184,7 +225,9 @@ export default async function CommentsList({
         <p className="text-muted-foreground">
           {side
             ? `Ainda não há argumentos ${side === "AFAVOR" ? "a favor" : "contra"}.`
-            : "Ainda não há argumentos. Seja o primeiro a argumentar!"}
+            : optionId
+              ? "Ainda não há argumentos para esta opção."
+              : "Ainda não há argumentos. Seja o primeiro a argumentar!"}
         </p>
       </div>
     );
@@ -192,8 +235,8 @@ export default async function CommentsList({
 
   return (
     <div className="space-y-6">
-      {comments.map((comment) => (
-        <CommentItem key={comment.id} comment={comment} topicId={topicId!} />
+      {(comments as Array<{ id: string; [key: string]: unknown }>).map((comment) => (
+        <CommentItem key={comment.id} comment={comment as never} topicId={topicId!} />
       ))}
     </div>
   );

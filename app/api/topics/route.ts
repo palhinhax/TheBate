@@ -92,15 +92,48 @@ export async function POST(req: NextRequest) {
       return !!existing;
     });
 
+    const topicData: {
+      slug: string;
+      title: string;
+      description: string;
+      language: string;
+      tags: string[];
+      type?: "YES_NO" | "MULTI_CHOICE";
+      allowMultipleVotes?: boolean;
+      maxChoices?: number;
+      createdById: string;
+      options?: {
+        create: Array<{
+          label: string;
+          description?: string;
+          order: number;
+        }>;
+      };
+    } = {
+      slug,
+      title: validated.title,
+      description: validated.description,
+      language: validated.language,
+      tags: validated.tags,
+      type: validated.type || "YES_NO",
+      createdById: session.user.id,
+    };
+
+    // Add multi-choice specific fields
+    if (validated.type === "MULTI_CHOICE" && validated.options && validated.options.length >= 2) {
+      topicData.allowMultipleVotes = validated.allowMultipleVotes || false;
+      topicData.maxChoices = validated.maxChoices || 1;
+      topicData.options = {
+        create: validated.options.map((opt, index) => ({
+          label: opt.label,
+          description: opt.description || undefined,
+          order: index,
+        })),
+      };
+    }
+
     const topic = await prisma.topic.create({
-      data: {
-        slug,
-        title: validated.title,
-        description: validated.description,
-        language: validated.language,
-        tags: validated.tags,
-        createdById: session.user.id,
-      },
+      data: topicData,
       include: {
         createdBy: {
           select: {
@@ -109,6 +142,7 @@ export async function POST(req: NextRequest) {
             name: true,
           },
         },
+        options: validated.type === "MULTI_CHOICE",
       },
     });
 
