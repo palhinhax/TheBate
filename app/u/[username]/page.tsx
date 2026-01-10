@@ -34,8 +34,9 @@ import { useTranslations } from "@/lib/use-translations";
 
 type UserData = {
   id: string;
-  username: string;
+  username: string | null;
   name: string | null;
+  email: string;
   image: string | null;
   createdAt: string;
   topics: Array<{
@@ -178,17 +179,19 @@ export default function UserProfilePage() {
                 <div className="flex h-24 w-24 items-center justify-center rounded-full bg-primary/10 text-4xl font-bold text-primary">
                   {user.name
                     ? user.name.charAt(0).toUpperCase()
-                    : user.username.charAt(0).toUpperCase()}
+                    : user.username
+                      ? user.username.charAt(0).toUpperCase()
+                      : user.email.charAt(0).toUpperCase()}
                 </div>
               </div>
 
               {/* User Info */}
               <div className="flex-1 text-center sm:text-left">
                 <h1 className="mb-2 text-3xl font-bold">
-                  {user.name || user.username}
+                  {user.name || user.username || user.email}
                 </h1>
                 <p className="mb-4 text-lg text-muted-foreground">
-                  @{user.username}
+                  @{user.username || user.email.split("@")[0]}
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground sm:justify-start">
                   <span className="flex items-center gap-1">

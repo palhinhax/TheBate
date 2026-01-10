@@ -33,7 +33,7 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
       await signIn("google", {
         callbackUrl: window.location.href,
       });
-    } catch (error) {
+    } catch {
       toast({
         title: t("common.error"),
         description: t("auth.magic_link_error"),
@@ -72,7 +72,7 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
         title: t("auth.magic_link_sent"),
         description: t("auth.magic_link_sent_message"),
       });
-    } catch (error) {
+    } catch {
       toast({
         title: t("common.error"),
         description: t("auth.magic_link_error"),
