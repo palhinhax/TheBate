@@ -49,6 +49,7 @@ model User {
   image                String?
   role                 UserRole              @default(USER)
   isOwner              Boolean               @default(false)
+  isSeed               Boolean               @default(false) // Mark seed users for cleanup
   preferredLanguage    String                @default("pt") // UI language preference
   preferredContentLanguages String[]         @default(["pt", "en", "es", "fr", "de"]) // Content languages to show
   createdAt            DateTime              @default(now())
@@ -89,6 +90,7 @@ model Comment {
   side        CommentSide?  // A FAVOR or CONTRA (null for replies)
   status      CommentStatus @default(ACTIVE)
   reportCount Int           @default(0) // Number of reports for moderation
+  isSeed      Boolean       @default(false) // Mark seed comments for cleanup
   topicId     String
   topic       Topic         @relation(fields: [topicId], references: [id], onDelete: Cascade)
   userId      String
@@ -109,6 +111,7 @@ model Comment {
 model Vote {
   id        String   @id @default(cuid())
   value     Int // Only +1 for "good argument" quality vote
+  isSeed    Boolean  @default(false) // Mark seed votes for cleanup
   commentId String
   comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
   userId    String
