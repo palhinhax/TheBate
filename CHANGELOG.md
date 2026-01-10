@@ -1,3 +1,15 @@
+# [2.13.0](https://github.com/palhinhax/TheBate/compare/v2.12.3...v2.13.0) (2026-01-10)
+
+
+### Bug Fixes
+
+* **seed:** standardize command references to use npm run ([22aa9af](https://github.com/palhinhax/TheBate/commit/22aa9afa16539c8ed84719b6448306a7b60062f5))
+
+
+### Features
+
+* **seed:** add engagement seed script with isSeed fields and cleanup ([5a98dfe](https://github.com/palhinhax/TheBate/commit/5a98dfef762cb58969f71e3dc995882b82ac21e9))
+
 ## [2.12.3](https://github.com/palhinhax/TheBate/compare/v2.12.2...v2.12.3) (2026-01-10)
 
 
