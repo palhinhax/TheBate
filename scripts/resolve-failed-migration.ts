@@ -43,7 +43,11 @@ async function resolveFailedMigration() {
       console.log(`   Started at: ${migration.started_at}`);
       console.log(`   Applied steps: ${migration.applied_steps_count}`);
       if (migration.logs) {
-        console.log(`   Logs: ${migration.logs.substring(0, 100)}...`);
+        const MAX_LOG_LENGTH = 500;
+        const logPreview = migration.logs.length > MAX_LOG_LENGTH 
+          ? `${migration.logs.substring(0, MAX_LOG_LENGTH)}...` 
+          : migration.logs;
+        console.log(`   Logs: ${logPreview}`);
       }
       console.log();
     });
@@ -51,10 +55,13 @@ async function resolveFailedMigration() {
     console.log("🔄 Marking failed migrations as rolled back...\n");
 
     for (const migration of failedMigrations) {
+      const timestamp = new Date().toISOString();
+      const rollbackMessage = `\n\n[${timestamp}] Marked as rolled back by resolve-failed-migration script`;
+      
       await prisma.$executeRaw`
         UPDATE "_prisma_migrations"
         SET rolled_back_at = NOW(),
-            logs = COALESCE(logs, '') || E'\n\nMarked as rolled back by resolve-failed-migration script'
+            logs = COALESCE(logs, '') || ${rollbackMessage}
         WHERE id = ${migration.id}
       `;
       console.log(`✅ Marked as rolled back: ${migration.migration_name}`);
