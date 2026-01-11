@@ -7,7 +7,7 @@ admin_users:
   - username: admin
     email: admin@thebate.com
     name: Admin User
-    password: password123  # Will be hashed
+    password: password123
     role: ADMIN
     preferred_language: pt
     preferred_content_languages: [pt, en, es, fr, de]
@@ -15,7 +15,7 @@ admin_users:
   - username: moderator
     email: mod@thebate.com
     name: Moderator
-    password: password123  # Will be hashed
+    password: password123
     role: MOD
     preferred_language: pt
     preferred_content_languages: [pt, en, es, fr, de]
@@ -71,7 +71,7 @@ sample_topics:
     type: YES_NO
 
   - language: pt
-    title: Trabalho remoto vs presencial: qual o melhor?
+    title: "Trabalho remoto vs presencial: qual o melhor?"
     description: |
       Após a pandemia, muitas empresas adotaram o trabalho remoto. Mas será que é realmente 
       melhor para todos? Discutamos os prós e contras de cada modelo.
@@ -111,7 +111,7 @@ sample_topics:
 
   # French topics
   - language: fr
-    title: La France devrait-elle sortir du nucléaire civil?
+    title: "La France devrait-elle sortir du nucléaire civil?"
     description: |
       Alors que l'Allemagne ferme ses centrales, la France reste nucléaire. Face au changement 
       climatique, est-ce la bonne stratégie? Quels sont les risques et avantages à long terme?

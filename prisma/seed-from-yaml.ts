@@ -17,134 +17,10 @@ import { PrismaClient, UserRole } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { readFileSync } from "fs";
 import { join } from "path";
+import { load } from "js-yaml";
 import { generateSlug } from "../lib/slug";
 
 const prisma = new PrismaClient();
-
-// Simple YAML parser for our specific format
-function parseSimpleYAML(yamlContent: string): Record<string, unknown> {
-  const lines = yamlContent.split("\n");
-  const result: Record<string, unknown> = {};
-  let currentKey: string | null = null;
-  let currentArray: Array<Record<string, unknown>> = [];
-  let currentObject: Record<string, unknown> = {};
-  let indentLevel = 0;
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    
-    // Skip comments and empty lines
-    if (line.trim().startsWith("#") || line.trim() === "") {
-      continue;
-    }
-
-    // Calculate indent
-    const indent = line.search(/\S/);
-    
-    // Top level key (e.g., "admin_users:")
-    if (indent === 0 && line.includes(":") && !line.trim().startsWith("-")) {
-      // Save previous array if exists
-      if (currentKey && currentArray.length > 0) {
-        result[currentKey] = currentArray;
-        currentArray = [];
-      }
-      
-      currentKey = line.split(":")[0].trim();
-      indentLevel = 0;
-      continue;
-    }
-
-    // Array item start
-    if (line.trim().startsWith("- ")) {
-      // Save previous object if exists
-      if (Object.keys(currentObject).length > 0) {
-        currentArray.push({ ...currentObject });
-        currentObject = {};
-      }
-      
-      // Parse inline or start new object
-      const content = line.substring(line.indexOf("- ") + 2).trim();
-      if (content.includes(":")) {
-        const [key, value] = content.split(":", 2);
-        currentObject[key.trim()] = parseValue(value.trim());
-      }
-      indentLevel = indent;
-      continue;
-    }
-
-    // Object property
-    if (line.includes(":") && indent > 0) {
-      const [key, ...valueParts] = line.split(":");
-      const value = valueParts.join(":").trim();
-      
-      if (value) {
-        currentObject[key.trim()] = parseValue(value);
-      } else {
-        // Multi-line value or sub-object - look ahead
-        let multilineValue = "";
-        let j = i + 1;
-        const keyIndent = indent;
-        
-        while (j < lines.length) {
-          const nextLine = lines[j];
-          const nextIndent = nextLine.search(/\S/);
-          
-          if (nextIndent <= keyIndent && nextLine.trim() !== "") {
-            break;
-          }
-          
-          if (nextLine.trim() !== "" && !nextLine.trim().startsWith("#")) {
-            multilineValue += nextLine.substring(keyIndent + 2) + "\n";
-          }
-          j++;
-        }
-        
-        if (multilineValue) {
-          currentObject[key.trim()] = multilineValue.trim();
-          i = j - 1;
-        }
-      }
-    }
-  }
-
-  // Save last object and array
-  if (Object.keys(currentObject).length > 0) {
-    currentArray.push(currentObject);
-  }
-  if (currentKey && currentArray.length > 0) {
-    result[currentKey] = currentArray;
-  }
-
-  return result;
-}
-
-function parseValue(value: string): unknown {
-  // Array format: [item1, item2]
-  if (value.startsWith("[") && value.endsWith("]")) {
-    return value
-      .slice(1, -1)
-      .split(",")
-      .map((item) => item.trim());
-  }
-  
-  // String with quotes
-  if ((value.startsWith('"') && value.endsWith('"')) || 
-      (value.startsWith("'") && value.endsWith("'"))) {
-    return value.slice(1, -1);
-  }
-  
-  // Numbers
-  if (!isNaN(Number(value))) {
-    return Number(value);
-  }
-  
-  // Booleans
-  if (value === "true") return true;
-  if (value === "false") return false;
-  
-  // Default to string
-  return value;
-}
 
 interface UserData {
   username: string;
@@ -262,7 +138,7 @@ async function main() {
     const yamlPath = join(__dirname, "seed-data.yml");
     console.log(`📄 Reading seed data from: ${yamlPath}`);
     const yamlContent = readFileSync(yamlPath, "utf-8");
-    const seedData = parseSimpleYAML(yamlContent);
+    const seedData = load(yamlContent) as Record<string, unknown>;
     
     console.log("✅ Parsed seed data successfully\n");
 
