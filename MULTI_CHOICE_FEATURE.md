@@ -199,12 +199,11 @@ Users can:
 
 2. **Run Migration**
    ```bash
-   # Using Prisma
+   # Using Prisma (recommended)
    npx prisma migrate deploy
-   
-   # Or manually apply the SQL from:
-   # prisma/migrations/MANUAL_add_multi_choice_topics.sql
    ```
+   
+   The migration `20260111000000_add_multi_choice_topics` will be automatically applied.
 
 3. **Regenerate Prisma Client**
    ```bash
