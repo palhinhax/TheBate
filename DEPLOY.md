@@ -32,18 +32,21 @@ NODE_ENV="production"
 
 ### Automatic Migrations (Production)
 
-✅ **Migrations now run automatically!**
+✅ **Migrations now run automatically via GitHub Actions!**
 
-Migrations are applied automatically in two ways:
+**How it works:**
 
-1. **On every push to `main`** (via GitHub Actions):
-   - Detects changes to Prisma schema or migrations
+1. **On every push to `main`** with schema/migration changes:
+   - GitHub Actions workflow detects changes
    - Runs `prisma migrate deploy` with retry logic
-   - Prevents deployment if migrations fail
+   - Reports success/failure
+   - **Migrations run before Vercel deployment** (not during build)
 
-2. **During Vercel deployment**:
-   - The `vercel-build` script now includes `prisma migrate deploy`
-   - Ensures database is up-to-date before the app starts
+**Benefits:**
+- ✅ Database updated before new code is deployed
+- ✅ No concurrent migration conflicts
+- ✅ Clear error reporting
+- ✅ Prevents broken deployments
 
 ### Manual Migration (If Needed)
 

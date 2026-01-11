@@ -19,39 +19,37 @@ The migration `20260111000000_add_multi_choice_topics` exists in the codebase bu
 
 ## Solution Implemented
 
-### 1. Automatic Migration on Push to Main
+### Automatic Migration on Push to Main
 
 Created `.github/workflows/migrate-on-push.yml` that:
 - Triggers automatically when changes are pushed to `main` branch
 - Detects changes to `prisma/schema.prisma` or `prisma/migrations/**`
 - Runs `prisma migrate deploy` with retry logic
 - Reports success/failure status
+- **Runs BEFORE Vercel deployment** (not during build)
 
 **Benefits:**
-- ✅ Migrations run automatically before deployment
+- ✅ Migrations run before deployment, ensuring database is ready
 - ✅ Prevents deployment with outdated database schema
 - ✅ Includes retry logic for reliability
 - ✅ Proper timeout configuration
+- ✅ No concurrent migration conflicts (single workflow execution)
+- ✅ Build failures don't prevent migration troubleshooting
 
-### 2. Updated Vercel Build Script
+**Why not during build?**
+Running migrations during Vercel build was considered but rejected because:
+- ❌ Multiple concurrent builds could cause migration conflicts
+- ❌ Database unavailability during build would block entire deployment
+- ❌ Migration failures would require build restart
+- ❌ Less clear error reporting
 
-Modified `package.json` to include migration in the `vercel-build` script:
-```json
-"vercel-build": "prisma generate && prisma migrate deploy && next build"
-```
-
-**Benefits:**
-- ✅ Ensures database is up-to-date during deployment
-- ✅ Prevents server from starting with mismatched schema
-- ✅ Works with Vercel's deployment pipeline
-
-### 3. Updated Documentation
+### Updated Documentation
 
 Updated `PRODUCTION_DB_MIGRATION.md` and `DEPLOY.md` to:
 - Document the automatic migration workflow
 - Explain the specific error and its solution
 - Provide manual migration options as fallback
-- Clarify when migrations run
+- Clarify when migrations run (before deployment, not during build)
 
 ## How to Apply the Fix
 
@@ -99,8 +97,8 @@ This fix includes automatic migration on push, which prevents this issue from ha
 
 ## Related Files
 
-- `.github/workflows/migrate-on-push.yml` - New automatic migration workflow
-- `package.json` - Updated `vercel-build` script
+- `.github/workflows/migrate-on-push.yml` - New automatic migration workflow (runs before deployment)
+- `package.json` - No changes (migrations run via GitHub Actions, not during build)
 - `PRODUCTION_DB_MIGRATION.md` - Updated documentation
 - `DEPLOY.md` - Updated deployment guide
 - `prisma/migrations/20260111000000_add_multi_choice_topics/migration.sql` - The migration that needs to be applied

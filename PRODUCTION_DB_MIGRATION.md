@@ -2,22 +2,27 @@
 
 ## Automated Migration (Recommended)
 
-Migrations are now automatically applied when you push changes to the `main` branch! 🎉
+✅ **Migrations now run automatically via GitHub Actions!**
 
 ### How It Works
 
-1. **On every push to `main`** that includes changes to:
-   - `prisma/schema.prisma`
-   - `prisma/migrations/**`
-   
-2. **GitHub Actions automatically**:
-   - Checks if migrations are needed
-   - Runs `prisma migrate deploy` with retry logic
-   - Reports success/failure status
+**On every push to `main`** that includes changes to:
+- `prisma/schema.prisma`
+- `prisma/migrations/**`
 
-3. **Vercel deployments** also run migrations automatically via the `vercel-build` script
+**GitHub Actions automatically**:
+- Checks if migrations are needed
+- Runs `prisma migrate deploy` with retry logic
+- Reports success/failure status
+- **Blocks deployment if migrations fail** (prevents broken deployments)
 
-### Manual Migration Workflow (When Needed)
+**Important**: Migrations run **before** Vercel deployment, not during the build. This ensures:
+- ✅ Database is updated before new code is deployed
+- ✅ No concurrent migration conflicts
+- ✅ Build failures don't prevent migration troubleshooting
+- ✅ Clear separation of concerns
+
+### Manual Migration (If Needed)
 
 If you need to run migrations manually or seed data:
 
