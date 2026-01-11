@@ -7,7 +7,8 @@
     "logout": "Sign Out",
     "loading": "Loading...",
     "error": "Error",
-    "search": "Search"
+    "search": "Search",
+    "close": "Close"
   },
   "hero": {
     "title": "Global Discussion Platform",
@@ -143,7 +144,17 @@
       "uppercase": "At least one uppercase letter",
       "lowercase": "At least one lowercase letter",
       "number": "At least one number"
-    }
+    },
+    "login_modal_title": "Sign In to Continue",
+    "login_modal_description": "To keep debates fair, you need to sign in.",
+    "sign_in_google": "Sign in with Google",
+    "sign_in_email": "Sign in with Email",
+    "or": "or",
+    "email_placeholder": "your@email.com",
+    "send_magic_link": "Send Magic Link",
+    "magic_link_sent": "Magic Link Sent",
+    "magic_link_sent_message": "We've sent you a link to sign in. Check your email.",
+    "magic_link_error": "Error sending magic link"
   },
   "errors": {
     "page_title": "Something went wrong",

@@ -7,7 +7,8 @@
     "logout": "Abmelden",
     "loading": "Laden...",
     "error": "Fehler",
-    "search": "Suchen"
+    "search": "Suchen",
+    "close": "Schließen"
   },
   "hero": {
     "title": "Globale Diskussionsplattform",
@@ -141,7 +142,17 @@
       "uppercase": "Mindestens ein Großbuchstabe",
       "lowercase": "Mindestens ein Kleinbuchstabe",
       "number": "Mindestens eine Zahl"
-    }
+    },
+    "login_modal_title": "Anmelden um fortzufahren",
+    "login_modal_description": "Um faire Debatten zu gewährleisten, müssen Sie sich anmelden.",
+    "sign_in_google": "Mit Google anmelden",
+    "sign_in_email": "Mit E-Mail anmelden",
+    "or": "oder",
+    "email_placeholder": "ihre@email.com",
+    "send_magic_link": "Zugangslink senden",
+    "magic_link_sent": "Link gesendet",
+    "magic_link_sent_message": "Wir haben Ihnen einen Link zum Anmelden gesendet. Überprüfen Sie Ihre E-Mail.",
+    "magic_link_error": "Fehler beim Senden des Links"
   },
   "errors": {
     "page_title": "Etwas ist schiefgelaufen",

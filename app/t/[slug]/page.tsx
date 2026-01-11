@@ -175,8 +175,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${topic.title} - Thebate`,
     description: topic.description.substring(0, 160),
     keywords,
-    authors: [{ name: topic.createdBy.name || topic.createdBy.username }],
-    creator: topic.createdBy.name || topic.createdBy.username,
+    authors: [{ name: topic.createdBy.name || topic.createdBy.username || "Unknown" }],
+    creator: topic.createdBy.name || topic.createdBy.username || "Unknown",
     publisher: "Thebate",
     openGraph: {
       title: topic.title,
@@ -184,7 +184,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "article",
       publishedTime: topic.createdAt.toISOString(),
       modifiedTime: topic.updatedAt.toISOString(),
-      authors: [topic.createdBy.username],
+      authors: [topic.createdBy.username || topic.createdBy.name || "TheBate"],
       tags: topic.tags,
       url: topicUrl,
       siteName: "TheBatee",
@@ -262,8 +262,8 @@ export default async function TopicPage({ params, searchParams }: Props) {
     url: topicUrl,
     author: {
       "@type": "Person",
-      name: topic.createdBy.name || topic.createdBy.username,
-      url: `${baseUrl}/u/${topic.createdBy.username}`,
+      name: topic.createdBy.name || topic.createdBy.username || "Unknown",
+      url: topic.createdBy.username ? `${baseUrl}/u/${topic.createdBy.username}` : baseUrl,
     },
     publisher: {
       "@type": "Organization",
@@ -376,12 +376,14 @@ export default async function TopicPage({ params, searchParams }: Props) {
 
             {/* Topic metadata - responsive layout */}
             <div className="flex flex-col gap-3 text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
-              <Link
-                href={`/u/${topic.createdBy.username}`}
-                className="hover:underline"
-              >
-                @{topic.createdBy.username}
-              </Link>
+              {topic.createdBy.username && (
+                <Link
+                  href={`/u/${topic.createdBy.username}`}
+                  className="hover:underline"
+                >
+                  @{topic.createdBy.username}
+                </Link>
+              )}
 
               <span className="hidden sm:inline">•</span>
 

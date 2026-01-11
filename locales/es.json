@@ -7,7 +7,8 @@
     "logout": "Cerrar Sesión",
     "loading": "Cargando...",
     "error": "Error",
-    "search": "Buscar"
+    "search": "Buscar",
+    "close": "Cerrar"
   },
   "hero": {
     "title": "Plataforma Global de Discusión",
@@ -141,7 +142,17 @@
       "uppercase": "Al menos una letra mayúscula",
       "lowercase": "Al menos una letra minúscula",
       "number": "Al menos un número"
-    }
+    },
+    "login_modal_title": "Entrar para Continuar",
+    "login_modal_description": "Para mantener debates justos, necesitas entrar.",
+    "sign_in_google": "Entrar con Google",
+    "sign_in_email": "Entrar con Email",
+    "or": "o",
+    "email_placeholder": "tu@email.com",
+    "send_magic_link": "Enviar Enlace de Acceso",
+    "magic_link_sent": "Enlace Enviado",
+    "magic_link_sent_message": "Te hemos enviado un enlace para entrar. Revisa tu email.",
+    "magic_link_error": "Error al enviar enlace"
   },
   "errors": {
     "page_title": "Algo salió mal",

@@ -61,7 +61,7 @@ async function main() {
   // Step 1: Create seed users
   console.log("👥 Creating seed users...");
   const passwordHash = await bcrypt.hash("seed123password", 12);
-  const allUsers: Array<{ id: string; locale: string; username: string }> = [];
+  const allUsers: Array<{ id: string; locale: string; username: string | null }> = [];
 
   for (const locale of LOCALES) {
     const localeUsers = generateUsersForLocale(locale, USERS_PER_LOCALE);

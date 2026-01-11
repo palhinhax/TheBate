@@ -27,6 +27,11 @@
     "prepare": "husky",
     "semantic-release": "semantic-release"
   },
+  "pnpm": {
+    "overrides": {
+      "@auth/core": "0.41.0"
+    }
+  },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix",
@@ -40,6 +45,7 @@
     "seed": "npx tsx prisma/seed-from-yaml.ts"
   },
   "dependencies": {
+    "@auth/prisma-adapter": "^2.11.1",
     "@hookform/resolvers": "^5.2.2",
     "@prisma/client": "^5.22.0",
     "@radix-ui/react-dialog": "^1.1.15",

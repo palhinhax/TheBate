@@ -17,7 +17,7 @@ type Topic = {
   status: string;
   createdAt: string;
   createdBy: {
-    username: string;
+    username: string | null;
     name: string | null;
   };
   _count: {
@@ -32,7 +32,7 @@ type Comment = {
   status: string;
   createdAt: string;
   user: {
-    username: string;
+    username: string | null;
     name: string | null;
   };
   topic: {
@@ -47,7 +47,7 @@ type Comment = {
 
 type User = {
   id: string;
-  username: string;
+  username: string | null;
   email: string;
   name: string | null;
   role: string;
@@ -429,7 +429,7 @@ export default function AdminPage() {
                     {topic.title}
                   </Link>
                   <p className="mt-1 break-words text-sm text-muted-foreground">
-                    Por {topic.createdBy.name || topic.createdBy.username} •{" "}
+                    Por {topic.createdBy.name || topic.createdBy.username || topic.createdBy.name || "Unknown"} •{" "}
                     {new Date(topic.createdAt).toLocaleDateString("pt-PT")} •{" "}
                     {topic._count.comments} argumentos •{" "}
                     {topic._count.topicVotes} votos
@@ -542,7 +542,7 @@ export default function AdminPage() {
                       : comment.content}
                   </p>
                   <p className="mt-2 text-sm text-muted-foreground">
-                    Por {comment.user.name || comment.user.username} •{" "}
+                    Por {comment.user.name || comment.user.username || "Unknown"} •{" "}
                     {new Date(comment.createdAt).toLocaleDateString("pt-PT")} •
                     em{" "}
                     <Link
@@ -639,7 +639,7 @@ export default function AdminPage() {
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
                     <h3 className="text-lg font-semibold">
-                      {user.name || user.username}
+                      {user.name || user.username || user.email}
                     </h3>
                     {user.isOwner && (
                       <span className="rounded bg-purple-100 px-2 py-1 text-xs font-semibold text-purple-800">
@@ -659,7 +659,7 @@ export default function AdminPage() {
                     </span>
                   </div>
                   <p className="mt-1 break-words text-sm text-muted-foreground">
-                    @{user.username} • {user.email}
+                    @{user.username || user.email} • {user.email}
                   </p>
                   <p className="mt-1 text-xs text-muted-foreground">
                     Membro desde{" "}
@@ -849,7 +849,7 @@ export default function AdminPage() {
                           <div className="min-w-0 flex-1">
                             <p className="break-words">{comment.content}</p>
                             <p className="mt-1 break-words text-sm text-muted-foreground">
-                              Por {comment.user.name || comment.user.username}{" "}
+                              Por {comment.user.name || comment.user.username || "Unknown"}{" "}
                               em{" "}
                               <Link
                                 href={`/t/${comment.topic.slug}`}

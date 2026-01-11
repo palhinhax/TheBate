@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -13,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
+import { AuthModal } from "@/components/auth-modal";
 
 type TopicOption = {
   id: string;
@@ -38,8 +40,10 @@ export default function NewCommentForm({
   onCancel,
 }: NewCommentFormProps) {
   const router = useRouter();
+  const { data: session } = useSession();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   const isReply = !!parentId;
   
@@ -63,6 +67,12 @@ export default function NewCommentForm({
   const selectedOptionId = watch("optionId" as never) as unknown;
 
   const onSubmit = async (data: CommentFormData | ReplyFormData) => {
+    // Check authentication before submitting
+    if (!session?.user) {
+      setShowAuthModal(true);
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       const response = await fetch("/api/comments", {
@@ -101,7 +111,8 @@ export default function NewCommentForm({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       {/* Side selection for YES_NO topics (only for top-level comments) */}
       {!isReply && topicType === "YES_NO" && (
         <div>
@@ -214,5 +225,7 @@ export default function NewCommentForm({
         )}
       </div>
     </form>
+    <AuthModal open={showAuthModal} onOpenChange={setShowAuthModal} />
+    </>
   );
 }
