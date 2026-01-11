@@ -1,3 +1,10 @@
+## [2.17.2](https://github.com/palhinhax/TheBate/compare/v2.17.1...v2.17.2) (2026-01-11)
+
+
+### Bug Fixes
+
+* **db:** correct migration to drop unique index instead of constraint ([5694431](https://github.com/palhinhax/TheBate/commit/569443114f2ecf49bd338bc314d8cd6bfab19bdc))
+
 ## [2.17.1](https://github.com/palhinhax/TheBate/compare/v2.17.0...v2.17.1) (2026-01-11)
 
 
