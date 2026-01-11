@@ -1,0 +1,130 @@
+# Seed Data Configuration for TheBate
+# This file defines the baseline seed data for the application
+# Run with: pnpm run db:seed or via GitHub Actions workflow
+
+# Admin and moderator users
+admin_users:
+  - username: admin
+    email: admin@thebate.com
+    name: Admin User
+    password: password123  # Will be hashed
+    role: ADMIN
+    preferred_language: pt
+    preferred_content_languages: [pt, en, es, fr, de]
+
+  - username: moderator
+    email: mod@thebate.com
+    name: Moderator
+    password: password123  # Will be hashed
+    role: MOD
+    preferred_language: pt
+    preferred_content_languages: [pt, en, es, fr, de]
+
+# Sample users for different languages
+sample_users:
+  - username: maria_silva
+    email: maria@example.com
+    name: Maria Silva
+    password: password123
+    preferred_language: pt
+    preferred_content_languages: [pt, en]
+
+  - username: john_doe
+    email: john@example.com
+    name: John Doe
+    password: password123
+    preferred_language: en
+    preferred_content_languages: [en, es]
+
+  - username: carlos_garcia
+    email: carlos@example.com
+    name: Carlos García
+    password: password123
+    preferred_language: es
+    preferred_content_languages: [es, en]
+
+  - username: jean_dupont
+    email: jean@example.com
+    name: Jean Dupont
+    password: password123
+    preferred_language: fr
+    preferred_content_languages: [fr, en]
+
+  - username: hans_mueller
+    email: hans@example.com
+    name: Hans Müller
+    password: password123
+    preferred_language: de
+    preferred_content_languages: [de, en]
+
+# Sample topics to demonstrate the platform
+sample_topics:
+  # Portuguese topics
+  - language: pt
+    title: A inteligência artificial vai substituir programadores?
+    description: |
+      Com o avanço de ferramentas como ChatGPT e GitHub Copilot, há uma discussão crescente 
+      sobre o futuro da profissão de programador. Será que a IA vai substituir completamente 
+      os desenvolvedores ou apenas vai mudar a forma como trabalhamos?
+    tags: [tecnologia, ia, programação, futuro]
+    created_by: admin
+    type: YES_NO
+
+  - language: pt
+    title: Trabalho remoto vs presencial: qual o melhor?
+    description: |
+      Após a pandemia, muitas empresas adotaram o trabalho remoto. Mas será que é realmente 
+      melhor para todos? Discutamos os prós e contras de cada modelo.
+    tags: [trabalho, produtividade, carreira]
+    created_by: maria_silva
+    type: YES_NO
+
+  # English topics
+  - language: en
+    title: Should artificial intelligence be regulated like nuclear weapons?
+    description: |
+      As AI capabilities advance rapidly, experts warn of existential risks. Should governments 
+      treat advanced AI systems with the same regulatory framework as nuclear weapons? What are 
+      the implications for innovation and safety?
+    tags: [artificial-intelligence, regulation, safety, technology]
+    created_by: john_doe
+    type: YES_NO
+
+  - language: en
+    title: Is cryptocurrency the future of money or a speculative bubble?
+    description: |
+      With Bitcoin reaching new highs and major institutions adopting crypto, the debate intensifies. 
+      Are cryptocurrencies revolutionizing finance or creating a dangerous bubble?
+    tags: [cryptocurrency, finance, economy, blockchain]
+    created_by: admin
+    type: YES_NO
+
+  # Spanish topics
+  - language: es
+    title: ¿Debe ser la semana laboral de 4 días el nuevo estándar?
+    description: |
+      Varios países experimentan con jornadas laborales reducidas con resultados prometedores. 
+      ¿Es sostenible implementar esto globalmente? ¿Cómo afectaría a la economía y calidad de vida?
+    tags: [trabajo, economía, calidad-de-vida, innovación]
+    created_by: carlos_garcia
+    type: YES_NO
+
+  # French topics
+  - language: fr
+    title: La France devrait-elle sortir du nucléaire civil?
+    description: |
+      Alors que l'Allemagne ferme ses centrales, la France reste nucléaire. Face au changement 
+      climatique, est-ce la bonne stratégie? Quels sont les risques et avantages à long terme?
+    tags: [énergie, environnement, politique, nucléaire]
+    created_by: jean_dupont
+    type: YES_NO
+
+  # German topics
+  - language: de
+    title: Sollte Deutschland ein Tempolimit auf Autobahnen einführen?
+    description: |
+      Die Debatte spaltet das Land. Klimaschutz vs. Freiheit - was wiegt schwerer? 
+      Welche Auswirkungen hätte ein Tempolimit auf Umwelt und Wirtschaft?
+    tags: [verkehr, umwelt, politik, gesellschaft]
+    created_by: hans_mueller
+    type: YES_NO
