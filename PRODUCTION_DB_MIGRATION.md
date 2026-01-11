@@ -196,6 +196,7 @@ The repository contains the following migrations that may need to be applied:
 9. `20260109145337_add_preferred_content_languages` - Content language preferences
 10. `20260109181945_add_comment_report_count` - Comment moderation
 11. `20260110200738_add_is_seed_fields` - Seed data tracking
+12. `20260111000000_add_multi_choice_topics` - Multi-choice topic support with TopicType enum, TopicOption table, and related fields
 
 ## Best Practices
 
