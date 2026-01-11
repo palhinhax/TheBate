@@ -1,3 +1,16 @@
+# [2.17.0](https://github.com/palhinhax/TheBate/compare/v2.16.0...v2.17.0) (2026-01-11)
+
+
+### Bug Fixes
+
+* **seed:** address code review feedback ([2d074ea](https://github.com/palhinhax/TheBate/commit/2d074ea77633907bfe0ca1d507eff58825e4843e))
+* **seed:** use js-yaml library and fix YAML syntax issues ([5140c22](https://github.com/palhinhax/TheBate/commit/5140c228a8487402148d8a20411e2fc64069fb19))
+
+
+### Features
+
+* **seed:** add YAML-based seed with improved migration workflow ([18c99d6](https://github.com/palhinhax/TheBate/commit/18c99d63b2890afc2bad64e2cc5efede07d352fd))
+
 # [2.16.0](https://github.com/palhinhax/TheBate/compare/v2.15.0...v2.16.0) (2026-01-10)
 
 
