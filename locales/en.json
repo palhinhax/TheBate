@@ -144,5 +144,14 @@
       "lowercase": "At least one lowercase letter",
       "number": "At least one number"
     }
+  },
+  "errors": {
+    "page_title": "Something went wrong",
+    "page_description": "We're sorry, but something unexpected happened. Our team has been notified and is working to fix the issue.",
+    "go_home": "Go to Homepage",
+    "try_again": "Try Again",
+    "not_found_title": "Page not found",
+    "not_found_description": "The page you're looking for doesn't exist or has been moved.",
+    "contact_support": "Contact Support"
   }
 }

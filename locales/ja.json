@@ -144,5 +144,14 @@
       "lowercase": "小文字を1つ以上",
       "number": "数字を1つ以上"
     }
+  },
+  "errors": {
+    "page_title": "エラーが発生しました",
+    "page_description": "申し訳ございませんが、予期しないエラーが発生しました。チームに通知され、問題の解決に取り組んでいます。",
+    "go_home": "ホームページへ",
+    "try_again": "再試行",
+    "not_found_title": "ページが見つかりません",
+    "not_found_description": "お探しのページは存在しないか、移動されました。",
+    "contact_support": "サポートに連絡"
   }
 }
