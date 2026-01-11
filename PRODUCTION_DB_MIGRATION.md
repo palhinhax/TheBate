@@ -1,8 +1,30 @@
 # Production Database Migration & Seeding
 
-## Quick Start: Automated Workflow (Recommended)
+## Automated Migration (Recommended)
 
-The easiest and safest way to update your production database is using the GitHub Actions workflow:
+✅ **Migrations now run automatically via GitHub Actions!**
+
+### How It Works
+
+**On every push to `main`** that includes changes to:
+- `prisma/schema.prisma`
+- `prisma/migrations/**`
+
+**GitHub Actions automatically**:
+- Checks if migrations are needed
+- Runs `prisma migrate deploy` with retry logic
+- Reports success/failure status
+- **Blocks deployment if migrations fail** (prevents broken deployments)
+
+**Important**: Migrations run **before** Vercel deployment, not during the build. This ensures:
+- ✅ Database is updated before new code is deployed
+- ✅ No concurrent migration conflicts
+- ✅ Build failures don't prevent migration troubleshooting
+- ✅ Clear separation of concerns
+
+### Manual Migration (If Needed)
+
+If you need to run migrations manually or seed data:
 
 1. Go to your GitHub repository
 2. Navigate to **Actions** > **Database Update & Seed**
@@ -197,6 +219,47 @@ The repository contains the following migrations that may need to be applied:
 10. `20260109181945_add_comment_report_count` - Comment moderation
 11. `20260110200738_add_is_seed_fields` - Seed data tracking
 12. `20260111000000_add_multi_choice_topics` - Multi-choice topic support with TopicType enum, TopicOption table, and related fields
+
+## Known Issues & Solutions
+
+### Issue: Missing Topic.type Column Error
+
+**Error Message:**
+```
+PrismaClientKnownRequestError: Invalid prisma.topic.findMany() invocation:
+The column Topic.type does not exist in the current database.
+Code: P2022
+```
+
+**Cause:** 
+The production database is missing the `20260111000000_add_multi_choice_topics` migration. This migration adds the `type` column to the Topic table, which is required for all topics.
+
+**Solutions (in order of preference):**
+
+1. **Automatic fix (recommended):** 
+   - Push any change to `main` branch - the auto-migration workflow will detect and apply pending migrations
+   - Wait for GitHub Actions to complete successfully
+
+2. **Manual workflow fix:**
+   - Go to **Actions** > **Database Update & Seed**
+   - Click **Run workflow**
+   - Set `seed_type: none` and `force_migrate: false`
+   - Click **Run workflow**
+
+3. **CLI fix (advanced):**
+   ```bash
+   # Ensure DATABASE_URL is set to production database
+   export DATABASE_URL="your_production_database_url"
+   npx prisma migrate deploy
+   ```
+
+**What the migration adds:**
+- `TopicType` enum with values: `YES_NO`, `MULTI_CHOICE`
+- `type` column on Topic table (defaults to `YES_NO`)
+- `allowMultipleVotes` and `maxChoices` columns for multi-choice configuration
+- `TopicOption` table for storing voting options
+- Updated `TopicVote` and `Comment` tables to support option associations
+- Necessary indexes and foreign key constraints
 
 ## Best Practices
 
