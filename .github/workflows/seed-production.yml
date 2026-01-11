@@ -52,8 +52,8 @@ jobs:
           echo "🔍 Checking if migrations are needed..."
           
           # Set connection timeout and statement timeout
-          export PGCONNECT_TIMEOUT=10
-          export PGSTATEMENT_TIMEOUT=30000
+          export PGCONNECT_TIMEOUT=15
+          export PGSTATEMENT_TIMEOUT=45000
           
           # Try to check migration status with timeout
           if timeout 30s pnpm prisma migrate status 2>&1 | tee migration_status.txt; then
@@ -84,7 +84,7 @@ jobs:
             local attempt=$1
             echo "Attempt $attempt of 3..."
             
-            # Set shorter timeouts for Prisma
+            # Set connection and statement timeouts
             export PRISMA_ENGINE_PROTOCOL=graphql
             export PGCONNECT_TIMEOUT=15
             export PGSTATEMENT_TIMEOUT=45000

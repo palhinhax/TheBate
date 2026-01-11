@@ -41,7 +41,7 @@ interface TopicData {
   type?: string;
 }
 
-async function seedUsers(users: UserData[], isSeed: boolean = false): Promise<Map<string, string>> {
+async function seedUsers(users: UserData[], markAsSeed: boolean = false): Promise<Map<string, string>> {
   const userIdMap = new Map<string, string>();
   
   for (const userData of users) {
@@ -73,7 +73,7 @@ async function seedUsers(users: UserData[], isSeed: boolean = false): Promise<Ma
           role: (userData.role as UserRole) || "USER",
           preferredLanguage: userData.preferred_language,
           preferredContentLanguages: userData.preferred_content_languages,
-          isSeed,
+          isSeed: markAsSeed,
         },
       });
 
@@ -142,16 +142,16 @@ async function main() {
     
     console.log("✅ Parsed seed data successfully\n");
 
-    // Seed admin users
+    // Seed admin users (not marked as seed data - permanent)
     console.log("👥 Seeding admin users...");
     const adminUsers = (seedData.admin_users || []) as UserData[];
     const adminUserMap = await seedUsers(adminUsers, false);
     console.log("");
 
-    // Seed sample users
+    // Seed sample users (marked as seed data for cleanup)
     console.log("👥 Seeding sample users...");
     const sampleUsers = (seedData.sample_users || []) as UserData[];
-    const sampleUserMap = await seedUsers(sampleUsers, false);
+    const sampleUserMap = await seedUsers(sampleUsers, true);
     console.log("");
 
     // Combine user maps

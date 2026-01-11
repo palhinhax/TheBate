@@ -38,6 +38,9 @@
   "prisma": {
     "seed": "npx tsx prisma/seed-from-yaml.ts"
   },
+  "comments": {
+    "prisma_seed": "Default seed changed to YAML-based approach. Use 'pnpm run db:seed' for old behavior if needed."
+  },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "@prisma/client": "^5.22.0",
