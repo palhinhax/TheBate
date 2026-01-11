@@ -20,6 +20,7 @@
     "db:seed": "npx tsx prisma/seed.ts",
     "db:seed-yaml": "npx tsx prisma/seed-from-yaml.ts",
     "db:seed-topics": "npx tsx scripts/seed-hot-topics.ts",
+    "db:resolve-failed-migration": "npx tsx scripts/resolve-failed-migration.ts",
     "seed:engagement": "npx tsx scripts/seed-engagement.ts",
     "seed:cleanup": "npx tsx scripts/cleanup-seed-data.ts",
     "db:studio": "prisma studio",

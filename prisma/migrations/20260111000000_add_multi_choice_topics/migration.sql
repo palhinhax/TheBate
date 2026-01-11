@@ -31,8 +31,8 @@ ALTER TABLE "TopicVote" ADD CONSTRAINT "TopicVote_optionId_fkey" FOREIGN KEY ("o
 ALTER TABLE "Comment" ADD COLUMN "optionId" TEXT;
 ALTER TABLE "Comment" ADD CONSTRAINT "Comment_optionId_fkey" FOREIGN KEY ("optionId") REFERENCES "TopicOption"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
--- 6. Drop old unique constraint and add new one
-ALTER TABLE "TopicVote" DROP CONSTRAINT "TopicVote_userId_topicId_key";
+-- 6. Drop old unique index and add new unique constraint
+DROP INDEX IF EXISTS "TopicVote_userId_topicId_key";
 ALTER TABLE "TopicVote" ADD CONSTRAINT "TopicVote_userId_topicId_optionId_key" UNIQUE("userId", "topicId", "optionId");
 
 -- 7. Create indexes
