@@ -1,3 +1,15 @@
+# [3.1.0](https://github.com/palhinhax/TheBate/compare/v3.0.0...v3.1.0) (2026-01-11)
+
+
+### Bug Fixes
+
+* **errors:** improve Button/Link composition and add multilingual global error ([2cb7f9f](https://github.com/palhinhax/TheBate/commit/2cb7f9fbe97d9f4a1a7eda2522368305537e5cec))
+
+
+### Features
+
+* **errors:** add user-friendly error pages with i18n support ([1f81c28](https://github.com/palhinhax/TheBate/commit/1f81c288b28a7403b6fd4aceb651ce3d4ec9ca1b))
+
 # [3.0.0](https://github.com/palhinhax/TheBate/compare/v2.17.2...v3.0.0) (2026-01-11)
 
 
