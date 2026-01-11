@@ -2,6 +2,54 @@
 
 import { useEffect } from "react";
 
+// Minimal translations for global error (fallback when nothing else works)
+const translations: Record<
+  string,
+  { title: string; description: string; tryAgain: string; goHome: string }
+> = {
+  en: {
+    title: "Something went wrong",
+    description:
+      "We're sorry, but something unexpected happened. Our team has been notified and is working to fix the issue.",
+    tryAgain: "Try Again",
+    goHome: "Go to Homepage",
+  },
+  pt: {
+    title: "Algo correu mal",
+    description:
+      "Lamentamos, mas ocorreu algo inesperado. A nossa equipa foi notificada e está a trabalhar para resolver o problema.",
+    tryAgain: "Tentar Novamente",
+    goHome: "Ir para a Página Inicial",
+  },
+  es: {
+    title: "Algo salió mal",
+    description:
+      "Lo sentimos, pero ocurrió algo inesperado. Nuestro equipo ha sido notificado y está trabajando para resolver el problema.",
+    tryAgain: "Intentar de Nuevo",
+    goHome: "Ir a la Página Principal",
+  },
+  fr: {
+    title: "Une erreur s'est produite",
+    description:
+      "Nous sommes désolés, mais quelque chose d'inattendu s'est produit. Notre équipe a été informée et travaille à résoudre le problème.",
+    tryAgain: "Réessayer",
+    goHome: "Aller à la Page d'Accueil",
+  },
+  de: {
+    title: "Etwas ist schiefgelaufen",
+    description:
+      "Es tut uns leid, aber etwas Unerwartetes ist passiert. Unser Team wurde benachrichtigt und arbeitet daran, das Problem zu beheben.",
+    tryAgain: "Erneut Versuchen",
+    goHome: "Zur Startseite",
+  },
+};
+
+function detectLanguage(): string {
+  if (typeof navigator === "undefined") return "en";
+  const browserLang = navigator.language.split("-")[0].toLowerCase();
+  return translations[browserLang] ? browserLang : "en";
+}
+
 export default function GlobalError({
   error,
   reset,
@@ -14,8 +62,11 @@ export default function GlobalError({
     console.error("Global error boundary caught:", error);
   }, [error]);
 
+  const lang = detectLanguage();
+  const t = translations[lang];
+
   return (
-    <html lang="en">
+    <html lang={lang}>
       <body>
         <div
           style={{
@@ -65,7 +116,7 @@ export default function GlobalError({
                 fontWeight: "bold",
               }}
             >
-              Something went wrong
+              {t.title}
             </h1>
 
             <p
@@ -74,8 +125,7 @@ export default function GlobalError({
                 color: "#6b7280",
               }}
             >
-              We&apos;re sorry, but something unexpected happened. Our team has
-              been notified and is working to fix the issue.
+              {t.description}
             </p>
 
             {error.digest && (
@@ -109,7 +159,7 @@ export default function GlobalError({
                   fontWeight: "500",
                 }}
               >
-                Try Again
+                {t.tryAgain}
               </button>
               <a
                 href="/"
@@ -124,7 +174,7 @@ export default function GlobalError({
                   fontWeight: "500",
                 }}
               >
-                Go to Homepage
+                {t.goHome}
               </a>
             </div>
           </div>

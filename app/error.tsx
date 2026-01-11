@@ -58,11 +58,9 @@ export default function Error({
           <Button onClick={reset} variant="default">
             {t("errors.try_again", "Try Again")}
           </Button>
-          <Link href="/">
-            <Button variant="outline">
-              {t("errors.go_home", "Go to Homepage")}
-            </Button>
-          </Link>
+          <Button variant="outline" asChild>
+            <Link href="/">{t("errors.go_home", "Go to Homepage")}</Link>
+          </Button>
         </div>
       </div>
     </div>

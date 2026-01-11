@@ -38,9 +38,9 @@ export default function NotFound() {
           )}
         </p>
 
-        <Link href="/">
-          <Button>{t("errors.go_home", "Go to Homepage")}</Button>
-        </Link>
+        <Button asChild>
+          <Link href="/">{t("errors.go_home", "Go to Homepage")}</Link>
+        </Button>
       </div>
     </div>
   );
