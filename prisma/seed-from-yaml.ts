@@ -130,6 +130,12 @@ async function seedTopics(topics: TopicData[], userIdMap: Map<string, string>): 
   }
 }
 
+interface SeedData {
+  admin_users?: UserData[];
+  sample_users?: UserData[];
+  sample_topics?: TopicData[];
+}
+
 async function main() {
   console.log("🌱 Starting YAML-based seed...\n");
 
@@ -138,19 +144,19 @@ async function main() {
     const yamlPath = join(__dirname, "seed-data.yml");
     console.log(`📄 Reading seed data from: ${yamlPath}`);
     const yamlContent = readFileSync(yamlPath, "utf-8");
-    const seedData = load(yamlContent) as Record<string, unknown>;
+    const seedData = load(yamlContent) as SeedData;
     
     console.log("✅ Parsed seed data successfully\n");
 
     // Seed admin users (not marked as seed data - permanent)
     console.log("👥 Seeding admin users...");
-    const adminUsers = (seedData.admin_users || []) as UserData[];
+    const adminUsers = seedData.admin_users || [];
     const adminUserMap = await seedUsers(adminUsers, false);
     console.log("");
 
     // Seed sample users (marked as seed data for cleanup)
     console.log("👥 Seeding sample users...");
-    const sampleUsers = (seedData.sample_users || []) as UserData[];
+    const sampleUsers = seedData.sample_users || [];
     const sampleUserMap = await seedUsers(sampleUsers, true);
     console.log("");
 
@@ -161,7 +167,7 @@ async function main() {
 
     // Seed topics
     console.log("📝 Seeding topics...");
-    const topics = (seedData.sample_topics || []) as TopicData[];
+    const topics = seedData.sample_topics || [];
     await seedTopics(topics, allUserMap);
     console.log("");
 
@@ -176,6 +182,8 @@ async function main() {
     console.log("   Admin: admin@thebate.com / password123");
     console.log("   Moderator: mod@thebate.com / password123");
     console.log("   Sample users: Use their emails with password123");
+    console.log("");
+    console.log("⚠️  IMPORTANT: Change default passwords immediately in production!");
   } catch (error) {
     console.error("\n❌ Error during seeding:", error);
     throw error;
