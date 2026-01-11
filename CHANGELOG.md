@@ -1,3 +1,10 @@
+## [2.17.1](https://github.com/palhinhax/TheBate/compare/v2.17.0...v2.17.1) (2026-01-11)
+
+
+### Bug Fixes
+
+* **db:** convert manual migration to proper Prisma migration for multi-choice topics ([50b91fe](https://github.com/palhinhax/TheBate/commit/50b91fe874cf920c8d3934087e2d7ecd936ae119))
+
 # [2.17.0](https://github.com/palhinhax/TheBate/compare/v2.16.0...v2.17.0) (2026-01-11)
 
 
