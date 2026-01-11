@@ -1,3 +1,23 @@
+# [3.0.0](https://github.com/palhinhax/TheBate/compare/v2.17.2...v3.0.0) (2026-01-11)
+
+
+### Bug Fixes
+
+* **ci:** remove migration from vercel-build to avoid concurrent conflicts ([732cbd5](https://github.com/palhinhax/TheBate/commit/732cbd5e9d0a1bad78d859bf1e21e8dc4e792c34))
+
+
+### Features
+
+* **ci:** add automatic database migration on push to main ([dbfc483](https://github.com/palhinhax/TheBate/commit/dbfc4838747d2dd33943f9ca2e9df311956d0e54))
+
+
+### BREAKING CHANGES
+
+* **ci:** Migrations now run automatically during Vercel deployments.
+Ensure DATABASE_URL is properly configured in production environment.
+
+Co-authored-by: palhinhax <13228131+palhinhax@users.noreply.github.com>
+
 ## [2.17.2](https://github.com/palhinhax/TheBate/compare/v2.17.1...v2.17.2) (2026-01-11)
 
 
