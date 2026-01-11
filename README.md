@@ -273,6 +273,28 @@ A plataforma utiliza shadcn/ui para componentes:
 - **Paginação**: Limite de resultados em listagens
 - **Caching**: Revalidation tags para ISR
 
+## 🚀 Deployment & Production
+
+### Database Migrations
+
+The project uses automated database migrations via GitHub Actions:
+
+- **Automatic**: Migrations run automatically on push to `main` when `prisma/schema.prisma` or `prisma/migrations/**` change
+- **Manual**: You can manually trigger migrations via GitHub Actions > "Auto-migrate Database on Push"
+
+**If you encounter database schema errors in production** (e.g., missing columns), see [PRODUCTION_DB_MIGRATION.md](./PRODUCTION_DB_MIGRATION.md) for detailed troubleshooting steps.
+
+Common issues:
+- Missing `Topic.type` column → Run the "Auto-migrate Database on Push" workflow manually
+- Migration timeouts → Check the workflow includes retry logic and proper timeouts
+- Advisory lock errors → Wait and retry, or check for stuck database processes
+
+### Required Secrets
+
+For GitHub Actions to work properly, configure these secrets in your repository:
+
+- `DATABASE_URL`: Production PostgreSQL connection string
+
 ## 🤝 Contribuindo
 
 Contribuições são bem-vindas! Por favor:

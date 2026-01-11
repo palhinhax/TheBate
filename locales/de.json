@@ -153,5 +153,14 @@
     "magic_link_sent": "Link gesendet",
     "magic_link_sent_message": "Wir haben Ihnen einen Link zum Anmelden gesendet. Überprüfen Sie Ihre E-Mail.",
     "magic_link_error": "Fehler beim Senden des Links"
+  },
+  "errors": {
+    "page_title": "Etwas ist schiefgelaufen",
+    "page_description": "Es tut uns leid, aber etwas Unerwartetes ist passiert. Unser Team wurde benachrichtigt und arbeitet daran, das Problem zu beheben.",
+    "go_home": "Zur Startseite",
+    "try_again": "Erneut Versuchen",
+    "not_found_title": "Seite nicht gefunden",
+    "not_found_description": "Die Seite, die Sie suchen, existiert nicht oder wurde verschoben.",
+    "contact_support": "Support Kontaktieren"
   }
 }

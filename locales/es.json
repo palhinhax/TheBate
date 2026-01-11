@@ -153,5 +153,14 @@
     "magic_link_sent": "Enlace Enviado",
     "magic_link_sent_message": "Te hemos enviado un enlace para entrar. Revisa tu email.",
     "magic_link_error": "Error al enviar enlace"
+  },
+  "errors": {
+    "page_title": "Algo salió mal",
+    "page_description": "Lo sentimos, pero ocurrió algo inesperado. Nuestro equipo ha sido notificado y está trabajando para resolver el problema.",
+    "go_home": "Ir a la Página Principal",
+    "try_again": "Intentar de Nuevo",
+    "not_found_title": "Página no encontrada",
+    "not_found_description": "La página que buscas no existe o ha sido movida.",
+    "contact_support": "Contactar Soporte"
   }
 }

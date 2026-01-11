@@ -1,3 +1,117 @@
+# [3.2.0](https://github.com/palhinhax/TheBate/compare/v3.1.0...v3.2.0) (2026-01-11)
+
+
+### Features
+
+* **ci:** add manual trigger to auto-migrate workflow and improve documentation ([da0fad5](https://github.com/palhinhax/TheBate/commit/da0fad55fa8a18db1fa79735a27742ed3b8d8d22))
+
+# [3.1.0](https://github.com/palhinhax/TheBate/compare/v3.0.0...v3.1.0) (2026-01-11)
+
+
+### Bug Fixes
+
+* **errors:** improve Button/Link composition and add multilingual global error ([2cb7f9f](https://github.com/palhinhax/TheBate/commit/2cb7f9fbe97d9f4a1a7eda2522368305537e5cec))
+
+
+### Features
+
+* **errors:** add user-friendly error pages with i18n support ([1f81c28](https://github.com/palhinhax/TheBate/commit/1f81c288b28a7403b6fd4aceb651ce3d4ec9ca1b))
+
+# [3.0.0](https://github.com/palhinhax/TheBate/compare/v2.17.2...v3.0.0) (2026-01-11)
+
+
+### Bug Fixes
+
+* **ci:** remove migration from vercel-build to avoid concurrent conflicts ([732cbd5](https://github.com/palhinhax/TheBate/commit/732cbd5e9d0a1bad78d859bf1e21e8dc4e792c34))
+
+
+### Features
+
+* **ci:** add automatic database migration on push to main ([dbfc483](https://github.com/palhinhax/TheBate/commit/dbfc4838747d2dd33943f9ca2e9df311956d0e54))
+
+
+### BREAKING CHANGES
+
+* **ci:** Migrations now run automatically during Vercel deployments.
+Ensure DATABASE_URL is properly configured in production environment.
+
+Co-authored-by: palhinhax <13228131+palhinhax@users.noreply.github.com>
+
+## [2.17.2](https://github.com/palhinhax/TheBate/compare/v2.17.1...v2.17.2) (2026-01-11)
+
+
+### Bug Fixes
+
+* **db:** correct migration to drop unique index instead of constraint ([5694431](https://github.com/palhinhax/TheBate/commit/569443114f2ecf49bd338bc314d8cd6bfab19bdc))
+
+## [2.17.1](https://github.com/palhinhax/TheBate/compare/v2.17.0...v2.17.1) (2026-01-11)
+
+
+### Bug Fixes
+
+* **db:** convert manual migration to proper Prisma migration for multi-choice topics ([50b91fe](https://github.com/palhinhax/TheBate/commit/50b91fe874cf920c8d3934087e2d7ecd936ae119))
+
+# [2.17.0](https://github.com/palhinhax/TheBate/compare/v2.16.0...v2.17.0) (2026-01-11)
+
+
+### Bug Fixes
+
+* **seed:** address code review feedback ([2d074ea](https://github.com/palhinhax/TheBate/commit/2d074ea77633907bfe0ca1d507eff58825e4843e))
+* **seed:** use js-yaml library and fix YAML syntax issues ([5140c22](https://github.com/palhinhax/TheBate/commit/5140c228a8487402148d8a20411e2fc64069fb19))
+
+
+### Features
+
+* **seed:** add YAML-based seed with improved migration workflow ([18c99d6](https://github.com/palhinhax/TheBate/commit/18c99d63b2890afc2bad64e2cc5efede07d352fd))
+
+# [2.16.0](https://github.com/palhinhax/TheBate/compare/v2.15.0...v2.16.0) (2026-01-10)
+
+
+### Bug Fixes
+
+* resolve TypeScript type errors in multi-choice implementation ([071a653](https://github.com/palhinhax/TheBate/commit/071a6537a2e90ca3c0e6ccec0041f89363457ef3))
+
+
+### Features
+
+* **admin:** add UI for creating multi-choice topics ([9c0bda3](https://github.com/palhinhax/TheBate/commit/9c0bda3ebb65a25f13f1b1163a2e8e4900348ad4))
+* **api:** update voting and comment APIs for multi-choice support ([623f2f1](https://github.com/palhinhax/TheBate/commit/623f2f13d2375700dfab25eab489e11fbc5576ec))
+* **db:** add multi-choice topic support to schema ([4cc5a55](https://github.com/palhinhax/TheBate/commit/4cc5a55c527fe57877050a82c31e55b4dc7d0471))
+* **ui:** add multi-choice voting and comment UI components ([6c6df68](https://github.com/palhinhax/TheBate/commit/6c6df68549deec50ecea8ef8cf40a4e0d4b0ccd0))
+
+# [2.15.0](https://github.com/palhinhax/TheBate/compare/v2.14.0...v2.15.0) (2026-01-10)
+
+
+### Features
+
+* **admin:** add pagination and fix mobile responsiveness in owner panel ([50c546d](https://github.com/palhinhax/TheBate/commit/50c546deac0705e514ed95f384963d81efc6e43c))
+
+# [2.14.0](https://github.com/palhinhax/TheBate/compare/v2.13.0...v2.14.0) (2026-01-10)
+
+
+### Bug Fixes
+
+* **ci:** improve seed status step with outcome check ([2b542de](https://github.com/palhinhax/TheBate/commit/2b542de5b2caba352016316251ce273759462b0b))
+* **ci:** only fail workflow on actual seed errors ([ada80dc](https://github.com/palhinhax/TheBate/commit/ada80dc84dff477d5b73f7066da895d6b4fd9795))
+* **ci:** use Node 22 for consistency with other workflows ([cb06114](https://github.com/palhinhax/TheBate/commit/cb06114b8216181905a2d618b5540586e11d8d68))
+
+
+### Features
+
+* **ci:** add seed production workflow ([98eddee](https://github.com/palhinhax/TheBate/commit/98eddee6a9a394e397b7a3113ff4a80537633054))
+
+# [2.13.0](https://github.com/palhinhax/TheBate/compare/v2.12.3...v2.13.0) (2026-01-10)
+
+
+### Bug Fixes
+
+* **seed:** standardize command references to use npm run ([22aa9af](https://github.com/palhinhax/TheBate/commit/22aa9afa16539c8ed84719b6448306a7b60062f5))
+
+
+### Features
+
+* **seed:** add engagement seed script with isSeed fields and cleanup ([5a98dfe](https://github.com/palhinhax/TheBate/commit/5a98dfef762cb58969f71e3dc995882b82ac21e9))
+
 ## [2.12.3](https://github.com/palhinhax/TheBate/compare/v2.12.2...v2.12.3) (2026-01-10)
 
 

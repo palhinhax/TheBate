@@ -155,5 +155,14 @@
     "magic_link_sent": "Magic Link Sent",
     "magic_link_sent_message": "We've sent you a link to sign in. Check your email.",
     "magic_link_error": "Error sending magic link"
+  },
+  "errors": {
+    "page_title": "Something went wrong",
+    "page_description": "We're sorry, but something unexpected happened. Our team has been notified and is working to fix the issue.",
+    "go_home": "Go to Homepage",
+    "try_again": "Try Again",
+    "not_found_title": "Page not found",
+    "not_found_description": "The page you're looking for doesn't exist or has been moved.",
+    "contact_support": "Contact Support"
   }
 }

@@ -41,6 +41,7 @@ export async function GET(request: Request) {
         orderBy: {
           createdAt: "desc",
         },
+        // Skip pagination for reported topics to show all reports at once
         skip: reported ? undefined : skip,
         take: reported ? undefined : limit,
       }),

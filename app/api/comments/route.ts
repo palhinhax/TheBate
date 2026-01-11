@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     // Check if topic exists and is not locked
     const topic = await prisma.topic.findUnique({
       where: { id: validated.topicId },
-      select: { status: true },
+      select: { status: true, type: true },
     });
 
     if (!topic) {
@@ -53,9 +53,31 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    // Validate optionId for MULTI_CHOICE topics
+    let optionId = null;
+    if (!isReply && topic.type === "MULTI_CHOICE" && "optionId" in validated) {
+      optionId = validated.optionId || null;
+      
+      // Verify optionId belongs to this topic
+      if (optionId) {
+        const option = await prisma.topicOption.findUnique({
+          where: { id: optionId },
+          select: { topicId: true },
+        });
+
+        if (!option || option.topicId !== validated.topicId) {
+          return NextResponse.json(
+            { error: "Opção inválida" },
+            { status: 400 }
+          );
+        }
+      }
+    }
+
     const commentData = {
       content: validated.content,
-      side: isReply ? null : ("side" in validated ? validated.side : null),
+      side: isReply ? null : (topic.type === "YES_NO" && "side" in validated ? validated.side : null),
+      optionId: isReply ? null : optionId,
       topicId: validated.topicId,
       userId: session.user.id,
       parentId: validated.parentId || null,
@@ -70,6 +92,12 @@ export async function POST(req: NextRequest) {
             username: true,
             name: true,
             image: true,
+          },
+        },
+        option: {
+          select: {
+            id: true,
+            label: true,
           },
         },
         _count: {

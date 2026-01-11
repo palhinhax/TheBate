@@ -62,19 +62,20 @@ export async function GET(
     };
 
     voteStats.forEach((stat) => {
-      voteCounts[stat.vote] = stat._count;
-      voteCounts.total += stat._count;
+      if (stat.vote) {
+        voteCounts[stat.vote] = stat._count;
+        voteCounts.total += stat._count;
+      }
     });
 
     // Get user's vote if authenticated
     let userVote = null;
     if (session?.user) {
-      const vote = await prisma.topicVote.findUnique({
+      const vote = await prisma.topicVote.findFirst({
         where: {
-          userId_topicId: {
-            userId: session.user.id,
-            topicId: topic.id,
-          },
+          userId: session.user.id,
+          topicId: topic.id,
+          optionId: null,
         },
         select: { vote: true },
       });
