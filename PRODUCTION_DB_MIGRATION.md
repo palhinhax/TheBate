@@ -24,7 +24,28 @@
 
 ### Manual Migration (If Needed)
 
-If you need to run migrations manually or seed data:
+If you need to run migrations manually:
+
+#### Option 1: Quick Migration (No Seeding)
+
+Use the **Auto-migrate Database on Push** workflow:
+
+1. Go to your GitHub repository
+2. Navigate to **Actions** > **Auto-migrate Database on Push**
+3. Click **Run workflow** dropdown
+4. Select branch: `main`
+5. Configure options:
+   - **Force migration**: Choose `true` to force migration, or `false` to auto-detect
+6. Click **Run workflow**
+
+**When to use:**
+- ✅ After initial deployment when migrations need to catch up
+- ✅ When auto-migration didn't trigger (e.g., workflow added after migrations)
+- ✅ To quickly apply pending migrations without seeding
+
+#### Option 2: Migration with Seeding
+
+Use the **Database Update & Seed** workflow:
 
 1. Go to your GitHub repository
 2. Navigate to **Actions** > **Database Update & Seed**
@@ -33,6 +54,11 @@ If you need to run migrations manually or seed data:
    - **Type of seed to run**: Choose `yaml` for initial setup, `engagement` for additional data, or `none` to just run migrations
    - **Force migration**: Usually keep as `false` (workflow will auto-detect if migrations are needed)
 5. Click **Run workflow**
+
+**When to use:**
+- ✅ Initial setup with seed data
+- ✅ Adding engagement data to existing topics
+- ✅ Full database update including migrations and seeding
 
 **Features:**
 - ✅ Automatically checks if migrations are needed
@@ -236,17 +262,27 @@ The production database is missing the `20260111000000_add_multi_choice_topics` 
 
 **Solutions (in order of preference):**
 
-1. **Automatic fix (recommended):** 
-   - Push any change to `main` branch - the auto-migration workflow will detect and apply pending migrations
-   - Wait for GitHub Actions to complete successfully
+1. **Manual workflow trigger (recommended):**
+   - Go to **Actions** > **Auto-migrate Database on Push**
+   - Click **Run workflow** dropdown
+   - Select branch: `main`
+   - Set `force_migrate: false` (or `true` to force)
+   - Click **Run workflow**
+   - Wait for completion (check workflow logs for status)
 
-2. **Manual workflow fix:**
+2. **Alternative - Full update with seeding:**
    - Go to **Actions** > **Database Update & Seed**
    - Click **Run workflow**
    - Set `seed_type: none` and `force_migrate: false`
    - Click **Run workflow**
 
-3. **CLI fix (advanced):**
+3. **Automatic fix (if manual doesn't work):**
+   - Make any minor change to `prisma/schema.prisma` (e.g., add a comment)
+   - Commit and push to `main` branch
+   - The auto-migration workflow will trigger and apply pending migrations
+   - Wait for GitHub Actions to complete successfully
+
+4. **CLI fix (advanced):**
    ```bash
    # Ensure DATABASE_URL is set to production database
    export DATABASE_URL="your_production_database_url"

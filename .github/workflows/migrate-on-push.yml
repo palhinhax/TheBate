@@ -6,6 +6,16 @@ on:
     paths:
       - 'prisma/schema.prisma'
       - 'prisma/migrations/**'
+  workflow_dispatch:
+    inputs:
+      force_migrate:
+        description: "Force migration even if not needed"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "true"
+          - "false"
 
 jobs:
   migrate:
@@ -60,7 +70,7 @@ jobs:
         continue-on-error: true
 
       - name: Run migrations with retry
-        if: ${{ steps.check_migration.outputs.status == 'needs-migration' || steps.check_migration.outputs.status == 'unknown' }}
+        if: ${{ steps.check_migration.outputs.status == 'needs-migration' || steps.check_migration.outputs.status == 'unknown' || inputs.force_migrate == 'true' }}
         run: |
           echo "🔄 Running database migrations with retry logic..."
 
@@ -114,6 +124,7 @@ jobs:
           echo "📊 Migration Summary"
           echo "===================="
           echo "Status: ${{ steps.check_migration.outputs.status }}"
+          echo "Force migrate: ${{ inputs.force_migrate || 'false' }}"
           echo ""
 
           if [ "${{ job.status }}" == "success" ]; then
@@ -125,4 +136,5 @@ jobs:
             echo "  - Verify DATABASE_URL secret is set correctly"
             echo "  - Check database accessibility"
             echo "  - Run 'Database Update & Seed' workflow manually"
+            echo "  - Try running this workflow manually with force_migrate: true"
           fi
