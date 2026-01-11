@@ -1,3 +1,10 @@
+# [3.2.0](https://github.com/palhinhax/TheBate/compare/v3.1.0...v3.2.0) (2026-01-11)
+
+
+### Features
+
+* **ci:** add manual trigger to auto-migrate workflow and improve documentation ([da0fad5](https://github.com/palhinhax/TheBate/commit/da0fad55fa8a18db1fa79735a27742ed3b8d8d22))
+
 # [3.1.0](https://github.com/palhinhax/TheBate/compare/v3.0.0...v3.1.0) (2026-01-11)
 
 
