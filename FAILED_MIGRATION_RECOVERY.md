@@ -90,7 +90,7 @@ WHERE migration_name = '20260111000000_add_multi_choice_topics';
 -- Mark it as rolled back
 UPDATE "_prisma_migrations"
 SET rolled_back_at = NOW(),
-    logs = COALESCE(logs, '') || E'\n\nManually marked as rolled back'
+    logs = CONCAT(COALESCE(logs, ''), E'\n\nManually marked as rolled back')
 WHERE migration_name = '20260111000000_add_multi_choice_topics'
 AND finished_at IS NULL;
 ```

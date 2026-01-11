@@ -58,6 +58,8 @@ async function resolveFailedMigration() {
       const timestamp = new Date().toISOString();
       const rollbackMessage = `\n\n[${timestamp}] Marked as rolled back by resolve-failed-migration script`;
       
+      // Using Prisma's tagged template literals for safe parameterized queries
+      // Both migration.id and rollbackMessage are automatically escaped
       await prisma.$executeRaw`
         UPDATE "_prisma_migrations"
         SET rolled_back_at = NOW(),
