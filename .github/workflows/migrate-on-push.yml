@@ -1,0 +1,128 @@
+name: Auto-migrate Database on Push
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'prisma/schema.prisma'
+      - 'prisma/migrations/**'
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Generate Prisma Client
+        run: pnpm prisma generate
+
+      - name: Check migration status
+        id: check_migration
+        run: |
+          echo "🔍 Checking if migrations are needed..."
+          
+          export PGCONNECT_TIMEOUT=15
+          export PGSTATEMENT_TIMEOUT=45000
+          
+          if timeout 30s pnpm prisma migrate status 2>&1 | tee migration_status.txt; then
+            if grep -q "Database schema is up to date" migration_status.txt; then
+              echo "status=up-to-date" >> $GITHUB_OUTPUT
+              echo "✅ Database is up to date"
+            else
+              echo "status=needs-migration" >> $GITHUB_OUTPUT
+              echo "⚠️ Migrations needed"
+            fi
+          else
+            echo "status=unknown" >> $GITHUB_OUTPUT
+            echo "⚠️ Could not determine migration status"
+          fi
+          
+          rm -f migration_status.txt
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        continue-on-error: true
+
+      - name: Run migrations with retry
+        if: ${{ steps.check_migration.outputs.status == 'needs-migration' || steps.check_migration.outputs.status == 'unknown' }}
+        run: |
+          echo "🔄 Running database migrations with retry logic..."
+          
+          run_migration() {
+            local attempt=$1
+            echo "Attempt $attempt of 3..."
+            
+            export PRISMA_ENGINE_PROTOCOL=graphql
+            export PGCONNECT_TIMEOUT=15
+            export PGSTATEMENT_TIMEOUT=45000
+            
+            if timeout 60s pnpm prisma migrate deploy; then
+              echo "✅ Migration successful"
+              return 0
+            else
+              echo "❌ Migration failed or timed out"
+              return 1
+            fi
+          }
+          
+          max_attempts=3
+          attempt=1
+          
+          while [ $attempt -le $max_attempts ]; do
+            if run_migration $attempt; then
+              exit 0
+            fi
+            
+            if [ $attempt -lt $max_attempts ]; then
+              echo "⏳ Waiting 10 seconds before retry..."
+              sleep 10
+            fi
+            
+            attempt=$((attempt + 1))
+          done
+          
+          echo "❌ All migration attempts failed"
+          
+          if pnpm prisma migrate status 2>&1 | grep -q "Database schema is up to date"; then
+            echo "✅ Database is actually up to date (migrations already applied)"
+            exit 0
+          fi
+          
+          exit 1
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "📊 Migration Summary"
+          echo "===================="
+          echo "Status: ${{ steps.check_migration.outputs.status }}"
+          echo ""
+          
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "✅ Migrations completed successfully"
+          else
+            echo "❌ Migration failed"
+            echo ""
+            echo "💡 Troubleshooting:"
+            echo "  - Verify DATABASE_URL secret is set correctly"
+            echo "  - Check database accessibility"
+            echo "  - Run 'Database Update & Seed' workflow manually"
+          fi

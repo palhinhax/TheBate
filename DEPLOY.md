@@ -30,26 +30,43 @@ NODE_ENV="production"
 
 ## 🗄️ Database Migrations
 
-Quando houver mudanças no schema da base de dados, é necessário executar as migrações:
+### Automatic Migrations (Production)
 
-### Opção 1: Usando Prisma Migrate (Recomendado)
+✅ **Migrations now run automatically!**
+
+Migrations are applied automatically in two ways:
+
+1. **On every push to `main`** (via GitHub Actions):
+   - Detects changes to Prisma schema or migrations
+   - Runs `prisma migrate deploy` with retry logic
+   - Prevents deployment if migrations fail
+
+2. **During Vercel deployment**:
+   - The `vercel-build` script now includes `prisma migrate deploy`
+   - Ensures database is up-to-date before the app starts
+
+### Manual Migration (If Needed)
+
+If you need to run migrations manually:
+
+#### Option 1: GitHub Actions Workflow
+
+1. Go to **Actions** > **Database Update & Seed**
+2. Click **Run workflow**
+3. Select `none` for seed type if you only want to run migrations
+
+#### Option 2: Using Prisma CLI
 
 ```bash
-# Para produção, usa migrate deploy (não é interativo)
+# For production, use migrate deploy (non-interactive)
 npx prisma migrate deploy
 ```
 
-Este comando aplica todas as migrações pendentes à base de dados de produção.
+This command applies all pending migrations to the production database.
 
-### Opção 2: Via Vercel Build (Automático)
+### Development Migrations
 
-O build script já inclui `prisma generate`, mas se precisares aplicar migrações manualmente:
-
-1. Vai ao dashboard do Vercel
-2. Settings → General → Build & Development Settings
-3. Build Command: `prisma generate && prisma migrate deploy && next build`
-
-> **Nota:** A migração `20260108140000_add_score_to_comment` foi criada para adicionar a coluna `score` à tabela `Comment`, calcular o score baseado nos votos existentes, e criar o índice correspondente de forma segura, verificando primeiro se já existem.
+For local development:
 
 ## 🔄 Como Fazer Redeploy
 
