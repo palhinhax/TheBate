@@ -74,6 +74,22 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         continue-on-error: true
 
+      - name: Resolve failed migrations
+        if: ${{ steps.check_migration.outputs.status == 'needs-migration' || steps.check_migration.outputs.status == 'unknown' || inputs.force_migrate == 'true' }}
+        run: |
+          echo "🔍 Checking for failed migrations..."
+          
+          # Check if there are any failed migrations
+          if pnpm prisma migrate status 2>&1 | grep -q "migrate found failed migrations"; then
+            echo "⚠️  Found failed migrations - attempting to resolve..."
+            pnpm tsx scripts/resolve-failed-migration.ts || echo "Note: Could not auto-resolve failed migrations"
+          else
+            echo "✅ No failed migrations found"
+          fi
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        continue-on-error: true
+
       - name: Run migrations with retry
         if: ${{ steps.check_migration.outputs.status == 'needs-migration' || steps.check_migration.outputs.status == 'unknown' || inputs.force_migrate == 'true' }}
         run: |
