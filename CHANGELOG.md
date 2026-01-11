@@ -1,3 +1,18 @@
+# [3.3.0](https://github.com/palhinhax/TheBate/compare/v3.2.0...v3.3.0) (2026-01-11)
+
+
+### Bug Fixes
+
+* handle nullable username fields for OAuth users ([6329c31](https://github.com/palhinhax/TheBate/commit/6329c31234c52ba091887b762f04954cbde6fbc9))
+* regenerate pnpm-lock.yaml after adding dependencies ([5c71e00](https://github.com/palhinhax/TheBate/commit/5c71e00ccbf107781b6c74d92739130a5dc13763))
+* resolve @auth/core version conflict causing build failure ([26265b6](https://github.com/palhinhax/TheBate/commit/26265b6afa7af7fae9bdab511aeccb9023d11ae4))
+
+
+### Features
+
+* **auth:** add Google OAuth and magic link authentication ([64cd0d5](https://github.com/palhinhax/TheBate/commit/64cd0d5f7188492d77638103346edbc0d989a0bb))
+* **auth:** add Google OAuth and magic link to login page ([b992c0a](https://github.com/palhinhax/TheBate/commit/b992c0a6a6b680080bbfe0cf99f874455b165036))
+
 # [3.2.0](https://github.com/palhinhax/TheBate/compare/v3.1.0...v3.2.0) (2026-01-11)
 
 
