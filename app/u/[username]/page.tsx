@@ -38,6 +38,7 @@ type UserData = {
     slug: string;
     title: string;
     tags: string[];
+    imageUrl: string | null;
     createdAt: string;
     _count: {
       comments: number;
@@ -168,13 +169,21 @@ export default function UserProfilePage() {
             <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
               {/* Avatar */}
               <div className="flex justify-center sm:justify-start">
-                <div className="flex h-24 w-24 items-center justify-center rounded-full bg-primary/10 text-4xl font-bold text-primary">
-                  {user.name
-                    ? user.name.charAt(0).toUpperCase()
-                    : user.username
-                      ? user.username.charAt(0).toUpperCase()
-                      : user.email.charAt(0).toUpperCase()}
-                </div>
+                {user.image ? (
+                  <img
+                    src={user.image}
+                    alt={user.name || user.username || "User"}
+                    className="h-24 w-24 rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="flex h-24 w-24 items-center justify-center rounded-full bg-primary/10 text-4xl font-bold text-primary">
+                    {user.name
+                      ? user.name.charAt(0).toUpperCase()
+                      : user.username
+                        ? user.username.charAt(0).toUpperCase()
+                        : user.email.charAt(0).toUpperCase()}
+                  </div>
+                )}
               </div>
 
               {/* User Info */}
@@ -270,43 +279,59 @@ export default function UserProfilePage() {
               user.topics.map((topic) => (
                 <Link key={topic.id} href={`/t/${topic.slug}`}>
                   <Card className="transition-all hover:shadow-lg">
-                    <CardHeader>
-                      <CardTitle className="text-xl">{topic.title}</CardTitle>
-                      <CardDescription className="flex flex-wrap items-center gap-4">
-                        <span className="flex items-center gap-1">
-                          <Clock className="h-3 w-3" />
-                          {new Date(topic.createdAt).toLocaleDateString("pt-PT", {
-                            day: "numeric",
-                            month: "short",
-                            year: "numeric",
-                          })}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <MessageSquare className="h-3 w-3" />
-                          {topic._count.comments} argumento
-                          {topic._count.comments !== 1 ? "s" : ""}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <ThumbsUp className="h-3 w-3" />
-                          {topic._count.topicVotes} voto
-                          {topic._count.topicVotes !== 1 ? "s" : ""}
-                        </span>
-                      </CardDescription>
-                    </CardHeader>
-                    {topic.tags.length > 0 && (
-                      <CardContent className="pt-0">
-                        <div className="flex flex-wrap gap-2">
-                          {topic.tags.map((tag) => (
-                            <span
-                              key={tag}
-                              className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary"
-                            >
-                              {tag}
-                            </span>
-                          ))}
+                    <div className="flex flex-col sm:flex-row">
+                      {/* Topic Image Thumbnail */}
+                      {topic.imageUrl && (
+                        <div className="sm:w-48 sm:flex-shrink-0">
+                          <img
+                            src={topic.imageUrl}
+                            alt={topic.title}
+                            className="h-48 w-full object-cover sm:h-full sm:rounded-l-lg"
+                          />
                         </div>
-                      </CardContent>
-                    )}
+                      )}
+                      
+                      {/* Topic Content */}
+                      <div className="flex-1">
+                        <CardHeader>
+                          <CardTitle className="text-xl">{topic.title}</CardTitle>
+                          <CardDescription className="flex flex-wrap items-center gap-4">
+                            <span className="flex items-center gap-1">
+                              <Clock className="h-3 w-3" />
+                              {new Date(topic.createdAt).toLocaleDateString("pt-PT", {
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric",
+                              })}
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <MessageSquare className="h-3 w-3" />
+                              {topic._count.comments} argumento
+                              {topic._count.comments !== 1 ? "s" : ""}
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <ThumbsUp className="h-3 w-3" />
+                              {topic._count.topicVotes} voto
+                              {topic._count.topicVotes !== 1 ? "s" : ""}
+                            </span>
+                          </CardDescription>
+                        </CardHeader>
+                        {topic.tags.length > 0 && (
+                          <CardContent className="pt-0">
+                            <div className="flex flex-wrap gap-2">
+                              {topic.tags.map((tag) => (
+                                <span
+                                  key={tag}
+                                  className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary"
+                                >
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                          </CardContent>
+                        )}
+                      </div>
+                    </div>
                   </Card>
                 </Link>
               ))

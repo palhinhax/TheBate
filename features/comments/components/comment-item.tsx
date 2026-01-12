@@ -117,6 +117,23 @@ export default function CommentItem({ comment, isReply = false, topicId }: Comme
   return (
     <div className={isReply ? "ml-8 mt-4" : ""}>
       <div className="flex gap-3">
+        {/* User Avatar */}
+        <Link href={`/u/${comment.user.username}`} className="flex-shrink-0">
+          {comment.user.image ? (
+            <img
+              src={comment.user.image}
+              alt={comment.user.username}
+              className="h-10 w-10 rounded-full object-cover"
+            />
+          ) : (
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
+              {comment.user.name
+                ? comment.user.name.charAt(0).toUpperCase()
+                : comment.user.username.charAt(0).toUpperCase()}
+            </div>
+          )}
+        </Link>
+
         {/* Quality Voting */}
         <div className="flex flex-col items-center gap-1">
           <button

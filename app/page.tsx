@@ -188,33 +188,47 @@ export default async function Home({
                 <Link
                   key={topic.id}
                   href={`/t/${topic.slug}`}
-                  className="block rounded-lg border bg-card p-6 transition-shadow hover:shadow-md"
+                  className="block rounded-lg border bg-card transition-shadow hover:shadow-md"
                 >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h3 className="text-xl font-semibold">{topic.title}</h3>
-                      <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">
-                        {topic.description}
-                      </p>
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        {topic.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary"
-                          >
-                            {tag}
-                          </span>
-                        ))}
+                  <div className="flex flex-col sm:flex-row">
+                    {/* Topic Image Thumbnail */}
+                    {topic.imageUrl && (
+                      <div className="sm:w-48 sm:flex-shrink-0">
+                        <img
+                          src={topic.imageUrl}
+                          alt={topic.title}
+                          className="h-48 w-full rounded-t-lg object-cover sm:h-full sm:rounded-l-lg sm:rounded-tr-none"
+                        />
                       </div>
-                      <div className="mt-3 flex items-center gap-4 text-xs text-muted-foreground">
-                        <span>por @{topic.createdBy.username}</span>
-                        <span>•</span>
-                        <span>{new Date(topic.createdAt).toLocaleDateString("pt-BR")}</span>
+                    )}
+                    
+                    {/* Topic Content */}
+                    <div className="flex flex-1 items-start justify-between p-6">
+                      <div className="flex-1">
+                        <h3 className="text-xl font-semibold">{topic.title}</h3>
+                        <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">
+                          {topic.description}
+                        </p>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {topic.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="mt-3 flex items-center gap-4 text-xs text-muted-foreground">
+                          <span>por @{topic.createdBy.username}</span>
+                          <span>•</span>
+                          <span>{new Date(topic.createdAt).toLocaleDateString("pt-BR")}</span>
+                        </div>
                       </div>
-                    </div>
-                    <div className="ml-4 flex flex-col items-center">
-                      <MessageSquare className="h-5 w-5 text-muted-foreground" />
-                      <span className="mt-1 text-sm font-medium">{topic._count.comments}</span>
+                      <div className="ml-4 flex flex-col items-center">
+                        <MessageSquare className="h-5 w-5 text-muted-foreground" />
+                        <span className="mt-1 text-sm font-medium">{topic._count.comments}</span>
+                      </div>
                     </div>
                   </div>
                 </Link>

@@ -45,8 +45,16 @@ export function Navbar() {
                   </Button>
                 </Link>
                 <Link href={`/u/${session.user?.username}`}>
-                  <Button variant="ghost" size="sm">
-                    <User className="mr-2 h-4 w-4" />
+                  <Button variant="ghost" size="sm" className="gap-2">
+                    {session.user?.image ? (
+                      <img
+                        src={session.user.image}
+                        alt={session.user.name || session.user.username || "User"}
+                        className="h-6 w-6 rounded-full object-cover"
+                      />
+                    ) : (
+                      <User className="h-4 w-4" />
+                    )}
                     <span className="max-w-[100px] truncate">
                       {session.user?.name || session.user?.username}
                     </span>
@@ -114,8 +122,16 @@ export function Navbar() {
                     href={`/u/${session.user?.username}`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    <Button variant="ghost" size="sm" className="w-full justify-start">
-                      <User className="mr-2 h-4 w-4" />
+                    <Button variant="ghost" size="sm" className="w-full justify-start gap-2">
+                      {session.user?.image ? (
+                        <img
+                          src={session.user.image}
+                          alt={session.user.name || session.user.username || "User"}
+                          className="h-6 w-6 rounded-full object-cover"
+                        />
+                      ) : (
+                        <User className="h-4 w-4" />
+                      )}
                       {session.user?.name || session.user?.username}
                     </Button>
                   </Link>

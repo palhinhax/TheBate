@@ -32,6 +32,7 @@ export async function GET(request: Request, { params }: { params: { username: st
         slug: true,
         title: true,
         tags: true,
+        imageUrl: true,
         createdAt: true,
         _count: {
           select: {
