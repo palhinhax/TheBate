@@ -77,7 +77,7 @@ export default async function EditTopicPage({ params }: Props) {
         <p className="text-muted-foreground">Editar imagem do tema</p>
       </div>
 
-      <EditTopicImage topicSlug={topic.slug} currentImageUrl={topic.imageUrl} onUpdate={() => {}} />
+      <EditTopicImage topicSlug={topic.slug} currentImageUrl={topic.imageUrl} />
     </div>
   );
 }

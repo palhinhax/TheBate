@@ -10,13 +10,11 @@ import { Upload, X, ImageIcon } from "lucide-react";
 interface EditTopicImageProps {
   topicSlug: string;
   currentImageUrl: string | null;
-  onUpdate: () => void;
 }
 
 export default function EditTopicImage({
   topicSlug,
   currentImageUrl,
-  onUpdate,
 }: EditTopicImageProps) {
   const router = useRouter();
   const { toast } = useToast();
@@ -94,7 +92,6 @@ export default function EditTopicImage({
         description: t("topics.image_updated_desc", "A imagem do tema foi atualizada com sucesso."),
       });
 
-      onUpdate();
       router.refresh();
     } catch (error: any) {
       toast({
@@ -132,7 +129,6 @@ export default function EditTopicImage({
         description: t("topics.image_removed_desc", "A imagem do tema foi removida."),
       });
 
-      onUpdate();
       router.refresh();
     } catch (error: any) {
       toast({
