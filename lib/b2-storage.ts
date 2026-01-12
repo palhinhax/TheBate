@@ -48,12 +48,14 @@ export async function uploadToB2(
 
   const timestamp = Date.now();
   const uniqueFilename = `topics/${timestamp}-${filename}`;
+  const contentLength = file.byteLength;
 
   const command = new PutObjectCommand({
     Bucket: bucketName,
     Key: uniqueFilename,
     Body: file,
     ContentType: contentType,
+    ContentLength: contentLength,
   });
 
   try {
