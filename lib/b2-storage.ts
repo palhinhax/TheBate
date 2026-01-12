@@ -38,9 +38,6 @@ export async function uploadToB2(
   if (!bucketName) {
     throw new Error("B2_BUCKET_NAME not configured");
   }
-  if (!endpoint) {
-    throw new Error("B2_ENDPOINT not configured");
-  }
 
   console.log("B2 upload:", {
     filename,
@@ -49,7 +46,6 @@ export async function uploadToB2(
     bucketName,
   });
 
-  // Generate a unique filename with timestamp to avoid collisions
   const timestamp = Date.now();
   const uniqueFilename = `topics/${timestamp}-${filename}`;
 
@@ -58,7 +54,6 @@ export async function uploadToB2(
     Key: uniqueFilename,
     Body: file,
     ContentType: contentType,
-    ContentLength: file.length,
   });
 
   try {
