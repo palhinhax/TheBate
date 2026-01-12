@@ -1,23 +1,20 @@
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 
-// Validate required environment variables
 const rawEndpoint = process.env.B2_ENDPOINT;
 const region = process.env.B2_REGION || "eu-central-003";
 const keyId = process.env.B2_KEY_ID;
 const appKey = process.env.B2_APPLICATION_KEY;
 
-if (!rawEndpoint || !keyId || !appKey) {
-  throw new Error("Backblaze B2 env vars missing (B2_ENDPOINT, B2_KEY_ID, B2_APPLICATION_KEY)");
+if (!rawEndpoint || !region || !keyId || !appKey) {
+  throw new Error("Missing Backblaze B2 environment variables");
 }
 
-// Ensure endpoint has protocol
 const endpoint = rawEndpoint.startsWith("http") ? rawEndpoint : `https://${rawEndpoint}`;
 
-// Backblaze B2 client configuration
 const b2Client = new S3Client({
-  endpoint, // e.g., https://s3.eu-central-003.backblazeb2.com
+  endpoint,
   region,
-  forcePathStyle: true, // CRITICAL for Backblaze B2 compatibility
+  forcePathStyle: true,
   credentials: {
     accessKeyId: keyId,
     secretAccessKey: appKey,
@@ -76,9 +73,8 @@ export async function uploadToB2(
     throw error;
   }
 
-  // Return the public URL using S3-compatible format
-  // Format: https://s3.eu-central-003.backblazeb2.com/bucket-name/file-key
-  const publicUrl = `${endpoint}/${bucketName}/${uniqueFilename}`;
+  const base = endpoint.replace(/\/$/, "");
+  const publicUrl = `${base}/${bucketName}/${uniqueFilename}`;
   return publicUrl;
 }
 
@@ -93,14 +89,13 @@ export async function deleteFromB2(fileUrl: string): Promise<void> {
     throw new Error("B2_BUCKET_NAME not configured");
   }
 
-  // Extract the file key from the S3-compatible URL
-  // Format: https://s3.../bucket-name/file-key
-  const urlParts = fileUrl.split(`/${bucketName}/`);
-  if (urlParts.length !== 2) {
+  const separator = `/${bucketName}/`;
+  const idx = fileUrl.indexOf(separator);
+  if (idx === -1) {
     throw new Error("Invalid B2 file URL");
   }
 
-  const fileKey = urlParts[1];
+  const fileKey = fileUrl.substring(idx + separator.length);
 
   const command = new DeleteObjectCommand({
     Bucket: bucketName,
@@ -112,8 +107,6 @@ export async function deleteFromB2(fileUrl: string): Promise<void> {
 
 /**
  * Validate image file type and size
- * Note: This function uses the File API and should be called on the client-side
- * or in API routes after receiving FormData
  * @param file - File to validate
  * @throws Error if validation fails
  */
