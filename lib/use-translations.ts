@@ -88,9 +88,11 @@ export function useTranslations() {
   }, [session?.user?.preferredLanguage, status, locale]);
 
   const t = (key: TranslationKey, fallback?: string): string => {
-    // If translations are still loading, return the key or fallback
-    if (isLoading && Object.keys(translations).length === 0) {
-      console.log("⏳ Translations still loading, returning fallback for:", key);
+    // Debug: check if translations object is empty
+    const translationsCount = Object.keys(translations).length;
+    
+    if (translationsCount === 0) {
+      console.warn(`⚠️ Translations object is empty! isLoading: ${isLoading}, locale: ${locale}, key: ${key}`);
       return fallback || key;
     }
 
@@ -101,7 +103,8 @@ export function useTranslations() {
       if (value && typeof value === "object" && k in value) {
         value = (value as Record<string, unknown>)[k];
       } else {
-        console.warn(`⚠️ Translation key not found: ${key}, locale: ${locale}`);
+        console.warn(`⚠️ Translation key not found: ${key}, locale: ${locale}, keys checked: ${keys.join(".")}`);
+        console.log("📦 Available translations:", Object.keys(translations));
         return fallback || key;
       }
     }
