@@ -144,6 +144,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const baseUrl = process.env.NEXTAUTH_URL || "https://thebatee.com";
   const topicUrl = `${baseUrl}/t/${topic.slug}`;
 
+  // Use topic image if available, otherwise fallback to default OG image
+  const imageUrl = topic.imageUrl || `${baseUrl}/og-image.png`;
+  const imageWidth = topic.imageUrl ? 1200 : 1200;
+  const imageHeight = topic.imageUrl ? 630 : 630;
+
   // Generate keywords from tags and content
   const keywords = [
     ...topic.tags,
@@ -188,9 +193,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       locale: localeMap[topic.language] || "en_US",
       images: [
         {
-          url: `${baseUrl}/og-image.png`,
-          width: 1200,
-          height: 630,
+          url: imageUrl,
+          width: imageWidth,
+          height: imageHeight,
           alt: topic.title,
         },
       ],
@@ -201,7 +206,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: topic.description.substring(0, 160),
       creator: "@thebatee",
       site: "@thebatee",
-      images: [`${baseUrl}/og-image.png`],
+      images: [imageUrl],
     },
     alternates: {
       canonical: topicUrl,
@@ -246,6 +251,9 @@ export default async function TopicPage({ params, searchParams }: Props) {
   const baseUrl = process.env.NEXTAUTH_URL || "https://thebatee.com";
   const topicUrl = `${baseUrl}/t/${topic.slug}`;
 
+  // Use topic image if available for structured data
+  const imageUrl = topic.imageUrl || `${baseUrl}/og-image.png`;
+
   // Enhanced JSON-LD structured data for better SEO
   const jsonLd = {
     "@context": "https://schema.org",
@@ -257,6 +265,14 @@ export default async function TopicPage({ params, searchParams }: Props) {
     dateModified: topic.updatedAt.toISOString(),
     inLanguage: topic.language,
     url: topicUrl,
+    ...(topic.imageUrl && {
+      image: {
+        "@type": "ImageObject",
+        url: imageUrl,
+        width: 1200,
+        height: 630,
+      },
+    }),
     author: {
       "@type": "Person",
       name: topic.createdBy.name || topic.createdBy.username || "Unknown",
