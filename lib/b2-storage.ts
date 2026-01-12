@@ -1,12 +1,23 @@
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 
+// Validate required environment variables
+const endpoint = process.env.B2_ENDPOINT;
+const region = process.env.B2_REGION || "eu-central-003";
+const keyId = process.env.B2_KEY_ID;
+const appKey = process.env.B2_APPLICATION_KEY;
+
+if (!endpoint || !keyId || !appKey) {
+  throw new Error("Backblaze B2 env vars missing (B2_ENDPOINT, B2_KEY_ID, B2_APPLICATION_KEY)");
+}
+
 // Backblaze B2 client configuration
 const b2Client = new S3Client({
-  endpoint: `https://${process.env.B2_ENDPOINT}`,
-  region: process.env.B2_REGION || "eu-central-003",
+  endpoint, // Should include https:// (e.g., https://s3.eu-central-003.backblazeb2.com)
+  region,
+  forcePathStyle: true, // CRITICAL for Backblaze B2 compatibility
   credentials: {
-    accessKeyId: process.env.B2_KEY_ID || "",
-    secretAccessKey: process.env.B2_APPLICATION_KEY || "",
+    accessKeyId: keyId,
+    secretAccessKey: appKey,
   },
 });
 
@@ -27,6 +38,9 @@ export async function uploadToB2(
   if (!bucketName) {
     throw new Error("B2_BUCKET_NAME not configured");
   }
+  if (!endpoint) {
+    throw new Error("B2_ENDPOINT not configured");
+  }
 
   console.log("B2 upload:", {
     filename,
@@ -45,7 +59,6 @@ export async function uploadToB2(
     Body: file,
     ContentType: contentType,
     ContentLength: file.length,
-    // Note: B2 doesn't support ACL parameter - files are public by default if bucket is public
   });
 
   try {
@@ -60,10 +73,10 @@ export async function uploadToB2(
     throw error;
   }
 
-  // Return the public URL
-  // Format: https://f003.backblazeb2.com/file/bucket-name/file-key
-  const endpoint = process.env.B2_ENDPOINT?.replace("s3.", "f003.");
-  return `https://${endpoint}/file/${bucketName}/${uniqueFilename}`;
+  // Return the public URL using S3-compatible format
+  // Format: https://s3.eu-central-003.backblazeb2.com/bucket-name/file-key
+  const publicUrl = `${endpoint}/${bucketName}/${uniqueFilename}`;
+  return publicUrl;
 }
 
 /**
@@ -77,8 +90,9 @@ export async function deleteFromB2(fileUrl: string): Promise<void> {
     throw new Error("B2_BUCKET_NAME not configured");
   }
 
-  // Extract the file key from the URL
-  const urlParts = fileUrl.split(`/file/${bucketName}/`);
+  // Extract the file key from the S3-compatible URL
+  // Format: https://s3.../bucket-name/file-key
+  const urlParts = fileUrl.split(`/${bucketName}/`);
   if (urlParts.length !== 2) {
     throw new Error("Invalid B2 file URL");
   }
@@ -95,6 +109,8 @@ export async function deleteFromB2(fileUrl: string): Promise<void> {
 
 /**
  * Validate image file type and size
+ * Note: This function uses the File API and should be called on the client-side
+ * or in API routes after receiving FormData
  * @param file - File to validate
  * @throws Error if validation fails
  */
