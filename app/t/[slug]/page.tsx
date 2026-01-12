@@ -171,18 +171,35 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     es: "es_ES",
     fr: "fr_FR",
     de: "de_DE",
+    hi: "hi_IN",
+    zh: "zh_CN",
+    ar: "ar_SA",
+    bn: "bn_BD",
+    ru: "ru_RU",
+    id: "id_ID",
+    ja: "ja_JP",
   };
 
+  // Generate rich description with vote stats
+  const voteCount =
+    topic.type === "YES_NO" && "voteStats" in topic
+      ? topic.voteStats.total
+      : "totalVotes" in topic
+        ? topic.totalVotes
+        : 0;
+
+  const richDescription = `${topic.description.substring(0, 140)} | ${voteCount} votes, ${topic._count.comments} comments. Join the debate on TheBatee.`;
+
   return {
-    title: `${topic.title} - TheBatee`,
-    description: topic.description.substring(0, 160),
+    title: `${topic.title} - TheBatee Debate`,
+    description: richDescription,
     keywords,
     authors: [{ name: topic.createdBy.name || topic.createdBy.username || "Unknown" }],
     creator: topic.createdBy.name || topic.createdBy.username || "Unknown",
     publisher: "TheBatee",
     openGraph: {
       title: topic.title,
-      description: topic.description.substring(0, 160),
+      description: richDescription,
       type: "article",
       publishedTime: topic.createdAt.toISOString(),
       modifiedTime: topic.updatedAt.toISOString(),
@@ -203,7 +220,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     twitter: {
       card: "summary_large_image",
       title: topic.title,
-      description: topic.description.substring(0, 160),
+      description: richDescription,
       creator: "@thebatee",
       site: "@thebatee",
       images: [imageUrl],
@@ -218,13 +235,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     robots: {
       index: true,
       follow: true,
+      "max-snippet": 300,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
       googleBot: {
         index: true,
         follow: true,
         "max-video-preview": -1,
         "max-image-preview": "large",
-        "max-snippet": -1,
+        "max-snippet": 300,
       },
+    },
+    other: {
+      "article:published_time": topic.createdAt.toISOString(),
+      "article:modified_time": topic.updatedAt.toISOString(),
+      "article:author": topic.createdBy.name || topic.createdBy.username || "Unknown",
+      "article:section": topic.tags[0] || "Debate",
+      "article:tag": topic.tags.join(", "),
     },
   };
 }
@@ -255,68 +282,109 @@ export default async function TopicPage({ params, searchParams }: Props) {
   const imageUrl = topic.imageUrl || `${baseUrl}/og-image.png`;
 
   // Enhanced JSON-LD structured data for better SEO
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "DiscussionForumPosting",
-    "@id": topicUrl,
-    headline: topic.title,
-    text: topic.description,
-    datePublished: topic.createdAt.toISOString(),
-    dateModified: topic.updatedAt.toISOString(),
-    inLanguage: topic.language,
-    url: topicUrl,
-    ...(topic.imageUrl && {
-      image: {
-        "@type": "ImageObject",
-        url: imageUrl,
-        width: 1200,
-        height: 630,
-      },
-    }),
-    author: {
-      "@type": "Person",
-      name: topic.createdBy.name || topic.createdBy.username || "Unknown",
-      url: topic.createdBy.username ? `${baseUrl}/u/${topic.createdBy.username}` : baseUrl,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "TheBatee",
-      url: baseUrl,
-      logo: {
-        "@type": "ImageObject",
-        url: `${baseUrl}/logo_no_bg.png`,
-      },
-    },
-    interactionStatistic: [
-      {
-        "@type": "InteractionCounter",
-        interactionType: "https://schema.org/CommentAction",
-        userInteractionCount: topic._count.comments,
-      },
-      {
-        "@type": "InteractionCounter",
-        interactionType: "https://schema.org/VoteAction",
-        userInteractionCount:
-          topic.type === "YES_NO"
-            ? "voteStats" in topic
-              ? topic.voteStats.total
-              : 0
-            : "totalVotes" in topic
-              ? topic.totalVotes
-              : 0,
-      },
-    ],
-    keywords: topic.tags.join(", "),
-    isPartOf: {
-      "@type": "WebSite",
-      name: "TheBatee",
-      url: baseUrl,
-    },
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": topicUrl,
-    },
-  };
+  // Use QAPage schema for YES_NO topics, DiscussionForumPosting for others
+  const jsonLd =
+    topic.type === "YES_NO"
+      ? {
+          "@context": "https://schema.org",
+          "@type": "QAPage",
+          "@id": topicUrl,
+          mainEntity: {
+            "@type": "Question",
+            name: topic.title,
+            text: topic.description,
+            answerCount: topic._count.comments,
+            upvoteCount: "voteStats" in topic ? topic.voteStats.SIM + topic.voteStats.DEPENDE : 0,
+            downvoteCount: "voteStats" in topic ? topic.voteStats.NAO : 0,
+            dateCreated: topic.createdAt.toISOString(),
+            author: {
+              "@type": "Person",
+              name: topic.createdBy.name || topic.createdBy.username || "Unknown",
+            },
+          },
+          datePublished: topic.createdAt.toISOString(),
+          dateModified: topic.updatedAt.toISOString(),
+          inLanguage: topic.language,
+          url: topicUrl,
+          image: topic.imageUrl
+            ? {
+                "@type": "ImageObject",
+                url: imageUrl,
+                width: 1200,
+                height: 630,
+              }
+            : undefined,
+          publisher: {
+            "@type": "Organization",
+            name: "TheBatee",
+            url: baseUrl,
+            logo: {
+              "@type": "ImageObject",
+              url: `${baseUrl}/logo_no_bg.png`,
+            },
+          },
+          isPartOf: {
+            "@type": "WebSite",
+            name: "TheBatee - Global Discussion Platform",
+            url: baseUrl,
+          },
+        }
+      : {
+          "@context": "https://schema.org",
+          "@type": "DiscussionForumPosting",
+          "@id": topicUrl,
+          headline: topic.title,
+          text: topic.description,
+          articleBody: topic.description,
+          datePublished: topic.createdAt.toISOString(),
+          dateModified: topic.updatedAt.toISOString(),
+          inLanguage: topic.language,
+          url: topicUrl,
+          image: topic.imageUrl
+            ? {
+                "@type": "ImageObject",
+                url: imageUrl,
+                width: 1200,
+                height: 630,
+              }
+            : undefined,
+          author: {
+            "@type": "Person",
+            name: topic.createdBy.name || topic.createdBy.username || "Unknown",
+            url: topic.createdBy.username ? `${baseUrl}/u/${topic.createdBy.username}` : baseUrl,
+          },
+          publisher: {
+            "@type": "Organization",
+            name: "TheBatee",
+            url: baseUrl,
+            logo: {
+              "@type": "ImageObject",
+              url: `${baseUrl}/logo_no_bg.png`,
+            },
+          },
+          interactionStatistic: [
+            {
+              "@type": "InteractionCounter",
+              interactionType: "https://schema.org/CommentAction",
+              userInteractionCount: topic._count.comments,
+            },
+            {
+              "@type": "InteractionCounter",
+              interactionType: "https://schema.org/VoteAction",
+              userInteractionCount: "totalVotes" in topic ? topic.totalVotes : 0,
+            },
+          ],
+          keywords: topic.tags.join(", "),
+          isPartOf: {
+            "@type": "WebSite",
+            name: "TheBatee - Global Discussion Platform",
+            url: baseUrl,
+          },
+          mainEntityOfPage: {
+            "@type": "WebPage",
+            "@id": topicUrl,
+          },
+        };
 
   return (
     <>
