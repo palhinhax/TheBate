@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { AuthModal } from "@/components/auth-modal";
+import { useTranslations } from "@/lib/use-translations";
 
 type ThemeVote = "SIM" | "NAO" | "DEPENDE";
 
@@ -23,6 +24,7 @@ export default function ThemeVoteButtons({
   const router = useRouter();
   const { data: session } = useSession();
   const { toast } = useToast();
+  const { t } = useTranslations();
   const [isVoting, setIsVoting] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
 
@@ -44,7 +46,7 @@ export default function ThemeVoteButtons({
 
         if (!response.ok) {
           const error = await response.json();
-          throw new Error(error.error || "Erro ao remover voto");
+          throw new Error(error.error || t("topics.vote_remove_error", "Error removing vote"));
         }
       } else {
         // Otherwise, vote or change vote
@@ -56,14 +58,14 @@ export default function ThemeVoteButtons({
 
         if (!response.ok) {
           const error = await response.json();
-          throw new Error(error.error || "Erro ao votar");
+          throw new Error(error.error || t("topics.vote_error", "Error voting"));
         }
       }
 
       router.refresh();
     } catch (error: any) {
       toast({
-        title: "Erro",
+        title: t("common.error", "Error"),
         description: error.message,
         variant: "destructive",
       });
@@ -82,7 +84,8 @@ export default function ThemeVoteButtons({
           className="flex-1"
           size="lg"
         >
-          {userVote === "SIM" ? "✓ " : ""}Sim
+          {userVote === "SIM" ? "✓ " : ""}
+          {t("topics.vote_yes", "Yes")}
         </Button>
         <Button
           onClick={() => handleVote("NAO")}
@@ -91,7 +94,8 @@ export default function ThemeVoteButtons({
           className="flex-1"
           size="lg"
         >
-          {userVote === "NAO" ? "✓ " : ""}Não
+          {userVote === "NAO" ? "✓ " : ""}
+          {t("topics.vote_no", "No")}
         </Button>
         <Button
           onClick={() => handleVote("DEPENDE")}
@@ -100,7 +104,8 @@ export default function ThemeVoteButtons({
           className="flex-1"
           size="lg"
         >
-          {userVote === "DEPENDE" ? "✓ " : ""}Depende
+          {userVote === "DEPENDE" ? "✓ " : ""}
+          {t("topics.vote_depends", "It Depends")}
         </Button>
       </div>
       <AuthModal open={showAuthModal} onOpenChange={setShowAuthModal} />

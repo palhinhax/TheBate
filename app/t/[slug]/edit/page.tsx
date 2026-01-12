@@ -1,10 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import EditTopicImage from "@/features/topics/components/edit-topic-image";
+import EditTopicPageClient from "./edit-client";
 
 type Props = {
   params: { slug: string };
@@ -61,23 +58,5 @@ export default async function EditTopicPage({ params }: Props) {
     redirect(`/t/${params.slug}`);
   }
 
-  return (
-    <div className="container mx-auto max-w-4xl px-4 py-8">
-      <div className="mb-6">
-        <Link href={`/t/${params.slug}`}>
-          <Button variant="ghost" size="sm">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Voltar ao tema
-          </Button>
-        </Link>
-      </div>
-
-      <div className="mb-8">
-        <h1 className="mb-2 text-3xl font-bold">{topic.title}</h1>
-        <p className="text-muted-foreground">Editar imagem do tema</p>
-      </div>
-
-      <EditTopicImage topicSlug={topic.slug} currentImageUrl={topic.imageUrl} />
-    </div>
-  );
+  return <EditTopicPageClient topic={topic} />;
 }

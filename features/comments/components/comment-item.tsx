@@ -7,6 +7,7 @@ import Link from "next/link";
 import { ThumbsUp, MessageSquare, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { useTranslations } from "@/lib/use-translations";
 import NewCommentForm from "./new-comment-form";
 
 type CommentUser = {
@@ -47,6 +48,7 @@ export default function CommentItem({ comment, isReply = false, topicId }: Comme
   const router = useRouter();
   const { data: session } = useSession();
   const { toast } = useToast();
+  const { t } = useTranslations();
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [isVoting, setIsVoting] = useState(false);
 
@@ -58,8 +60,8 @@ export default function CommentItem({ comment, isReply = false, topicId }: Comme
     const score = comment._count?.votes ?? 0;
     if (!session?.user) {
       toast({
-        title: "Entre para votar",
-        description: "Precisa de iniciar sessão para votar.",
+        title: t("comments.login_to_vote", "Sign in to vote"),
+        description: t("comments.login_to_vote_description", "You need to sign in to vote."),
         variant: "destructive",
       });
       return;
@@ -77,13 +79,13 @@ export default function CommentItem({ comment, isReply = false, topicId }: Comme
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.error || "Erro ao votar");
+        throw new Error(error.error || t("comments.vote_error", "Error voting"));
       }
 
       router.refresh();
     } catch (error: any) {
       toast({
-        title: "Erro",
+        title: t("common.error", "Error"),
         description: error.message,
         variant: "destructive",
       });
@@ -109,7 +111,7 @@ export default function CommentItem({ comment, isReply = false, topicId }: Comme
         className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold ${badgeClasses}`}
       >
         <span>{comment.side === "AFAVOR" ? "👍" : "👎"}</span>
-        {comment.side === "AFAVOR" ? "A Favor" : "Contra"}
+        {comment.side === "AFAVOR" ? t("comments.for", "For") : t("comments.against", "Against")}
       </span>
     );
   };
@@ -142,7 +144,7 @@ export default function CommentItem({ comment, isReply = false, topicId }: Comme
             className={`rounded p-1.5 transition-colors hover:bg-muted disabled:opacity-50 ${
               hasVoted ? "text-primary" : "text-muted-foreground"
             }`}
-            title="Bom argumento"
+            title={t("comments.good_argument", "Good argument")}
           >
             <ThumbsUp className="h-5 w-5" />
           </button>
@@ -177,13 +179,13 @@ export default function CommentItem({ comment, isReply = false, topicId }: Comme
                 className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
               >
                 <MessageSquare className="h-4 w-4" />
-                Responder
+                {t("comments.reply", "Reply")}
               </button>
             )}
             {session?.user?.id === comment.user.id && (
               <button className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
                 <MoreHorizontal className="h-4 w-4" />
-                Editar
+                {t("comments.edit", "Edit")}
               </button>
             )}
           </div>

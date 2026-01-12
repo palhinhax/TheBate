@@ -23,7 +23,31 @@
     "title": "Название",
     "description": "Описание",
     "tags": "Теги",
-    "language": "Язык"
+    "language": "Язык",
+    "next_topic": "Следующая тема",
+    "next_topic_loading": "Загрузка следующей темы...",
+    "no_more_topics": "Больше нет доступных тем",
+    "vote_yes": "Да",
+    "vote_no": "Нет",
+    "vote_depends": "Зависит",
+    "vote_remove_error": "Ошибка при удалении голоса",
+    "vote_error": "Ошибка при голосовании",
+    "edit_image": "Редактировать изображение темы",
+    "image_updated": "Изображение обновлено!",
+    "image_updated_desc": "Изображение темы успешно обновлено.",
+    "image_removed": "Изображение удалено",
+    "image_removed_desc": "Изображение темы было удалено.",
+    "uploading_image": "Загрузка...",
+    "no_image": "Нет изображения",
+    "upload_image": "Загрузить изображение",
+    "image_requirements": "JPG, PNG, WebP или GIF. Максимум 5MB.",
+    "invalid_file_type": "Недопустимый тип файла. Разрешены только JPG, PNG, WebP и GIF.",
+    "file_too_large": "Файл слишком большой. Максимальный размер: 5MB",
+    "upload_error": "Ошибка при загрузке изображения",
+    "update_error": "Ошибка при обновлении темы",
+    "remove_image_error": "Ошибка при удалении изображения",
+    "back_to_topic": "Вернуться к теме",
+    "edit_topic_image": "Редактировать изображение темы"
   },
   "profile": {
     "delete_account": "Удалить аккаунт",
@@ -89,7 +113,12 @@
     "reply": "Ответить",
     "for": "За",
     "against": "Против",
-    "neutral": "Нейтрально"
+    "neutral": "Нейтрально",
+    "edit": "Редактировать",
+    "login_to_vote": "Войдите, чтобы голосовать",
+    "login_to_vote_description": "Вам нужно войти, чтобы голосовать.",
+    "vote_error": "Ошибка при голосовании",
+    "good_argument": "Хороший аргумент"
   },
   "languages": {
     "pt": "Português",
@@ -105,7 +134,21 @@
     "id": "Bahasa Indonesia",
     "ja": "日本語"
   },
-  "footer": { "tagline": "Глобальные публичные обсуждения" },
+  "footer": {
+    "tagline": "Глобальные публичные обсуждения"
+  },
+  "share": {
+    "share": "Поделиться",
+    "share_discussion": "Поделиться обсуждением",
+    "share_description": "Выберите, где поделиться этим обсуждением",
+    "share_on_twitter": "Поделиться в Twitter / X",
+    "share_on_facebook": "Поделиться в Facebook",
+    "share_on_linkedin": "Поделиться в LinkedIn",
+    "share_on_reddit": "Поделиться в Reddit",
+    "share_on_whatsapp": "Поделиться в WhatsApp",
+    "copy_link": "Копировать ссылку",
+    "link_copied": "Ссылка скопирована!"
+  },
   "auth": {
     "show_password": "Показать пароль",
     "hide_password": "Скрыть пароль",

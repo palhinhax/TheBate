@@ -23,7 +23,31 @@
     "title": "标题",
     "description": "描述",
     "tags": "标签",
-    "language": "语言"
+    "language": "语言",
+    "next_topic": "下一个话题",
+    "next_topic_loading": "正在加载下一个话题...",
+    "no_more_topics": "没有更多话题了",
+    "vote_yes": "是",
+    "vote_no": "否",
+    "vote_depends": "看情况",
+    "vote_remove_error": "删除投票时出错",
+    "vote_error": "投票时出错",
+    "edit_image": "编辑话题图片",
+    "image_updated": "图片已更新！",
+    "image_updated_desc": "话题图片已成功更新。",
+    "image_removed": "图片已删除",
+    "image_removed_desc": "话题图片已被删除。",
+    "uploading_image": "正在上传...",
+    "no_image": "无图片",
+    "upload_image": "上传图片",
+    "image_requirements": "JPG、PNG、WebP或GIF。最大5MB。",
+    "invalid_file_type": "无效的文件类型。仅允许JPG、PNG、WebP和GIF。",
+    "file_too_large": "文件太大。最大大小：5MB",
+    "upload_error": "上传图片时出错",
+    "update_error": "更新话题时出错",
+    "remove_image_error": "删除图片时出错",
+    "back_to_topic": "返回话题",
+    "edit_topic_image": "编辑话题图片"
   },
   "profile": {
     "delete_account": "删除账户",
@@ -89,7 +113,12 @@
     "reply": "回复",
     "for": "支持",
     "against": "反对",
-    "neutral": "中立"
+    "neutral": "中立",
+    "edit": "编辑",
+    "login_to_vote": "登录以投票",
+    "login_to_vote_description": "您需要登录才能投票。",
+    "vote_error": "投票时出错",
+    "good_argument": "好论点"
   },
   "languages": {
     "pt": "Português",
@@ -102,6 +131,18 @@
   },
   "footer": {
     "tagline": "全球公共讨论"
+  },
+  "share": {
+    "share": "分享",
+    "share_discussion": "分享讨论",
+    "share_description": "选择要分享此讨论的位置",
+    "share_on_twitter": "在Twitter / X上分享",
+    "share_on_facebook": "在Facebook上分享",
+    "share_on_linkedin": "在LinkedIn上分享",
+    "share_on_reddit": "在Reddit上分享",
+    "share_on_whatsapp": "在WhatsApp上分享",
+    "copy_link": "复制链接",
+    "link_copied": "链接已复制！"
   },
   "auth": {
     "show_password": "显示密码",

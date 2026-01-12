@@ -23,7 +23,31 @@
     "title": "العنوان",
     "description": "الوصف",
     "tags": "الوسوم",
-    "language": "اللغة"
+    "language": "اللغة",
+    "next_topic": "الموضوع التالي",
+    "next_topic_loading": "جاري تحميل الموضوع التالي...",
+    "no_more_topics": "لا توجد مواضيع أخرى متاحة",
+    "vote_yes": "نعم",
+    "vote_no": "لا",
+    "vote_depends": "يعتمد",
+    "vote_remove_error": "خطأ في إزالة التصويت",
+    "vote_error": "خطأ في التصويت",
+    "edit_image": "تعديل صورة الموضوع",
+    "image_updated": "تم تحديث الصورة!",
+    "image_updated_desc": "تم تحديث صورة الموضوع بنجاح.",
+    "image_removed": "تم إزالة الصورة",
+    "image_removed_desc": "تم إزالة صورة الموضوع.",
+    "uploading_image": "جاري الرفع...",
+    "no_image": "لا توجد صورة",
+    "upload_image": "رفع صورة",
+    "image_requirements": "JPG أو PNG أو WebP أو GIF. بحد أقصى 5 ميجابايت.",
+    "invalid_file_type": "نوع ملف غير صالح. يُسمح فقط بـ JPG و PNG و WebP و GIF.",
+    "file_too_large": "الملف كبير جدًا. الحجم الأقصى: 5 ميجابايت",
+    "upload_error": "خطأ في رفع الصورة",
+    "update_error": "خطأ في تحديث الموضوع",
+    "remove_image_error": "خطأ في إزالة الصورة",
+    "back_to_topic": "العودة إلى الموضوع",
+    "edit_topic_image": "تعديل صورة الموضوع"
   },
   "profile": {
     "delete_account": "حذف الحساب",
@@ -89,7 +113,12 @@
     "reply": "رد",
     "for": "مع",
     "against": "ضد",
-    "neutral": "محايد"
+    "neutral": "محايد",
+    "edit": "تعديل",
+    "login_to_vote": "سجل الدخول للتصويت",
+    "login_to_vote_description": "تحتاج إلى تسجيل الدخول للتصويت.",
+    "vote_error": "خطأ في التصويت",
+    "good_argument": "حجة جيدة"
   },
   "languages": {
     "pt": "Português",
@@ -107,6 +136,18 @@
   },
   "footer": {
     "tagline": "مناقشات عامة عالمية"
+  },
+  "share": {
+    "share": "مشاركة",
+    "share_discussion": "مشاركة المناقشة",
+    "share_description": "اختر أين تريد مشاركة هذه المناقشة",
+    "share_on_twitter": "مشاركة على Twitter / X",
+    "share_on_facebook": "مشاركة على Facebook",
+    "share_on_linkedin": "مشاركة على LinkedIn",
+    "share_on_reddit": "مشاركة على Reddit",
+    "share_on_whatsapp": "مشاركة على WhatsApp",
+    "copy_link": "نسخ الرابط",
+    "link_copied": "تم نسخ الرابط!"
   },
   "auth": {
     "show_password": "إظهار كلمة المرور",

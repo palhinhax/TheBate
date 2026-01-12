@@ -29,7 +29,28 @@
     "language": "Langue",
     "next_topic": "Sujet suivant",
     "next_topic_loading": "Chargement du sujet suivant...",
-    "no_more_topics": "Plus de sujets disponibles"
+    "no_more_topics": "Plus de sujets disponibles",
+    "vote_yes": "Oui",
+    "vote_no": "Non",
+    "vote_depends": "Ça dépend",
+    "vote_remove_error": "Erreur lors de la suppression du vote",
+    "vote_error": "Erreur lors du vote",
+    "edit_image": "Modifier l'Image du Sujet",
+    "image_updated": "Image mise à jour !",
+    "image_updated_desc": "L'image du sujet a été mise à jour avec succès.",
+    "image_removed": "Image supprimée",
+    "image_removed_desc": "L'image du sujet a été supprimée.",
+    "uploading_image": "Téléchargement...",
+    "no_image": "Aucune image",
+    "upload_image": "Télécharger une Image",
+    "image_requirements": "JPG, PNG, WebP ou GIF. Maximum 5MB.",
+    "invalid_file_type": "Type de fichier invalide. Seuls JPG, PNG, WebP et GIF sont autorisés.",
+    "file_too_large": "Fichier trop volumineux. Taille maximale : 5MB",
+    "upload_error": "Erreur lors du téléchargement de l'image",
+    "update_error": "Erreur lors de la mise à jour du sujet",
+    "remove_image_error": "Erreur lors de la suppression de l'image",
+    "back_to_topic": "Retour au sujet",
+    "edit_topic_image": "Modifier l'image du sujet"
   },
   "profile": {
     "delete_account": "Supprimer le compte",
@@ -88,7 +109,12 @@
     "reply": "Répondre",
     "for": "Pour",
     "against": "Contre",
-    "neutral": "Neutre"
+    "neutral": "Neutre",
+    "edit": "Modifier",
+    "login_to_vote": "Connectez-vous pour voter",
+    "login_to_vote_description": "Vous devez vous connecter pour voter.",
+    "vote_error": "Erreur lors du vote",
+    "good_argument": "Bon argument"
   },
   "languages": {
     "pt": "Português",
@@ -112,6 +138,18 @@
   },
   "footer": {
     "tagline": "Discussions publiques mondiales"
+  },
+  "share": {
+    "share": "Partager",
+    "share_discussion": "Partager la discussion",
+    "share_description": "Choisissez où partager cette discussion",
+    "share_on_twitter": "Partager sur Twitter / X",
+    "share_on_facebook": "Partager sur Facebook",
+    "share_on_linkedin": "Partager sur LinkedIn",
+    "share_on_reddit": "Partager sur Reddit",
+    "share_on_whatsapp": "Partager sur WhatsApp",
+    "copy_link": "Copier le lien",
+    "link_copied": "Lien copié !"
   },
   "auth": {
     "show_password": "Afficher le mot de passe",

@@ -23,7 +23,31 @@
     "title": "タイトル",
     "description": "説明",
     "tags": "タグ",
-    "language": "言語"
+    "language": "言語",
+    "next_topic": "次のトピック",
+    "next_topic_loading": "次のトピックを読み込み中...",
+    "no_more_topics": "これ以上のトピックはありません",
+    "vote_yes": "はい",
+    "vote_no": "いいえ",
+    "vote_depends": "場合による",
+    "vote_remove_error": "投票の削除エラー",
+    "vote_error": "投票エラー",
+    "edit_image": "トピック画像を編集",
+    "image_updated": "画像が更新されました！",
+    "image_updated_desc": "トピック画像が正常に更新されました。",
+    "image_removed": "画像が削除されました",
+    "image_removed_desc": "トピック画像が削除されました。",
+    "uploading_image": "アップロード中...",
+    "no_image": "画像なし",
+    "upload_image": "画像をアップロード",
+    "image_requirements": "JPG、PNG、WebP、またはGIF。最大5MB。",
+    "invalid_file_type": "無効なファイルタイプ。JPG、PNG、WebP、GIFのみが許可されています。",
+    "file_too_large": "ファイルが大きすぎます。最大サイズ：5MB",
+    "upload_error": "画像のアップロードエラー",
+    "update_error": "トピックの更新エラー",
+    "remove_image_error": "画像の削除エラー",
+    "back_to_topic": "トピックに戻る",
+    "edit_topic_image": "トピック画像を編集"
   },
   "profile": {
     "delete_account": "アカウント削除",
@@ -89,7 +113,12 @@
     "reply": "返信",
     "for": "賛成",
     "against": "反対",
-    "neutral": "中立"
+    "neutral": "中立",
+    "edit": "編集",
+    "login_to_vote": "投票するにはログインしてください",
+    "login_to_vote_description": "投票するにはログインする必要があります。",
+    "vote_error": "投票エラー",
+    "good_argument": "良い議論"
   },
   "languages": {
     "pt": "Português",
@@ -105,7 +134,21 @@
     "id": "Bahasa Indonesia",
     "ja": "日本語"
   },
-  "footer": { "tagline": "グローバル公開討論" },
+  "footer": {
+    "tagline": "グローバル公開討論"
+  },
+  "share": {
+    "share": "共有",
+    "share_discussion": "ディスカッションを共有",
+    "share_description": "このディスカッションを共有する場所を選択してください",
+    "share_on_twitter": "Twitter / Xで共有",
+    "share_on_facebook": "Facebookで共有",
+    "share_on_linkedin": "LinkedInで共有",
+    "share_on_reddit": "Redditで共有",
+    "share_on_whatsapp": "WhatsAppで共有",
+    "copy_link": "リンクをコピー",
+    "link_copied": "リンクがコピーされました！"
+  },
   "auth": {
     "show_password": "パスワードを表示",
     "hide_password": "パスワードを非表示",

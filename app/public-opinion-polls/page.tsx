@@ -43,8 +43,9 @@ export default function PublicOpinionPollsPage() {
       <section className="container mx-auto max-w-4xl px-4 py-12">
         <p className="text-lg leading-relaxed text-muted-foreground">
           TheBatee is your go-to platform for creating and participating in public opinion polls.
-          Whether you&apos;re a researcher, content creator, student, or just curious about what people
-          think, our platform gives you the tools to gather genuine insights from a global audience.
+          Whether you&apos;re a researcher, content creator, student, or just curious about what
+          people think, our platform gives you the tools to gather genuine insights from a global
+          audience.
         </p>
       </section>
     </div>
