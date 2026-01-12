@@ -28,6 +28,13 @@ export async function uploadToB2(
     throw new Error("B2_BUCKET_NAME not configured");
   }
 
+  console.log("B2 upload:", {
+    filename,
+    contentType,
+    bufferLength: file.length,
+    bucketName,
+  });
+
   // Generate a unique filename with timestamp to avoid collisions
   const timestamp = Date.now();
   const uniqueFilename = `topics/${timestamp}-${filename}`;
@@ -37,6 +44,7 @@ export async function uploadToB2(
     Key: uniqueFilename,
     Body: file,
     ContentType: contentType,
+    ContentLength: file.length,
     // Make the file publicly readable
     ACL: "public-read",
   });
