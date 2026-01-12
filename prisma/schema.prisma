@@ -73,6 +73,7 @@ model Topic {
   slug               String        @unique
   title              String
   description        String        @db.Text
+  imageUrl           String?       // Topic image/thumbnail URL
   type               TopicType     @default(YES_NO) // Type of topic: YES_NO or MULTI_CHOICE
   allowMultipleVotes Boolean       @default(false) // For MULTI_CHOICE: allow voting for multiple options
   maxChoices         Int           @default(1) // For MULTI_CHOICE: max number of options user can vote for

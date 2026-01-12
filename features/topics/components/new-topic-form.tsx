@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,14 +10,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { useTranslations } from "@/lib/use-translations";
-import { X, Globe, Plus, GripVertical, Trash2 } from "lucide-react";
+import { X, Globe, Plus, GripVertical, Trash2, Image as ImageIcon, Upload } from "lucide-react";
 import { LANGUAGES, type SupportedLanguage } from "@/lib/language-shared";
 
 export default function NewTopicForm() {
   const router = useRouter();
   const { toast } = useToast();
   const { t } = useTranslations();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState<SupportedLanguage>("pt");
@@ -105,6 +109,84 @@ export default function NewTopicForm() {
     setValue("options", newOptions);
   };
 
+  const handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/gif"];
+    if (!allowedTypes.includes(file.type)) {
+      toast({
+        title: t("common.error", "Erro"),
+        description: "Tipo de ficheiro inválido. Apenas JPG, PNG, WebP e GIF são permitidos.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    const maxSize = 5 * 1024 * 1024;
+    if (file.size > maxSize) {
+      toast({
+        title: t("common.error", "Erro"),
+        description: "Ficheiro demasiado grande. Tamanho máximo: 5MB",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Show preview
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setImagePreview(e.target?.result as string);
+    };
+    reader.readAsDataURL(file);
+
+    // Upload to B2
+    setIsUploadingImage(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await fetch("/api/upload/image", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Erro ao fazer upload da imagem");
+      }
+
+      const { imageUrl: uploadedUrl } = await response.json();
+      setImageUrl(uploadedUrl);
+      setValue("imageUrl", uploadedUrl);
+
+      toast({
+        title: t("topics.image_uploaded", "Imagem carregada!"),
+        description: t("topics.image_uploaded_desc", "A imagem foi carregada com sucesso."),
+      });
+    } catch (error: any) {
+      toast({
+        title: t("common.error", "Erro"),
+        description: error.message,
+        variant: "destructive",
+      });
+      setImagePreview(null);
+    } finally {
+      setIsUploadingImage(false);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setImageUrl(null);
+    setImagePreview(null);
+    setValue("imageUrl", undefined);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
   const onSubmit = async (data: TopicFormData) => {
     setIsSubmitting(true);
     try {
@@ -167,6 +249,68 @@ export default function NewTopicForm() {
         />
         {errors.description && (
           <p className="mt-1 text-sm text-destructive">{errors.description.message}</p>
+        )}
+      </div>
+
+      {/* Image Upload */}
+      <div>
+        <Label htmlFor="image">
+          <ImageIcon className="mr-1 inline h-4 w-4" />
+          {t("topics.image", "Imagem do Tema")} <span className="text-muted-foreground">(Opcional)</span>
+        </Label>
+        <p className="mb-2 text-xs text-muted-foreground">
+          {t("topics.image_help", "Adicione uma imagem para tornar o tema mais atrativo (JPG, PNG, WebP ou GIF, máx. 5MB)")}
+        </p>
+        
+        {imagePreview ? (
+          <div className="relative mt-2 overflow-hidden rounded-lg border">
+            <img
+              src={imagePreview}
+              alt="Preview"
+              className="h-48 w-full object-cover"
+            />
+            <Button
+              type="button"
+              size="sm"
+              variant="destructive"
+              onClick={handleRemoveImage}
+              className="absolute right-2 top-2"
+              disabled={isUploadingImage}
+            >
+              <X className="h-4 w-4" />
+            </Button>
+            {isUploadingImage && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+                <div className="text-white">
+                  {t("topics.uploading_image", "A carregar...")}
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="mt-2">
+            <input
+              ref={fileInputRef}
+              id="image"
+              type="file"
+              accept="image/jpeg,image/jpg,image/png,image/webp,image/gif"
+              onChange={handleImageSelect}
+              className="hidden"
+              disabled={isUploadingImage}
+            />
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isUploadingImage}
+              className="w-full"
+            >
+              <Upload className="mr-2 h-4 w-4" />
+              {isUploadingImage
+                ? t("topics.uploading_image", "A carregar...")
+                : t("topics.select_image", "Selecionar Imagem")}
+            </Button>
+          </div>
         )}
       </div>
 

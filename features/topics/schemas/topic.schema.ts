@@ -20,6 +20,7 @@ export const topicSchema = z
       .string()
       .min(20, "A descrição deve ter pelo menos 20 caracteres")
       .max(5000, "A descrição não pode ter mais de 5000 caracteres"),
+    imageUrl: z.string().url("URL de imagem inválida").optional(),
     language: z.enum(SUPPORTED_LANGUAGES),
     tags: z
       .array(z.string().min(2).max(30))
