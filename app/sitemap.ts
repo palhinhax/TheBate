@@ -61,6 +61,40 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.9,
   }));
 
+  // SEO landing pages - high priority for organic search
+  const seoPages: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/create-debate`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/vote-on-topics`,
+      lastModified: new Date(),
+      changeFrequency: "daily" as const,
+      priority: 0.95,
+    },
+    {
+      url: `${baseUrl}/public-opinion-polls`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/debate-controversial-topics`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/online-voting-platform`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    },
+  ];
+
   return [
     {
       url: baseUrl,
@@ -69,6 +103,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     },
     ...languageUrls,
+    ...seoPages,
     {
       url: `${baseUrl}/giveaway`,
       lastModified: new Date(),

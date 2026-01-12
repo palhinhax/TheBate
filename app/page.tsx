@@ -75,22 +75,22 @@ export default async function Home({
 
   const baseUrl = process.env.NEXTAUTH_URL || "https://thebatee.com";
 
-  // JSON-LD structured data for homepage
-  const jsonLd = {
+  // Enhanced JSON-LD structured data for homepage
+  const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "TheBatee",
     url: baseUrl,
     description:
-      "Global discussion platform for intelligent debates about technology, society, and culture in multiple languages.",
-    inLanguage: ["pt", "en", "es", "fr", "de"],
+      "Global discussion platform for intelligent debates about technology, society, and culture in multiple languages. Create debates, vote on topics, and share your opinion.",
+    inLanguage: ["pt", "en", "es", "fr", "de", "hi", "bn", "zh", "ru", "id", "ja", "ar"],
     potentialAction: {
       "@type": "SearchAction",
       target: {
         "@type": "EntryPoint",
-        urlTemplate: baseUrl + "?lang={language}",
+        urlTemplate: baseUrl + "?q={search_term_string}",
       },
-      "query-input": "required name=language",
+      "query-input": "required name=search_term_string",
     },
     publisher: {
       "@type": "Organization",
@@ -101,6 +101,43 @@ export default async function Home({
         url: baseUrl + "/logo_no_bg.png",
       },
     },
+  };
+
+  // WebApplication schema
+  const webAppSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: "TheBatee",
+    url: baseUrl,
+    description: "Create debates, vote on topics, and share your opinion with a global community",
+    applicationCategory: "SocialNetworkingApplication",
+    operatingSystem: "Web Browser",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    featureList: [
+      "Create debates online",
+      "Vote on controversial topics",
+      "Public opinion polls",
+      "Multi-language support (12 languages)",
+      "Real-time voting results",
+      "Comment and discuss",
+      "Anonymous voting",
+      "Share debates on social media",
+    ],
+  };
+
+  // Organization schema
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "TheBatee",
+    url: baseUrl,
+    logo: baseUrl + "/logo_no_bg.png",
+    sameAs: ["https://twitter.com/thebatee"],
+    description: "Global platform for debates and public opinion",
   };
 
   // BreadcrumbList for better SEO
@@ -121,7 +158,15 @@ export default async function Home({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
       />
       <script
         type="application/ld+json"
@@ -133,16 +178,27 @@ export default async function Home({
           <section className="border-b bg-muted/50 py-12">
             <div className="container mx-auto px-4 text-center">
               <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-                Plataforma de <span className="text-primary">Discussão</span>
+                Create Debates, Vote on Topics & Share Your Opinion
               </h1>
               <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-                Participe de discussões inteligentes sobre tecnologia, sociedade e cultura.
-                Compartilhe ideias, aprenda e conecte-se com respeito.
+                Join a global community discussing technology, politics, society, and culture.
+                Create your own debate, vote on controversial topics, and see what the world thinks.
               </p>
-              <div className="mt-6">
+              <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <Link href="/auth/register">
-                  <Button size="lg">Começar Agora</Button>
+                  <Button size="lg">Create Your Debate</Button>
                 </Link>
+                <Link href="/vote-on-topics">
+                  <Button size="lg" variant="outline">
+                    Vote on Topics
+                  </Button>
+                </Link>
+              </div>
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground">
+                <span>✓ Free forever</span>
+                <span>✓ Anonymous voting</span>
+                <span>✓ 12 languages</span>
+                <span>✓ Global community</span>
               </div>
             </div>
           </section>
