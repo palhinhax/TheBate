@@ -6,6 +6,7 @@ import { MessageSquare, TrendingUp, Clock, Search } from "lucide-react";
 import { AdContainer } from "@/components/ad-container";
 import { getUserLanguages } from "@/lib/language";
 import { SearchBar } from "@/components/search-bar";
+import { GiveawayBanner } from "@/components/giveaway-banner";
 
 async function getTopics(
   sort: "trending" | "new" = "new",
@@ -149,6 +150,11 @@ export default async function Home({
 
         {/* Topics List */}
         <section className="container mx-auto px-4 py-8">
+          {/* Giveaway Banner */}
+          <div className="mb-8">
+            <GiveawayBanner />
+          </div>
+
           <div className="mb-6">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-2xl font-bold">Tópicos Recentes</h2>

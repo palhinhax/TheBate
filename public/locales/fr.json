@@ -161,8 +161,13 @@
     "magic_link_sent": "Lien envoyé",
     "magic_link_sent_message": "Nous vous avons envoyé un lien pour vous connecter. Vérifiez votre email.",
     "magic_link_error": "Erreur lors de l'envoi du lien"
-  },
-  "errors": {
+  },  "giveaway": {
+    "banner": {
+      "title": "Gagnez €50 juste pour avoir une opinion",
+      "subtitle": "Participez au tirage en votant dans un débat",
+      "cta": "Rejoindre le débat"
+    }
+  },  "errors": {
     "page_title": "Une erreur s'est produite",
     "page_description": "Nous sommes désolés, mais quelque chose d'inattendu s'est produit. Notre équipe a été informée et travaille à résoudre le problème.",
     "go_home": "Aller à la Page d'Accueil",

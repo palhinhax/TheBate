@@ -162,6 +162,13 @@
     "magic_link_sent_message": "Wir haben Ihnen einen Link zum Anmelden gesendet. Überprüfen Sie Ihre E-Mail.",
     "magic_link_error": "Fehler beim Senden des Links"
   },
+  "giveaway": {
+    "banner": {
+      "title": "Gewinne €50, nur weil du eine Meinung hast",
+      "subtitle": "Nimm an der Verlosung teil, indem du in einer Debatte abstimmst",
+      "cta": "An der Debatte teilnehmen"
+    }
+  },
   "errors": {
     "page_title": "Etwas ist schiefgelaufen",
     "page_description": "Es tut uns leid, aber etwas Unerwartetes ist passiert. Unser Team wurde benachrichtigt und arbeitet daran, das Problem zu beheben.",

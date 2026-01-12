@@ -45,29 +45,31 @@ enum ThemeVote {
 }
 
 model User {
-  id                   String                @id @default(cuid())
-  name                 String?
-  username             String?               @unique // Made optional for OAuth users
-  email                String                @unique
-  passwordHash         String?               // Made optional for OAuth/Magic Link users
-  emailVerified        DateTime?
-  image                String?
-  role                 UserRole              @default(USER)
-  isOwner              Boolean               @default(false)
-  isSeed               Boolean               @default(false) // Mark seed users for cleanup
-  preferredLanguage    String                @default("pt") // UI language preference
-  preferredContentLanguages String[]         @default(["pt", "en", "es", "fr", "de"]) // Content languages to show
-  karma                Int                   @default(0) // Total karma points
-  createdAt            DateTime              @default(now())
-  topics               Topic[]
-  comments             Comment[]
-  votes                Vote[]
-  topicVotes           TopicVote[]
-  passwordResetTokens  PasswordResetToken[]
-  emailVerificationTokens EmailVerificationToken[]
-  accounts             Account[]             // OAuth accounts
-  sessions             Session[]             // User sessions
-  achievements         UserAchievement[]     // User's unlocked achievements
+  id                        String                   @id @default(cuid())
+  name                      String?
+  username                  String?                  @unique // Made optional for OAuth users
+  email                     String                   @unique
+  passwordHash              String? // Made optional for OAuth/Magic Link users
+  emailVerified             DateTime?
+  image                     String?
+  role                      UserRole                 @default(USER)
+  isOwner                   Boolean                  @default(false)
+  isSeed                    Boolean                  @default(false) // Mark seed users for cleanup
+  preferredLanguage         String                   @default("pt") // UI language preference
+  preferredContentLanguages String[]                 @default(["pt", "en", "es", "fr", "de"]) // Content languages to show
+  karma                     Int                      @default(0) // Total karma points
+  createdAt                 DateTime                 @default(now())
+  topics                    Topic[]
+  comments                  Comment[]
+  votes                     Vote[]
+  topicVotes                TopicVote[]
+  passwordResetTokens       PasswordResetToken[]
+  emailVerificationTokens   EmailVerificationToken[]
+  accounts                  Account[] // OAuth accounts
+  sessions                  Session[] // User sessions
+  achievements              UserAchievement[] // User's unlocked achievements
+  giveawayEntries           GiveawayEntry[] // Giveaway entries
+  giveawaysWon              Giveaway[]               @relation("GiveawayWinner") // Giveaways won
 }
 
 model Topic {
@@ -75,7 +77,7 @@ model Topic {
   slug               String        @unique
   title              String
   description        String        @db.Text
-  imageUrl           String?       // Topic image/thumbnail URL
+  imageUrl           String? // Topic image/thumbnail URL
   type               TopicType     @default(YES_NO) // Type of topic: YES_NO or MULTI_CHOICE
   allowMultipleVotes Boolean       @default(false) // For MULTI_CHOICE: allow voting for multiple options
   maxChoices         Int           @default(1) // For MULTI_CHOICE: max number of options user can vote for
@@ -101,13 +103,13 @@ model Topic {
 
 model TopicOption {
   id          String      @id @default(cuid())
-  label       String      // Option label (e.g., "Messi", "Ronaldo")
+  label       String // Option label (e.g., "Messi", "Ronaldo")
   description String?     @db.Text // Optional description
   order       Int         @default(0) // Display order
   topicId     String
   topic       Topic       @relation(fields: [topicId], references: [id], onDelete: Cascade)
   votes       TopicVote[] // Votes for this option
-  comments    Comment[]   // Comments associated with this option
+  comments    Comment[] // Comments associated with this option
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
 
@@ -118,8 +120,8 @@ model TopicOption {
 model Comment {
   id          String        @id @default(cuid())
   content     String        @db.Text
-  side        CommentSide?  // A FAVOR or CONTRA (null for replies or MULTI_CHOICE)
-  optionId    String?       // For MULTI_CHOICE topics: associated option
+  side        CommentSide? // A FAVOR or CONTRA (null for replies or MULTI_CHOICE)
+  optionId    String? // For MULTI_CHOICE topics: associated option
   option      TopicOption?  @relation(fields: [optionId], references: [id], onDelete: Cascade)
   status      CommentStatus @default(ACTIVE)
   reportCount Int           @default(0) // Number of reports for moderation
@@ -157,16 +159,16 @@ model Vote {
 }
 
 model TopicVote {
-  id        String     @id @default(cuid())
+  id        String       @id @default(cuid())
   vote      ThemeVote? // SIM, NAO, or DEPENDE (for YES_NO topics)
-  optionId  String?    // For MULTI_CHOICE topics: selected option
+  optionId  String? // For MULTI_CHOICE topics: selected option
   option    TopicOption? @relation(fields: [optionId], references: [id], onDelete: Cascade)
   topicId   String
-  topic     Topic      @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  topic     Topic        @relation(fields: [topicId], references: [id], onDelete: Cascade)
   userId    String
-  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
 
   @@unique([userId, topicId, optionId]) // Allow multiple votes per topic if options differ
   @@index([topicId])
@@ -242,14 +244,14 @@ model VerificationToken {
 
 // Achievements/Badges system
 model Achievement {
-  id          String   @id @default(cuid())
-  key         String   @unique // e.g., "first_vote", "topic_creator"
-  name        Json     // Display name (multilingual)
-  description Json     // What the achievement is for (multilingual)
-  icon        String   // Icon/emoji for the badge
-  tier        String   @default("bronze") // bronze, silver, gold, platinum
-  requirement Int      @default(1) // Number needed to unlock
-  createdAt   DateTime @default(now())
+  id          String            @id @default(cuid())
+  key         String            @unique // e.g., "first_vote", "topic_creator"
+  name        Json // Display name (multilingual)
+  description Json // What the achievement is for (multilingual)
+  icon        String // Icon/emoji for the badge
+  tier        String            @default("bronze") // bronze, silver, gold, platinum
+  requirement Int               @default(1) // Number needed to unlock
+  createdAt   DateTime          @default(now())
   users       UserAchievement[]
 }
 
@@ -264,4 +266,46 @@ model UserAchievement {
   @@unique([userId, achievementId])
   @@index([userId])
   @@index([achievementId])
+}
+
+// Giveaway system
+enum GiveawayStatus {
+  DRAFT
+  ACTIVE
+  ENDED
+  WINNER_SELECTED
+}
+
+model Giveaway {
+  id          String          @id @default(cuid())
+  title       Json // Multilingual title
+  description Json // Multilingual description
+  prize       String // e.g., "€50 Amazon Gift Card"
+  status      GiveawayStatus  @default(DRAFT)
+  startDate   DateTime
+  endDate     DateTime
+  winnerId    String?
+  winner      User?           @relation("GiveawayWinner", fields: [winnerId], references: [id])
+  entries     GiveawayEntry[]
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  @@index([status])
+  @@index([winnerId])
+}
+
+model GiveawayEntry {
+  id           String   @id @default(cuid())
+  giveawayId   String
+  userId       String
+  hasVoted     Boolean  @default(false)
+  hasCommented Boolean  @default(false)
+  enteredAt    DateTime @default(now())
+  giveaway     Giveaway @relation(fields: [giveawayId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([giveawayId, userId])
+  @@index([giveawayId])
+  @@index([userId])
+  @@index([hasVoted])
 }

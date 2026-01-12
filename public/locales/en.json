@@ -164,6 +164,13 @@
     "magic_link_sent_message": "We've sent you a link to sign in. Check your email.",
     "magic_link_error": "Error sending magic link"
   },
+  "giveaway": {
+    "banner": {
+      "title": "Win €50 just for having an opinion",
+      "subtitle": "Enter our giveaway by voting in a debate",
+      "cta": "Join the debate"
+    }
+  },
   "errors": {
     "page_title": "Something went wrong",
     "page_description": "We're sorry, but something unexpected happened. Our team has been notified and is working to fix the issue.",
