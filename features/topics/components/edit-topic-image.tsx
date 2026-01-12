@@ -20,8 +20,9 @@ export default function EditTopicImage({ topicSlug, currentImageUrl }: EditTopic
 
   const [isUploading, setIsUploading] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(currentImageUrl);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const handleImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -47,18 +48,22 @@ export default function EditTopicImage({ topicSlug, currentImageUrl }: EditTopic
       return;
     }
 
-    // Show preview
+    // Store file and show preview
+    setSelectedFile(file);
     const reader = new FileReader();
     reader.onload = (e) => {
       setImagePreview(e.target?.result as string);
     };
     reader.readAsDataURL(file);
+  };
 
-    // Upload to B2
+  const handleSaveImage = async () => {
+    if (!selectedFile) return;
+
     setIsUploading(true);
     try {
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", selectedFile);
 
       const uploadResponse = await fetch("/api/upload/image", {
         method: "POST",
@@ -89,16 +94,26 @@ export default function EditTopicImage({ topicSlug, currentImageUrl }: EditTopic
         description: t("topics.image_updated_desc", "A imagem do tema foi atualizada com sucesso."),
       });
 
+      setSelectedFile(null);
       router.refresh();
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: t("common.error", "Erro"),
-        description: error.message,
+        description: error instanceof Error ? error.message : "Erro desconhecido",
         variant: "destructive",
       });
       setImagePreview(currentImageUrl);
+      setSelectedFile(null);
     } finally {
       setIsUploading(false);
+    }
+  };
+
+  const handleCancelImage = () => {
+    setSelectedFile(null);
+    setImagePreview(currentImageUrl);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   };
 
@@ -117,6 +132,7 @@ export default function EditTopicImage({ topicSlug, currentImageUrl }: EditTopic
       }
 
       setImagePreview(null);
+      setSelectedFile(null);
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
@@ -127,10 +143,10 @@ export default function EditTopicImage({ topicSlug, currentImageUrl }: EditTopic
       });
 
       router.refresh();
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: t("common.error", "Erro"),
-        description: error.message,
+        description: error instanceof Error ? error.message : "Erro desconhecido",
         variant: "destructive",
       });
     } finally {
@@ -161,7 +177,7 @@ export default function EditTopicImage({ topicSlug, currentImageUrl }: EditTopic
               size="sm"
               variant="destructive"
               onClick={handleRemoveImage}
-              disabled={isUploading}
+              disabled={isUploading || selectedFile !== null}
             >
               <X className="h-4 w-4" />
             </Button>
@@ -185,6 +201,17 @@ export default function EditTopicImage({ topicSlug, currentImageUrl }: EditTopic
             {isUploading
               ? t("topics.uploading_image", "A carregar...")
               : t("topics.upload_image", "Carregar Imagem")}
+          </Button>
+        </div>
+      )}
+
+      {selectedFile && (
+        <div className="mt-4 flex gap-2">
+          <Button onClick={handleSaveImage} disabled={isUploading} className="flex-1">
+            {isUploading ? t("topics.uploading_image", "A carregar...") : t("common.save", "Guardar")}
+          </Button>
+          <Button onClick={handleCancelImage} disabled={isUploading} variant="outline">
+            {t("common.cancel", "Cancelar")}
           </Button>
         </div>
       )}

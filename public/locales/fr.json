@@ -8,7 +8,9 @@
     "loading": "Chargement...",
     "error": "Erreur",
     "search": "Rechercher",
-    "close": "Fermer"
+    "close": "Fermer",
+    "save": "Enregistrer",
+    "cancel": "Annuler"
   },
   "hero": {
     "title": "Plateforme Mondiale de Discussion",

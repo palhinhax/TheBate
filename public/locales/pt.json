@@ -12,7 +12,9 @@
     "deleted_success": "Eliminado com sucesso",
     "delete_error": "Erro ao eliminar",
     "load_error": "Falha ao carregar dados",
-    "close": "Fechar"
+    "close": "Fechar",
+    "save": "Guardar",
+    "cancel": "Cancelar"
   },
   "hero": {
     "title": "Plataforma Global de Discussão",

@@ -8,7 +8,9 @@
     "loading": "Cargando...",
     "error": "Error",
     "search": "Buscar",
-    "close": "Cerrar"
+    "close": "Cerrar",
+    "save": "Guardar",
+    "cancel": "Cancelar"
   },
   "hero": {
     "title": "Plataforma Global de Discusión",

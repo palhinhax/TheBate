@@ -8,7 +8,9 @@
     "loading": "Laden...",
     "error": "Fehler",
     "search": "Suchen",
-    "close": "Schließen"
+    "close": "Schließen",
+    "save": "Speichern",
+    "cancel": "Abbrechen"
   },
   "hero": {
     "title": "Globale Diskussionsplattform",

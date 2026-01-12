@@ -8,7 +8,9 @@
     "loading": "Loading...",
     "error": "Error",
     "search": "Search",
-    "close": "Close"
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel"
   },
   "hero": {
     "title": "Global Discussion Platform",
