@@ -7,7 +7,8 @@
     "logout": "Cerrar Sesión",
     "loading": "Cargando...",
     "error": "Error",
-    "search": "Buscar"
+    "search": "Buscar",
+    "close": "Cerrar"
   },
   "hero": {
     "title": "Plataforma Global de Discusión",
@@ -23,7 +24,10 @@
     "title": "Título",
     "description": "Descripción",
     "tags": "Etiquetas",
-    "language": "Idioma"
+    "language": "Idioma",
+    "next_topic": "Próximo tema",
+    "next_topic_loading": "Cargando próximo tema...",
+    "no_more_topics": "No hay más temas disponibles"
   },
   "profile": {
     "delete_account": "Eliminar Cuenta",
@@ -83,7 +87,9 @@
     "en": "English",
     "es": "Español",
     "fr": "Français",
-    "de": "Deutsch"
+    "de": "Deutsch",
+    "hi": "हिन्दी",
+    "zh": "中文"
   },
   "reports": {
     "report": "Reportar",
@@ -136,6 +142,25 @@
       "uppercase": "Al menos una letra mayúscula",
       "lowercase": "Al menos una letra minúscula",
       "number": "Al menos un número"
-    }
+    },
+    "login_modal_title": "Entrar para Continuar",
+    "login_modal_description": "Para mantener debates justos, necesitas entrar.",
+    "sign_in_google": "Entrar con Google",
+    "sign_in_email": "Entrar con Email",
+    "or": "o",
+    "email_placeholder": "tu@email.com",
+    "send_magic_link": "Enviar Enlace de Acceso",
+    "magic_link_sent": "Enlace Enviado",
+    "magic_link_sent_message": "Te hemos enviado un enlace para entrar. Revisa tu email.",
+    "magic_link_error": "Error al enviar enlace"
+  },
+  "errors": {
+    "page_title": "Algo salió mal",
+    "page_description": "Lo sentimos, pero ocurrió algo inesperado. Nuestro equipo ha sido notificado y está trabajando para resolver el problema.",
+    "go_home": "Ir a la Página Principal",
+    "try_again": "Intentar de Nuevo",
+    "not_found_title": "Página no encontrada",
+    "not_found_description": "La página que buscas no existe o ha sido movida.",
+    "contact_support": "Contactar Soporte"
   }
 }

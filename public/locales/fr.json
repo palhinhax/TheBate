@@ -7,7 +7,8 @@
     "logout": "Se Déconnecter",
     "loading": "Chargement...",
     "error": "Erreur",
-    "search": "Rechercher"
+    "search": "Rechercher",
+    "close": "Fermer"
   },
   "hero": {
     "title": "Plateforme Mondiale de Discussion",
@@ -23,7 +24,10 @@
     "title": "Titre",
     "description": "Description",
     "tags": "Tags",
-    "language": "Langue"
+    "language": "Langue",
+    "next_topic": "Sujet suivant",
+    "next_topic_loading": "Chargement du sujet suivant...",
+    "no_more_topics": "Plus de sujets disponibles"
   },
   "profile": {
     "delete_account": "Supprimer le compte",
@@ -83,7 +87,9 @@
     "en": "English",
     "es": "Español",
     "fr": "Français",
-    "de": "Deutsch"
+    "de": "Deutsch",
+    "hi": "हिन्दी",
+    "zh": "中文"
   },
   "reports": {
     "report": "Signaler",
@@ -136,6 +142,25 @@
       "uppercase": "Au moins une lettre majuscule",
       "lowercase": "Au moins une lettre minuscule",
       "number": "Au moins un chiffre"
-    }
+    },
+    "login_modal_title": "Se connecter pour continuer",
+    "login_modal_description": "Pour maintenir des débats justes, vous devez vous connecter.",
+    "sign_in_google": "Se connecter avec Google",
+    "sign_in_email": "Se connecter avec Email",
+    "or": "ou",
+    "email_placeholder": "votre@email.com",
+    "send_magic_link": "Envoyer le lien d'accès",
+    "magic_link_sent": "Lien envoyé",
+    "magic_link_sent_message": "Nous vous avons envoyé un lien pour vous connecter. Vérifiez votre email.",
+    "magic_link_error": "Erreur lors de l'envoi du lien"
+  },
+  "errors": {
+    "page_title": "Une erreur s'est produite",
+    "page_description": "Nous sommes désolés, mais quelque chose d'inattendu s'est produit. Notre équipe a été informée et travaille à résoudre le problème.",
+    "go_home": "Aller à la Page d'Accueil",
+    "try_again": "Réessayer",
+    "not_found_title": "Page non trouvée",
+    "not_found_description": "La page que vous recherchez n'existe pas ou a été déplacée.",
+    "contact_support": "Contacter le Support"
   }
 }

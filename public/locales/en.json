@@ -7,7 +7,8 @@
     "logout": "Sign Out",
     "loading": "Loading...",
     "error": "Error",
-    "search": "Search"
+    "search": "Search",
+    "close": "Close"
   },
   "hero": {
     "title": "Global Discussion Platform",
@@ -23,7 +24,10 @@
     "title": "Title",
     "description": "Description",
     "tags": "Tags",
-    "language": "Language"
+    "language": "Language",
+    "next_topic": "Next topic",
+    "next_topic_loading": "Loading next topic...",
+    "no_more_topics": "No more topics available"
   },
   "profile": {
     "delete_account": "Delete Account",
@@ -96,7 +100,9 @@
     "en": "English",
     "es": "Español",
     "fr": "Français",
-    "de": "Deutsch"
+    "de": "Deutsch",
+    "hi": "हिन्दी",
+    "zh": "中文"
   },
   "footer": {
     "tagline": "Global public discussions"
@@ -138,6 +144,25 @@
       "uppercase": "At least one uppercase letter",
       "lowercase": "At least one lowercase letter",
       "number": "At least one number"
-    }
+    },
+    "login_modal_title": "Sign In to Continue",
+    "login_modal_description": "To keep debates fair, you need to sign in.",
+    "sign_in_google": "Sign in with Google",
+    "sign_in_email": "Sign in with Email",
+    "or": "or",
+    "email_placeholder": "your@email.com",
+    "send_magic_link": "Send Magic Link",
+    "magic_link_sent": "Magic Link Sent",
+    "magic_link_sent_message": "We've sent you a link to sign in. Check your email.",
+    "magic_link_error": "Error sending magic link"
+  },
+  "errors": {
+    "page_title": "Something went wrong",
+    "page_description": "We're sorry, but something unexpected happened. Our team has been notified and is working to fix the issue.",
+    "go_home": "Go to Homepage",
+    "try_again": "Try Again",
+    "not_found_title": "Page not found",
+    "not_found_description": "The page you're looking for doesn't exist or has been moved.",
+    "contact_support": "Contact Support"
   }
 }

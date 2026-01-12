@@ -7,7 +7,8 @@
     "logout": "Abmelden",
     "loading": "Laden...",
     "error": "Fehler",
-    "search": "Suchen"
+    "search": "Suchen",
+    "close": "Schließen"
   },
   "hero": {
     "title": "Globale Diskussionsplattform",
@@ -23,7 +24,10 @@
     "title": "Titel",
     "description": "Beschreibung",
     "tags": "Tags",
-    "language": "Sprache"
+    "language": "Sprache",
+    "next_topic": "Nächstes Thema",
+    "next_topic_loading": "Nächstes Thema wird geladen...",
+    "no_more_topics": "Keine weiteren Themen verfügbar"
   },
   "profile": {
     "delete_account": "Konto löschen",
@@ -83,7 +87,9 @@
     "en": "English",
     "es": "Español",
     "fr": "Français",
-    "de": "Deutsch"
+    "de": "Deutsch",
+    "hi": "हिन्दी",
+    "zh": "中文"
   },
   "reports": {
     "report": "Melden",
@@ -136,6 +142,25 @@
       "uppercase": "Mindestens ein Großbuchstabe",
       "lowercase": "Mindestens ein Kleinbuchstabe",
       "number": "Mindestens eine Zahl"
-    }
+    },
+    "login_modal_title": "Anmelden um fortzufahren",
+    "login_modal_description": "Um faire Debatten zu gewährleisten, müssen Sie sich anmelden.",
+    "sign_in_google": "Mit Google anmelden",
+    "sign_in_email": "Mit E-Mail anmelden",
+    "or": "oder",
+    "email_placeholder": "ihre@email.com",
+    "send_magic_link": "Zugangslink senden",
+    "magic_link_sent": "Link gesendet",
+    "magic_link_sent_message": "Wir haben Ihnen einen Link zum Anmelden gesendet. Überprüfen Sie Ihre E-Mail.",
+    "magic_link_error": "Fehler beim Senden des Links"
+  },
+  "errors": {
+    "page_title": "Etwas ist schiefgelaufen",
+    "page_description": "Es tut uns leid, aber etwas Unerwartetes ist passiert. Unser Team wurde benachrichtigt und arbeitet daran, das Problem zu beheben.",
+    "go_home": "Zur Startseite",
+    "try_again": "Erneut Versuchen",
+    "not_found_title": "Seite nicht gefunden",
+    "not_found_description": "Die Seite, die Sie suchen, existiert nicht oder wurde verschoben.",
+    "contact_support": "Support Kontaktieren"
   }
 }

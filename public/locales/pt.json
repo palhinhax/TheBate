@@ -11,7 +11,8 @@
     "delete_confirm": "Tem a certeza que deseja eliminar?",
     "deleted_success": "Eliminado com sucesso",
     "delete_error": "Erro ao eliminar",
-    "load_error": "Falha ao carregar dados"
+    "load_error": "Falha ao carregar dados",
+    "close": "Fechar"
   },
   "hero": {
     "title": "Plataforma Global de Discussão",
@@ -42,7 +43,10 @@
     "cancel": "Cancelar",
     "created_success": "Tema criado!",
     "created_description": "O seu tema foi criado com sucesso.",
-    "create_error": "Erro ao criar tema"
+    "create_error": "Erro ao criar tema",
+    "next_topic": "Próximo tema",
+    "next_topic_loading": "A carregar próximo tema...",
+    "no_more_topics": "Não há mais temas disponíveis"
   },
   "profile": {
     "delete_account": "Eliminar Conta",
@@ -115,7 +119,9 @@
     "en": "English",
     "es": "Español",
     "fr": "Français",
-    "de": "Deutsch"
+    "de": "Deutsch",
+    "hi": "हिन्दी",
+    "zh": "中文"
   },
   "footer": {
     "tagline": "Discussões públicas globais"
@@ -157,6 +163,25 @@
       "uppercase": "Pelo menos uma letra maiúscula",
       "lowercase": "Pelo menos uma letra minúscula",
       "number": "Pelo menos um número"
-    }
+    },
+    "login_modal_title": "Entrar para Continuar",
+    "login_modal_description": "Para manter debates justos, é preciso entrar.",
+    "sign_in_google": "Entrar com Google",
+    "sign_in_email": "Entrar com Email",
+    "or": "ou",
+    "email_placeholder": "o.teu@email.com",
+    "send_magic_link": "Enviar Link de Acesso",
+    "magic_link_sent": "Link Enviado",
+    "magic_link_sent_message": "Enviámos-te um link para entrares. Verifica o teu email.",
+    "magic_link_error": "Erro ao enviar link"
+  },
+  "errors": {
+    "page_title": "Algo correu mal",
+    "page_description": "Lamentamos, mas ocorreu algo inesperado. A nossa equipa foi notificada e está a trabalhar para resolver o problema.",
+    "go_home": "Ir para a Página Inicial",
+    "try_again": "Tentar Novamente",
+    "not_found_title": "Página não encontrada",
+    "not_found_description": "A página que procura não existe ou foi movida.",
+    "contact_support": "Contactar Suporte"
   }
 }
