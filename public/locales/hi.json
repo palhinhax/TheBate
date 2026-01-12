@@ -23,7 +23,31 @@
     "title": "शीर्षक",
     "description": "विवरण",
     "tags": "टैग",
-    "language": "भाषा"
+    "language": "भाषा",
+    "next_topic": "अगला विषय",
+    "next_topic_loading": "अगला विषय लोड हो रहा है...",
+    "no_more_topics": "और विषय उपलब्ध नहीं हैं",
+    "vote_yes": "हाँ",
+    "vote_no": "नहीं",
+    "vote_depends": "निर्भर करता है",
+    "vote_remove_error": "वोट हटाने में त्रुटि",
+    "vote_error": "वोटिंग में त्रुटि",
+    "edit_image": "विषय छवि संपादित करें",
+    "image_updated": "छवि अपडेट की गई!",
+    "image_updated_desc": "विषय छवि सफलतापूर्वक अपडेट की गई है।",
+    "image_removed": "छवि हटाई गई",
+    "image_removed_desc": "विषय छवि हटा दी गई है।",
+    "uploading_image": "अपलोड हो रहा है...",
+    "no_image": "कोई छवि नहीं",
+    "upload_image": "छवि अपलोड करें",
+    "image_requirements": "JPG, PNG, WebP या GIF। अधिकतम 5MB।",
+    "invalid_file_type": "अमान्य फ़ाइल प्रकार। केवल JPG, PNG, WebP और GIF की अनुमति है।",
+    "file_too_large": "फ़ाइल बहुत बड़ी है। अधिकतम आकार: 5MB",
+    "upload_error": "छवि अपलोड करने में त्रुटि",
+    "update_error": "विषय अपडेट करने में त्रुटि",
+    "remove_image_error": "छवि हटाने में त्रुटि",
+    "back_to_topic": "विषय पर वापस जाएं",
+    "edit_topic_image": "विषय छवि संपादित करें"
   },
   "profile": {
     "delete_account": "खाता हटाएं",
@@ -89,7 +113,12 @@
     "reply": "जवाब दें",
     "for": "समर्थन में",
     "against": "विरोध में",
-    "neutral": "तटस्थ"
+    "neutral": "तटस्थ",
+    "edit": "संपादित करें",
+    "login_to_vote": "वोट करने के लिए साइन इन करें",
+    "login_to_vote_description": "वोट करने के लिए आपको साइन इन करना होगा।",
+    "vote_error": "वोटिंग में त्रुटि",
+    "good_argument": "अच्छा तर्क"
   },
   "languages": {
     "pt": "Português",
@@ -102,6 +131,18 @@
   },
   "footer": {
     "tagline": "वैश्विक सार्वजनिक चर्चा"
+  },
+  "share": {
+    "share": "साझा करें",
+    "share_discussion": "चर्चा साझा करें",
+    "share_description": "चुनें कि इस चर्चा को कहां साझा करना है",
+    "share_on_twitter": "Twitter / X पर साझा करें",
+    "share_on_facebook": "Facebook पर साझा करें",
+    "share_on_linkedin": "LinkedIn पर साझा करें",
+    "share_on_reddit": "Reddit पर साझा करें",
+    "share_on_whatsapp": "WhatsApp पर साझा करें",
+    "copy_link": "लिंक कॉपी करें",
+    "link_copied": "लिंक कॉपी किया गया!"
   },
   "auth": {
     "show_password": "पासवर्ड दिखाएं",

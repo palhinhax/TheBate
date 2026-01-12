@@ -19,6 +19,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useTranslations } from "@/lib/use-translations";
 
 interface ShareButtonProps {
   title: string;
@@ -35,6 +36,7 @@ export function ShareButton({
 }: ShareButtonProps) {
   const [copied, setCopied] = useState(false);
   const [open, setOpen] = useState(false);
+  const { t } = useTranslations();
 
   const encodedUrl = encodeURIComponent(url);
   const encodedTitle = encodeURIComponent(title);
@@ -68,13 +70,13 @@ export function ShareButton({
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="gap-2">
           <Share2 className="h-4 w-4" />
-          <span className="hidden sm:inline">Partilhar</span>
+          <span className="hidden sm:inline">{t("share.share", "Share")}</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Partilhar discussão</DialogTitle>
-          <DialogDescription>Escolhe onde queres partilhar esta discussão</DialogDescription>
+          <DialogTitle>{t("share.share_discussion", "Share discussion")}</DialogTitle>
+          <DialogDescription>{t("share.share_description", "Choose where to share this discussion")}</DialogDescription>
         </DialogHeader>
         <div className="grid gap-3">
           {/* Twitter/X */}
@@ -84,7 +86,7 @@ export function ShareButton({
             onClick={() => handleShare("twitter")}
           >
             <Twitter className="h-5 w-5 text-[#1DA1F2]" />
-            <span>Partilhar no Twitter / X</span>
+            <span>{t("share.share_on_twitter", "Share on Twitter / X")}</span>
           </Button>
 
           {/* Facebook */}
@@ -94,7 +96,7 @@ export function ShareButton({
             onClick={() => handleShare("facebook")}
           >
             <Facebook className="h-5 w-5 text-[#1877F2]" />
-            <span>Partilhar no Facebook</span>
+            <span>{t("share.share_on_facebook", "Share on Facebook")}</span>
           </Button>
 
           {/* LinkedIn */}
@@ -104,7 +106,7 @@ export function ShareButton({
             onClick={() => handleShare("linkedin")}
           >
             <Linkedin className="h-5 w-5 text-[#0A66C2]" />
-            <span>Partilhar no LinkedIn</span>
+            <span>{t("share.share_on_linkedin", "Share on LinkedIn")}</span>
           </Button>
 
           {/* Reddit */}
@@ -114,7 +116,7 @@ export function ShareButton({
             onClick={() => handleShare("reddit")}
           >
             <MessageCircle className="h-5 w-5 text-[#FF4500]" />
-            <span>Partilhar no Reddit</span>
+            <span>{t("share.share_on_reddit", "Share on Reddit")}</span>
           </Button>
 
           {/* WhatsApp */}
@@ -124,7 +126,7 @@ export function ShareButton({
             onClick={() => handleShare("whatsapp")}
           >
             <MessageCircle className="h-5 w-5 text-[#25D366]" />
-            <span>Partilhar no WhatsApp</span>
+            <span>{t("share.share_on_whatsapp", "Share on WhatsApp")}</span>
           </Button>
 
           {/* Copy Link */}
@@ -132,12 +134,12 @@ export function ShareButton({
             {copied ? (
               <>
                 <Check className="h-5 w-5 text-green-500" />
-                <span className="text-green-500">Link copiado!</span>
+                <span className="text-green-500">{t("share.link_copied", "Link copied!")}</span>
               </>
             ) : (
               <>
                 <LinkIcon className="h-5 w-5" />
-                <span>Copiar link</span>
+                <span>{t("share.copy_link", "Copy link")}</span>
               </>
             )}
           </Button>

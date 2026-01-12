@@ -23,7 +23,31 @@
     "title": "Judul",
     "description": "Deskripsi",
     "tags": "Tag",
-    "language": "Bahasa"
+    "language": "Bahasa",
+    "next_topic": "Topik berikutnya",
+    "next_topic_loading": "Memuat topik berikutnya...",
+    "no_more_topics": "Tidak ada topik lagi yang tersedia",
+    "vote_yes": "Ya",
+    "vote_no": "Tidak",
+    "vote_depends": "Tergantung",
+    "vote_remove_error": "Kesalahan menghapus suara",
+    "vote_error": "Kesalahan memberikan suara",
+    "edit_image": "Edit Gambar Topik",
+    "image_updated": "Gambar diperbarui!",
+    "image_updated_desc": "Gambar topik berhasil diperbarui.",
+    "image_removed": "Gambar dihapus",
+    "image_removed_desc": "Gambar topik telah dihapus.",
+    "uploading_image": "Mengunggah...",
+    "no_image": "Tidak ada gambar",
+    "upload_image": "Unggah Gambar",
+    "image_requirements": "JPG, PNG, WebP atau GIF. Maksimal 5MB.",
+    "invalid_file_type": "Jenis file tidak valid. Hanya JPG, PNG, WebP dan GIF yang diizinkan.",
+    "file_too_large": "File terlalu besar. Ukuran maksimal: 5MB",
+    "upload_error": "Kesalahan mengunggah gambar",
+    "update_error": "Kesalahan memperbarui topik",
+    "remove_image_error": "Kesalahan menghapus gambar",
+    "back_to_topic": "Kembali ke topik",
+    "edit_topic_image": "Edit gambar topik"
   },
   "profile": {
     "delete_account": "Hapus Akun",
@@ -89,7 +113,12 @@
     "reply": "Balas",
     "for": "Setuju",
     "against": "Tidak Setuju",
-    "neutral": "Netral"
+    "neutral": "Netral",
+    "edit": "Edit",
+    "login_to_vote": "Masuk untuk memberikan suara",
+    "login_to_vote_description": "Anda perlu masuk untuk memberikan suara.",
+    "vote_error": "Kesalahan memberikan suara",
+    "good_argument": "Argumen bagus"
   },
   "languages": {
     "pt": "Português",
@@ -105,7 +134,21 @@
     "id": "Bahasa Indonesia",
     "ja": "日本語"
   },
-  "footer": { "tagline": "Diskusi publik global" },
+  "footer": {
+    "tagline": "Diskusi publik global"
+  },
+  "share": {
+    "share": "Bagikan",
+    "share_discussion": "Bagikan diskusi",
+    "share_description": "Pilih tempat untuk membagikan diskusi ini",
+    "share_on_twitter": "Bagikan di Twitter / X",
+    "share_on_facebook": "Bagikan di Facebook",
+    "share_on_linkedin": "Bagikan di LinkedIn",
+    "share_on_reddit": "Bagikan di Reddit",
+    "share_on_whatsapp": "Bagikan di WhatsApp",
+    "copy_link": "Salin tautan",
+    "link_copied": "Tautan disalin!"
+  },
   "auth": {
     "show_password": "Tampilkan kata sandi",
     "hide_password": "Sembunyikan kata sandi",

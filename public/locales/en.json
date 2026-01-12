@@ -29,7 +29,28 @@
     "language": "Language",
     "next_topic": "Next topic",
     "next_topic_loading": "Loading next topic...",
-    "no_more_topics": "No more topics available"
+    "no_more_topics": "No more topics available",
+    "vote_yes": "Yes",
+    "vote_no": "No",
+    "vote_depends": "It Depends",
+    "vote_remove_error": "Error removing vote",
+    "vote_error": "Error voting",
+    "edit_image": "Edit Topic Image",
+    "image_updated": "Image updated!",
+    "image_updated_desc": "The topic image has been updated successfully.",
+    "image_removed": "Image removed",
+    "image_removed_desc": "The topic image has been removed.",
+    "uploading_image": "Uploading...",
+    "no_image": "No image",
+    "upload_image": "Upload Image",
+    "image_requirements": "JPG, PNG, WebP or GIF. Max 5MB.",
+    "invalid_file_type": "Invalid file type. Only JPG, PNG, WebP and GIF are allowed.",
+    "file_too_large": "File too large. Maximum size: 5MB",
+    "upload_error": "Error uploading image",
+    "update_error": "Error updating topic",
+    "remove_image_error": "Error removing image",
+    "back_to_topic": "Back to topic",
+    "edit_topic_image": "Edit topic image"
   },
   "profile": {
     "delete_account": "Delete Account",
@@ -101,7 +122,12 @@
     "reply": "Reply",
     "for": "For",
     "against": "Against",
-    "neutral": "Neutral"
+    "neutral": "Neutral",
+    "edit": "Edit",
+    "login_to_vote": "Sign in to vote",
+    "login_to_vote_description": "You need to sign in to vote.",
+    "vote_error": "Error voting",
+    "good_argument": "Good argument"
   },
   "languages": {
     "pt": "Português",
@@ -114,6 +140,18 @@
   },
   "footer": {
     "tagline": "Global public discussions"
+  },
+  "share": {
+    "share": "Share",
+    "share_discussion": "Share discussion",
+    "share_description": "Choose where to share this discussion",
+    "share_on_twitter": "Share on Twitter / X",
+    "share_on_facebook": "Share on Facebook",
+    "share_on_linkedin": "Share on LinkedIn",
+    "share_on_reddit": "Share on Reddit",
+    "share_on_whatsapp": "Share on WhatsApp",
+    "copy_link": "Copy link",
+    "link_copied": "Link copied!"
   },
   "auth": {
     "show_password": "Show password",

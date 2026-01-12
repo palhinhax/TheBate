@@ -30,8 +30,8 @@ export default function EditTopicImage({ topicSlug, currentImageUrl }: EditTopic
     const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/gif"];
     if (!allowedTypes.includes(file.type)) {
       toast({
-        title: t("common.error", "Erro"),
-        description: "Tipo de ficheiro inválido. Apenas JPG, PNG, WebP e GIF são permitidos.",
+        title: t("common.error", "Error"),
+        description: t("topics.invalid_file_type", "Invalid file type. Only JPG, PNG, WebP and GIF are allowed."),
         variant: "destructive",
       });
       return;
@@ -41,8 +41,8 @@ export default function EditTopicImage({ topicSlug, currentImageUrl }: EditTopic
     const maxSize = 5 * 1024 * 1024;
     if (file.size > maxSize) {
       toast({
-        title: t("common.error", "Erro"),
-        description: "Ficheiro demasiado grande. Tamanho máximo: 5MB",
+        title: t("common.error", "Error"),
+        description: t("topics.file_too_large", "File too large. Maximum size: 5MB"),
         variant: "destructive",
       });
       return;
@@ -72,7 +72,7 @@ export default function EditTopicImage({ topicSlug, currentImageUrl }: EditTopic
 
       if (!uploadResponse.ok) {
         const error = await uploadResponse.json();
-        throw new Error(error.error || "Erro ao fazer upload da imagem");
+        throw new Error(error.error || t("topics.upload_error", "Error uploading image"));
       }
 
       const { imageUrl: uploadedUrl } = await uploadResponse.json();
@@ -86,7 +86,7 @@ export default function EditTopicImage({ topicSlug, currentImageUrl }: EditTopic
 
       if (!updateResponse.ok) {
         const error = await updateResponse.json();
-        throw new Error(error.error || "Erro ao atualizar tema");
+        throw new Error(error.error || t("topics.update_error", "Error updating topic"));
       }
 
       toast({
@@ -128,7 +128,7 @@ export default function EditTopicImage({ topicSlug, currentImageUrl }: EditTopic
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.error || "Erro ao remover imagem");
+        throw new Error(error.error || t("topics.remove_image_error", "Error removing image"));
       }
 
       setImagePreview(null);

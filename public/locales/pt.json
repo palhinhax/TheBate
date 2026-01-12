@@ -48,7 +48,28 @@
     "create_error": "Erro ao criar tema",
     "next_topic": "Próximo tema",
     "next_topic_loading": "A carregar próximo tema...",
-    "no_more_topics": "Não há mais temas disponíveis"
+    "no_more_topics": "Não há mais temas disponíveis",
+    "vote_yes": "Sim",
+    "vote_no": "Não",
+    "vote_depends": "Depende",
+    "vote_remove_error": "Erro ao remover voto",
+    "vote_error": "Erro ao votar",
+    "edit_image": "Editar Imagem do Tema",
+    "image_updated": "Imagem atualizada!",
+    "image_updated_desc": "A imagem do tema foi atualizada com sucesso.",
+    "image_removed": "Imagem removida",
+    "image_removed_desc": "A imagem do tema foi removida.",
+    "uploading_image": "A carregar...",
+    "no_image": "Sem imagem",
+    "upload_image": "Carregar Imagem",
+    "image_requirements": "JPG, PNG, WebP ou GIF. Máximo 5MB.",
+    "invalid_file_type": "Tipo de ficheiro inválido. Apenas JPG, PNG, WebP e GIF são permitidos.",
+    "file_too_large": "Ficheiro demasiado grande. Tamanho máximo: 5MB",
+    "upload_error": "Erro ao fazer upload da imagem",
+    "update_error": "Erro ao atualizar tema",
+    "remove_image_error": "Erro ao remover imagem",
+    "back_to_topic": "Voltar ao tema",
+    "edit_topic_image": "Editar imagem do tema"
   },
   "profile": {
     "delete_account": "Eliminar Conta",
@@ -120,7 +141,12 @@
     "reply": "Responder",
     "for": "A Favor",
     "against": "Contra",
-    "neutral": "Neutro"
+    "neutral": "Neutro",
+    "edit": "Editar",
+    "login_to_vote": "Entre para votar",
+    "login_to_vote_description": "Precisa de iniciar sessão para votar.",
+    "vote_error": "Erro ao votar",
+    "good_argument": "Bom argumento"
   },
   "languages": {
     "pt": "Português",
@@ -133,6 +159,18 @@
   },
   "footer": {
     "tagline": "Discussões públicas globais"
+  },
+  "share": {
+    "share": "Partilhar",
+    "share_discussion": "Partilhar discussão",
+    "share_description": "Escolhe onde queres partilhar esta discussão",
+    "share_on_twitter": "Partilhar no Twitter / X",
+    "share_on_facebook": "Partilhar no Facebook",
+    "share_on_linkedin": "Partilhar no LinkedIn",
+    "share_on_reddit": "Partilhar no Reddit",
+    "share_on_whatsapp": "Partilhar no WhatsApp",
+    "copy_link": "Copiar link",
+    "link_copied": "Link copiado!"
   },
   "auth": {
     "show_password": "Mostrar palavra-passe",

@@ -29,7 +29,28 @@
     "language": "Idioma",
     "next_topic": "Próximo tema",
     "next_topic_loading": "Cargando próximo tema...",
-    "no_more_topics": "No hay más temas disponibles"
+    "no_more_topics": "No hay más temas disponibles",
+    "vote_yes": "Sí",
+    "vote_no": "No",
+    "vote_depends": "Depende",
+    "vote_remove_error": "Error al eliminar voto",
+    "vote_error": "Error al votar",
+    "edit_image": "Editar Imagen del Tema",
+    "image_updated": "¡Imagen actualizada!",
+    "image_updated_desc": "La imagen del tema se ha actualizado correctamente.",
+    "image_removed": "Imagen eliminada",
+    "image_removed_desc": "La imagen del tema ha sido eliminada.",
+    "uploading_image": "Cargando...",
+    "no_image": "Sin imagen",
+    "upload_image": "Cargar Imagen",
+    "image_requirements": "JPG, PNG, WebP o GIF. Máximo 5MB.",
+    "invalid_file_type": "Tipo de archivo inválido. Solo se permiten JPG, PNG, WebP y GIF.",
+    "file_too_large": "Archivo demasiado grande. Tamaño máximo: 5MB",
+    "upload_error": "Error al cargar imagen",
+    "update_error": "Error al actualizar tema",
+    "remove_image_error": "Error al eliminar imagen",
+    "back_to_topic": "Volver al tema",
+    "edit_topic_image": "Editar imagen del tema"
   },
   "profile": {
     "delete_account": "Eliminar Cuenta",
@@ -88,7 +109,12 @@
     "reply": "Responder",
     "for": "A Favor",
     "against": "En Contra",
-    "neutral": "Neutral"
+    "neutral": "Neutral",
+    "edit": "Editar",
+    "login_to_vote": "Iniciar sesión para votar",
+    "login_to_vote_description": "Necesitas iniciar sesión para votar.",
+    "vote_error": "Error al votar",
+    "good_argument": "Buen argumento"
   },
   "languages": {
     "pt": "Português",
@@ -112,6 +138,18 @@
   },
   "footer": {
     "tagline": "Discusiones públicas globales"
+  },
+  "share": {
+    "share": "Compartir",
+    "share_discussion": "Compartir discusión",
+    "share_description": "Elige dónde compartir esta discusión",
+    "share_on_twitter": "Compartir en Twitter / X",
+    "share_on_facebook": "Compartir en Facebook",
+    "share_on_linkedin": "Compartir en LinkedIn",
+    "share_on_reddit": "Compartir en Reddit",
+    "share_on_whatsapp": "Compartir en WhatsApp",
+    "copy_link": "Copiar enlace",
+    "link_copied": "¡Enlace copiado!"
   },
   "auth": {
     "show_password": "Mostrar contraseña",

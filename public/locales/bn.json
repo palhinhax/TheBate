@@ -23,7 +23,31 @@
     "title": "শিরোনাম",
     "description": "বিবরণ",
     "tags": "ট্যাগ",
-    "language": "ভাষা"
+    "language": "ভাষা",
+    "next_topic": "পরবর্তী বিষয়",
+    "next_topic_loading": "পরবর্তী বিষয় লোড হচ্ছে...",
+    "no_more_topics": "আর কোনো বিষয় উপলব্ধ নেই",
+    "vote_yes": "হ্যাঁ",
+    "vote_no": "না",
+    "vote_depends": "নির্ভর করে",
+    "vote_remove_error": "ভোট সরাতে ত্রুটি",
+    "vote_error": "ভোট দিতে ত্রুটি",
+    "edit_image": "বিষয়ের ছবি সম্পাদনা করুন",
+    "image_updated": "ছবি আপডেট করা হয়েছে!",
+    "image_updated_desc": "বিষয়ের ছবি সফলভাবে আপডেট করা হয়েছে।",
+    "image_removed": "ছবি সরানো হয়েছে",
+    "image_removed_desc": "বিষয়ের ছবি সরানো হয়েছে।",
+    "uploading_image": "আপলোড হচ্ছে...",
+    "no_image": "কোনো ছবি নেই",
+    "upload_image": "ছবি আপলোড করুন",
+    "image_requirements": "JPG, PNG, WebP বা GIF। সর্বোচ্চ 5MB।",
+    "invalid_file_type": "অবৈধ ফাইল প্রকার। শুধুমাত্র JPG, PNG, WebP এবং GIF অনুমোদিত।",
+    "file_too_large": "ফাইল খুব বড়। সর্বোচ্চ আকার: 5MB",
+    "upload_error": "ছবি আপলোড করতে ত্রুটি",
+    "update_error": "বিষয় আপডেট করতে ত্রুটি",
+    "remove_image_error": "ছবি সরাতে ত্রুটি",
+    "back_to_topic": "বিষয়ে ফিরে যান",
+    "edit_topic_image": "বিষয়ের ছবি সম্পাদনা করুন"
   },
   "profile": {
     "delete_account": "অ্যাকাউন্ট মুছুন",
@@ -89,7 +113,12 @@
     "reply": "উত্তর",
     "for": "পক্ষে",
     "against": "বিপক্ষে",
-    "neutral": "নিরপেক্ষ"
+    "neutral": "নিরপেক্ষ",
+    "edit": "সম্পাদনা করুন",
+    "login_to_vote": "ভোট দিতে সাইন ইন করুন",
+    "login_to_vote_description": "ভোট দিতে আপনাকে সাইন ইন করতে হবে।",
+    "vote_error": "ভোট দিতে ত্রুটি",
+    "good_argument": "ভালো যুক্তি"
   },
   "languages": {
     "pt": "Português",
@@ -107,6 +136,18 @@
   },
   "footer": {
     "tagline": "বৈশ্বিক সর্বজনীন আলোচনা"
+  },
+  "share": {
+    "share": "শেয়ার করুন",
+    "share_discussion": "আলোচনা শেয়ার করুন",
+    "share_description": "এই আলোচনা কোথায় শেয়ার করতে চান তা চয়ন করুন",
+    "share_on_twitter": "Twitter / X এ শেয়ার করুন",
+    "share_on_facebook": "Facebook এ শেয়ার করুন",
+    "share_on_linkedin": "LinkedIn এ শেয়ার করুন",
+    "share_on_reddit": "Reddit এ শেয়ার করুন",
+    "share_on_whatsapp": "WhatsApp এ শেয়ার করুন",
+    "copy_link": "লিংক কপি করুন",
+    "link_copied": "লিংক কপি করা হয়েছে!"
   },
   "auth": {
     "show_password": "পাসওয়ার্ড দেখান",
