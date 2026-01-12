@@ -107,9 +107,7 @@ export function useTranslations() {
       if (value && typeof value === "object" && k in value) {
         value = (value as Record<string, unknown>)[k];
       } else {
-        console.warn(
-          `⚠️ Translation key not found: ${key}, locale: ${locale}`
-        );
+        console.warn(`⚠️ Translation key not found: ${key}, locale: ${locale}`);
         console.log("🔍 Current path:", keys.slice(0, keys.indexOf(k) + 1).join("."));
         console.log("🔍 Value at this point:", value);
         return fallback || key;

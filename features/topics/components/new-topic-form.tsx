@@ -256,19 +256,19 @@ export default function NewTopicForm() {
       <div>
         <Label htmlFor="image">
           <ImageIcon className="mr-1 inline h-4 w-4" />
-          {t("topics.image", "Imagem do Tema")} <span className="text-muted-foreground">(Opcional)</span>
+          {t("topics.image", "Imagem do Tema")}{" "}
+          <span className="text-muted-foreground">(Opcional)</span>
         </Label>
         <p className="mb-2 text-xs text-muted-foreground">
-          {t("topics.image_help", "Adicione uma imagem para tornar o tema mais atrativo (JPG, PNG, WebP ou GIF, máx. 5MB)")}
+          {t(
+            "topics.image_help",
+            "Adicione uma imagem para tornar o tema mais atrativo (JPG, PNG, WebP ou GIF, máx. 5MB)"
+          )}
         </p>
-        
+
         {imagePreview ? (
           <div className="relative mt-2 overflow-hidden rounded-lg border">
-            <img
-              src={imagePreview}
-              alt="Preview"
-              className="h-48 w-full object-cover"
-            />
+            <img src={imagePreview} alt="Preview" className="h-48 w-full object-cover" />
             <Button
               type="button"
               size="sm"
@@ -281,9 +281,7 @@ export default function NewTopicForm() {
             </Button>
             {isUploadingImage && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                <div className="text-white">
-                  {t("topics.uploading_image", "A carregar...")}
-                </div>
+                <div className="text-white">{t("topics.uploading_image", "A carregar...")}</div>
               </div>
             )}
           </div>

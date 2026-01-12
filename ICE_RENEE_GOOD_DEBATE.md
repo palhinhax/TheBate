@@ -18,9 +18,11 @@
 ## 📊 Topic Details
 
 ### Title
+
 US protests condemn ICE killing of Renee Good — justified action or abuse of power?
 
 ### Description
+
 The killing of Renee Good by an ICE agent has sparked nationwide protests across the United States.
 
 Supporters of the government argue the agent acted in self-defense during a federal operation.
@@ -47,13 +49,10 @@ What is your position?
 
 - **Option A (Justified):** 2 comments
   - Focus on protocol, investigation needed, split-second decisions
-  
 - **Option B (Unjustified):** 4 comments
   - Focus on lack of lethal threat, excessive force, accountability
-  
 - **Option C (Need Investigation):** 4 comments
   - Focus on incomplete evidence, need for independent review
-  
 - **Option D (Systemic Problem):** 5 comments
   - Focus on ICE accountability, militarization, qualified immunity
 
@@ -63,7 +62,7 @@ What is your position?
 ✅ **Diverse viewpoints** - Multiple perspectives represented  
 ✅ **Thoughtful** - Each comment presents reasoned arguments  
 ✅ **Substantive** - Comments reference specific issues (qualified immunity, de-escalation training, oversight)  
-✅ **Balanced** - Some users show nuanced positions between options  
+✅ **Balanced** - Some users show nuanced positions between options
 
 ---
 
@@ -100,6 +99,7 @@ All users marked with `isSeed: true` for easy cleanup:
 ## 🧪 Verification Checklist
 
 ### Basic Functionality
+
 - [ ] Topic page loads at `/t/us-protests-ice-killing-renee-good`
 - [ ] Title and description display correctly
 - [ ] All 4 voting options are visible
@@ -107,6 +107,7 @@ All users marked with `isSeed: true` for easy cleanup:
 - [ ] Voting UI allows selecting exactly one option
 
 ### Voting System
+
 - [ ] Logged-in users can vote
 - [ ] Users can vote for only one option
 - [ ] Vote percentages update in real-time
@@ -114,6 +115,7 @@ All users marked with `isSeed: true` for easy cleanup:
 - [ ] Users cannot vote multiple times
 
 ### Comments Section
+
 - [ ] All 15 comments display correctly
 - [ ] Comments are associated with their respective options
 - [ ] Users can filter comments by option
@@ -121,6 +123,7 @@ All users marked with `isSeed: true` for easy cleanup:
 - [ ] User profiles link correctly
 
 ### SEO & Metadata
+
 - [ ] Page has proper title tag
 - [ ] Meta description is present
 - [ ] Open Graph tags are set
@@ -128,6 +131,7 @@ All users marked with `isSeed: true` for easy cleanup:
 - [ ] Structured data is present (if applicable)
 
 ### Navigation & Discovery
+
 - [ ] Topic appears in "Latest debates" list
 - [ ] Topic can be found via search (if implemented)
 - [ ] Topic shows correct language filter (EN)
@@ -160,6 +164,7 @@ Comment {
 ```
 
 ### Script Location
+
 `/workspaces/TheBate/scripts/seed-ice-renee-good-debate.ts`
 
 ### Running the Script Again
@@ -226,7 +231,7 @@ await prisma.topic.delete({
 ✅ Neutral wording throughout  
 ✅ No auto-seeded votes (only comments)  
 ✅ Reusable structure for future debates  
-✅ Supports future translations/localization  
+✅ Supports future translations/localization
 
 ---
 

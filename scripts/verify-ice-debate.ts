@@ -36,9 +36,7 @@ async function verify() {
     .sort((a, b) => a.order - b.order)
     .forEach((opt, index) => {
       const commentCount = topic.comments.filter((c) => c.optionId === opt.id).length;
-      console.log(
-        `\n${String.fromCharCode(65 + index)}. ${opt.label}`
-      );
+      console.log(`\n${String.fromCharCode(65 + index)}. ${opt.label}`);
       console.log(`   Comments: ${commentCount}`);
     });
 

@@ -5,10 +5,7 @@ async function main() {
   // Find or create a user to author the topic
   let user = await prisma.user.findFirst({
     where: {
-      OR: [
-        { email: "admin@thebate.com" },
-        { role: "ADMIN" }
-      ]
+      OR: [{ email: "admin@thebate.com" }, { role: "ADMIN" }],
     },
     orderBy: { createdAt: "desc" },
   });
@@ -313,7 +310,7 @@ What is your position?`,
         status: "ACTIVE",
       },
     });
-    console.log(`   ✅ Comment by ${commentUsers.find(u => u.id === comment.userId)?.username}`);
+    console.log(`   ✅ Comment by ${commentUsers.find((u) => u.id === comment.userId)?.username}`);
   }
 
   console.log(`\n✅ Successfully created debate topic with ${comments.length} comments`);

@@ -407,15 +407,19 @@ When developing features or fixing issues:
 
 **MANDATORY**: Before EVERY commit, you MUST run:
 
-1. **Lint check**: `pnpm lint`
+1. **Format code**: `pnpm format`
+   - Automatically format code with Prettier
+   - Ensure consistent code style across the project
+
+2. **Lint check**: `pnpm lint`
    - Fix all ESLint warnings and errors
    - Ensure code follows project style guidelines
 
-2. **Type check**: `pnpm typecheck`
+3. **Type check**: `pnpm typecheck`
    - Verify no TypeScript errors exist
    - Ensure all types are properly defined
 
-3. **Build verification**: `pnpm build`
+4. **Build verification**: `pnpm build`
    - Confirm the project builds successfully
    - Catch any build-time errors
 
@@ -423,6 +427,7 @@ When developing features or fixing issues:
 
 ```bash
 # 1. Run quality checks
+pnpm format
 pnpm lint
 pnpm typecheck
 pnpm build
@@ -440,6 +445,7 @@ Before committing, verify:
 - [ ] No `unknown` types used unnecessarily
 - [ ] All functions have proper return types
 - [ ] All parameters have explicit types
+- [ ] `pnpm format` passes with no errors
 - [ ] `pnpm lint` passes with no errors
 - [ ] `pnpm typecheck` passes with no errors
 - [ ] `pnpm build` completes successfully

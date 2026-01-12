@@ -12,10 +12,7 @@ interface EditTopicImageProps {
   currentImageUrl: string | null;
 }
 
-export default function EditTopicImage({
-  topicSlug,
-  currentImageUrl,
-}: EditTopicImageProps) {
+export default function EditTopicImage({ topicSlug, currentImageUrl }: EditTopicImageProps) {
   const router = useRouter();
   const { toast } = useToast();
   const { t } = useTranslations();
