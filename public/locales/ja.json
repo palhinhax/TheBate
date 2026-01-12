@@ -153,5 +153,12 @@
     "not_found_title": "ページが見つかりません",
     "not_found_description": "お探しのページは存在しないか、移動されました。",
     "contact_support": "サポートに連絡"
+  },
+  "giveaway": {
+    "banner": {
+      "title": "意見を持つだけで€50を獲得",
+      "subtitle": "討論に投票してギブアウェイに参加",
+      "cta": "討論に参加"
+    }
   }
 }

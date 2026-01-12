@@ -150,5 +150,12 @@
     "not_found_title": "页面未找到",
     "not_found_description": "您要查找的页面不存在或已被移动。",
     "contact_support": "联系支持"
+  },
+  "giveaway": {
+    "banner": {
+      "title": "发表意见即可赢取€50",
+      "subtitle": "参与辩论投票即可参加抽奖",
+      "cta": "加入辩论"
+    }
   }
 }
