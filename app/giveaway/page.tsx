@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Gift, CheckCircle2, XCircle } from "lucide-react";
 import { GiveawayEntryButton } from "./giveaway-entry-button";
+import { ShareButton } from "@/components/share-button";
 import { headers } from "next/headers";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -308,25 +309,45 @@ export default async function GiveawayPage() {
         {session?.user ? (
           <div className="mb-12">
             {userEntry ? (
-              <div className="rounded-lg border border-green-500 bg-green-50 p-6 text-center dark:bg-green-950/30">
-                <CheckCircle2 className="mx-auto h-12 w-12 text-green-600 dark:text-green-400" />
-                <h2 className="mt-4 text-xl font-bold text-green-900 dark:text-green-100">
-                  You&apos;re Entered!
-                </h2>
-                <p className="mt-2 text-green-700 dark:text-green-300">
-                  You&apos;ve successfully entered the giveaway. Winner will be announced on{" "}
-                  {new Date(giveaway.endDate).toLocaleDateString("en-US", {
-                    month: "long",
-                    day: "numeric",
-                    year: "numeric",
-                  })}
-                  .
-                </p>
-                {!userEntry.hasVoted && (
-                  <p className="mt-4 text-sm text-green-600 dark:text-green-400">
-                    💡 Tip: Vote in a debate to complete your entry!
+              <div className="rounded-lg border border-green-500 bg-green-50 p-6 dark:bg-green-950/30">
+                <div className="text-center">
+                  <CheckCircle2 className="mx-auto h-12 w-12 text-green-600 dark:text-green-400" />
+                  <h2 className="mt-4 text-xl font-bold text-green-900 dark:text-green-100">
+                    You&apos;re Entered!
+                  </h2>
+                  <p className="mt-2 text-green-700 dark:text-green-300">
+                    You&apos;ve successfully entered the giveaway. Winner will be announced on{" "}
+                    {new Date(giveaway.endDate).toLocaleDateString("en-US", {
+                      month: "long",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                    .
                   </p>
-                )}
+                  {!userEntry.hasVoted && (
+                    <p className="mt-4 text-sm text-green-600 dark:text-green-400">
+                      💡 Tip: Vote in a debate to complete your entry!
+                    </p>
+                  )}
+                </div>
+
+                {/* Share Section */}
+                <div className="mt-6 border-t border-green-300 pt-6 dark:border-green-700">
+                  <h3 className="mb-3 text-center text-lg font-semibold text-green-900 dark:text-green-100">
+                    Share & Increase Your Chances! 🎯
+                  </h3>
+                  <p className="mb-4 text-center text-sm text-green-700 dark:text-green-300">
+                    Share the giveaway with friends and help them win too!
+                  </p>
+                  <div className="flex justify-center">
+                    <ShareButton
+                      title={`Win €50 just for having an opinion! 🎁`}
+                      description={`I just entered TheBatee's giveaway - you should too! Free entry, just vote in any debate. Ends ${new Date(giveaway.endDate).toLocaleDateString()}`}
+                      url="https://thebatee.com/giveaway"
+                      hashtags={["giveaway", "win", "TheBatee", "freemoney"]}
+                    />
+                  </div>
+                </div>
               </div>
             ) : (
               <div className="rounded-lg border bg-card p-8 text-center">
