@@ -124,13 +124,7 @@ export function CreateGiveawayForm() {
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <Label htmlFor="startDate">Start Date</Label>
-          <Input
-            id="startDate"
-            name="startDate"
-            type="datetime-local"
-            min={today}
-            required
-          />
+          <Input id="startDate" name="startDate" type="datetime-local" min={today} required />
         </div>
         <div>
           <Label htmlFor="endDate">End Date</Label>

@@ -30,7 +30,7 @@ export function GiveawayBanner() {
         <Link href="/giveaway">
           <Button
             size="lg"
-            className="bg-amber-500 hover:bg-amber-600 text-white font-semibold shadow-md"
+            className="bg-amber-500 font-semibold text-white shadow-md hover:bg-amber-600"
           >
             {t("giveaway.banner.cta")}
           </Button>

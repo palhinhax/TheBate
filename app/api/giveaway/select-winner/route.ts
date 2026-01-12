@@ -33,7 +33,10 @@ export async function POST(request: Request) {
     }
 
     if (giveaway.status !== "ACTIVE" && giveaway.status !== "ENDED") {
-      return NextResponse.json({ error: "Giveaway is not ready for winner selection" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Giveaway is not ready for winner selection" },
+        { status: 400 }
+      );
     }
 
     if (giveaway.winnerId) {

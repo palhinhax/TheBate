@@ -8,12 +8,13 @@ import { GiveawayEntryButton } from "./giveaway-entry-button";
 
 export const metadata: Metadata = {
   title: "Win €50 - Giveaway - TheBatee",
-  description: "Win €50 just for having an opinion. Enter our giveaway by creating an account and voting in a debate.",
+  description:
+    "Win €50 just for having an opinion. Enter our giveaway by creating an account and voting in a debate.",
 };
 
 async function getActiveGiveaway() {
   const now = new Date();
-  
+
   const giveaway = await prisma.giveaway.findFirst({
     where: {
       status: "ACTIVE",
@@ -80,18 +81,18 @@ export default async function GiveawayPage() {
     );
   }
 
-  const userEntry = session?.user?.id
-    ? await getUserEntry(session.user.id, giveaway.id)
-    : null;
+  const userEntry = session?.user?.id ? await getUserEntry(session.user.id, giveaway.id) : null;
   const hasVoted = session?.user?.id ? await hasUserVoted(session.user.id) : false;
 
-  const title = typeof giveaway.title === "object" 
-    ? (giveaway.title as Record<string, string>).en || ""
-    : giveaway.title;
-  
-  const description = typeof giveaway.description === "object"
-    ? (giveaway.description as Record<string, string>).en || ""
-    : giveaway.description;
+  const title =
+    typeof giveaway.title === "object"
+      ? (giveaway.title as Record<string, string>).en || ""
+      : giveaway.title;
+
+  const description =
+    typeof giveaway.description === "object"
+      ? (giveaway.description as Record<string, string>).en || ""
+      : giveaway.description;
 
   const daysLeft = Math.ceil(
     (new Date(giveaway.endDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
@@ -133,7 +134,8 @@ export default async function GiveawayPage() {
                   month: "long",
                   day: "numeric",
                   year: "numeric",
-                })}.
+                })}
+                .
               </p>
               {!userEntry.hasVoted && (
                 <p className="mt-4 text-sm text-green-600 dark:text-green-400">
@@ -236,22 +238,29 @@ export default async function GiveawayPage() {
             })}
           </p>
           <p>
-            <strong>Winner Selection:</strong> One winner will be selected randomly from all eligible entries after the entry period ends.
+            <strong>Winner Selection:</strong> One winner will be selected randomly from all
+            eligible entries after the entry period ends.
           </p>
           <p>
-            <strong>Winner Notification:</strong> The winner will be contacted via email within 48 hours of selection and announced publicly on the site.
+            <strong>Winner Notification:</strong> The winner will be contacted via email within 48
+            hours of selection and announced publicly on the site.
           </p>
           <p>
-            <strong>Prize Delivery:</strong> The prize will be sent electronically to the winner&apos;s email address.
+            <strong>Prize Delivery:</strong> The prize will be sent electronically to the
+            winner&apos;s email address.
           </p>
           <p>
-            <strong>No Purchase Necessary:</strong> No purchase or payment is required to enter or win.
+            <strong>No Purchase Necessary:</strong> No purchase or payment is required to enter or
+            win.
           </p>
           <p>
-            <strong>Affiliation:</strong> This giveaway is not sponsored, endorsed, or administered by Amazon or any other brand mentioned. All trademarks are property of their respective owners.
+            <strong>Affiliation:</strong> This giveaway is not sponsored, endorsed, or administered
+            by Amazon or any other brand mentioned. All trademarks are property of their respective
+            owners.
           </p>
           <p>
-            <strong>Privacy:</strong> Your information will only be used for the giveaway and will not be shared with third parties. See our{" "}
+            <strong>Privacy:</strong> Your information will only be used for the giveaway and will
+            not be shared with third parties. See our{" "}
             <Link href="/legal/privacy" className="text-primary underline">
               Privacy Policy
             </Link>

@@ -5,11 +5,12 @@ import { Badge } from "@/components/ui/badge";
 import { Trophy, Users, Calendar } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Prisma } from "@prisma/client";
 
 type GiveawayWithDetails = {
   id: string;
-  title: Record<string, string>;
-  description: Record<string, string>;
+  title: Prisma.JsonValue;
+  description: Prisma.JsonValue;
   prize: string;
   status: string;
   startDate: Date;
@@ -51,9 +52,7 @@ export function GiveawayListItem({ giveaway }: { giveaway: GiveawayWithDetails }
         throw new Error(data.error || "Failed to select winner");
       }
 
-      alert(
-        `Winner selected: ${data.winner.name || data.winner.username} (${data.winner.email})`
-      );
+      alert(`Winner selected: ${data.winner.name || data.winner.username} (${data.winner.email})`);
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
@@ -61,9 +60,13 @@ export function GiveawayListItem({ giveaway }: { giveaway: GiveawayWithDetails }
     }
   };
 
-  const title = typeof giveaway.title === "object" ? giveaway.title.en : giveaway.title;
+  const title =
+    giveaway.title && typeof giveaway.title === "object" && !Array.isArray(giveaway.title)
+      ? (giveaway.title as Record<string, string>).en || ""
+      : String(giveaway.title || "");
   const now = new Date();
-  const isActive = giveaway.status === "ACTIVE" && now >= giveaway.startDate && now <= giveaway.endDate;
+  const isActive =
+    giveaway.status === "ACTIVE" && now >= giveaway.startDate && now <= giveaway.endDate;
   const hasEnded = now > giveaway.endDate;
 
   return (
