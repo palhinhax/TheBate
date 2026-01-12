@@ -37,6 +37,12 @@
     "delete_account_success": "Account deleted successfully",
     "delete_account_error": "Error deleting account"
   },
+  "karma": {
+    "karma": "Karma",
+    "achievements": "Achievements",
+    "no_achievements_yet": "No achievements unlocked yet. Keep participating!",
+    "points_earned": "points earned"
+  },
   "settings": {
     "title": "Settings",
     "profile_tab": "Profile",

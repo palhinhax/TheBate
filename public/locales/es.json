@@ -37,6 +37,12 @@
     "delete_account_success": "Cuenta eliminada exitosamente",
     "delete_account_error": "Error al eliminar cuenta"
   },
+  "karma": {
+    "karma": "Karma",
+    "achievements": "Logros",
+    "no_achievements_yet": "Aún no has desbloqueado ningún logro. ¡Sigue participando!",
+    "points_earned": "puntos ganados"
+  },
   "settings": {
     "title": "Configuración",
     "profile_tab": "Perfil",

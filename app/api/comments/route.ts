@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { commentSchema, replySchema } from "@/features/comments/schemas";
+import { awardKarma, checkAchievements, KARMA_POINTS } from "@/lib/karma";
 
 export async function POST(req: NextRequest) {
   try {
@@ -97,6 +98,10 @@ export async function POST(req: NextRequest) {
         },
       },
     });
+
+    // Award karma for creating a comment
+    await awardKarma(session.user.id, KARMA_POINTS.CREATE_COMMENT);
+    await checkAchievements(session.user.id);
 
     return NextResponse.json(comment, { status: 201 });
   } catch (error) {

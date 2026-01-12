@@ -57,6 +57,7 @@ model User {
   isSeed               Boolean               @default(false) // Mark seed users for cleanup
   preferredLanguage    String                @default("pt") // UI language preference
   preferredContentLanguages String[]         @default(["pt", "en", "es", "fr", "de"]) // Content languages to show
+  karma                Int                   @default(0) // Total karma points
   createdAt            DateTime              @default(now())
   topics               Topic[]
   comments             Comment[]
@@ -66,6 +67,7 @@ model User {
   emailVerificationTokens EmailVerificationToken[]
   accounts             Account[]             // OAuth accounts
   sessions             Session[]             // User sessions
+  achievements         UserAchievement[]     // User's unlocked achievements
 }
 
 model Topic {
@@ -236,4 +238,30 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+// Achievements/Badges system
+model Achievement {
+  id          String   @id @default(cuid())
+  key         String   @unique // e.g., "first_vote", "topic_creator"
+  name        Json     // Display name (multilingual)
+  description Json     // What the achievement is for (multilingual)
+  icon        String   // Icon/emoji for the badge
+  tier        String   @default("bronze") // bronze, silver, gold, platinum
+  requirement Int      @default(1) // Number needed to unlock
+  createdAt   DateTime @default(now())
+  users       UserAchievement[]
+}
+
+model UserAchievement {
+  id            String      @id @default(cuid())
+  userId        String
+  achievementId String
+  unlockedAt    DateTime    @default(now())
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievement   Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, achievementId])
+  @@index([userId])
+  @@index([achievementId])
 }

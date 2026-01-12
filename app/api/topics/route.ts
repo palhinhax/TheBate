@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { topicSchema } from "@/features/topics/schemas";
 import { generateSlug, generateUniqueSlug } from "@/lib/slug";
+import { awardKarma, checkAchievements, KARMA_POINTS } from "@/lib/karma";
 
 export async function GET(req: NextRequest) {
   try {
@@ -137,6 +138,10 @@ export async function POST(req: NextRequest) {
         options: validated.type === "MULTI_CHOICE",
       },
     });
+
+    // Award karma for creating a topic
+    await awardKarma(session.user.id, KARMA_POINTS.CREATE_TOPIC);
+    await checkAchievements(session.user.id);
 
     return NextResponse.json(topic, { status: 201 });
   } catch (error) {

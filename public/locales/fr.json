@@ -37,6 +37,12 @@
     "delete_account_success": "Compte supprimé avec succès",
     "delete_account_error": "Erreur lors de la suppression du compte"
   },
+  "karma": {
+    "karma": "Karma",
+    "achievements": "Succès",
+    "no_achievements_yet": "Aucun succès débloqué pour le moment. Continuez à participer !",
+    "points_earned": "points gagnés"
+  },
   "settings": {
     "title": "Paramètres",
     "profile_tab": "Profil",

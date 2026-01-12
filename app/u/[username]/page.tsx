@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
 import { useTranslations } from "@/lib/use-translations";
+import { AchievementsDisplay } from "@/components/achievements-display";
 
 type UserData = {
   id: string;
@@ -33,6 +34,18 @@ type UserData = {
   email: string;
   image: string | null;
   createdAt: string;
+  karma: number;
+  achievements: Array<{
+    id: string;
+    achievement: {
+      key: string;
+      name: Record<string, string>;
+      description: Record<string, string>;
+      icon: string;
+      tier: string;
+    };
+    unlockedAt: string;
+  }>;
   topics: Array<{
     id: string;
     slug: string;
@@ -223,7 +236,11 @@ export default function UserProfilePage() {
             )}
 
             {/* Stats */}
-            <div className="mt-6 grid grid-cols-2 gap-4 border-t pt-6 sm:grid-cols-3">
+            <div className="mt-6 grid grid-cols-2 gap-4 border-t pt-6 sm:grid-cols-4">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-primary">⚡ {user.karma}</div>
+                <div className="text-sm text-muted-foreground">{t("karma.karma")}</div>
+              </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-primary">{user.stats.totalTopics}</div>
                 <div className="text-sm text-muted-foreground">
@@ -237,7 +254,7 @@ export default function UserProfilePage() {
                   Argumento{user.stats.totalComments !== 1 ? "s" : ""}
                 </div>
               </div>
-              <div className="col-span-2 text-center sm:col-span-1">
+              <div className="text-center">
                 <div className="text-2xl font-bold text-primary">
                   {user.stats.totalVotesReceived}
                 </div>
@@ -249,6 +266,9 @@ export default function UserProfilePage() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Achievements */}
+        <AchievementsDisplay achievements={user.achievements} karma={user.karma} />
 
         {/* Tabs */}
         <div className="mb-6">

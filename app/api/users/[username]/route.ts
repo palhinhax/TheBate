@@ -12,6 +12,15 @@ export async function GET(request: Request, { params }: { params: { username: st
         email: true,
         image: true,
         createdAt: true,
+        karma: true,
+        achievements: {
+          include: {
+            achievement: true,
+          },
+          orderBy: {
+            unlockedAt: "desc",
+          },
+        },
       },
     });
 
@@ -93,6 +102,8 @@ export async function GET(request: Request, { params }: { params: { username: st
       email: user.email,
       image: user.image,
       createdAt: user.createdAt,
+      karma: user.karma,
+      achievements: user.achievements,
       topics,
       comments: commentsWithVoteCounts,
       stats: {

@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { z } from "zod";
 import { yesNoVoteSchema, multiChoiceVoteSchema } from "@/features/topics/schemas/topic.schema";
+import { awardKarma, checkAchievements, KARMA_POINTS } from "@/lib/karma";
 
 export async function POST(req: NextRequest, { params }: { params: { slug: string } }) {
   try {
@@ -61,6 +62,10 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
             userId: session.user.id,
           },
         });
+
+        // Award karma for first-time vote on this topic
+        await awardKarma(session.user.id, KARMA_POINTS.VOTE_ON_TOPIC);
+        await checkAchievements(session.user.id);
       }
 
       // Get updated vote statistics
@@ -123,6 +128,14 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
       }
 
       // Delete existing votes for this user on this topic
+      const existingVotes = await prisma.topicVote.findMany({
+        where: {
+          userId: session.user.id,
+          topicId: topic.id,
+        },
+      });
+      const hadPreviousVotes = existingVotes.length > 0;
+
       await prisma.topicVote.deleteMany({
         where: {
           userId: session.user.id,
@@ -138,6 +151,12 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
           optionId,
         })),
       });
+
+      // Award karma only for first-time votes
+      if (!hadPreviousVotes) {
+        await awardKarma(session.user.id, KARMA_POINTS.VOTE_ON_TOPIC);
+        await checkAchievements(session.user.id);
+      }
 
       // Get updated vote statistics per option
       const voteStats = await prisma.topicVote.groupBy({
