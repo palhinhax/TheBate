@@ -138,9 +138,9 @@ export default function CreateDebatePage() {
         {/* Introduction */}
         <section className="container mx-auto max-w-4xl px-4 py-12">
           <p className="text-lg leading-relaxed text-muted-foreground">
-            TheBatee is a free platform where anyone can create debates on topics that matter. Whether
-            you&apos;re discussing technology, politics, society, or culture, our global community is
-            ready to share their opinions and vote on your questions.
+            TheBatee is a free platform where anyone can create debates on topics that matter.
+            Whether you&apos;re discussing technology, politics, society, or culture, our global
+            community is ready to share their opinions and vote on your questions.
           </p>
         </section>
 

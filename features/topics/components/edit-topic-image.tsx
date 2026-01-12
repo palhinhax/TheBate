@@ -31,7 +31,10 @@ export default function EditTopicImage({ topicSlug, currentImageUrl }: EditTopic
     if (!allowedTypes.includes(file.type)) {
       toast({
         title: t("common.error", "Error"),
-        description: t("topics.invalid_file_type", "Invalid file type. Only JPG, PNG, WebP and GIF are allowed."),
+        description: t(
+          "topics.invalid_file_type",
+          "Invalid file type. Only JPG, PNG, WebP and GIF are allowed."
+        ),
         variant: "destructive",
       });
       return;

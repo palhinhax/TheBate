@@ -76,7 +76,9 @@ export function ShareButton({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>{t("share.share_discussion", "Share discussion")}</DialogTitle>
-          <DialogDescription>{t("share.share_description", "Choose where to share this discussion")}</DialogDescription>
+          <DialogDescription>
+            {t("share.share_description", "Choose where to share this discussion")}
+          </DialogDescription>
         </DialogHeader>
         <div className="grid gap-3">
           {/* Twitter/X */}

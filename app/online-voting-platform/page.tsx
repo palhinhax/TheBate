@@ -43,8 +43,8 @@ export default function OnlineVotingPlatformPage() {
         <p className="text-lg leading-relaxed text-muted-foreground">
           TheBatee is more than a debate platform—it&apos;s a complete online voting system designed
           for transparency, engagement, and democratic participation. Whether you&apos;re making
-          decisions for a community, gathering team input, or measuring public sentiment, our platform
-          makes voting simple and accessible.
+          decisions for a community, gathering team input, or measuring public sentiment, our
+          platform makes voting simple and accessible.
         </p>
       </section>
     </div>
