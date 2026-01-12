@@ -107,7 +107,7 @@ export async function GET(request: Request, { params }: { params: { username: st
     ]);
 
     // Calculate total votes received on ALL user's comments (not just current page)
-    const allCommentVotes = await prisma.commentVote.aggregate({
+    const allCommentVotes = await prisma.vote.aggregate({
       where: {
         comment: {
           userId: user.id,
