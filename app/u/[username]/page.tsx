@@ -108,6 +108,12 @@ export default function UserProfilePage() {
   // Verificar se o utilizador está a ver o próprio perfil
   const isOwnProfile = session?.user?.username === username;
 
+  // Reset pagination when username changes
+  useEffect(() => {
+    setTopicsPage(1);
+    setCommentsPage(1);
+  }, [username]);
+
   useEffect(() => {
     async function fetchUser() {
       try {

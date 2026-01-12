@@ -4,10 +4,16 @@ import { prisma } from "@/lib/prisma";
 export async function GET(request: Request, { params }: { params: { username: string } }) {
   try {
     const { searchParams } = new URL(request.url);
-    const topicsPage = parseInt(searchParams.get("topicsPage") || "1");
-    const topicsPerPage = Math.min(parseInt(searchParams.get("topicsPerPage") || "10"), 50);
-    const commentsPage = parseInt(searchParams.get("commentsPage") || "1");
-    const commentsPerPage = Math.min(parseInt(searchParams.get("commentsPerPage") || "10"), 50);
+    const topicsPageParam = searchParams.get("topicsPage");
+    const topicsPerPageParam = searchParams.get("topicsPerPage");
+    const commentsPageParam = searchParams.get("commentsPage");
+    const commentsPerPageParam = searchParams.get("commentsPerPage");
+
+    // Validate and parse pagination parameters with defaults
+    const topicsPage = Math.max(1, parseInt(topicsPageParam || "1") || 1);
+    const topicsPerPage = Math.min(Math.max(1, parseInt(topicsPerPageParam || "10") || 10), 50);
+    const commentsPage = Math.max(1, parseInt(commentsPageParam || "1") || 1);
+    const commentsPerPage = Math.min(Math.max(1, parseInt(commentsPerPageParam || "10") || 10), 50);
 
     const topicsSkip = (topicsPage - 1) * topicsPerPage;
     const commentsSkip = (commentsPage - 1) * commentsPerPage;
