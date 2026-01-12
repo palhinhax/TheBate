@@ -28,7 +28,10 @@ export function useTranslations() {
       // First priority: user's preferred language from session
       if (session?.user?.preferredLanguage) {
         selectedLang = session.user.preferredLanguage;
-        console.log("🌐 Loading translations for user preference:", selectedLang);
+        console.log(
+          "🌐 Loading translations for user preference:",
+          selectedLang
+        );
       } else {
         // Second priority: detect browser language
         const browserLang =
@@ -38,14 +41,14 @@ export function useTranslations() {
         selectedLang = supportedLangs.includes(browserLang)
           ? browserLang
           : "pt";
-        console.log("🌐 Loading translations for browser language:", selectedLang);
+        console.log(
+          "🌐 Loading translations for browser language:",
+          selectedLang
+        );
       }
 
-      // Only update if language actually changed
-      if (selectedLang !== locale) {
-        console.log(`🌐 Language changed from ${locale} to ${selectedLang}`);
-        setLocale(selectedLang);
-      }
+      // Update locale
+      setLocale(selectedLang);
 
       // Check cache first
       if (translationsCache[selectedLang]) {
@@ -59,7 +62,13 @@ export function useTranslations() {
       try {
         console.log("🔄 Fetching translations for:", selectedLang);
         const response = await fetch(`/locales/${selectedLang}.json`);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         const data = await response.json();
+        console.log("📦 Received translations data:", Object.keys(data));
         translationsCache[selectedLang] = data;
         setTranslations(data);
         console.log("✅ Translations loaded successfully:", selectedLang);
@@ -73,7 +82,10 @@ export function useTranslations() {
           setTranslations(fallbackData);
           console.log("⚠️ Loaded fallback Portuguese translations");
         } catch (fallbackError) {
-          console.error("❌ Failed to load fallback translations:", fallbackError);
+          console.error(
+            "❌ Failed to load fallback translations:",
+            fallbackError
+          );
         }
       } finally {
         setIsLoading(false);
@@ -82,17 +94,24 @@ export function useTranslations() {
 
     // Wait for session to load before loading translations
     if (status !== "loading") {
-      console.log("🔍 Session status:", status, "User preference:", session?.user?.preferredLanguage);
+      console.log(
+        "🔍 Session status:",
+        status,
+        "User preference:",
+        session?.user?.preferredLanguage
+      );
       loadTranslations();
     }
-  }, [session?.user?.preferredLanguage, status, locale]);
+  }, [session?.user?.preferredLanguage, status]);
 
   const t = (key: TranslationKey, fallback?: string): string => {
     // Debug: check if translations object is empty
     const translationsCount = Object.keys(translations).length;
-    
+
     if (translationsCount === 0) {
-      console.warn(`⚠️ Translations object is empty! isLoading: ${isLoading}, locale: ${locale}, key: ${key}`);
+      console.warn(
+        `⚠️ Translations object is empty! isLoading: ${isLoading}, locale: ${locale}, key: ${key}`
+      );
       return fallback || key;
     }
 
@@ -103,7 +122,9 @@ export function useTranslations() {
       if (value && typeof value === "object" && k in value) {
         value = (value as Record<string, unknown>)[k];
       } else {
-        console.warn(`⚠️ Translation key not found: ${key}, locale: ${locale}, keys checked: ${keys.join(".")}`);
+        console.warn(
+          `⚠️ Translation key not found: ${key}, locale: ${locale}, keys checked: ${keys.join(".")}`
+        );
         console.log("📦 Available translations:", Object.keys(translations));
         return fallback || key;
       }
