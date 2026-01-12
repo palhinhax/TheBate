@@ -9,11 +9,15 @@ import { sendMagicLinkEmail } from "@/lib/email";
 
 // Validate environment variables
 if (!process.env.AUTH_SECRET) {
-  throw new Error("❌ AUTH_SECRET is not configured. Please set it in your environment variables.");
+  throw new Error(
+    "❌ AUTH_SECRET is not configured. Please set it in your environment variables."
+  );
 }
 
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
-  console.warn("⚠️ Google OAuth is not fully configured. GOOGLE_CLIENT_ID or GOOGLE_CLIENT_SECRET is missing.");
+  console.warn(
+    "⚠️ Google OAuth is not fully configured. GOOGLE_CLIENT_ID or GOOGLE_CLIENT_SECRET is missing."
+  );
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -110,41 +114,46 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         // For OAuth providers, ensure user has required fields
         if (account?.provider === "google") {
           console.log("🔍 Processing Google sign-in for:", user.email);
-          
-          const existingUser = await prisma.user.findUnique({
-            where: { email: user.email! },
-          }).catch((error) => {
-            console.error("❌ Database error finding user:", error);
-            throw new Error(`Database connection failed: ${error.message}`);
-          });
+
+          const existingUser = await prisma.user
+            .findUnique({
+              where: { email: user.email! },
+            })
+            .catch((error) => {
+              console.error("❌ Database error finding user:", error);
+              throw new Error(`Database connection failed: ${error.message}`);
+            });
 
           if (existingUser && !existingUser.username) {
-            console.log("👤 Generating username for existing user:", existingUser.id);
-            
+            console.log(
+              "👤 Generating username for existing user:",
+              existingUser.id
+            );
+
             // Generate username from email if not set
             const baseUsername = user.email!.split("@")[0];
             let username = baseUsername;
             let counter = 1;
 
             // Ensure username is unique
-            while (
-              await prisma.user.findUnique({ where: { username } })
-            ) {
+            while (await prisma.user.findUnique({ where: { username } })) {
               username = `${baseUsername}${counter}`;
               counter++;
             }
 
-            await prisma.user.update({
-              where: { id: existingUser.id },
-              data: {
-                username,
-                emailVerified: new Date(),
-              },
-            }).catch((error) => {
-              console.error("❌ Failed to update user:", error);
-              throw new Error(`Failed to update user: ${error.message}`);
-            });
-            
+            await prisma.user
+              .update({
+                where: { id: existingUser.id },
+                data: {
+                  username,
+                  emailVerified: new Date(),
+                },
+              })
+              .catch((error) => {
+                console.error("❌ Failed to update user:", error);
+                throw new Error(`Failed to update user: ${error.message}`);
+              });
+
             console.log("✅ Username created:", username);
           }
         }
@@ -152,13 +161,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         // For email magic link, mark email as verified
         if (account?.provider === "resend" || account?.provider === "email") {
           console.log("📧 Processing email sign-in for:", user.email);
-          
-          const existingUser = await prisma.user.findUnique({
-            where: { email: user.email! },
-          }).catch((error) => {
-            console.error("❌ Database error finding user:", error);
-            throw new Error(`Database connection failed: ${error.message}`);
-          });
+
+          const existingUser = await prisma.user
+            .findUnique({
+              where: { email: user.email! },
+            })
+            .catch((error) => {
+              console.error("❌ Database error finding user:", error);
+              throw new Error(`Database connection failed: ${error.message}`);
+            });
 
           if (existingUser) {
             // Generate username if not set
@@ -167,31 +178,33 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
               let username = baseUsername;
               let counter = 1;
 
-              while (
-                await prisma.user.findUnique({ where: { username } })
-              ) {
+              while (await prisma.user.findUnique({ where: { username } })) {
                 username = `${baseUsername}${counter}`;
                 counter++;
               }
 
-              await prisma.user.update({
-                where: { id: existingUser.id },
-                data: {
-                  username,
-                  emailVerified: new Date(),
-                },
-              }).catch((error) => {
-                console.error("❌ Failed to update user:", error);
-                throw new Error(`Failed to update user: ${error.message}`);
-              });
+              await prisma.user
+                .update({
+                  where: { id: existingUser.id },
+                  data: {
+                    username,
+                    emailVerified: new Date(),
+                  },
+                })
+                .catch((error) => {
+                  console.error("❌ Failed to update user:", error);
+                  throw new Error(`Failed to update user: ${error.message}`);
+                });
             } else if (!existingUser.emailVerified) {
-              await prisma.user.update({
-                where: { id: existingUser.id },
-                data: { emailVerified: new Date() },
-              }).catch((error) => {
-                console.error("❌ Failed to verify email:", error);
-                throw new Error(`Failed to verify email: ${error.message}`);
-              });
+              await prisma.user
+                .update({
+                  where: { id: existingUser.id },
+                  data: { emailVerified: new Date() },
+                })
+                .catch((error) => {
+                  console.error("❌ Failed to verify email:", error);
+                  throw new Error(`Failed to verify email: ${error.message}`);
+                });
             }
           }
         }
@@ -220,21 +233,23 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         // This ensures language preferences are always up-to-date
         if ((trigger === "update" || !token.username) && token.id) {
           console.log("🔄 Refreshing token data from database for:", token.id);
-          
-          const dbUser = await prisma.user.findUnique({
-            where: { id: token.id as string },
-            select: {
-              username: true,
-              name: true,
-              role: true,
-              isOwner: true,
-              preferredLanguage: true,
-              preferredContentLanguages: true,
-            },
-          }).catch((error) => {
-            console.error("❌ Database error in JWT callback:", error);
-            throw new Error(`Failed to fetch user data: ${error.message}`);
-          });
+
+          const dbUser = await prisma.user
+            .findUnique({
+              where: { id: token.id as string },
+              select: {
+                username: true,
+                name: true,
+                role: true,
+                isOwner: true,
+                preferredLanguage: true,
+                preferredContentLanguages: true,
+              },
+            })
+            .catch((error) => {
+              console.error("❌ Database error in JWT callback:", error);
+              throw new Error(`Failed to fetch user data: ${error.message}`);
+            });
 
           if (dbUser) {
             token.username = dbUser.username;
