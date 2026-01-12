@@ -39,3 +39,6 @@ next-env.d.ts
 # pnpm
 pnpm-workspace.yaml
 .env.temp
+
+# npm (project uses pnpm)
+package-lock.json
