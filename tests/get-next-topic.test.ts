@@ -36,11 +36,7 @@ describe("getNextTopic", () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mockFindFirst.mockResolvedValueOnce(mockRelatedTopic as any);
 
-    const result = await getNextTopic(
-      currentTopicId,
-      currentTopicTags,
-      language
-    );
+    const result = await getNextTopic(currentTopicId, currentTopicTags, language);
 
     expect(result).toEqual(mockRelatedTopic);
     expect(mockFindFirst).toHaveBeenCalledWith({
@@ -78,11 +74,7 @@ describe("getNextTopic", () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mockFindFirst.mockResolvedValueOnce(mockRecentTopic as any);
 
-    const result = await getNextTopic(
-      currentTopicId,
-      currentTopicTags,
-      language
-    );
+    const result = await getNextTopic(currentTopicId, currentTopicTags, language);
 
     expect(result).toEqual(mockRecentTopic);
     expect(mockFindFirst).toHaveBeenCalledTimes(2);
@@ -106,11 +98,7 @@ describe("getNextTopic", () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mockFindFirst.mockResolvedValueOnce(mockFallbackTopic as any);
 
-    const result = await getNextTopic(
-      currentTopicId,
-      currentTopicTags,
-      language
-    );
+    const result = await getNextTopic(currentTopicId, currentTopicTags, language);
 
     expect(result).toEqual(mockFallbackTopic);
     expect(mockFindFirst).toHaveBeenCalledTimes(3);
@@ -124,11 +112,7 @@ describe("getNextTopic", () => {
     // All calls return null
     mockFindFirst.mockResolvedValue(null);
 
-    const result = await getNextTopic(
-      currentTopicId,
-      currentTopicTags,
-      language
-    );
+    const result = await getNextTopic(currentTopicId, currentTopicTags, language);
 
     expect(result).toBeNull();
     expect(mockFindFirst).toHaveBeenCalledTimes(3);
@@ -147,11 +131,7 @@ describe("getNextTopic", () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mockFindFirst.mockResolvedValueOnce(mockRecentTopic as any);
 
-    const result = await getNextTopic(
-      currentTopicId,
-      currentTopicTags,
-      language
-    );
+    const result = await getNextTopic(currentTopicId, currentTopicTags, language);
 
     expect(result).toEqual(mockRecentTopic);
     // Should skip related topics query and go straight to recent topics
@@ -177,18 +157,10 @@ describe("getNextTopic", () => {
     const currentTopicTags = ["tag"];
     const language = "pt";
 
-    const consoleErrorSpy = jest
-      .spyOn(console, "error")
-      .mockImplementation(() => {});
-    mockFindFirst.mockRejectedValueOnce(
-      new Error("Database error")
-    );
+    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+    mockFindFirst.mockRejectedValueOnce(new Error("Database error"));
 
-    const result = await getNextTopic(
-      currentTopicId,
-      currentTopicTags,
-      language
-    );
+    const result = await getNextTopic(currentTopicId, currentTopicTags, language);
 
     expect(result).toBeNull();
     expect(consoleErrorSpy).toHaveBeenCalled();

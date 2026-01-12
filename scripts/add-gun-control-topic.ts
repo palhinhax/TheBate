@@ -24,16 +24,13 @@ async function main() {
     throw new Error("Nenhum user encontrado!");
   }
 
-  console.log(
-    `\n🎯 A criar tópico polêmico sobre controle de armas para: ${user.username}`
-  );
+  console.log(`\n🎯 A criar tópico polêmico sobre controle de armas para: ${user.username}`);
   console.log(`   User ID: ${user.id}\n`);
 
   const topics = [
     // English - Super controversial gun control topic
     {
-      title:
-        "Should the Second Amendment be repealed? Guns kill more Americans than save them",
+      title: "Should the Second Amendment be repealed? Guns kill more Americans than save them",
       description:
         "The data is clear: more guns = more deaths. Mass shootings happen weekly. Children die in schools. Yet gun lobbyists claim 'good guys with guns' are the solution. Is the right to bear arms worth thousands of lives every year, or is it time to admit the Second Amendment is outdated and deadly?",
       language: "en" as const,
@@ -68,8 +65,7 @@ async function main() {
     },
     // Hindi
     {
-      title:
-        "अमेरिका: क्या हथियारों का अधिकार बच्चों की जान से ज़्यादा महत्वपूर्ण है?",
+      title: "अमेरिका: क्या हथियारों का अधिकार बच्चों की जान से ज़्यादा महत्वपूर्ण है?",
       description:
         "स्कूलों में गोलीबारी, साप्ताहिक नरसंहार, हर साल हजारों मौतें। डेटा स्पष्ट है: अधिक हथियार = अधिक मौतें। लेकिन अमेरिकी दूसरे संशोधन को पवित्र मानते हैं। क्या 'हथियार रखने का अधिकार' स्कूलों में बच्चों की मौत को उचित ठहराता है?",
       language: "hi" as const,
@@ -83,9 +79,7 @@ async function main() {
     },
   ];
 
-  console.log(
-    `📝 A criar ${topics.length} tópicos sobre controle de armas...\n`
-  );
+  console.log(`📝 A criar ${topics.length} tópicos sobre controle de armas...\n`);
 
   let created = 0;
   const errors: Array<{ title: string; error: string }> = [];
@@ -119,8 +113,7 @@ async function main() {
       created++;
       console.log(`✅ [${topic.language}] ${topic.title}`);
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Erro desconhecido";
+      const errorMessage = error instanceof Error ? error.message : "Erro desconhecido";
       errors.push({ title: topic.title, error: errorMessage });
       console.log(`❌ [${topic.language}] ${topic.title} - ${errorMessage}`);
     }

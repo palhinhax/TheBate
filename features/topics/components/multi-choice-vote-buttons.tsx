@@ -161,9 +161,7 @@ export default function MultiChoiceVoteButtons({
   if (!session?.user) {
     return (
       <div className="rounded-lg border bg-muted/50 px-6 py-8 text-center">
-        <p className="mb-4 text-muted-foreground">
-          Entre para votar neste tema
-        </p>
+        <p className="mb-4 text-muted-foreground">Entre para votar neste tema</p>
         <Link href={`/auth/login?callbackUrl=/t/${topicSlug}`}>
           <Button>Entrar</Button>
         </Link>
@@ -172,8 +170,7 @@ export default function MultiChoiceVoteButtons({
   }
 
   const hasChanges =
-    JSON.stringify([...selectedOptions].sort()) !==
-    JSON.stringify([...userVotes].sort());
+    JSON.stringify([...selectedOptions].sort()) !== JSON.stringify([...userVotes].sort());
 
   return (
     <div className="space-y-4">
@@ -195,21 +192,17 @@ export default function MultiChoiceVoteButtons({
                 <div className="flex-1">
                   <div className="font-medium">{option.label}</div>
                   {option.description && (
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      {option.description}
-                    </p>
+                    <p className="mt-1 text-sm text-muted-foreground">{option.description}</p>
                   )}
                 </div>
-                {isSelected && (
-                  <Check className="h-5 w-5 shrink-0 text-primary" />
-                )}
+                {isSelected && <Check className="h-5 w-5 shrink-0 text-primary" />}
               </div>
             </button>
           );
         })}
       </div>
 
-      <div className="flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-center">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">
           {allowMultipleVotes
             ? `Pode escolher até ${maxChoices} opç${maxChoices === 1 ? "ão" : "ões"}`
@@ -219,12 +212,7 @@ export default function MultiChoiceVoteButtons({
         </p>
         <div className="flex gap-2">
           {userVotes.length > 0 && (
-            <Button
-              onClick={handleRemoveVote}
-              disabled={isVoting}
-              variant="outline"
-              size="sm"
-            >
+            <Button onClick={handleRemoveVote} disabled={isVoting} variant="outline" size="sm">
               Remover voto
             </Button>
           )}

@@ -1,15 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
-import {
-  updateCommentSchema,
-  moderateCommentSchema,
-} from "@/features/comments/schemas";
+import { updateCommentSchema, moderateCommentSchema } from "@/features/comments/schemas";
 
-export async function PATCH(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const session = await auth();
     if (!session?.user) {
@@ -53,10 +47,7 @@ export async function PATCH(
     });
 
     if (!comment) {
-      return NextResponse.json(
-        { error: "Comentário não encontrado" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Comentário não encontrado" }, { status: 404 });
     }
 
     if (comment.userId !== session.user.id) {
@@ -90,28 +81,14 @@ export async function PATCH(
     if (error instanceof Error && error.name === "ZodError") {
       return NextResponse.json({ error: "Dados inválidos" }, { status: 400 });
     }
-    if (
-      error &&
-      typeof error === "object" &&
-      "code" in error &&
-      error.code === "P2025"
-    ) {
-      return NextResponse.json(
-        { error: "Comentário não encontrado" },
-        { status: 404 }
-      );
+    if (error && typeof error === "object" && "code" in error && error.code === "P2025") {
+      return NextResponse.json({ error: "Comentário não encontrado" }, { status: 404 });
     }
-    return NextResponse.json(
-      { error: "Erro ao atualizar comentário" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erro ao atualizar comentário" }, { status: 500 });
   }
 }
 
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const session = await auth();
     if (!session?.user) {
@@ -124,10 +101,7 @@ export async function DELETE(
     });
 
     if (!comment) {
-      return NextResponse.json(
-        { error: "Comentário não encontrado" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Comentário não encontrado" }, { status: 404 });
     }
 
     const userRole = session.user.role;
@@ -147,20 +121,9 @@ export async function DELETE(
     return NextResponse.json({ message: "Comentário removido" });
   } catch (error) {
     console.error("Error deleting comment:", error);
-    if (
-      error &&
-      typeof error === "object" &&
-      "code" in error &&
-      error.code === "P2025"
-    ) {
-      return NextResponse.json(
-        { error: "Comentário não encontrado" },
-        { status: 404 }
-      );
+    if (error && typeof error === "object" && "code" in error && error.code === "P2025") {
+      return NextResponse.json({ error: "Comentário não encontrado" }, { status: 404 });
     }
-    return NextResponse.json(
-      { error: "Erro ao remover comentário" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erro ao remover comentário" }, { status: 500 });
   }
 }

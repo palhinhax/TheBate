@@ -9,11 +9,13 @@ The easiest and most maintainable way to seed your database is using the new YAM
 ### What is YAML-Based Seeding?
 
 Seed data is defined in a declarative YAML file (`prisma/seed-data.yml`) which includes:
+
 - Admin and moderator users
 - Sample users for different languages
 - Sample topics to demonstrate the platform
 
 **Benefits:**
+
 - ✅ **Idempotent**: Safe to run multiple times
 - ✅ **Version controlled**: Changes tracked in git
 - ✅ **Easy to customize**: Edit YAML file to change seed data
@@ -30,9 +32,11 @@ Seed data is defined in a declarative YAML file (`prisma/seed-data.yml`) which i
 5. Click **Run workflow**
 
 **Required GitHub Secret:**
+
 - `DATABASE_URL`: Your production database connection string (add in Settings > Secrets > Actions)
 
 The workflow will:
+
 - Check and run any pending migrations (with retry logic)
 - Apply seed data from `prisma/seed-data.yml`
 - Create admin, moderator, and sample users
@@ -53,11 +57,13 @@ pnpm run db:seed-yaml
 ### Customizing Seed Data
 
 Edit `prisma/seed-data.yml` to customize:
+
 - User accounts (usernames, emails, passwords)
 - User roles and language preferences
 - Topics (titles, descriptions, tags, languages)
 
 After editing, simply run the seed command again. The script will:
+
 - Skip existing users (by email/username)
 - Skip existing topics (by slug)
 - Create any new entries
@@ -79,6 +85,7 @@ pnpm run seed:engagement
 ```
 
 This creates:
+
 - **60 users** across 6 languages (en, pt, es, fr, de, it)
 - **8-20 comments per topic** with realistic opinions
 - **Replies** to comments (max depth: 2 levels)
@@ -91,6 +98,7 @@ This creates:
 ## Verify Results
 
 Visit the application and check:
+
 - Admin and sample users can log in
 - Topics are displayed in multiple languages
 - Comments show different opinions (if engagement seed was run)
@@ -101,14 +109,17 @@ Visit the application and check:
 After YAML seeding, you can log in with:
 
 **Admin:**
+
 - Email: `admin@thebate.com`
 - Password: `password123`
 
 **Moderator:**
+
 - Email: `mod@thebate.com`
 - Password: `password123`
 
 **Sample Users:**
+
 - `maria@example.com` (Portuguese)
 - `john@example.com` (English)
 - `carlos@example.com` (Spanish)
@@ -142,6 +153,7 @@ The GitHub Actions workflow **"Database Update & Seed"** handles both migrations
 4. Provides detailed error reporting
 
 **Why this workflow is better:**
+
 - ✅ Handles PostgreSQL advisory lock timeouts
 - ✅ Automatic retry (3 attempts with delays)
 - ✅ Proper connection timeout configuration
@@ -161,6 +173,7 @@ This is normal and expected. The seed script skips existing topics by slug.
 ### Issue: "Connection timeout" or "Advisory lock timeout"
 
 Use the GitHub Actions workflow which includes:
+
 - Retry logic (3 attempts)
 - Proper timeouts (15s connect, 45s statement)
 - Better error handling

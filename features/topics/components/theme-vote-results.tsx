@@ -37,9 +37,7 @@ export default function ThemeVoteResults({ voteStats }: ThemeVoteResultsProps) {
           {/* Sim */}
           <div className="space-y-1">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-medium text-green-600 dark:text-green-500">
-                Sim
-              </span>
+              <span className="font-medium text-green-600 dark:text-green-500">Sim</span>
               <span className="text-muted-foreground">
                 {simPercent}% ({SIM})
               </span>
@@ -55,9 +53,7 @@ export default function ThemeVoteResults({ voteStats }: ThemeVoteResultsProps) {
           {/* Não */}
           <div className="space-y-1">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-medium text-red-600 dark:text-red-500">
-                Não
-              </span>
+              <span className="font-medium text-red-600 dark:text-red-500">Não</span>
               <span className="text-muted-foreground">
                 {naoPercent}% ({NAO})
               </span>
@@ -73,9 +69,7 @@ export default function ThemeVoteResults({ voteStats }: ThemeVoteResultsProps) {
           {/* Depende */}
           <div className="space-y-1">
             <div className="flex items-center justify-between text-xs">
-              <span className="font-medium text-yellow-600 dark:text-yellow-500">
-                Depende
-              </span>
+              <span className="font-medium text-yellow-600 dark:text-yellow-500">Depende</span>
               <span className="text-muted-foreground">
                 {dependePercent}% ({DEPENDE})
               </span>

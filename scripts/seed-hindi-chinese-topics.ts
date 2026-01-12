@@ -24,8 +24,7 @@ async function main() {
     },
     {
       title: "सोशल मीडिया लोकतंत्र के लिए अच्छा है या बुरा?",
-      description:
-        "सोशल मीडिया ने राजनीतिक चर्चा को कैसे बदल दिया है - सकारात्मक या नकारात्मक?",
+      description: "सोशल मीडिया ने राजनीतिक चर्चा को कैसे बदल दिया है - सकारात्मक या नकारात्मक?",
       language: "hi" as const,
     },
     {
@@ -36,8 +35,7 @@ async function main() {
     },
     {
       title: "दूरस्थ कार्य बेहतर है या कार्यालय में काम?",
-      description:
-        "COVID के बाद, कंपनियां कर्मचारियों को वापस बुला रही हैं - क्या यह सही है?",
+      description: "COVID के बाद, कंपनियां कर्मचारियों को वापस बुला रही हैं - क्या यह सही है?",
       language: "hi" as const,
     },
     {
@@ -48,14 +46,12 @@ async function main() {
     },
     {
       title: "ऑनलाइन शिक्षा पारंपरिक शिक्षा जितनी प्रभावी है?",
-      description:
-        "डिजिटल प्लेटफॉर्म पर शिक्षा - क्या यह कक्षा शिक्षा का वास्तविक विकल्प है?",
+      description: "डिजिटल प्लेटफॉर्म पर शिक्षा - क्या यह कक्षा शिक्षा का वास्तविक विकल्प है?",
       language: "hi" as const,
     },
     {
       title: "शाकाहार स्वास्थ्य और पर्यावरण के लिए बेहतर है?",
-      description:
-        "मांसाहार बनाम शाकाहार - वैज्ञानिक और नैतिक तर्क क्या कहते हैं?",
+      description: "मांसाहार बनाम शाकाहार - वैज्ञानिक और नैतिक तर्क क्या कहते हैं?",
       language: "hi" as const,
     },
     {
@@ -66,14 +62,12 @@ async function main() {
     },
     {
       title: "तकनीक बच्चों के विकास को कैसे प्रभावित करती है?",
-      description:
-        "स्मार्टफोन और टैबलेट का बच्चों पर प्रभाव - हानिकारक या लाभदायक?",
+      description: "स्मार्टफोन और टैबलेट का बच्चों पर प्रभाव - हानिकारक या लाभदायक?",
       language: "hi" as const,
     },
     {
       title: "यूनिवर्सल बेसिक इनकम एक व्यावहारिक समाधान है?",
-      description:
-        "सभी नागरिकों को मुफ्त आय - क्या यह आर्थिक असमानता को हल कर सकता है?",
+      description: "सभी नागरिकों को मुफ्त आय - क्या यह आर्थिक असमानता को हल कर सकता है?",
       language: "hi" as const,
     },
     // Chinese (zh) - 10 tópicos polêmicos
@@ -150,8 +144,7 @@ async function main() {
       created++;
       console.log(`✅ [${topic.language}] ${topic.title}`);
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Erro desconhecido";
+      const errorMessage = error instanceof Error ? error.message : "Erro desconhecido";
       errors.push({ title: topic.title, error: errorMessage });
       console.log(`❌ [${topic.language}] ${topic.title} - ${errorMessage}`);
     }

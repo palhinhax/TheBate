@@ -3,10 +3,7 @@ import { Prisma } from "@prisma/client";
 import { auth } from "@/lib/auth/config";
 import { prisma } from "@/lib/prisma";
 
-export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(request: Request, { params }: { params: { id: string } }) {
   try {
     const session = await auth();
 
@@ -21,17 +18,11 @@ export async function DELETE(
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Admin topic delete error:", error);
-    return NextResponse.json(
-      { error: "Failed to delete topic" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to delete topic" }, { status: 500 });
   }
 }
 
-export async function PATCH(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function PATCH(request: Request, { params }: { params: { id: string } }) {
   try {
     const session = await auth();
 
@@ -54,9 +45,6 @@ export async function PATCH(
     return NextResponse.json(topic);
   } catch (error) {
     console.error("Admin topic update error:", error);
-    return NextResponse.json(
-      { error: "Failed to update topic" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to update topic" }, { status: 500 });
   }
 }

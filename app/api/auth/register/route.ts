@@ -11,10 +11,7 @@ const registerSchema = z.object({
     .string()
     .min(3, "O username deve ter pelo menos 3 caracteres")
     .max(30, "O username não pode ter mais de 30 caracteres")
-    .regex(
-      /^[a-zA-Z0-9_.]+$/,
-      "Username só pode conter letras, números, underscore e ponto"
-    ),
+    .regex(/^[a-zA-Z0-9_.]+$/, "Username só pode conter letras, números, underscore e ponto"),
   email: z.string().email("Email inválido"),
   password: z.string().min(8, "A senha deve ter pelo menos 8 caracteres"),
 });
@@ -45,16 +42,10 @@ export async function POST(request: Request) {
 
     if (existingUser) {
       if (existingUser.email === email) {
-        return NextResponse.json(
-          { message: "Este email já está em uso" },
-          { status: 409 }
-        );
+        return NextResponse.json({ message: "Este email já está em uso" }, { status: 409 });
       }
       if (existingUser.username === username) {
-        return NextResponse.json(
-          { message: "Este username já está em uso" },
-          { status: 409 }
-        );
+        return NextResponse.json({ message: "Este username já está em uso" }, { status: 409 });
       }
     }
 
@@ -103,16 +94,12 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         ...user,
-        message:
-          "Registo concluído! Verifique o seu email para confirmar a conta.",
+        message: "Registo concluído! Verifique o seu email para confirmar a conta.",
       },
       { status: 201 }
     );
   } catch (error) {
     console.error("Registration error:", error);
-    return NextResponse.json(
-      { message: "Erro interno do servidor" },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Erro interno do servidor" }, { status: 500 });
   }
 }

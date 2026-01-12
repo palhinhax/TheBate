@@ -67,10 +67,7 @@ export async function sendPasswordResetEmail(
   const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
   const resetUrl = `${baseUrl}/auth/reset-password?token=${token}`;
 
-  const messages: Record<
-    string,
-    { subject: string; getText: (url: string) => string }
-  > = {
+  const messages: Record<string, { subject: string; getText: (url: string) => string }> = {
     pt: {
       subject: "Recuperar Palavra-passe - TheBatee",
       getText: (url: string) =>
@@ -150,10 +147,7 @@ export async function sendEmailVerificationEmail(
   const baseUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
   const verifyUrl = `${baseUrl}/auth/verify-email?token=${token}`;
 
-  const messages: Record<
-    string,
-    { subject: string; getText: (url: string) => string }
-  > = {
+  const messages: Record<string, { subject: string; getText: (url: string) => string }> = {
     pt: {
       subject: "Verificar Email - TheBate",
       getText: (url: string) =>

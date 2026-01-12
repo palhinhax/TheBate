@@ -28,10 +28,7 @@ const registerSchema = z
       .string()
       .min(3, "O username deve ter pelo menos 3 caracteres")
       .max(30, "O username não pode ter mais de 30 caracteres")
-      .regex(
-        /^[a-zA-Z0-9_.]+$/,
-        "Username só pode conter letras, números, underscore e ponto"
-      ),
+      .regex(/^[a-zA-Z0-9_.]+$/, "Username só pode conter letras, números, underscore e ponto"),
     email: z.string().email("Email inválido"),
     password: z.string().min(8, "A senha deve ter pelo menos 8 caracteres"),
     confirmPassword: z.string(),
@@ -101,9 +98,7 @@ export default function RegisterPage() {
     <div className="flex min-h-screen items-center justify-center px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-center text-2xl font-bold">
-            Criar uma conta
-          </CardTitle>
+          <CardTitle className="text-center text-2xl font-bold">Criar uma conta</CardTitle>
           <CardDescription className="text-center">
             Preencha seus dados para criar sua conta
           </CardDescription>
@@ -124,11 +119,7 @@ export default function RegisterPage() {
                 {...register("name")}
                 aria-invalid={!!errors.name}
               />
-              {errors.name && (
-                <p className="text-sm text-destructive">
-                  {errors.name.message}
-                </p>
-              )}
+              {errors.name && <p className="text-sm text-destructive">{errors.name.message}</p>}
             </div>
             <div className="space-y-2">
               <Label htmlFor="username">Username</Label>
@@ -140,9 +131,7 @@ export default function RegisterPage() {
                 aria-invalid={!!errors.username}
               />
               {errors.username && (
-                <p className="text-sm text-destructive">
-                  {errors.username.message}
-                </p>
+                <p className="text-sm text-destructive">{errors.username.message}</p>
               )}
             </div>
             <div className="space-y-2">
@@ -155,11 +144,7 @@ export default function RegisterPage() {
                 {...register("email")}
                 aria-invalid={!!errors.email}
               />
-              {errors.email && (
-                <p className="text-sm text-destructive">
-                  {errors.email.message}
-                </p>
-              )}
+              {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Senha</Label>
@@ -171,9 +156,7 @@ export default function RegisterPage() {
                 aria-invalid={!!errors.password}
               />
               {errors.password && (
-                <p className="text-sm text-destructive">
-                  {errors.password.message}
-                </p>
+                <p className="text-sm text-destructive">{errors.password.message}</p>
               )}
             </div>
             <div className="space-y-2">
@@ -186,9 +169,7 @@ export default function RegisterPage() {
                 aria-invalid={!!errors.confirmPassword}
               />
               {errors.confirmPassword && (
-                <p className="text-sm text-destructive">
-                  {errors.confirmPassword.message}
-                </p>
+                <p className="text-sm text-destructive">{errors.confirmPassword.message}</p>
               )}
             </div>
           </CardContent>

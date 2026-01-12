@@ -40,10 +40,7 @@ export async function POST(request: Request) {
       verificationToken.expiresAt < new Date() ||
       verificationToken.usedAt
     ) {
-      return NextResponse.json(
-        { message: "Token inválido ou expirado" },
-        { status: 400 }
-      );
+      return NextResponse.json({ message: "Token inválido ou expirado" }, { status: 400 });
     }
 
     // Mark email as verified and mark token as used in a transaction
@@ -73,9 +70,6 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("Email verification confirm error:", error);
-    return NextResponse.json(
-      { message: "Erro interno do servidor" },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Erro interno do servidor" }, { status: 500 });
   }
 }

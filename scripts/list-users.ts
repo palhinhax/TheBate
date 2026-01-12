@@ -25,9 +25,7 @@ async function main() {
     console.log(`👤 ${user.username} (${user.email})`);
     console.log(`   ID: ${user.id}`);
     console.log(`   Role: ${user.role}`);
-    console.log(
-      `   Topics: ${user._count.topics} | Comments: ${user._count.comments}`
-    );
+    console.log(`   Topics: ${user._count.topics} | Comments: ${user._count.comments}`);
     console.log("");
   });
 }

@@ -1,445 +1,382 @@
 # [3.3.0](https://github.com/palhinhax/TheBate/compare/v3.2.0...v3.3.0) (2026-01-11)
 
-
 ### Bug Fixes
 
-* handle nullable username fields for OAuth users ([6329c31](https://github.com/palhinhax/TheBate/commit/6329c31234c52ba091887b762f04954cbde6fbc9))
-* regenerate pnpm-lock.yaml after adding dependencies ([5c71e00](https://github.com/palhinhax/TheBate/commit/5c71e00ccbf107781b6c74d92739130a5dc13763))
-* resolve @auth/core version conflict causing build failure ([26265b6](https://github.com/palhinhax/TheBate/commit/26265b6afa7af7fae9bdab511aeccb9023d11ae4))
-
+- handle nullable username fields for OAuth users ([6329c31](https://github.com/palhinhax/TheBate/commit/6329c31234c52ba091887b762f04954cbde6fbc9))
+- regenerate pnpm-lock.yaml after adding dependencies ([5c71e00](https://github.com/palhinhax/TheBate/commit/5c71e00ccbf107781b6c74d92739130a5dc13763))
+- resolve @auth/core version conflict causing build failure ([26265b6](https://github.com/palhinhax/TheBate/commit/26265b6afa7af7fae9bdab511aeccb9023d11ae4))
 
 ### Features
 
-* **auth:** add Google OAuth and magic link authentication ([64cd0d5](https://github.com/palhinhax/TheBate/commit/64cd0d5f7188492d77638103346edbc0d989a0bb))
-* **auth:** add Google OAuth and magic link to login page ([b992c0a](https://github.com/palhinhax/TheBate/commit/b992c0a6a6b680080bbfe0cf99f874455b165036))
+- **auth:** add Google OAuth and magic link authentication ([64cd0d5](https://github.com/palhinhax/TheBate/commit/64cd0d5f7188492d77638103346edbc0d989a0bb))
+- **auth:** add Google OAuth and magic link to login page ([b992c0a](https://github.com/palhinhax/TheBate/commit/b992c0a6a6b680080bbfe0cf99f874455b165036))
 
 # [3.2.0](https://github.com/palhinhax/TheBate/compare/v3.1.0...v3.2.0) (2026-01-11)
 
-
 ### Features
 
-* **ci:** add manual trigger to auto-migrate workflow and improve documentation ([da0fad5](https://github.com/palhinhax/TheBate/commit/da0fad55fa8a18db1fa79735a27742ed3b8d8d22))
+- **ci:** add manual trigger to auto-migrate workflow and improve documentation ([da0fad5](https://github.com/palhinhax/TheBate/commit/da0fad55fa8a18db1fa79735a27742ed3b8d8d22))
 
 # [3.1.0](https://github.com/palhinhax/TheBate/compare/v3.0.0...v3.1.0) (2026-01-11)
 
-
 ### Bug Fixes
 
-* **errors:** improve Button/Link composition and add multilingual global error ([2cb7f9f](https://github.com/palhinhax/TheBate/commit/2cb7f9fbe97d9f4a1a7eda2522368305537e5cec))
-
+- **errors:** improve Button/Link composition and add multilingual global error ([2cb7f9f](https://github.com/palhinhax/TheBate/commit/2cb7f9fbe97d9f4a1a7eda2522368305537e5cec))
 
 ### Features
 
-* **errors:** add user-friendly error pages with i18n support ([1f81c28](https://github.com/palhinhax/TheBate/commit/1f81c288b28a7403b6fd4aceb651ce3d4ec9ca1b))
+- **errors:** add user-friendly error pages with i18n support ([1f81c28](https://github.com/palhinhax/TheBate/commit/1f81c288b28a7403b6fd4aceb651ce3d4ec9ca1b))
 
 # [3.0.0](https://github.com/palhinhax/TheBate/compare/v2.17.2...v3.0.0) (2026-01-11)
 
-
 ### Bug Fixes
 
-* **ci:** remove migration from vercel-build to avoid concurrent conflicts ([732cbd5](https://github.com/palhinhax/TheBate/commit/732cbd5e9d0a1bad78d859bf1e21e8dc4e792c34))
-
+- **ci:** remove migration from vercel-build to avoid concurrent conflicts ([732cbd5](https://github.com/palhinhax/TheBate/commit/732cbd5e9d0a1bad78d859bf1e21e8dc4e792c34))
 
 ### Features
 
-* **ci:** add automatic database migration on push to main ([dbfc483](https://github.com/palhinhax/TheBate/commit/dbfc4838747d2dd33943f9ca2e9df311956d0e54))
-
+- **ci:** add automatic database migration on push to main ([dbfc483](https://github.com/palhinhax/TheBate/commit/dbfc4838747d2dd33943f9ca2e9df311956d0e54))
 
 ### BREAKING CHANGES
 
-* **ci:** Migrations now run automatically during Vercel deployments.
-Ensure DATABASE_URL is properly configured in production environment.
+- **ci:** Migrations now run automatically during Vercel deployments.
+  Ensure DATABASE_URL is properly configured in production environment.
 
 Co-authored-by: palhinhax <13228131+palhinhax@users.noreply.github.com>
 
 ## [2.17.2](https://github.com/palhinhax/TheBate/compare/v2.17.1...v2.17.2) (2026-01-11)
 
-
 ### Bug Fixes
 
-* **db:** correct migration to drop unique index instead of constraint ([5694431](https://github.com/palhinhax/TheBate/commit/569443114f2ecf49bd338bc314d8cd6bfab19bdc))
+- **db:** correct migration to drop unique index instead of constraint ([5694431](https://github.com/palhinhax/TheBate/commit/569443114f2ecf49bd338bc314d8cd6bfab19bdc))
 
 ## [2.17.1](https://github.com/palhinhax/TheBate/compare/v2.17.0...v2.17.1) (2026-01-11)
 
-
 ### Bug Fixes
 
-* **db:** convert manual migration to proper Prisma migration for multi-choice topics ([50b91fe](https://github.com/palhinhax/TheBate/commit/50b91fe874cf920c8d3934087e2d7ecd936ae119))
+- **db:** convert manual migration to proper Prisma migration for multi-choice topics ([50b91fe](https://github.com/palhinhax/TheBate/commit/50b91fe874cf920c8d3934087e2d7ecd936ae119))
 
 # [2.17.0](https://github.com/palhinhax/TheBate/compare/v2.16.0...v2.17.0) (2026-01-11)
 
-
 ### Bug Fixes
 
-* **seed:** address code review feedback ([2d074ea](https://github.com/palhinhax/TheBate/commit/2d074ea77633907bfe0ca1d507eff58825e4843e))
-* **seed:** use js-yaml library and fix YAML syntax issues ([5140c22](https://github.com/palhinhax/TheBate/commit/5140c228a8487402148d8a20411e2fc64069fb19))
-
+- **seed:** address code review feedback ([2d074ea](https://github.com/palhinhax/TheBate/commit/2d074ea77633907bfe0ca1d507eff58825e4843e))
+- **seed:** use js-yaml library and fix YAML syntax issues ([5140c22](https://github.com/palhinhax/TheBate/commit/5140c228a8487402148d8a20411e2fc64069fb19))
 
 ### Features
 
-* **seed:** add YAML-based seed with improved migration workflow ([18c99d6](https://github.com/palhinhax/TheBate/commit/18c99d63b2890afc2bad64e2cc5efede07d352fd))
+- **seed:** add YAML-based seed with improved migration workflow ([18c99d6](https://github.com/palhinhax/TheBate/commit/18c99d63b2890afc2bad64e2cc5efede07d352fd))
 
 # [2.16.0](https://github.com/palhinhax/TheBate/compare/v2.15.0...v2.16.0) (2026-01-10)
 
-
 ### Bug Fixes
 
-* resolve TypeScript type errors in multi-choice implementation ([071a653](https://github.com/palhinhax/TheBate/commit/071a6537a2e90ca3c0e6ccec0041f89363457ef3))
-
+- resolve TypeScript type errors in multi-choice implementation ([071a653](https://github.com/palhinhax/TheBate/commit/071a6537a2e90ca3c0e6ccec0041f89363457ef3))
 
 ### Features
 
-* **admin:** add UI for creating multi-choice topics ([9c0bda3](https://github.com/palhinhax/TheBate/commit/9c0bda3ebb65a25f13f1b1163a2e8e4900348ad4))
-* **api:** update voting and comment APIs for multi-choice support ([623f2f1](https://github.com/palhinhax/TheBate/commit/623f2f13d2375700dfab25eab489e11fbc5576ec))
-* **db:** add multi-choice topic support to schema ([4cc5a55](https://github.com/palhinhax/TheBate/commit/4cc5a55c527fe57877050a82c31e55b4dc7d0471))
-* **ui:** add multi-choice voting and comment UI components ([6c6df68](https://github.com/palhinhax/TheBate/commit/6c6df68549deec50ecea8ef8cf40a4e0d4b0ccd0))
+- **admin:** add UI for creating multi-choice topics ([9c0bda3](https://github.com/palhinhax/TheBate/commit/9c0bda3ebb65a25f13f1b1163a2e8e4900348ad4))
+- **api:** update voting and comment APIs for multi-choice support ([623f2f1](https://github.com/palhinhax/TheBate/commit/623f2f13d2375700dfab25eab489e11fbc5576ec))
+- **db:** add multi-choice topic support to schema ([4cc5a55](https://github.com/palhinhax/TheBate/commit/4cc5a55c527fe57877050a82c31e55b4dc7d0471))
+- **ui:** add multi-choice voting and comment UI components ([6c6df68](https://github.com/palhinhax/TheBate/commit/6c6df68549deec50ecea8ef8cf40a4e0d4b0ccd0))
 
 # [2.15.0](https://github.com/palhinhax/TheBate/compare/v2.14.0...v2.15.0) (2026-01-10)
 
-
 ### Features
 
-* **admin:** add pagination and fix mobile responsiveness in owner panel ([50c546d](https://github.com/palhinhax/TheBate/commit/50c546deac0705e514ed95f384963d81efc6e43c))
+- **admin:** add pagination and fix mobile responsiveness in owner panel ([50c546d](https://github.com/palhinhax/TheBate/commit/50c546deac0705e514ed95f384963d81efc6e43c))
 
 # [2.14.0](https://github.com/palhinhax/TheBate/compare/v2.13.0...v2.14.0) (2026-01-10)
 
-
 ### Bug Fixes
 
-* **ci:** improve seed status step with outcome check ([2b542de](https://github.com/palhinhax/TheBate/commit/2b542de5b2caba352016316251ce273759462b0b))
-* **ci:** only fail workflow on actual seed errors ([ada80dc](https://github.com/palhinhax/TheBate/commit/ada80dc84dff477d5b73f7066da895d6b4fd9795))
-* **ci:** use Node 22 for consistency with other workflows ([cb06114](https://github.com/palhinhax/TheBate/commit/cb06114b8216181905a2d618b5540586e11d8d68))
-
+- **ci:** improve seed status step with outcome check ([2b542de](https://github.com/palhinhax/TheBate/commit/2b542de5b2caba352016316251ce273759462b0b))
+- **ci:** only fail workflow on actual seed errors ([ada80dc](https://github.com/palhinhax/TheBate/commit/ada80dc84dff477d5b73f7066da895d6b4fd9795))
+- **ci:** use Node 22 for consistency with other workflows ([cb06114](https://github.com/palhinhax/TheBate/commit/cb06114b8216181905a2d618b5540586e11d8d68))
 
 ### Features
 
-* **ci:** add seed production workflow ([98eddee](https://github.com/palhinhax/TheBate/commit/98eddee6a9a394e397b7a3113ff4a80537633054))
+- **ci:** add seed production workflow ([98eddee](https://github.com/palhinhax/TheBate/commit/98eddee6a9a394e397b7a3113ff4a80537633054))
 
 # [2.13.0](https://github.com/palhinhax/TheBate/compare/v2.12.3...v2.13.0) (2026-01-10)
 
-
 ### Bug Fixes
 
-* **seed:** standardize command references to use npm run ([22aa9af](https://github.com/palhinhax/TheBate/commit/22aa9afa16539c8ed84719b6448306a7b60062f5))
-
+- **seed:** standardize command references to use npm run ([22aa9af](https://github.com/palhinhax/TheBate/commit/22aa9afa16539c8ed84719b6448306a7b60062f5))
 
 ### Features
 
-* **seed:** add engagement seed script with isSeed fields and cleanup ([5a98dfe](https://github.com/palhinhax/TheBate/commit/5a98dfef762cb58969f71e3dc995882b82ac21e9))
+- **seed:** add engagement seed script with isSeed fields and cleanup ([5a98dfe](https://github.com/palhinhax/TheBate/commit/5a98dfef762cb58969f71e3dc995882b82ac21e9))
 
 ## [2.12.3](https://github.com/palhinhax/TheBate/compare/v2.12.2...v2.12.3) (2026-01-10)
 
-
 ### Bug Fixes
 
-* **i18n:** resolve language change errors and enable proper language switching ([bc3b677](https://github.com/palhinhax/TheBate/commit/bc3b677f270ac7c3aa17bdd61a428265d86501fc))
+- **i18n:** resolve language change errors and enable proper language switching ([bc3b677](https://github.com/palhinhax/TheBate/commit/bc3b677f270ac7c3aa17bdd61a428265d86501fc))
 
 ## [2.12.2](https://github.com/palhinhax/TheBate/compare/v2.12.1...v2.12.2) (2026-01-09)
 
-
 ### Bug Fixes
 
-* **ui:** improve mobile navbar layout by adjusting breakpoint ([810ae1e](https://github.com/palhinhax/TheBate/commit/810ae1e9d8e28ce65993de01fbcb47b53b855cfa))
+- **ui:** improve mobile navbar layout by adjusting breakpoint ([810ae1e](https://github.com/palhinhax/TheBate/commit/810ae1e9d8e28ce65993de01fbcb47b53b855cfa))
 
 ## [2.12.1](https://github.com/palhinhax/TheBate/compare/v2.12.0...v2.12.1) (2026-01-09)
 
-
 ### Bug Fixes
 
-* **ui:** move share and report buttons above title on mobile ([11b87a1](https://github.com/palhinhax/TheBate/commit/11b87a181970ab9fc90910c8da86e21856c20609))
+- **ui:** move share and report buttons above title on mobile ([11b87a1](https://github.com/palhinhax/TheBate/commit/11b87a181970ab9fc90910c8da86e21856c20609))
 
 # [2.12.0](https://github.com/palhinhax/TheBate/compare/v2.11.2...v2.12.0) (2026-01-09)
 
-
 ### Features
 
-* **ui:** hide hero section for logged-in users ([8d4158e](https://github.com/palhinhax/TheBate/commit/8d4158e1e2114a901d3d659be9cc60a5a8b31057))
+- **ui:** hide hero section for logged-in users ([8d4158e](https://github.com/palhinhax/TheBate/commit/8d4158e1e2114a901d3d659be9cc60a5a8b31057))
 
 ## [2.11.2](https://github.com/palhinhax/TheBate/compare/v2.11.1...v2.11.2) (2026-01-09)
 
-
 ### Bug Fixes
 
-* **admin:** add unlock button for locked topics ([201e0c9](https://github.com/palhinhax/TheBate/commit/201e0c925614776b0c64e80e2588509c234c3924))
+- **admin:** add unlock button for locked topics ([201e0c9](https://github.com/palhinhax/TheBate/commit/201e0c925614776b0c64e80e2588509c234c3924))
 
 ## [2.11.1](https://github.com/palhinhax/TheBate/compare/v2.11.0...v2.11.1) (2026-01-09)
 
-
 ### Bug Fixes
 
-* **ui:** move advertisement to end of topic page ([889124a](https://github.com/palhinhax/TheBate/commit/889124a844340d01dcb21ba83437c8f8d8ef162a))
+- **ui:** move advertisement to end of topic page ([889124a](https://github.com/palhinhax/TheBate/commit/889124a844340d01dcb21ba83437c8f8d8ef162a))
 
 # [2.11.0](https://github.com/palhinhax/TheBate/compare/v2.10.0...v2.11.0) (2026-01-09)
 
-
 ### Bug Fixes
 
-* address code review feedback - add types, docs, and proper error handling ([405c878](https://github.com/palhinhax/TheBate/commit/405c878479624924d366e67a664d5df45346031f))
-* **tests:** correct TypeScript types for mocked Prisma client ([665c86c](https://github.com/palhinhax/TheBate/commit/665c86c7f36a12c5d1fd8810e84cadd82232b923))
-
+- address code review feedback - add types, docs, and proper error handling ([405c878](https://github.com/palhinhax/TheBate/commit/405c878479624924d366e67a664d5df45346031f))
+- **tests:** correct TypeScript types for mocked Prisma client ([665c86c](https://github.com/palhinhax/TheBate/commit/665c86c7f36a12c5d1fd8810e84cadd82232b923))
 
 ### Features
 
-* **topics:** add next topic navigation component ([9b97e64](https://github.com/palhinhax/TheBate/commit/9b97e64125373c7ee0560b60f0fb71f0714e5de9))
+- **topics:** add next topic navigation component ([9b97e64](https://github.com/palhinhax/TheBate/commit/9b97e64125373c7ee0560b60f0fb71f0714e5de9))
 
 # [2.10.0](https://github.com/palhinhax/TheBate/compare/v2.9.0...v2.10.0) (2026-01-09)
 
-
 ### Features
 
-* **admin:** add reports management dashboard ([2e77e75](https://github.com/palhinhax/TheBate/commit/2e77e75e1d8d6f9be90144288c08ecdbfe8cfe3c))
+- **admin:** add reports management dashboard ([2e77e75](https://github.com/palhinhax/TheBate/commit/2e77e75e1d8d6f9be90144288c08ecdbfe8cfe3c))
 
 # [2.9.0](https://github.com/palhinhax/TheBate/compare/v2.8.0...v2.9.0) (2026-01-09)
 
-
 ### Features
 
-* **analytics:** add Google Analytics 4 integration ([55263e7](https://github.com/palhinhax/TheBate/commit/55263e70a612ea1c5c8af4ab90bef13921331a21))
+- **analytics:** add Google Analytics 4 integration ([55263e7](https://github.com/palhinhax/TheBate/commit/55263e70a612ea1c5c8af4ab90bef13921331a21))
 
 # [2.8.0](https://github.com/palhinhax/TheBate/compare/v2.7.0...v2.8.0) (2026-01-09)
 
-
 ### Features
 
-* **seo:** add og-image for social sharing ([91b7e71](https://github.com/palhinhax/TheBate/commit/91b7e7179fc0abf39299719e3c52d240db94ecc8))
+- **seo:** add og-image for social sharing ([91b7e71](https://github.com/palhinhax/TheBate/commit/91b7e7179fc0abf39299719e3c52d240db94ecc8))
 
 # [2.7.0](https://github.com/palhinhax/TheBate/compare/v2.6.0...v2.7.0) (2026-01-09)
 
-
 ### Features
 
-* **topics:** add social share button for discussions ([6837708](https://github.com/palhinhax/TheBate/commit/683770885949bf3c53c26db4c17b07072eab90cd))
+- **topics:** add social share button for discussions ([6837708](https://github.com/palhinhax/TheBate/commit/683770885949bf3c53c26db4c17b07072eab90cd))
 
 # [2.6.0](https://github.com/palhinhax/TheBate/compare/v2.5.1...v2.6.0) (2026-01-09)
 
-
 ### Features
 
-* **seo:** update metadata with all 12 languages and improve keywords ([d7f3744](https://github.com/palhinhax/TheBate/commit/d7f3744610503aa5c2fa5a6663f0e55c8fae9c00))
+- **seo:** update metadata with all 12 languages and improve keywords ([d7f3744](https://github.com/palhinhax/TheBate/commit/d7f3744610503aa5c2fa5a6663f0e55c8fae9c00))
 
 ## [2.5.1](https://github.com/palhinhax/TheBate/compare/v2.5.0...v2.5.1) (2026-01-09)
 
-
 ### Bug Fixes
 
-* **ui:** improve mobile responsiveness for topic pages ([cf210b2](https://github.com/palhinhax/TheBate/commit/cf210b246f99a1beb64f08599c74ff83cf3b74fe))
+- **ui:** improve mobile responsiveness for topic pages ([cf210b2](https://github.com/palhinhax/TheBate/commit/cf210b246f99a1beb64f08599c74ff83cf3b74fe))
 
 # [2.5.0](https://github.com/palhinhax/TheBate/compare/v2.4.0...v2.5.0) (2026-01-09)
 
-
 ### Features
 
-* **legal:** add Terms of Service and Privacy Policy pages ([5941885](https://github.com/palhinhax/TheBate/commit/59418854e7aca2556eb3f7bf5ea3a35533781306))
+- **legal:** add Terms of Service and Privacy Policy pages ([5941885](https://github.com/palhinhax/TheBate/commit/59418854e7aca2556eb3f7bf5ea3a35533781306))
 
 # [2.4.0](https://github.com/palhinhax/TheBate/compare/v2.3.0...v2.4.0) (2026-01-09)
 
-
 ### Features
 
-* **search:** add search functionality with language filtering ([9142ef3](https://github.com/palhinhax/TheBate/commit/9142ef3cc0cb24c7dacd48e3c7e8251432f5e8ac))
+- **search:** add search functionality with language filtering ([9142ef3](https://github.com/palhinhax/TheBate/commit/9142ef3cc0cb24c7dacd48e3c7e8251432f5e8ac))
 
 # [2.3.0](https://github.com/palhinhax/TheBate/compare/v2.2.0...v2.3.0) (2026-01-09)
 
-
 ### Features
 
-* **i18n:** add 5 new languages with UI support and 50 controversial topics ([bc06564](https://github.com/palhinhax/TheBate/commit/bc065649cf768d443646bf35b20bc26c1a0a75e3))
+- **i18n:** add 5 new languages with UI support and 50 controversial topics ([bc06564](https://github.com/palhinhax/TheBate/commit/bc065649cf768d443646bf35b20bc26c1a0a75e3))
 
 # [2.2.0](https://github.com/palhinhax/TheBate/compare/v2.1.0...v2.2.0) (2026-01-09)
 
-
 ### Features
 
-* **topics:** add controversial gun control topics in all languages ([bbf57d7](https://github.com/palhinhax/TheBate/commit/bbf57d78ea8a0bdf6a78fb934a1137d8dcdb65a2))
+- **topics:** add controversial gun control topics in all languages ([bbf57d7](https://github.com/palhinhax/TheBate/commit/bbf57d78ea8a0bdf6a78fb934a1137d8dcdb65a2))
 
 # [2.1.0](https://github.com/palhinhax/TheBate/compare/v2.0.2...v2.1.0) (2026-01-09)
 
-
 ### Features
 
-* **i18n:** add Hindi and Chinese language support ([3773192](https://github.com/palhinhax/TheBate/commit/3773192b1766e8ecda320b286b57bf4ab6d459f5))
+- **i18n:** add Hindi and Chinese language support ([3773192](https://github.com/palhinhax/TheBate/commit/3773192b1766e8ecda320b286b57bf4ab6d459f5))
 
 ## [2.0.2](https://github.com/palhinhax/TheBate/compare/v2.0.1...v2.0.2) (2026-01-09)
 
-
 ### Bug Fixes
 
-* **build:** remove database migration from vercel-build script ([b03d42d](https://github.com/palhinhax/TheBate/commit/b03d42d59e116af6d773deeeba31d1d7afcf775d))
+- **build:** remove database migration from vercel-build script ([b03d42d](https://github.com/palhinhax/TheBate/commit/b03d42d59e116af6d773deeeba31d1d7afcf775d))
 
 ## [2.0.1](https://github.com/palhinhax/TheBate/compare/v2.0.0...v2.0.1) (2026-01-09)
 
-
 ### Bug Fixes
 
-* **i18n:** add robust array validation for preferredContentLanguages ([a271fab](https://github.com/palhinhax/TheBate/commit/a271fab1ab3f5254c7bde535b26ecd0af34a17d4))
+- **i18n:** add robust array validation for preferredContentLanguages ([a271fab](https://github.com/palhinhax/TheBate/commit/a271fab1ab3f5254c7bde535b26ecd0af34a17d4))
 
 # [2.0.0](https://github.com/palhinhax/TheBate/compare/v1.9.0...v2.0.0) (2026-01-09)
 
-
 ### Bug Fixes
 
-* **i18n:** sync public locale files with updated translations ([4d35f5c](https://github.com/palhinhax/TheBate/commit/4d35f5cb53985ec425f67aea4116f0b2d9419dcc))
-
+- **i18n:** sync public locale files with updated translations ([4d35f5c](https://github.com/palhinhax/TheBate/commit/4d35f5cb53985ec425f67aea4116f0b2d9419dcc))
 
 ### Features
 
-* **admin:** add pagination to admin panel and fix language filtering ([fefab55](https://github.com/palhinhax/TheBate/commit/fefab556f28f8e974d03a876dc286e37e38f19c1))
-* **settings:** add multi-language content preferences ([a4afaec](https://github.com/palhinhax/TheBate/commit/a4afaec0af80560c46349f0a5565ae8ffaeea4fe))
-
+- **admin:** add pagination to admin panel and fix language filtering ([fefab55](https://github.com/palhinhax/TheBate/commit/fefab556f28f8e974d03a876dc286e37e38f19c1))
+- **settings:** add multi-language content preferences ([a4afaec](https://github.com/palhinhax/TheBate/commit/a4afaec0af80560c46349f0a5565ae8ffaeea4fe))
 
 ### BREAKING CHANGES
 
-* **admin:** Admin topics API now returns object with {topics, pagination} instead of array
-* **settings:** Content language filtering moved from navbar to user settings. All users will see all languages by default until they configure their preferences in settings.
+- **admin:** Admin topics API now returns object with {topics, pagination} instead of array
+- **settings:** Content language filtering moved from navbar to user settings. All users will see all languages by default until they configure their preferences in settings.
 
 # [1.9.0](https://github.com/palhinhax/TheBate/compare/v1.8.0...v1.9.0) (2026-01-09)
 
-
 ### Features
 
-* **i18n:** add missing settings translations for es, fr, de ([4c51f3c](https://github.com/palhinhax/TheBate/commit/4c51f3c9658f358b253ec04eba87e592b7f9a92c))
+- **i18n:** add missing settings translations for es, fr, de ([4c51f3c](https://github.com/palhinhax/TheBate/commit/4c51f3c9658f358b253ec04eba87e592b7f9a92c))
 
 # [1.8.0](https://github.com/palhinhax/TheBate/compare/v1.7.1...v1.8.0) (2026-01-09)
 
-
 ### Bug Fixes
 
-* **adsense:** improve ad loading debug and troubleshooting ([c18f5e5](https://github.com/palhinhax/TheBate/commit/c18f5e51d65bc2ac369b1b6ff961c4ba72704b76)), closes [#adsense-blank-ads](https://github.com/palhinhax/TheBate/issues/adsense-blank-ads)
-* **ui:** wrap content language filter in suspense boundary ([a3bbad8](https://github.com/palhinhax/TheBate/commit/a3bbad89f4fdccc2f94985cb309064a2bddfe97f))
-
+- **adsense:** improve ad loading debug and troubleshooting ([c18f5e5](https://github.com/palhinhax/TheBate/commit/c18f5e51d65bc2ac369b1b6ff961c4ba72704b76)), closes [#adsense-blank-ads](https://github.com/palhinhax/TheBate/issues/adsense-blank-ads)
+- **ui:** wrap content language filter in suspense boundary ([a3bbad8](https://github.com/palhinhax/TheBate/commit/a3bbad89f4fdccc2f94985cb309064a2bddfe97f))
 
 ### Features
 
-* **i18n:** separate UI language settings from content language filter ([ff8c699](https://github.com/palhinhax/TheBate/commit/ff8c699431488aaeded927dcb216a02300760629))
-* **moderation:** add topic reporting system ([64d708c](https://github.com/palhinhax/TheBate/commit/64d708ca851b61490be9664736917b25e7378979))
-* **profile:** add user self-deletion functionality ([a75a818](https://github.com/palhinhax/TheBate/commit/a75a81876b789dbe53a71a9a2fe938e683426f13))
-* **seo:** enhance multilingual SEO for international discoverability ([f1984b7](https://github.com/palhinhax/TheBate/commit/f1984b735ca9a4dee7a547dbe8ac8b966752295c))
-* **settings:** add comprehensive user settings page ([a3e3167](https://github.com/palhinhax/TheBate/commit/a3e3167433f2b96920be9e81f2a89c4b9fb067f8))
+- **i18n:** separate UI language settings from content language filter ([ff8c699](https://github.com/palhinhax/TheBate/commit/ff8c699431488aaeded927dcb216a02300760629))
+- **moderation:** add topic reporting system ([64d708c](https://github.com/palhinhax/TheBate/commit/64d708ca851b61490be9664736917b25e7378979))
+- **profile:** add user self-deletion functionality ([a75a818](https://github.com/palhinhax/TheBate/commit/a75a81876b789dbe53a71a9a2fe938e683426f13))
+- **seo:** enhance multilingual SEO for international discoverability ([f1984b7](https://github.com/palhinhax/TheBate/commit/f1984b735ca9a4dee7a547dbe8ac8b966752295c))
+- **settings:** add comprehensive user settings page ([a3e3167](https://github.com/palhinhax/TheBate/commit/a3e3167433f2b96920be9e81f2a89c4b9fb067f8))
 
 ## [1.7.1](https://github.com/palhinhax/TheBate/compare/v1.7.0...v1.7.1) (2026-01-09)
 
-
 ### Bug Fixes
 
-* **i18n:** eliminate all Brazilian Portuguese terms from documentation ([b8954bc](https://github.com/palhinhax/TheBate/commit/b8954bc83ecda03963650007d45ab97843f38786))
+- **i18n:** eliminate all Brazilian Portuguese terms from documentation ([b8954bc](https://github.com/palhinhax/TheBate/commit/b8954bc83ecda03963650007d45ab97843f38786))
 
 # [1.7.0](https://github.com/palhinhax/TheBate/compare/v1.6.1...v1.7.0) (2026-01-09)
 
-
 ### Bug Fixes
 
-* **admin:** convert all text to European Portuguese ([605b9df](https://github.com/palhinhax/TheBate/commit/605b9dfd47e454550676dfceb45df0a7bef02ce1))
-
+- **admin:** convert all text to European Portuguese ([605b9df](https://github.com/palhinhax/TheBate/commit/605b9dfd47e454550676dfceb45df0a7bef02ce1))
 
 ### Features
 
-* **data:** add hot topics seed script for multiple languages ([a9fbf32](https://github.com/palhinhax/TheBate/commit/a9fbf322b127400bb96c9437f8e164ae3c73a5be))
+- **data:** add hot topics seed script for multiple languages ([a9fbf32](https://github.com/palhinhax/TheBate/commit/a9fbf322b127400bb96c9437f8e164ae3c73a5be))
 
 ## [1.6.1](https://github.com/palhinhax/TheBate/compare/v1.6.0...v1.6.1) (2026-01-09)
 
-
 ### Bug Fixes
 
-* **admin:** improve responsiveness and use European Portuguese ([0c500b8](https://github.com/palhinhax/TheBate/commit/0c500b8a9e14022d4914c28bbdf93fe59c226b57))
+- **admin:** improve responsiveness and use European Portuguese ([0c500b8](https://github.com/palhinhax/TheBate/commit/0c500b8a9e14022d4914c28bbdf93fe59c226b57))
 
 # [1.6.0](https://github.com/palhinhax/TheBate/compare/v1.5.3...v1.6.0) (2026-01-09)
 
-
 ### Features
 
-* **profile:** create comprehensive user profile page ([17cbc49](https://github.com/palhinhax/TheBate/commit/17cbc497afba0f8380696d7dacf7fabf633fe447))
+- **profile:** create comprehensive user profile page ([17cbc49](https://github.com/palhinhax/TheBate/commit/17cbc497afba0f8380696d7dacf7fabf633fe447))
 
 ## [1.5.3](https://github.com/palhinhax/TheBate/compare/v1.5.2...v1.5.3) (2026-01-09)
 
-
 ### Bug Fixes
 
-* **ui:** make comment sort and filter buttons responsive ([c89c418](https://github.com/palhinhax/TheBate/commit/c89c418319d29c58b6e16f4a7b0a4207e398a3b3))
+- **ui:** make comment sort and filter buttons responsive ([c89c418](https://github.com/palhinhax/TheBate/commit/c89c418319d29c58b6e16f4a7b0a4207e398a3b3))
 
 ## [1.5.2](https://github.com/palhinhax/TheBate/compare/v1.5.1...v1.5.2) (2026-01-09)
 
-
 ### Bug Fixes
 
-* **ui:** make navbar responsive for mobile devices ([431ac37](https://github.com/palhinhax/TheBate/commit/431ac37f879b4d13ea31acc196b78214f059b36a))
+- **ui:** make navbar responsive for mobile devices ([431ac37](https://github.com/palhinhax/TheBate/commit/431ac37f879b4d13ea31acc196b78214f059b36a))
 
 ## [1.5.1](https://github.com/palhinhax/TheBate/compare/v1.5.0...v1.5.1) (2026-01-09)
 
-
 ### Bug Fixes
 
-* **db:** add automatic migration deployment for production ([eee13a4](https://github.com/palhinhax/TheBate/commit/eee13a4de2d4148dad6074bf114f94e1f4c60324))
+- **db:** add automatic migration deployment for production ([eee13a4](https://github.com/palhinhax/TheBate/commit/eee13a4de2d4148dad6074bf114f94e1f4c60324))
 
 # [1.5.0](https://github.com/palhinhax/TheBate/compare/v1.4.0...v1.5.0) (2026-01-09)
 
-
 ### Bug Fixes
 
-* **auth:** address security and code quality issues ([31815b9](https://github.com/palhinhax/TheBate/commit/31815b9d39ee9a397ca2ba9e77b25fea44c50605))
-* **auth:** improve rate limiting for serverless and add tests ([7740e26](https://github.com/palhinhax/TheBate/commit/7740e26e868d014e8f7415130cd3a055b91d04d5))
-* **i18n:** convert Brazilian Portuguese to European Portuguese ([32b6280](https://github.com/palhinhax/TheBate/commit/32b6280b828cb3763bd246365def9282e8a50e97))
-* **i18n:** replace hardcoded strings with translations in topic form ([69f5a21](https://github.com/palhinhax/TheBate/commit/69f5a21acf29dc2a399cf107c52e376afc620c0a))
-* resolve linting and build errors ([29e5cb2](https://github.com/palhinhax/TheBate/commit/29e5cb2c736df6d7187355c7ddae7eee3837a24a))
-* **tests:** use proper type assertion for Request mocks ([790cc97](https://github.com/palhinhax/TheBate/commit/790cc97ecf37b073f1eb18acb2867f40de30eab7))
-
+- **auth:** address security and code quality issues ([31815b9](https://github.com/palhinhax/TheBate/commit/31815b9d39ee9a397ca2ba9e77b25fea44c50605))
+- **auth:** improve rate limiting for serverless and add tests ([7740e26](https://github.com/palhinhax/TheBate/commit/7740e26e868d014e8f7415130cd3a055b91d04d5))
+- **i18n:** convert Brazilian Portuguese to European Portuguese ([32b6280](https://github.com/palhinhax/TheBate/commit/32b6280b828cb3763bd246365def9282e8a50e97))
+- **i18n:** replace hardcoded strings with translations in topic form ([69f5a21](https://github.com/palhinhax/TheBate/commit/69f5a21acf29dc2a399cf107c52e376afc620c0a))
+- resolve linting and build errors ([29e5cb2](https://github.com/palhinhax/TheBate/commit/29e5cb2c736df6d7187355c7ddae7eee3837a24a))
+- **tests:** use proper type assertion for Request mocks ([790cc97](https://github.com/palhinhax/TheBate/commit/790cc97ecf37b073f1eb18acb2867f40de30eab7))
 
 ### Features
 
-* **auth:** implement email verification with Resend ([314b4df](https://github.com/palhinhax/TheBate/commit/314b4dffc1444a431f47103765ae62a834e68a68))
-* **auth:** implement password reset with magic link ([2998103](https://github.com/palhinhax/TheBate/commit/29981030ca8d7966202c1ad0ffa5aab67270ef51))
-* **database:** update environment configuration for Neon PostgreSQL and add setup guide ([d0735d0](https://github.com/palhinhax/TheBate/commit/d0735d07ee77591204305a5ecbb920e34eeb8304))
-* **email:** integrate Resend for production email delivery ([048b4e9](https://github.com/palhinhax/TheBate/commit/048b4e9056fbb929f360a2d54cefa77f821767ef))
-* **i18n:** add translation support for password reset pages ([3824d8c](https://github.com/palhinhax/TheBate/commit/3824d8c5aa6e0e953d2736b2460f768da396499c))
+- **auth:** implement email verification with Resend ([314b4df](https://github.com/palhinhax/TheBate/commit/314b4dffc1444a431f47103765ae62a834e68a68))
+- **auth:** implement password reset with magic link ([2998103](https://github.com/palhinhax/TheBate/commit/29981030ca8d7966202c1ad0ffa5aab67270ef51))
+- **database:** update environment configuration for Neon PostgreSQL and add setup guide ([d0735d0](https://github.com/palhinhax/TheBate/commit/d0735d07ee77591204305a5ecbb920e34eeb8304))
+- **email:** integrate Resend for production email delivery ([048b4e9](https://github.com/palhinhax/TheBate/commit/048b4e9056fbb929f360a2d54cefa77f821767ef))
+- **i18n:** add translation support for password reset pages ([3824d8c](https://github.com/palhinhax/TheBate/commit/3824d8c5aa6e0e953d2736b2460f768da396499c))
 
 # [1.4.0](https://github.com/palhinhax/TheBate/compare/v1.3.0...v1.4.0) (2026-01-08)
 
-
 ### Features
 
-* **auth:** add password visibility toggle button to register form ([7af1788](https://github.com/palhinhax/TheBate/commit/7af1788fff7234715744f135abdc777b15af649c))
+- **auth:** add password visibility toggle button to register form ([7af1788](https://github.com/palhinhax/TheBate/commit/7af1788fff7234715744f135abdc777b15af649c))
 
 # [1.3.0](https://github.com/palhinhax/TheBate/compare/v1.2.0...v1.3.0) (2026-01-08)
 
-
 ### Features
 
-* **admin:** add admin panel for content moderation ([f814678](https://github.com/palhinhax/TheBate/commit/f8146787289a4004461e81299abeadf3e44542ad))
-* **admin:** add owner system with user management ([a94ecf0](https://github.com/palhinhax/TheBate/commit/a94ecf046640aaf63efbdde6390a27a920244a88))
+- **admin:** add admin panel for content moderation ([f814678](https://github.com/palhinhax/TheBate/commit/f8146787289a4004461e81299abeadf3e44542ad))
+- **admin:** add owner system with user management ([a94ecf0](https://github.com/palhinhax/TheBate/commit/a94ecf046640aaf63efbdde6390a27a920244a88))
 
 # [1.2.0](https://github.com/palhinhax/TheBate/compare/v1.1.2...v1.2.0) (2026-01-08)
 
-
 ### Features
 
-* **ads:** configure in-article AdSense with real slot ID ([a24da51](https://github.com/palhinhax/TheBate/commit/a24da51450739092afe27c8c3ed8bc54fa0d78a2))
+- **ads:** configure in-article AdSense with real slot ID ([a24da51](https://github.com/palhinhax/TheBate/commit/a24da51450739092afe27c8c3ed8bc54fa0d78a2))
 
 ## [1.1.2](https://github.com/palhinhax/TheBate/compare/v1.1.1...v1.1.2) (2026-01-08)
 
-
 ### Bug Fixes
 
-* **ads:** update placeholder text to Portuguese ([05f525f](https://github.com/palhinhax/TheBate/commit/05f525fc9590de565b7ea6e866557eb09707848e))
+- **ads:** update placeholder text to Portuguese ([05f525f](https://github.com/palhinhax/TheBate/commit/05f525fc9590de565b7ea6e866557eb09707848e))
 
 ## [1.1.1](https://github.com/palhinhax/TheBate/compare/v1.1.0...v1.1.1) (2026-01-08)
 
-
 ### Bug Fixes
 
-* **ads:** prevent AdSense 400 errors with invalid slot ID ([4726f31](https://github.com/palhinhax/TheBate/commit/4726f31f1592f67144ddc2815b02b9dd948a7287))
+- **ads:** prevent AdSense 400 errors with invalid slot ID ([4726f31](https://github.com/palhinhax/TheBate/commit/4726f31f1592f67144ddc2815b02b9dd948a7287))
 
 # [1.1.0](https://github.com/palhinhax/TheBate/compare/v1.0.2...v1.1.0) (2026-01-08)
 
-
 ### Features
 
-* **ui:** add footer with version display ([273bc0b](https://github.com/palhinhax/TheBate/commit/273bc0bcde417797ebf6b2581a3a2d49f9ae7b9c))
+- **ui:** add footer with version display ([273bc0b](https://github.com/palhinhax/TheBate/commit/273bc0bcde417797ebf6b2581a3a2d49f9ae7b9c))
 
 ## [1.0.2](https://github.com/palhinhax/TheBate/compare/v1.0.1...v1.0.2) (2026-01-08)
 
-
 ### Bug Fixes
 
-* **ui:** prevent language dropdown from overflowing on mobile ([859e799](https://github.com/palhinhax/TheBate/commit/859e799364f773590d2bb29fb4c3038f68969e93))
+- **ui:** prevent language dropdown from overflowing on mobile ([859e799](https://github.com/palhinhax/TheBate/commit/859e799364f773590d2bb29fb4c3038f68969e93))
 
 ## [1.0.1](https://github.com/palhinhax/TheBate/compare/v1.0.0...v1.0.1) (2026-01-08)
 

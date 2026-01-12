@@ -18,8 +18,7 @@ async function main() {
         name: "TheBate Curator",
         isSeed: true,
         emailVerified: new Date(),
-        passwordHash:
-          "$2a$10$dummyHashForSeedUser1234567890abcdefghijklmnopqrstuv",
+        passwordHash: "$2a$10$dummyHashForSeedUser1234567890abcdefghijklmnopqrstuv",
         preferredLanguage: "en",
         preferredContentLanguages: ["en", "pt", "es", "fr", "de"],
       },
@@ -54,33 +53,27 @@ async function main() {
       options: [
         {
           label: "The Godfather",
-          description:
-            "Francis Ford Coppola's 1972 epic crime drama about the Corleone family.",
+          description: "Francis Ford Coppola's 1972 epic crime drama about the Corleone family.",
         },
         {
           label: "The Shawshank Redemption",
-          description:
-            "Frank Darabont's 1994 drama about hope and friendship in prison.",
+          description: "Frank Darabont's 1994 drama about hope and friendship in prison.",
         },
         {
           label: "Pulp Fiction",
-          description:
-            "Quentin Tarantino's 1994 neo-noir crime film with intertwining stories.",
+          description: "Quentin Tarantino's 1994 neo-noir crime film with intertwining stories.",
         },
         {
           label: "The Dark Knight",
-          description:
-            "Christopher Nolan's 2008 superhero film redefining the genre.",
+          description: "Christopher Nolan's 2008 superhero film redefining the genre.",
         },
         {
           label: "Schindler's List",
-          description:
-            "Steven Spielberg's 1993 historical drama about the Holocaust.",
+          description: "Steven Spielberg's 1993 historical drama about the Holocaust.",
         },
         {
           label: "Citizen Kane",
-          description:
-            "Orson Welles's 1941 masterpiece revolutionizing cinema technique.",
+          description: "Orson Welles's 1941 masterpiece revolutionizing cinema technique.",
         },
       ],
     },
@@ -110,33 +103,27 @@ async function main() {
       options: [
         {
           label: "Breaking Bad",
-          description:
-            "Vince Gilligan's intense drama about a chemistry teacher turned drug lord.",
+          description: "Vince Gilligan's intense drama about a chemistry teacher turned drug lord.",
         },
         {
           label: "The Sopranos",
-          description:
-            "David Chase's revolutionary mob drama that changed television forever.",
+          description: "David Chase's revolutionary mob drama that changed television forever.",
         },
         {
           label: "Game of Thrones",
-          description:
-            "Epic fantasy series based on George R.R. Martin's novels.",
+          description: "Epic fantasy series based on George R.R. Martin's novels.",
         },
         {
           label: "The Wire",
-          description:
-            "David Simon's gritty portrayal of Baltimore's drug scene and institutions.",
+          description: "David Simon's gritty portrayal of Baltimore's drug scene and institutions.",
         },
         {
           label: "Friends",
-          description:
-            "Iconic sitcom about six friends navigating life in New York City.",
+          description: "Iconic sitcom about six friends navigating life in New York City.",
         },
         {
           label: "The Office (US)",
-          description:
-            "Mockumentary sitcom about everyday office life at Dunder Mifflin.",
+          description: "Mockumentary sitcom about everyday office life at Dunder Mifflin.",
         },
       ],
     },
@@ -166,13 +153,11 @@ async function main() {
       options: [
         {
           label: "Michael Jordan",
-          description:
-            "Basketball legend with 6 NBA championships and cultural icon.",
+          description: "Basketball legend with 6 NBA championships and cultural icon.",
         },
         {
           label: "Muhammad Ali",
-          description:
-            "Boxing champion who transcended sport to become a global figure.",
+          description: "Boxing champion who transcended sport to become a global figure.",
         },
         {
           label: "Serena Williams",
@@ -180,18 +165,15 @@ async function main() {
         },
         {
           label: "Cristiano Ronaldo",
-          description:
-            "Football superstar with unmatched longevity and goal-scoring records.",
+          description: "Football superstar with unmatched longevity and goal-scoring records.",
         },
         {
           label: "Lionel Messi",
-          description:
-            "Football genius with record-breaking 8 Ballon d'Or awards.",
+          description: "Football genius with record-breaking 8 Ballon d'Or awards.",
         },
         {
           label: "Usain Bolt",
-          description:
-            "Sprinting legend holding world records in 100m and 200m.",
+          description: "Sprinting legend holding world records in 100m and 200m.",
         },
       ],
     },
@@ -221,33 +203,27 @@ async function main() {
       options: [
         {
           label: "Abraham Lincoln",
-          description:
-            "Led the nation through Civil War and abolished slavery.",
+          description: "Led the nation through Civil War and abolished slavery.",
         },
         {
           label: "George Washington",
-          description:
-            "First president who established precedents for the office.",
+          description: "First president who established precedents for the office.",
         },
         {
           label: "Franklin D. Roosevelt",
-          description:
-            "Guided America through Great Depression and World War II.",
+          description: "Guided America through Great Depression and World War II.",
         },
         {
           label: "Thomas Jefferson",
-          description:
-            "Author of Declaration of Independence and Louisiana Purchase.",
+          description: "Author of Declaration of Independence and Louisiana Purchase.",
         },
         {
           label: "Theodore Roosevelt",
-          description:
-            "Progressive reformer and conservationist who modernized America.",
+          description: "Progressive reformer and conservationist who modernized America.",
         },
         {
           label: "John F. Kennedy",
-          description:
-            "Inspired generation with vision for space exploration and civil rights.",
+          description: "Inspired generation with vision for space exploration and civil rights.",
         },
       ],
     },
@@ -261,9 +237,7 @@ async function main() {
       });
 
       if (existingTopic) {
-        console.log(
-          `⏭️  Topic already exists: ${topicData.slug[lang]} (${lang})`
-        );
+        console.log(`⏭️  Topic already exists: ${topicData.slug[lang]} (${lang})`);
         continue;
       }
 

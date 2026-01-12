@@ -1,6 +1,6 @@
 /**
  * Script para tornar um usuário ADMIN
- * 
+ *
  * Uso: npx tsx scripts/make-admin.ts <username>
  * Exemplo: npx tsx scripts/make-admin.ts joao
  */

@@ -5,6 +5,7 @@
 When a migration fails during deployment, Prisma marks it as failed in the `_prisma_migrations` table. This prevents subsequent migration attempts from running because Prisma detects the failed migration and refuses to proceed.
 
 **Common Error:**
+
 ```
 Error: P3009
 
@@ -15,11 +16,13 @@ The `20260111000000_add_multi_choice_topics` migration started at 2026-01-11 00:
 ## Root Cause
 
 The migration `20260111000000_add_multi_choice_topics` initially had an error where it tried to:
+
 ```sql
 ALTER TABLE "TopicVote" DROP CONSTRAINT "TopicVote_userId_topicId_key";
 ```
 
 However, this was created as a **UNIQUE INDEX** (not a constraint) in the initial migration, causing PostgreSQL to fail with:
+
 ```
 ERROR: constraint "TopicVote_userId_topicId_key" of relation "TopicVote" does not exist
 ```
@@ -41,6 +44,7 @@ DATABASE_URL="$(grep DATABASE_URL .env.production | cut -d '=' -f2-)" pnpm tsx s
 ```
 
 This script:
+
 1. Finds all failed migrations (those with `finished_at = NULL` and `rolled_back_at = NULL`)
 2. Marks them as rolled back by setting `rolled_back_at = NOW()`
 3. Adds a log entry explaining the rollback
@@ -50,12 +54,14 @@ This script:
 After marking the failed migration as rolled back, you can retry:
 
 **Via GitHub Actions:**
+
 1. Go to **Actions** > **Database Update & Seed**
 2. Click **Run workflow**
 3. Set `force_migrate: true`
 4. Click **Run workflow**
 
 **Via Command Line:**
+
 ```bash
 pnpm prisma migrate deploy
 ```
@@ -63,11 +69,13 @@ pnpm prisma migrate deploy
 ## What Was Fixed
 
 The migration SQL has been corrected from:
+
 ```sql
 ALTER TABLE "TopicVote" DROP CONSTRAINT "TopicVote_userId_topicId_key";
 ```
 
 To:
+
 ```sql
 DROP INDEX IF EXISTS "TopicVote_userId_topicId_key";
 ```
@@ -84,7 +92,7 @@ Connect to your production database and run:
 
 ```sql
 -- Find the failed migration
-SELECT * FROM "_prisma_migrations" 
+SELECT * FROM "_prisma_migrations"
 WHERE migration_name = '20260111000000_add_multi_choice_topics';
 
 -- Mark it as rolled back
@@ -135,7 +143,7 @@ BEGIN
     IF NOT EXISTS (
         SELECT 1 FROM pg_constraint WHERE conname = 'TopicVote_optionId_fkey'
     ) THEN
-        ALTER TABLE "TopicVote" ADD CONSTRAINT "TopicVote_optionId_fkey" 
+        ALTER TABLE "TopicVote" ADD CONSTRAINT "TopicVote_optionId_fkey"
         FOREIGN KEY ("optionId") REFERENCES "TopicOption"("id") ON DELETE CASCADE ON UPDATE CASCADE;
     END IF;
 END $$;
@@ -149,7 +157,7 @@ BEGIN
     IF NOT EXISTS (
         SELECT 1 FROM pg_constraint WHERE conname = 'Comment_optionId_fkey'
     ) THEN
-        ALTER TABLE "Comment" ADD CONSTRAINT "Comment_optionId_fkey" 
+        ALTER TABLE "Comment" ADD CONSTRAINT "Comment_optionId_fkey"
         FOREIGN KEY ("optionId") REFERENCES "TopicOption"("id") ON DELETE CASCADE ON UPDATE CASCADE;
     END IF;
 END $$;
@@ -163,7 +171,7 @@ BEGIN
     IF NOT EXISTS (
         SELECT 1 FROM pg_constraint WHERE conname = 'TopicVote_userId_topicId_optionId_key'
     ) THEN
-        ALTER TABLE "TopicVote" ADD CONSTRAINT "TopicVote_userId_topicId_optionId_key" 
+        ALTER TABLE "TopicVote" ADD CONSTRAINT "TopicVote_userId_topicId_optionId_key"
         UNIQUE("userId", "topicId", "optionId");
     END IF;
 END $$;
@@ -181,7 +189,7 @@ BEGIN
     IF NOT EXISTS (
         SELECT 1 FROM pg_constraint WHERE conname = 'TopicOption_topicId_fkey'
     ) THEN
-        ALTER TABLE "TopicOption" ADD CONSTRAINT "TopicOption_topicId_fkey" 
+        ALTER TABLE "TopicOption" ADD CONSTRAINT "TopicOption_topicId_fkey"
         FOREIGN KEY ("topicId") REFERENCES "Topic"("id") ON DELETE CASCADE ON UPDATE CASCADE;
     END IF;
 END $$;
@@ -210,23 +218,23 @@ After resolving the issue, verify the migration was successful:
 
 ```sql
 -- Check migration status
-SELECT * FROM "_prisma_migrations" 
+SELECT * FROM "_prisma_migrations"
 WHERE migration_name = '20260111000000_add_multi_choice_topics';
 
 -- Verify tables exist
-SELECT tablename FROM pg_tables 
-WHERE schemaname = 'public' 
+SELECT tablename FROM pg_tables
+WHERE schemaname = 'public'
 AND tablename IN ('Topic', 'TopicOption', 'TopicVote')
 ORDER BY tablename;
 
 -- Verify columns exist
-SELECT column_name, data_type 
-FROM information_schema.columns 
-WHERE table_name = 'Topic' 
+SELECT column_name, data_type
+FROM information_schema.columns
+WHERE table_name = 'Topic'
 AND column_name IN ('type', 'allowMultipleVotes', 'maxChoices');
 
 -- Verify the new constraint exists
-SELECT conname FROM pg_constraint 
+SELECT conname FROM pg_constraint
 WHERE conname = 'TopicVote_userId_topicId_optionId_key';
 ```
 

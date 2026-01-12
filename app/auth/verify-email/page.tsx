@@ -3,13 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "@/lib/use-translations";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/spinner";
 
 function VerifyEmailContent() {
@@ -42,9 +36,7 @@ function VerifyEmailContent() {
         const result = await response.json();
 
         if (!response.ok) {
-          setError(
-            result.message || t("common.error", "Ocorreu um erro inesperado")
-          );
+          setError(result.message || t("common.error", "Ocorreu um erro inesperado"));
           return;
         }
 
@@ -89,10 +81,7 @@ function VerifyEmailContent() {
               {t("auth.email_verified", "Email Verificado")}
             </CardTitle>
             <CardDescription className="text-center">
-              {t(
-                "auth.email_verified_success",
-                "Seu email foi verificado com sucesso!"
-              )}
+              {t("auth.email_verified_success", "Seu email foi verificado com sucesso!")}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -121,9 +110,7 @@ function VerifyEmailContent() {
         </CardHeader>
         <CardContent className="space-y-4">
           {error && (
-            <div className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">
-              {error}
-            </div>
+            <div className="rounded-md bg-destructive/10 p-3 text-sm text-destructive">{error}</div>
           )}
           <p className="text-center text-sm text-muted-foreground">
             {t(
@@ -144,9 +131,7 @@ export default function VerifyEmailPage() {
         <div className="flex min-h-screen items-center justify-center px-4">
           <Card className="w-full max-w-md">
             <CardHeader className="space-y-1">
-              <CardTitle className="text-center text-2xl font-bold">
-                Verificando Email
-              </CardTitle>
+              <CardTitle className="text-center text-2xl font-bold">Verificando Email</CardTitle>
             </CardHeader>
             <CardContent className="flex justify-center">
               <Spinner size="lg" />

@@ -16,14 +16,10 @@ type NextTopic = {
   title: string;
 };
 
-export default function NextTopicNavigation({
-  currentSlug,
-}: NextTopicNavigationProps) {
+export default function NextTopicNavigation({ currentSlug }: NextTopicNavigationProps) {
   const { t, isLoading: translationsLoading } = useTranslations();
   const router = useRouter();
-  const [nextTopic, setNextTopic] = useState<NextTopic | null | undefined>(
-    undefined
-  );
+  const [nextTopic, setNextTopic] = useState<NextTopic | null | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -85,18 +81,12 @@ export default function NextTopicNavigation({
           }}
         >
           <div className="flex items-center justify-between gap-4">
-            <h3 className="text-lg font-semibold group-hover:text-primary">
-              {nextTopic.title}
-            </h3>
+            <h3 className="text-lg font-semibold group-hover:text-primary">{nextTopic.title}</h3>
             <ArrowRight className="h-5 w-5 flex-shrink-0 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" />
           </div>
         </Link>
         <div className="mt-4">
-          <Button
-            onClick={handleNavigation}
-            className="w-full sm:w-auto"
-            size="sm"
-          >
+          <Button onClick={handleNavigation} className="w-full sm:w-auto" size="sm">
             {t("topics.next_topic", "Next topic")}
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>

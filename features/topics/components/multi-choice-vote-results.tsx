@@ -27,9 +27,7 @@ export default function MultiChoiceVoteResults({
     ...option,
     votes: optionVoteCounts[option.id] || 0,
     percentage:
-      totalVotes > 0
-        ? Math.round(((optionVoteCounts[option.id] || 0) / totalVotes) * 100)
-        : 0,
+      totalVotes > 0 ? Math.round(((optionVoteCounts[option.id] || 0) / totalVotes) * 100) : 0,
   }));
 
   // Sort by vote count (descending)
@@ -59,21 +57,17 @@ export default function MultiChoiceVoteResults({
         <div className="space-y-3">
           {sortedOptions.map((option, index) => {
             const rank = index + 1;
-            const color = colors[index] || { 
-              bar: "bg-primary", 
-              text: "text-primary" 
+            const color = colors[index] || {
+              bar: "bg-primary",
+              text: "text-primary",
             };
-            
+
             return (
               <div key={option.id} className="space-y-1">
                 <div className="flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
-                    <span className="font-bold text-muted-foreground">
-                      #{rank}
-                    </span>
-                    <span className={`font-medium ${color.text}`}>
-                      {option.label}
-                    </span>
+                    <span className="font-bold text-muted-foreground">#{rank}</span>
+                    <span className={`font-medium ${color.text}`}>{option.label}</span>
                   </div>
                   <span className="text-muted-foreground">
                     {option.percentage}% ({option.votes})

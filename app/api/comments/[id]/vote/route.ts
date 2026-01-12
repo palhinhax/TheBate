@@ -7,10 +7,7 @@ const voteBodySchema = z.object({
   value: z.literal(1), // Only +1 for quality vote
 });
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const session = await auth();
     if (!session?.user) {
@@ -27,10 +24,7 @@ export async function POST(
     });
 
     if (!comment) {
-      return NextResponse.json(
-        { error: "Comentário não encontrado" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Comentário não encontrado" }, { status: 404 });
     }
 
     // Users can't vote on their own comments

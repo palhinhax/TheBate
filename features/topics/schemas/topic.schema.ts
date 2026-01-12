@@ -6,10 +6,7 @@ export const topicOptionSchema = z.object({
     .string()
     .min(1, "O nome da opção é obrigatório")
     .max(100, "O nome da opção não pode ter mais de 100 caracteres"),
-  description: z
-    .string()
-    .max(500, "A descrição não pode ter mais de 500 caracteres")
-    .optional(),
+  description: z.string().max(500, "A descrição não pode ter mais de 500 caracteres").optional(),
   order: z.number().int().min(0).default(0),
 });
 

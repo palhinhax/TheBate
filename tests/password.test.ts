@@ -79,9 +79,7 @@ describe("Password Utilities", () => {
       const result = validatePasswordStrength("Short1!");
 
       expect(result.valid).toBe(false);
-      expect(result.errors).toContain(
-        "A senha deve ter pelo menos 8 caracteres"
-      );
+      expect(result.errors).toContain("A senha deve ter pelo menos 8 caracteres");
     });
 
     it("should reject password without uppercase", () => {

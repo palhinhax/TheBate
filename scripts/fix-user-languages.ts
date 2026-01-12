@@ -19,10 +19,7 @@ async function fixUserLanguages() {
     console.log(`User: ${user.username}`);
     console.log(`  Current: ${JSON.stringify(user.preferredContentLanguages)}`);
 
-    if (
-      !user.preferredContentLanguages ||
-      user.preferredContentLanguages.length === 0
-    ) {
+    if (!user.preferredContentLanguages || user.preferredContentLanguages.length === 0) {
       await prisma.user.update({
         where: { id: user.id },
         data: {

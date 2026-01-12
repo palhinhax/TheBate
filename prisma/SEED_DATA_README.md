@@ -17,13 +17,14 @@ admin_users:
   - username: admin
     email: admin@thebate.com
     name: Admin User
-    password: password123  # Will be hashed with bcrypt
+    password: password123 # Will be hashed with bcrypt
     role: ADMIN
     preferred_language: pt
     preferred_content_languages: [pt, en, es, fr, de]
 ```
 
 **Fields:**
+
 - `username` (required): Unique username
 - `email` (required): Unique email address
 - `name` (required): Display name
@@ -60,11 +61,12 @@ sample_topics:
       Multi-line description goes here.
       You can use YAML's pipe (|) syntax for multi-line text.
     tags: [tecnologia, ia, programação, futuro]
-    created_by: admin  # Username from admin_users or sample_users
-    type: YES_NO  # YES_NO or MULTI_CHOICE
+    created_by: admin # Username from admin_users or sample_users
+    type: YES_NO # YES_NO or MULTI_CHOICE
 ```
 
 **Fields:**
+
 - `language` (required): ISO 639-1 language code
 - `title` (required): Topic title
 - `description` (required): Topic description (can be multi-line)
@@ -77,11 +79,13 @@ sample_topics:
 ### Run the Seed
 
 **Via pnpm:**
+
 ```bash
 pnpm run db:seed-yaml
 ```
 
 **Via GitHub Actions:**
+
 1. Go to Actions > Database Update & Seed
 2. Select `yaml` as seed type
 3. Click Run workflow
@@ -95,6 +99,7 @@ The seed script is idempotent, meaning it can be run multiple times safely:
 - **New entries** are created
 
 This allows you to:
+
 - Add new users or topics by editing the YAML
 - Re-run without duplicating existing data
 - Safely recover from partial failures
@@ -146,6 +151,7 @@ sample_topics:
 ## Password Security
 
 Passwords in this file are plain text but will be:
+
 - Hashed with bcrypt (12 rounds) before storing in database
 - Only used during initial seeding
 - Can be changed after first login via the application
@@ -155,6 +161,7 @@ Passwords in this file are plain text but will be:
 ## Language Support
 
 Supported languages in this application:
+
 - `pt` - Portuguese (European)
 - `en` - English
 - `es` - Spanish
@@ -162,6 +169,7 @@ Supported languages in this application:
 - `de` - German
 
 Each user should have:
+
 - `preferred_language`: Their UI language
 - `preferred_content_languages`: Languages they want to see in content (topics, comments)
 
@@ -192,6 +200,7 @@ This ensures your database is always up-to-date with both schema and data.
 The `created_by` field must match a username from `admin_users` or `sample_users` that was successfully created.
 
 **Solution:**
+
 - Check that the username exists in the YAML file
 - Ensure the user was created successfully (check console output)
 - Fix typos in the `created_by` field

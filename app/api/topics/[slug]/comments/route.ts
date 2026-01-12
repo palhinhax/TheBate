@@ -2,20 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { slug: string } }
-) {
+export async function GET(req: NextRequest, { params }: { params: { slug: string } }) {
   try {
     const { searchParams } = new URL(req.url);
     const sort = searchParams.get("sort") || "top";
     const side = searchParams.get("side"); // AFAVOR, CONTRA, or null for all
     const optionId = searchParams.get("optionId"); // For MULTI_CHOICE topics
     const page = parseInt(searchParams.get("page") || "1");
-    const perPage = Math.min(
-      parseInt(searchParams.get("perPage") || "50"),
-      100
-    );
+    const perPage = Math.min(parseInt(searchParams.get("perPage") || "50"), 100);
 
     const skip = (page - 1) * perPage;
 
@@ -26,10 +20,7 @@ export async function GET(
     });
 
     if (!topic) {
-      return NextResponse.json(
-        { error: "Tema não encontrado" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Tema não encontrado" }, { status: 404 });
     }
 
     interface CommentWhere {
@@ -62,9 +53,7 @@ export async function GET(
     // For "top" sort, we need to order by vote count (calculated field)
     // This requires a raw query for optimal performance with large datasets
     const orderBy =
-      sort === "new"
-        ? { createdAt: "desc" as const }
-        : { createdAt: "desc" as const }; // Will sort by votes in the query below
+      sort === "new" ? { createdAt: "desc" as const } : { createdAt: "desc" as const }; // Will sort by votes in the query below
 
     let comments;
 
@@ -208,9 +197,6 @@ export async function GET(
     });
   } catch (error) {
     console.error("Error fetching comments:", error);
-    return NextResponse.json(
-      { error: "Erro ao buscar comentários" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erro ao buscar comentários" }, { status: 500 });
   }
 }

@@ -55,9 +55,6 @@ export async function GET(request: Request) {
     });
   } catch (error) {
     console.error("Admin users fetch error:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch users" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to fetch users" }, { status: 500 });
   }
 }

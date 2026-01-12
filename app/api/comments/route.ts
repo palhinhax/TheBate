@@ -11,12 +11,10 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    
+
     // Check if this is a reply or a top-level comment
     const isReply = !!body.parentId;
-    const validated = isReply 
-      ? replySchema.parse(body)
-      : commentSchema.parse(body);
+    const validated = isReply ? replySchema.parse(body) : commentSchema.parse(body);
 
     // Check if topic exists and is not locked
     const topic = await prisma.topic.findUnique({
@@ -25,10 +23,7 @@ export async function POST(req: NextRequest) {
     });
 
     if (!topic) {
-      return NextResponse.json(
-        { error: "Tema não encontrado" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Tema não encontrado" }, { status: 404 });
     }
 
     if (topic.status === "LOCKED") {
@@ -46,10 +41,7 @@ export async function POST(req: NextRequest) {
       });
 
       if (!parent || parent.topicId !== validated.topicId) {
-        return NextResponse.json(
-          { error: "Comentário pai não encontrado" },
-          { status: 404 }
-        );
+        return NextResponse.json({ error: "Comentário pai não encontrado" }, { status: 404 });
       }
     }
 
@@ -57,7 +49,7 @@ export async function POST(req: NextRequest) {
     let optionId = null;
     if (!isReply && topic.type === "MULTI_CHOICE" && "optionId" in validated) {
       optionId = validated.optionId || null;
-      
+
       // Verify optionId belongs to this topic
       if (optionId) {
         const option = await prisma.topicOption.findUnique({
@@ -66,17 +58,14 @@ export async function POST(req: NextRequest) {
         });
 
         if (!option || option.topicId !== validated.topicId) {
-          return NextResponse.json(
-            { error: "Opção inválida" },
-            { status: 400 }
-          );
+          return NextResponse.json({ error: "Opção inválida" }, { status: 400 });
         }
       }
     }
 
     const commentData = {
       content: validated.content,
-      side: isReply ? null : (topic.type === "YES_NO" && "side" in validated ? validated.side : null),
+      side: isReply ? null : topic.type === "YES_NO" && "side" in validated ? validated.side : null,
       optionId: isReply ? null : optionId,
       topicId: validated.topicId,
       userId: session.user.id,
@@ -115,9 +104,6 @@ export async function POST(req: NextRequest) {
     if (error instanceof Error && error.name === "ZodError") {
       return NextResponse.json({ error: "Dados inválidos" }, { status: 400 });
     }
-    return NextResponse.json(
-      { error: "Erro ao criar comentário" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erro ao criar comentário" }, { status: 500 });
   }
 }

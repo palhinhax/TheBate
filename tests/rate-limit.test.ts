@@ -2,11 +2,7 @@
  * Tests for rate limiting utilities
  */
 
-import {
-  checkRateLimit,
-  resetRateLimit,
-  getClientIp,
-} from "@/lib/rate-limit";
+import { checkRateLimit, resetRateLimit, getClientIp } from "@/lib/rate-limit";
 
 describe("Rate Limiting Utilities", () => {
   beforeEach(() => {
@@ -127,8 +123,7 @@ describe("Rate Limiting Utilities", () => {
       const request = {
         headers: {
           get: (header: string) => {
-            if (header === "x-forwarded-for")
-              return "9.10.11.12, 13.14.15.16";
+            if (header === "x-forwarded-for") return "9.10.11.12, 13.14.15.16";
             return null;
           },
         },

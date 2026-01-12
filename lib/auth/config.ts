@@ -9,9 +9,7 @@ import { sendMagicLinkEmail } from "@/lib/email";
 
 // Validate environment variables
 if (!process.env.AUTH_SECRET) {
-  throw new Error(
-    "❌ AUTH_SECRET is not configured. Please set it in your environment variables."
-  );
+  throw new Error("❌ AUTH_SECRET is not configured. Please set it in your environment variables.");
 }
 
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
@@ -125,10 +123,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             });
 
           if (existingUser && !existingUser.username) {
-            console.log(
-              "👤 Generating username for existing user:",
-              existingUser.id
-            );
+            console.log("👤 Generating username for existing user:", existingUser.id);
 
             // Generate username from email if not set
             const baseUsername = user.email!.split("@")[0];
@@ -278,8 +273,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           session.user.role = token.role as string;
           session.user.isOwner = token.isOwner as boolean;
           session.user.preferredLanguage = token.preferredLanguage as string;
-          session.user.preferredContentLanguages =
-            token.preferredContentLanguages as string[];
+          session.user.preferredContentLanguages = token.preferredContentLanguages as string[];
         }
         return session;
       } catch (error) {

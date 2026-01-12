@@ -3,7 +3,7 @@
  * - Multi-language users
  * - Comments and replies
  * - Votes with realistic distribution
- * 
+ *
  * Run with: npm run seed:engagement
  */
 
@@ -65,11 +65,11 @@ async function main() {
 
   for (const locale of LOCALES) {
     const localeUsers = generateUsersForLocale(locale, USERS_PER_LOCALE);
-    
+
     for (const userData of localeUsers) {
       // Generate random creation date (30-180 days ago)
       const createdAt = adjustForActivityPattern(randomDateInRange(180, 30));
-      
+
       try {
         const user = await prisma.user.create({
           data: {
@@ -83,7 +83,7 @@ async function main() {
             createdAt,
           },
         });
-        
+
         allUsers.push({
           id: user.id,
           locale: userData.locale,
@@ -93,7 +93,7 @@ async function main() {
         console.error(`   ⚠️  Failed to create user ${userData.username}:`, error);
       }
     }
-    
+
     console.log(`   ✅ Created ${localeUsers.length} users for locale: ${locale}`);
   }
 
@@ -130,9 +130,7 @@ async function main() {
 
   for (const topic of topics) {
     // Get users who speak this language
-    const topicUsers = allUsers.filter(
-      (u) => u.locale === topic.language || u.locale === "en"
-    );
+    const topicUsers = allUsers.filter((u) => u.locale === topic.language || u.locale === "en");
 
     if (topicUsers.length === 0) {
       console.log(`   ⚠️  No users for language ${topic.language}, skipping topic`);
@@ -160,7 +158,7 @@ async function main() {
     for (let i = 0; i < numComments; i++) {
       const randomUser = topicUsers[Math.floor(Math.random() * topicUsers.length)];
       const opinion = opinions[i];
-      
+
       // Map opinion to side (only for top-level comments)
       let side: CommentSide | null = null;
       if (opinion === "pro") side = "AFAVOR";
@@ -171,13 +169,13 @@ async function main() {
       const content = getRandomComment(topic.language, opinion);
 
       // Random date between topic creation and now (1-60 days ago)
-      const commentDate = adjustForActivityPattern(
-        randomDateInRange(60, 0)
-      );
+      const commentDate = adjustForActivityPattern(randomDateInRange(60, 0));
 
       // Make sure comment is after topic creation
       const finalCommentDate =
-        commentDate > topic.createdAt ? commentDate : new Date(topic.createdAt.getTime() + ONE_HOUR_MS);
+        commentDate > topic.createdAt
+          ? commentDate
+          : new Date(topic.createdAt.getTime() + ONE_HOUR_MS);
 
       try {
         const comment = await prisma.comment.create({
@@ -209,7 +207,7 @@ async function main() {
 
   // Step 4: Create replies (max depth 2)
   console.log("💬 Creating replies...");
-  
+
   for (const comment of allComments) {
     // Skip some comments (reply probability)
     if (Math.random() > REPLY_PROBABILITY) continue;
@@ -218,9 +216,7 @@ async function main() {
     const topic = topics.find((t) => t.id === comment.topicId);
     if (!topic) continue;
 
-    const topicUsers = allUsers.filter(
-      (u) => u.locale === topic.language || u.locale === "en"
-    );
+    const topicUsers = allUsers.filter((u) => u.locale === topic.language || u.locale === "en");
 
     // Random number of replies (1-3)
     const numReplies = Math.floor(Math.random() * MAX_REPLIES_PER_COMMENT) + 1;
@@ -243,9 +239,7 @@ async function main() {
       const minDate = new Date(comment.createdAt.getTime() + 60000); // At least 1 minute after
       const maxDate = new Date();
       const replyDate = adjustForActivityPattern(
-        new Date(
-          minDate.getTime() + Math.random() * (maxDate.getTime() - minDate.getTime())
-        )
+        new Date(minDate.getTime() + Math.random() * (maxDate.getTime() - minDate.getTime()))
       );
 
       try {
@@ -271,7 +265,7 @@ async function main() {
 
   // Step 5: Create votes (long-tail distribution)
   console.log("👍 Creating votes...");
-  
+
   // Get all comments (including replies)
   const allCommentsWithReplies = await prisma.comment.findMany({
     where: { isSeed: true },
@@ -286,7 +280,7 @@ async function main() {
 
   for (const comment of allCommentsWithReplies) {
     const voteCount = getLongTailVoteCount(50);
-    
+
     if (voteCount === 0) continue;
 
     // Get random voters
@@ -297,8 +291,7 @@ async function main() {
       // Vote date between comment creation and now
       const voteDate = adjustForActivityPattern(
         new Date(
-          comment.createdAt.getTime() +
-            Math.random() * (Date.now() - comment.createdAt.getTime())
+          comment.createdAt.getTime() + Math.random() * (Date.now() - comment.createdAt.getTime())
         )
       );
 

@@ -22,9 +22,6 @@ export async function DELETE() {
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("User delete error:", error);
-    return NextResponse.json(
-      { error: "Erro ao eliminar conta" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erro ao eliminar conta" }, { status: 500 });
   }
 }

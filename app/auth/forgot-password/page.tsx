@@ -101,11 +101,7 @@ export default function ForgotPasswordPage() {
             </p>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
-            <Button
-              variant="outline"
-              className="w-full"
-              onClick={() => router.push("/auth/login")}
-            >
+            <Button variant="outline" className="w-full" onClick={() => router.push("/auth/login")}>
               {t("auth.back_to_login", "Voltar ao Login")}
             </Button>
           </CardFooter>
@@ -144,11 +140,7 @@ export default function ForgotPasswordPage() {
                 {...register("email")}
                 aria-invalid={!!errors.email}
               />
-              {errors.email && (
-                <p className="text-sm text-destructive">
-                  {errors.email.message}
-                </p>
-              )}
+              {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
             </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
@@ -158,10 +150,7 @@ export default function ForgotPasswordPage() {
             </Button>
             <p className="text-center text-sm text-muted-foreground">
               {t("auth.remembered_password", "Lembrou-se da senha?")}{" "}
-              <Link
-                href="/auth/login"
-                className="text-primary hover:underline"
-              >
+              <Link href="/auth/login" className="text-primary hover:underline">
                 {t("common.login", "Entrar")}
               </Link>
             </p>

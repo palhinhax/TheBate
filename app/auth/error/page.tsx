@@ -2,13 +2,7 @@
 
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { AlertCircle } from "lucide-react";
@@ -46,8 +40,7 @@ const errorMessages: Record<string, { title: string; description: string }> = {
   },
   EmailCreateAccount: {
     title: "Error Creating Email Account",
-    description:
-      "Could not create account with email. Please check database connection.",
+    description: "Could not create account with email. Please check database connection.",
   },
   Callback: {
     title: "Callback Error",
@@ -86,17 +79,13 @@ function ErrorContent() {
             <AlertCircle className="h-5 w-5" />
             <CardTitle>{errorInfo.title}</CardTitle>
           </div>
-          <CardDescription className="text-base">
-            {errorInfo.description}
-          </CardDescription>
+          <CardDescription className="text-base">{errorInfo.description}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {errorDetails && (
             <div className="rounded-md bg-muted p-4">
               <p className="mb-2 text-sm font-medium">Technical Details:</p>
-              <p className="break-all font-mono text-xs text-muted-foreground">
-                {errorDetails}
-              </p>
+              <p className="break-all font-mono text-xs text-muted-foreground">{errorDetails}</p>
             </div>
           )}
 
@@ -105,33 +94,19 @@ function ErrorContent() {
             <ul className="space-y-2 text-sm text-muted-foreground">
               {error === "Configuration" && (
                 <>
-                  <li>
-                    • Check that AUTH_SECRET is set in environment variables
-                  </li>
-                  <li>
-                    • Verify GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET are
-                    configured
-                  </li>
-                  <li>
-                    • Ensure DATABASE_URL points to a valid Neon PostgreSQL
-                    database
-                  </li>
+                  <li>• Check that AUTH_SECRET is set in environment variables</li>
+                  <li>• Verify GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET are configured</li>
+                  <li>• Ensure DATABASE_URL points to a valid Neon PostgreSQL database</li>
                   <li>
                     • Run database migrations:{" "}
-                    <code className="rounded bg-muted px-1">
-                      pnpm prisma migrate deploy
-                    </code>
+                    <code className="rounded bg-muted px-1">pnpm prisma migrate deploy</code>
                   </li>
                 </>
               )}
-              {(error === "OAuthCallback" ||
-                error === "OAuthCreateAccount") && (
+              {(error === "OAuthCallback" || error === "OAuthCreateAccount") && (
                 <>
                   <li>• Check database connection (DATABASE_URL)</li>
-                  <li>
-                    • Verify OAuth redirect URIs in Google Cloud Console match
-                    your domain
-                  </li>
+                  <li>• Verify OAuth redirect URIs in Google Cloud Console match your domain</li>
                   <li>• Ensure database tables exist (run migrations)</li>
                   <li>• Check server logs for detailed error messages</li>
                 </>
@@ -167,8 +142,8 @@ function ErrorContent() {
           {process.env.NODE_ENV === "development" && (
             <div className="mt-4 rounded-md border border-yellow-200 bg-yellow-50 p-3 dark:border-yellow-800 dark:bg-yellow-950">
               <p className="text-xs text-yellow-800 dark:text-yellow-200">
-                <strong>Development Mode:</strong> Check your terminal/console
-                for detailed error logs.
+                <strong>Development Mode:</strong> Check your terminal/console for detailed error
+                logs.
               </p>
             </div>
           )}

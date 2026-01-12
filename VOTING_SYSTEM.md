@@ -7,17 +7,20 @@ This document describes the voting and sided comments system implemented in TheB
 ### 1. Theme Voting (SIM/NÃO/DEPENDE)
 
 Users can vote on themes without commenting:
+
 - **SIM** - User agrees with the theme
-- **NÃO** - User disagrees with the theme  
+- **NÃO** - User disagrees with the theme
 - **DEPENDE** - User's opinion depends on context
 
 **Key Features:**
+
 - Login required to vote
 - One vote per user per theme (can be changed)
 - Vote statistics displayed with percentages
 - Public results visible to all users
 
 **API Endpoints:**
+
 - `POST /api/topics/[slug]/vote` - Create or update vote
 - `DELETE /api/topics/[slug]/vote` - Remove vote
 - `GET /api/topics/[slug]` - Includes vote stats and user's vote
@@ -25,10 +28,12 @@ Users can vote on themes without commenting:
 ### 2. Sided Comments (A FAVOR/CONTRA)
 
 Comments are now arguments that must have a side:
+
 - **A FAVOR** (👍) - Argument in favor of the theme
 - **CONTRA** (👎) - Argument against the theme
 
 **Key Features:**
+
 - Side selection is mandatory for top-level comments
 - Replies inherit context and don't require side selection
 - Character limit: 20-800 characters
@@ -38,6 +43,7 @@ Comments are now arguments that must have a side:
 ### 3. Quality Voting on Comments
 
 Changed from upvote/downvote to quality-based voting:
+
 - Only thumbs up (👍) for "Bom argumento" (good argument)
 - One vote per user per comment
 - Toggle to remove vote
@@ -46,6 +52,7 @@ Changed from upvote/downvote to quality-based voting:
 ## Database Changes
 
 ### New Enums
+
 ```prisma
 enum CommentSide {
   AFAVOR
@@ -60,6 +67,7 @@ enum ThemeVote {
 ```
 
 ### Updated Models
+
 - **Comment**: Added `side` field (nullable for replies)
 - **TopicVote**: Changed `value` (Int) to `vote` (ThemeVote enum), added `updatedAt`
 - **Vote**: Now only accepts value of 1 (quality vote)
@@ -67,10 +75,12 @@ enum ThemeVote {
 ## UI Components
 
 ### Theme Voting
+
 - `ThemeVoteButtons` - Three button interface for voting
 - `ThemeVoteResults` - Visual percentage bars showing vote distribution
 
 ### Comments
+
 - `NewCommentForm` - Updated with side selector (A FAVOR/CONTRA)
 - `CommentItem` - Shows side badge, quality voting with thumbs up
 - `CommentsList` - Supports filtering by side
@@ -78,12 +88,14 @@ enum ThemeVote {
 ## Usage Examples
 
 ### Voting on a Theme
+
 1. Navigate to a theme page
 2. Click one of: SIM, NÃO, or DEPENDE
 3. Click again to change vote
 4. See results update immediately
 
 ### Adding a Sided Comment
+
 1. Navigate to a theme page
 2. Select either "A Favor" or "Contra"
 3. Write your argument (20-800 characters)
@@ -91,6 +103,7 @@ enum ThemeVote {
 5. Comment appears with side badge
 
 ### Filtering Comments
+
 1. On theme page, use filter buttons:
    - **Todos** - Show all comments
    - **👍 A Favor** - Show only pro arguments
@@ -98,6 +111,7 @@ enum ThemeVote {
 2. Combine with sort options (Top/Novos)
 
 ### Quality Voting on Comments
+
 1. Find a well-written argument
 2. Click thumbs up (👍) icon
 3. Click again to remove vote

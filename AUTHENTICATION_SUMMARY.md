@@ -9,6 +9,7 @@ This implementation adds Google OAuth and Magic Link (passwordless email) authen
 ### 1. Database Changes
 
 **Schema Updates** (`prisma/schema.prisma`):
+
 - Made `User.username` optional (nullable) for OAuth users
 - Made `User.passwordHash` optional for passwordless users
 - Added `Account` table for OAuth provider accounts
@@ -16,12 +17,14 @@ This implementation adds Google OAuth and Magic Link (passwordless email) authen
 - Added `VerificationToken` table for magic links
 
 **Migration File**: `prisma/migrations/20260110110257_add_oauth_support/migration.sql`
+
 - Ready to apply to production database
 - Run with: `npx prisma migrate deploy`
 
 ### 2. Authentication Configuration
 
 **NextAuth.js Setup** (`lib/auth/config.ts`):
+
 - Configured Google OAuth provider with email account linking
 - Configured Resend Email provider for magic links
 - Added custom email template handler for branded magic links
@@ -29,6 +32,7 @@ This implementation adds Google OAuth and Magic Link (passwordless email) authen
 - Auto-marks email as verified on first OAuth/magic link sign-in
 
 **Providers**:
+
 - **Google OAuth**: One-click sign-in with Google accounts
 - **Resend Email**: Passwordless magic link authentication
 - **Credentials**: Kept for backward compatibility with existing users
@@ -36,6 +40,7 @@ This implementation adds Google OAuth and Magic Link (passwordless email) authen
 ### 3. User Interface
 
 **AuthModal Component** (`components/auth-modal.tsx`):
+
 - Modal dialog shown when unauthenticated users try to vote or comment
 - Google sign-in button with branding
 - Email input for magic link
@@ -43,12 +48,14 @@ This implementation adds Google OAuth and Magic Link (passwordless email) authen
 - Fully translated (5 languages)
 
 **Updated Components**:
+
 - `ThemeVoteButtons`: Shows AuthModal instead of redirecting
 - `NewCommentForm`: Checks auth and shows AuthModal before submission
 
 ### 4. Email Templates
 
 **Magic Link Emails** (`lib/email.ts`):
+
 - Branded HTML templates with TheBate styling
 - Plain text fallback
 - Translated in 5 languages: English, Portuguese (PT), Spanish, French, German
@@ -58,6 +65,7 @@ This implementation adds Google OAuth and Magic Link (passwordless email) authen
 ### 5. Translations
 
 **Added Translations** (all language files):
+
 - `auth.login_modal_title`: "Sign In to Continue"
 - `auth.login_modal_description`: "To keep debates fair, you need to sign in."
 - `auth.sign_in_google`: "Sign in with Google"
@@ -70,6 +78,7 @@ This implementation adds Google OAuth and Magic Link (passwordless email) authen
 ### 6. Null Safety
 
 **Updated Files** (to handle nullable usernames):
+
 - `app/t/[slug]/page.tsx`: Topic page metadata and display
 - `app/u/[username]/page.tsx`: User profile page
 - `app/admin/page.tsx`: Admin dashboard
@@ -79,6 +88,7 @@ This implementation adds Google OAuth and Magic Link (passwordless email) authen
 ### 7. Documentation
 
 **Created Files**:
+
 - `OAUTH_SETUP.md`: Comprehensive setup guide for OAuth authentication
 - `.env.example`: Updated with Google OAuth credentials
 - Migration SQL file with complete schema changes
@@ -102,6 +112,7 @@ EMAIL_FROM="noreply@yourdomain.com"
 ## User Flow
 
 ### Google OAuth Flow
+
 1. User tries to vote/comment without being logged in
 2. AuthModal appears with "Sign in with Google" button
 3. User clicks button → redirected to Google
@@ -112,6 +123,7 @@ EMAIL_FROM="noreply@yourdomain.com"
 8. Vote/comment is now enabled
 
 ### Magic Link Flow
+
 1. User tries to vote/comment without being logged in
 2. AuthModal appears with email input
 3. User enters email and clicks "Send Magic Link"
@@ -123,12 +135,14 @@ EMAIL_FROM="noreply@yourdomain.com"
 9. User is redirected to original page
 
 ### Existing Users
+
 - Credentials-based login still works
 - Users can add OAuth to existing accounts (email-based linking)
 
 ## Security Features
 
 ### Implemented
+
 - JWT sessions with httpOnly cookies
 - Email verification automatic for OAuth/magic links
 - CSRF protection (built into NextAuth)
@@ -136,6 +150,7 @@ EMAIL_FROM="noreply@yourdomain.com"
 - Account linking based on email address
 
 ### Recommended (Future)
+
 - Rate limiting on magic link requests (by IP + email)
 - Rate limiting on vote/comment endpoints
 - Soft-block mechanism for spam detection
@@ -160,6 +175,7 @@ Before deploying to production:
 ## Code Quality
 
 All checks passing:
+
 - ✅ ESLint: No warnings or errors
 - ✅ TypeScript: No type errors
 - ✅ Build: Successful compilation
@@ -169,16 +185,19 @@ All checks passing:
 ## Files Changed
 
 ### Core Implementation
+
 - `prisma/schema.prisma` - Database schema
 - `lib/auth/config.ts` - Auth configuration
 - `lib/email.ts` - Email templates
 - `components/auth-modal.tsx` - Authentication modal UI
 
 ### Feature Updates
+
 - `features/topics/components/theme-vote-buttons.tsx` - Vote authentication
 - `features/comments/components/new-comment-form.tsx` - Comment authentication
 
 ### Type Safety
+
 - `types/next-auth.d.ts` - NextAuth types
 - `app/t/[slug]/page.tsx` - Topic page
 - `app/u/[username]/page.tsx` - User profile
@@ -186,6 +205,7 @@ All checks passing:
 - `app/api/users/[username]/route.ts` - User API
 
 ### Translations (5 files)
+
 - `locales/en.json`
 - `locales/pt.json`
 - `locales/es.json`
@@ -193,17 +213,20 @@ All checks passing:
 - `locales/de.json`
 
 ### Documentation
+
 - `OAUTH_SETUP.md` - Setup guide
 - `.env.example` - Environment variables
 - `prisma/migrations/.../migration.sql` - Database migration
 - `AUTHENTICATION_SUMMARY.md` - This file
 
 ### Pages
+
 - `app/auth/verify-request/page.tsx` - Magic link sent page
 
 ## Next Steps
 
 ### For Production Deployment
+
 1. Review and approve the PR
 2. Set up Google OAuth credentials in Google Cloud Console
 3. Configure environment variables in hosting platform
@@ -213,6 +236,7 @@ All checks passing:
 7. Monitor authentication logs
 
 ### Future Enhancements (Out of Scope)
+
 - Apple Sign-In (mentioned as future phase)
 - Password-based registration (kept for compatibility)
 - Rate limiting implementation
@@ -252,6 +276,7 @@ All checks passing:
 ## Support
 
 For issues or questions:
+
 - See `OAUTH_SETUP.md` for detailed setup instructions
 - Check NextAuth.js docs: https://next-auth.js.org
 - Check Resend docs: https://resend.com/docs

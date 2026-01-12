@@ -43,6 +43,7 @@ NODE_ENV="production"
    - **Migrations run before Vercel deployment** (not during build)
 
 **Benefits:**
+
 - ✅ Database updated before new code is deployed
 - ✅ No concurrent migration conflicts
 - ✅ Clear error reporting

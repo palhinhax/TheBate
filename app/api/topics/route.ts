@@ -9,10 +9,7 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const sort = searchParams.get("sort") || "new";
     const page = parseInt(searchParams.get("page") || "1");
-    const perPage = Math.min(
-      parseInt(searchParams.get("perPage") || "20"),
-      100
-    );
+    const perPage = Math.min(parseInt(searchParams.get("perPage") || "20"), 100);
     const tag = searchParams.get("tag");
 
     const skip = (page - 1) * perPage;
@@ -28,9 +25,7 @@ export async function GET(req: NextRequest) {
     }
 
     const orderBy =
-      sort === "new"
-        ? { createdAt: "desc" as const }
-        : { createdAt: "desc" as const }; // TODO: implement real trending algorithm
+      sort === "new" ? { createdAt: "desc" as const } : { createdAt: "desc" as const }; // TODO: implement real trending algorithm
 
     const [topics, total] = await Promise.all([
       prisma.topic.findMany({
@@ -68,10 +63,7 @@ export async function GET(req: NextRequest) {
     });
   } catch (error) {
     console.error("Error fetching topics:", error);
-    return NextResponse.json(
-      { error: "Erro ao buscar temas" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erro ao buscar temas" }, { status: 500 });
   }
 }
 

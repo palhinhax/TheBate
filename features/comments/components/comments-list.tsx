@@ -211,12 +211,7 @@ async function getComments(
   return { comments, topicId: topic.id, topicType: topic.type };
 }
 
-export default async function CommentsList({
-  topicSlug,
-  sort,
-  side,
-  optionId,
-}: CommentsListProps) {
+export default async function CommentsList({ topicSlug, sort, side, optionId }: CommentsListProps) {
   const { comments, topicId, topicType } = await getComments(topicSlug, sort, side, optionId);
 
   if (comments.length === 0) {

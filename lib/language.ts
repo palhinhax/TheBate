@@ -4,11 +4,7 @@ import { SUPPORTED_LANGUAGES, type SupportedLanguage } from "./language-shared";
 
 // Re-export for convenience
 export type { SupportedLanguage } from "./language-shared";
-export {
-  SUPPORTED_LANGUAGES,
-  LANGUAGE_METADATA,
-  LANGUAGES,
-} from "./language-shared";
+export { SUPPORTED_LANGUAGES, LANGUAGE_METADATA, LANGUAGES } from "./language-shared";
 
 /**
  * Detects user's preferred language based on:

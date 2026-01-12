@@ -59,9 +59,6 @@ export async function GET(request: Request) {
     });
   } catch (error) {
     console.error("Admin topics fetch error:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch topics" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to fetch topics" }, { status: 500 });
   }
 }

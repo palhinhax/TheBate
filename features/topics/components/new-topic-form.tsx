@@ -43,13 +43,13 @@ export default function NewTopicForm() {
 
   // Detect user's preferred language on mount
   useEffect(() => {
-    const saved = localStorage.getItem('preferredLanguages');
+    const saved = localStorage.getItem("preferredLanguages");
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
           setSelectedLanguage(parsed[0]);
-          setValue('language', parsed[0]);
+          setValue("language", parsed[0]);
         }
       } catch {
         // ignore
@@ -94,7 +94,11 @@ export default function NewTopicForm() {
     setValue("options", reordered);
   };
 
-  const handleOptionChange = (index: number, field: keyof TopicOptionData, value: string | number) => {
+  const handleOptionChange = (
+    index: number,
+    field: keyof TopicOptionData,
+    value: string | number
+  ) => {
     const newOptions = [...options];
     newOptions[index] = { ...newOptions[index], [field]: value };
     setOptions(newOptions);
@@ -150,11 +154,7 @@ export default function NewTopicForm() {
           placeholder={t("topics.title_placeholder", "Ex: IA vai substituir programadores?")}
           className="mt-1"
         />
-        {errors.title && (
-          <p className="mt-1 text-sm text-destructive">
-            {errors.title.message}
-          </p>
-        )}
+        {errors.title && <p className="mt-1 text-sm text-destructive">{errors.title.message}</p>}
       </div>
 
       <div>
@@ -166,9 +166,7 @@ export default function NewTopicForm() {
           className="mt-1 min-h-[200px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
         />
         {errors.description && (
-          <p className="mt-1 text-sm text-destructive">
-            {errors.description.message}
-          </p>
+          <p className="mt-1 text-sm text-destructive">{errors.description.message}</p>
         )}
       </div>
 
@@ -191,9 +189,7 @@ export default function NewTopicForm() {
             {t("topics.add_tag", "Adicionar")}
           </Button>
         </div>
-        {errors.tags && (
-          <p className="mt-1 text-sm text-destructive">{errors.tags.message}</p>
-        )}
+        {errors.tags && <p className="mt-1 text-sm text-destructive">{errors.tags.message}</p>}
         {tags.length > 0 && (
           <div className="mt-2 flex flex-wrap gap-2">
             {tags.map((tag) => (
@@ -380,7 +376,8 @@ export default function NewTopicForm() {
                     className="mt-1 w-24"
                   />
                   <p className="mt-1 text-xs text-muted-foreground">
-                    Cada utilizador pode selecionar até {maxChoices} opç{maxChoices === 1 ? "ão" : "ões"}
+                    Cada utilizador pode selecionar até {maxChoices} opç
+                    {maxChoices === 1 ? "ão" : "ões"}
                   </p>
                 </div>
               )}
@@ -391,7 +388,7 @@ export default function NewTopicForm() {
 
       <div>
         <Label htmlFor="language">
-          <Globe className="inline h-4 w-4 mr-1" />
+          <Globe className="mr-1 inline h-4 w-4" />
           {t("topics.language_label", "Idioma do Tema")}
         </Label>
         <select
@@ -400,7 +397,7 @@ export default function NewTopicForm() {
           onChange={(e) => {
             const lang = e.target.value as SupportedLanguage;
             setSelectedLanguage(lang);
-            setValue('language', lang);
+            setValue("language", lang);
           }}
           className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
@@ -417,7 +414,9 @@ export default function NewTopicForm() {
 
       <div className="flex gap-4">
         <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? t("topics.creating", "A criar...") : t("topics.create_button", "Criar Tema")}
+          {isSubmitting
+            ? t("topics.creating", "A criar...")
+            : t("topics.create_button", "Criar Tema")}
         </Button>
         <Button
           type="button"

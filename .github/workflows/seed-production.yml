@@ -50,11 +50,11 @@ jobs:
         id: check_migration
         run: |
           echo "🔍 Checking if migrations are needed..."
-          
+
           # Set connection timeout and statement timeout
           export PGCONNECT_TIMEOUT=15
           export PGSTATEMENT_TIMEOUT=45000
-          
+
           # Try to check migration status with timeout
           if timeout 30s pnpm prisma migrate status 2>&1 | tee migration_status.txt; then
             if grep -q "Database schema is up to date" migration_status.txt; then
@@ -68,7 +68,7 @@ jobs:
             echo "status=unknown" >> $GITHUB_OUTPUT
             echo "⚠️ Could not determine migration status (timeout or error)"
           fi
-          
+
           rm -f migration_status.txt
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -78,7 +78,7 @@ jobs:
         if: ${{ steps.check_migration.outputs.status == 'needs-migration' || steps.check_migration.outputs.status == 'unknown' || inputs.force_migrate == 'true' }}
         run: |
           echo "🔍 Checking for failed migrations..."
-          
+
           # Check if there are any failed migrations
           if pnpm prisma migrate status 2>&1 | grep -q "migrate found failed migrations"; then
             echo "⚠️  Found failed migrations - attempting to resolve..."
@@ -94,7 +94,7 @@ jobs:
         if: ${{ steps.check_migration.outputs.status == 'needs-migration' || steps.check_migration.outputs.status == 'unknown' || inputs.force_migrate == 'true' }}
         run: |
           echo "🔄 Running database migrations with retry logic..."
-          
+
           # Function to run migration with timeout
           run_migration() {
             local attempt=$1
@@ -114,11 +114,11 @@ jobs:
               return 1
             fi
           }
-          
+
           # Retry logic
           max_attempts=3
           attempt=1
-          
+
           while [ $attempt -le $max_attempts ]; do
             if run_migration $attempt; then
               echo "migration_status=success" >> $GITHUB_OUTPUT
@@ -132,17 +132,17 @@ jobs:
             
             attempt=$((attempt + 1))
           done
-          
+
           echo "❌ All migration attempts failed"
           echo "migration_status=failed" >> $GITHUB_OUTPUT
-          
+
           # If migration fails, check if it's due to already being applied
           if pnpm prisma migrate status 2>&1 | grep -q "Database schema is up to date"; then
             echo "✅ Database is actually up to date (migrations already applied)"
             echo "migration_status=already-applied" >> $GITHUB_OUTPUT
             exit 0
           fi
-          
+
           exit 1
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -173,7 +173,7 @@ jobs:
           echo "Migration status: ${{ steps.check_migration.outputs.status }}"
           echo "Seed type: ${{ inputs.seed_type }}"
           echo ""
-          
+
           if [ "${{ job.status }}" == "success" ]; then
             echo "✅ Database update completed successfully"
           else

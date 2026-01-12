@@ -54,7 +54,7 @@ const multilingualTopics = [
     tags: ["ubi", "economy", "automation", "policy"],
     language: "en",
   },
-  
+
   // Portuguese - Tópicos Polêmicos
   {
     slug: "trump-ameaca-democracia-2025",
@@ -88,7 +88,7 @@ const multilingualTopics = [
     tags: ["tecnologia", "ia", "programação"],
     language: "pt",
   },
-  
+
   // Spanish - Temas Polémicos
   {
     slug: "trump-amenaza-democracia-2025",
@@ -122,7 +122,7 @@ const multilingualTopics = [
     tags: ["migración", "política", "economía", "sociedad"],
     language: "es",
   },
-  
+
   // French - Sujets Polémiques
   {
     slug: "trump-menace-democratie-2025",
@@ -156,7 +156,7 @@ const multilingualTopics = [
     tags: ["immigration", "europe", "politique", "société"],
     language: "fr",
   },
-  
+
   // German - Kontroverse Themen
   {
     slug: "trump-bedrohung-demokratie-2025",
@@ -296,7 +296,7 @@ async function main() {
   for (let i = 0; i < multilingualTopics.length; i++) {
     const topicData = multilingualTopics[i];
     const user = users[i % users.length];
-    
+
     const topic = await prisma.topic.create({
       data: {
         ...topicData,
@@ -313,11 +313,11 @@ async function main() {
   for (const topic of createdTopics.slice(0, 5)) {
     // Create 3-5 comments per topic
     const numComments = Math.floor(Math.random() * 3) + 3;
-    
+
     for (let i = 0; i < numComments; i++) {
       const user = users[Math.floor(Math.random() * users.length)];
       const side = ["AFAVOR", "CONTRA"][Math.floor(Math.random() * 2)];
-      
+
       await prisma.comment.create({
         data: {
           content: `This is a comment about ${topic.title}. ${side === "AFAVOR" ? "I agree with this perspective." : "I have some concerns about this."}`,

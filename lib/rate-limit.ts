@@ -46,10 +46,7 @@ export interface RateLimitResult {
  * @param config Rate limit configuration
  * @returns Rate limit result
  */
-export function checkRateLimit(
-  identifier: string,
-  config: RateLimitConfig
-): RateLimitResult {
+export function checkRateLimit(identifier: string, config: RateLimitConfig): RateLimitResult {
   // Clean up expired entries periodically (10% chance on each check)
   // This ensures cleanup happens without relying on timers (serverless-friendly)
   if (Math.random() < 0.1) {

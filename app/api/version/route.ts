@@ -12,9 +12,6 @@ export async function GET() {
       name: packageJson.name || "TheBatee",
     });
   } catch {
-    return NextResponse.json(
-      { error: "Failed to retrieve version" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to retrieve version" }, { status: 500 });
   }
 }

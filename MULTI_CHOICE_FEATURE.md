@@ -7,11 +7,13 @@ This feature adds support for multi-choice voting topics to TheBate, allowing to
 ## Topic Types
 
 ### YES_NO (Original)
+
 - Binary voting: Sim, Não, Depende
 - Comments are associated with a side (A Favor/Contra)
 - Filter comments by side
 
 ### MULTI_CHOICE (New)
+
 - Vote for one or multiple predefined options
 - Configurable max choices per user
 - Comments can be associated with specific options
@@ -23,7 +25,9 @@ This feature adds support for multi-choice voting topics to TheBate, allowing to
 ### New Tables
 
 #### TopicOption
+
 Stores the available options for multi-choice topics:
+
 - `id`: Unique identifier
 - `label`: Option name (e.g., "Messi", "Ronaldo")
 - `description`: Optional description
@@ -33,19 +37,25 @@ Stores the available options for multi-choice topics:
 ### Modified Tables
 
 #### Topic
+
 Added fields:
+
 - `type`: TopicType enum (YES_NO | MULTI_CHOICE)
 - `allowMultipleVotes`: Boolean - allow voting for multiple options
 - `maxChoices`: Integer - maximum number of options user can select
 
 #### TopicVote
+
 Modified fields:
+
 - `vote`: Now optional (null for MULTI_CHOICE)
 - `optionId`: New field - reference to TopicOption for MULTI_CHOICE votes
 - Unique constraint updated to `(userId, topicId, optionId)`
 
 #### Comment
+
 Added fields:
+
 - `optionId`: Optional reference to TopicOption for MULTI_CHOICE topics
 
 ## API Changes
@@ -53,7 +63,9 @@ Added fields:
 ### Voting Endpoint: POST /api/topics/[slug]/vote
 
 #### YES_NO Topics
+
 Request body:
+
 ```json
 {
   "vote": "SIM" | "NAO" | "DEPENDE"
@@ -61,6 +73,7 @@ Request body:
 ```
 
 Response:
+
 ```json
 {
   "success": true,
@@ -75,7 +88,9 @@ Response:
 ```
 
 #### MULTI_CHOICE Topics
+
 Request body:
+
 ```json
 {
   "optionIds": ["option-id-1", "option-id-2"]
@@ -83,6 +98,7 @@ Request body:
 ```
 
 Response:
+
 ```json
 {
   "success": true,
@@ -99,14 +115,17 @@ Response:
 ### Comments Endpoint: GET /api/topics/[slug]/comments
 
 New query parameter:
+
 - `optionId`: Filter comments by option (for MULTI_CHOICE topics)
 
 Existing parameter:
+
 - `side`: Filter by side (for YES_NO topics)
 
 ### Create Comment: POST /api/comments
 
 New fields in request body:
+
 - `side`: Required for YES_NO topics (AFAVOR | CONTRA)
 - `optionId`: Optional for MULTI_CHOICE topics
 
@@ -166,15 +185,16 @@ await prisma.topic.create({
         { label: "Ronaldo", order: 1 },
         { label: "Pelé", order: 2 },
         { label: "Maradona", order: 3 },
-      ]
-    }
-  }
+      ],
+    },
+  },
 });
 ```
 
 ### Voting on Multi-Choice Topics
 
 Users can:
+
 1. Select one or multiple options (based on settings)
 2. See real-time feedback on selection limits
 3. Submit their vote
@@ -184,6 +204,7 @@ Users can:
 ### Commenting on Multi-Choice Topics
 
 Users can:
+
 1. Optionally associate their comment with a specific option
 2. View all comments or filter by option
 3. See which option other comments are associated with
@@ -193,19 +214,22 @@ Users can:
 ### For Production Deployment
 
 1. **Backup Database**
+
    ```bash
    pg_dump your_database > backup_$(date +%Y%m%d_%H%M%S).sql
    ```
 
 2. **Run Migration**
+
    ```bash
    # Using Prisma (recommended)
    npx prisma migrate deploy
    ```
-   
+
    The migration `20260111000000_add_multi_choice_topics` will be automatically applied.
 
 3. **Regenerate Prisma Client**
+
    ```bash
    npx prisma generate
    ```
@@ -242,6 +266,7 @@ If issues occur:
 ## Future Enhancements
 
 ### Phase 2 Features
+
 1. **Admin UI for Multi-Choice Creation**
    - Visual option builder
    - Drag-and-drop ordering
@@ -266,21 +291,25 @@ If issues occur:
 ### Common Issues
 
 **Issue**: Votes not being recorded
+
 - Check that optionIds match existing options
 - Verify user is authenticated
 - Check maxChoices configuration
 
 **Issue**: Comments not showing option association
+
 - Ensure optionId is included in comment queries
 - Verify option exists and belongs to topic
 
 **Issue**: Type errors in TypeScript
+
 - Regenerate Prisma client: `npx prisma generate`
 - Clear Next.js cache: `rm -rf .next`
 
 ## Support
 
 For questions or issues:
+
 1. Check existing GitHub issues
 2. Review this documentation
 3. Create a new issue with:

@@ -2,15 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { z } from "zod";
-import {
-  yesNoVoteSchema,
-  multiChoiceVoteSchema,
-} from "@/features/topics/schemas/topic.schema";
+import { yesNoVoteSchema, multiChoiceVoteSchema } from "@/features/topics/schemas/topic.schema";
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: { slug: string } }
-) {
+export async function POST(req: NextRequest, { params }: { params: { slug: string } }) {
   try {
     const session = await auth();
     if (!session?.user) {
@@ -32,17 +26,11 @@ export async function POST(
     });
 
     if (!topic) {
-      return NextResponse.json(
-        { error: "Tema não encontrado" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Tema não encontrado" }, { status: 404 });
     }
 
     if (topic.status === "LOCKED") {
-      return NextResponse.json(
-        { error: "Este tema está bloqueado para votação" },
-        { status: 403 }
-      );
+      return NextResponse.json({ error: "Este tema está bloqueado para votação" }, { status: 403 });
     }
 
     // Handle voting based on topic type
@@ -113,10 +101,7 @@ export async function POST(
       });
 
       if (validOptions.length !== optionIds.length) {
-        return NextResponse.json(
-          { error: "Opções inválidas" },
-          { status: 400 }
-        );
+        return NextResponse.json({ error: "Opções inválidas" }, { status: 400 });
       }
 
       // Check if multiple votes are allowed
@@ -183,10 +168,7 @@ export async function POST(
         totalVotes,
       });
     } else {
-      return NextResponse.json(
-        { error: "Tipo de tema não suportado" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Tipo de tema não suportado" }, { status: 400 });
     }
   } catch (error) {
     console.error("Error voting on topic:", error);
@@ -197,10 +179,7 @@ export async function POST(
   }
 }
 
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { slug: string } }
-) {
+export async function DELETE(req: NextRequest, { params }: { params: { slug: string } }) {
   try {
     const session = await auth();
     if (!session?.user) {
@@ -214,10 +193,7 @@ export async function DELETE(
     });
 
     if (!topic) {
-      return NextResponse.json(
-        { error: "Tema não encontrado" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Tema não encontrado" }, { status: 404 });
     }
 
     // Delete all votes for this user on this topic
@@ -287,20 +263,9 @@ export async function DELETE(
     }
   } catch (error) {
     console.error("Error deleting vote:", error);
-    if (
-      error &&
-      typeof error === "object" &&
-      "code" in error &&
-      error.code === "P2025"
-    ) {
-      return NextResponse.json(
-        { error: "Voto não encontrado" },
-        { status: 404 }
-      );
+    if (error && typeof error === "object" && "code" in error && error.code === "P2025") {
+      return NextResponse.json({ error: "Voto não encontrado" }, { status: 404 });
     }
-    return NextResponse.json(
-      { error: "Erro ao remover voto" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erro ao remover voto" }, { status: 500 });
   }
 }

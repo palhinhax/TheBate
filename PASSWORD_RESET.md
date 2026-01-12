@@ -32,6 +32,7 @@ The password reset system allows users to securely reset their passwords using a
 Request a password reset link to be sent via email.
 
 **Request Body:**
+
 ```json
 {
   "email": "user@example.com"
@@ -39,6 +40,7 @@ Request a password reset link to be sent via email.
 ```
 
 **Success Response (200):**
+
 ```json
 {
   "success": true,
@@ -47,6 +49,7 @@ Request a password reset link to be sent via email.
 ```
 
 **Rate Limit Response (429):**
+
 ```json
 {
   "message": "Muitas tentativas. Tente novamente mais tarde.",
@@ -61,6 +64,7 @@ Request a password reset link to be sent via email.
 Reset the password using the token from the email.
 
 **Request Body:**
+
 ```json
 {
   "token": "abc123...",
@@ -69,6 +73,7 @@ Reset the password using the token from the email.
 ```
 
 **Success Response (200):**
+
 ```json
 {
   "success": true,
@@ -77,6 +82,7 @@ Reset the password using the token from the email.
 ```
 
 **Error Responses (400):**
+
 ```json
 // Invalid/expired token
 {
@@ -161,6 +167,7 @@ The system uses **Resend** for email delivery in production.
    - Verify your domain (or use the test domain for development)
 
 2. **Configure Environment Variables**:
+
    ```env
    RESEND_API_KEY="re_..."
    EMAIL_FROM="noreply@yourdomain.com"
@@ -174,6 +181,7 @@ The system uses **Resend** for email delivery in production.
 #### Email Template
 
 Emails are sent with:
+
 - **From**: Value from `EMAIL_FROM` env variable (default: `onboarding@resend.dev`)
 - **Subject**: Localized based on user's language (pt/en/es)
 - **Content**: Plain text with reset link
@@ -190,6 +198,7 @@ Emails are sent with:
 ### In-Memory Implementation
 
 The current implementation uses an in-memory Map for rate limiting. This is suitable for:
+
 - Single-server deployments
 - Development and testing
 - Low to medium traffic applications
@@ -199,7 +208,7 @@ The current implementation uses an in-memory Map for rate limiting. This is suit
 For production at scale, consider using Redis-based rate limiting:
 
 ```typescript
-import { Redis } from '@upstash/redis';
+import { Redis } from "@upstash/redis";
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL!,
@@ -221,7 +230,7 @@ Old expired tokens are not automatically cleaned up. Consider adding a cleanup j
 
 ```typescript
 // In a separate cleanup script or cron job
-import { prisma } from '@/lib/prisma';
+import { prisma } from "@/lib/prisma";
 
 async function cleanupExpiredTokens() {
   await prisma.passwordResetToken.deleteMany({
@@ -239,6 +248,7 @@ async function cleanupExpiredTokens() {
 ### Manual Testing
 
 1. **Request Reset**:
+
    ```bash
    curl -X POST http://localhost:3000/api/auth/password-reset/request \
      -H "Content-Type: application/json" \
@@ -290,10 +300,12 @@ Or manually apply the SQL:
 ## Translations
 
 The system supports multiple languages. Current translations:
+
 - Portuguese (pt)
 - English (en)
 - Spanish (es) - email only
 
 To add more languages, update:
+
 1. `locales/{locale}.json` - UI translations
 2. `lib/email.ts` - Email templates

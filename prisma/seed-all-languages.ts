@@ -307,8 +307,7 @@ const topicsFr: TopicData[] = [
   },
   {
     slug: "education-ligne-vs-presentielle-fr",
-    title:
-      "L'éducation en ligne est-elle aussi efficace que l'enseignement en classe?",
+    title: "L'éducation en ligne est-elle aussi efficace que l'enseignement en classe?",
     description:
       "Les plateformes d'apprentissage en ligne ont beaucoup grandi ces dernières années. Mais l'apprentissage à distance est-il aussi efficace que l'enseignement en classe traditionnel?",
     tags: ["éducation", "en-ligne", "apprentissage"],
@@ -523,13 +522,7 @@ async function main() {
 
   // Create all topics from all languages
   console.log("📝 Creating topics in all languages...");
-  const allTopics = [
-    ...topicsPt,
-    ...topicsEn,
-    ...topicsEs,
-    ...topicsFr,
-    ...topicsDe,
-  ];
+  const allTopics = [...topicsPt, ...topicsEn, ...topicsEs, ...topicsFr, ...topicsDe];
 
   let createdCount = 0;
   for (const topic of allTopics) {
@@ -559,9 +552,7 @@ async function main() {
 
     // Show progress
     if (createdCount % 10 === 0) {
-      console.log(
-        `   📊 Created ${createdCount}/${allTopics.length} topics...`
-      );
+      console.log(`   📊 Created ${createdCount}/${allTopics.length} topics...`);
     }
   }
 

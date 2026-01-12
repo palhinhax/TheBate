@@ -5,6 +5,7 @@ This guide explains how to set up Google OAuth and Magic Link authentication in 
 ## Overview
 
 TheBate now supports two authentication methods:
+
 1. **Google OAuth** - One-click sign-in with Google
 2. **Magic Link (Email)** - Passwordless authentication via email
 
@@ -29,6 +30,7 @@ npx prisma migrate deploy
 ```
 
 This migration:
+
 - Makes `username` and `passwordHash` optional in the User table
 - Creates `Account` table for OAuth provider accounts
 - Creates `Session` table for user sessions
@@ -170,6 +172,7 @@ const limiter = rateLimit({
 ### Account Linking
 
 The system uses `allowDangerousEmailAccountLinking: true` for Google OAuth. This means:
+
 - If a user signs up with email/password, they can later sign in with Google using the same email
 - Both methods will access the same account
 
@@ -178,28 +181,33 @@ The system uses `allowDangerousEmailAccountLinking: true` for Google OAuth. This
 ### Google OAuth Errors
 
 **Error: "redirect_uri_mismatch"**
+
 - Ensure the redirect URI in Google Console exactly matches your callback URL
 - Check for trailing slashes and http vs https
 
 **Error: "invalid_client"**
+
 - Verify GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET are correct
 - Check that credentials are for the correct Google Cloud project
 
 ### Magic Link Issues
 
 **Email not received**
+
 - Check spam folder
 - Verify RESEND_API_KEY is correct
 - Ensure domain is verified in Resend
 - Check Resend dashboard for delivery logs
 
 **Link expired**
+
 - Magic links expire after 24 hours by default
 - Request a new link
 
 ### Database Issues
 
 **Error: "username unique constraint"**
+
 - The system generates unique usernames automatically
 - If this error occurs, check the username generation logic in `/lib/auth/config.ts`
 
@@ -208,6 +216,7 @@ The system uses `allowDangerousEmailAccountLinking: true` for Google OAuth. This
 ### Email Templates
 
 Customize magic link emails in `/lib/email.ts`:
+
 - Update the HTML template
 - Change email subject lines
 - Add your branding
@@ -215,6 +224,7 @@ Customize magic link emails in `/lib/email.ts`:
 ### Translations
 
 Auth modal translations are in `/locales/{lang}.json`:
+
 - `auth.login_modal_title`
 - `auth.login_modal_description`
 - `auth.sign_in_google`
@@ -233,6 +243,7 @@ Currently supported languages: English, Portuguese (PT), Spanish, French, German
 ## Support
 
 For issues or questions:
+
 - Check GitHub issues
 - Review NextAuth.js documentation: https://next-auth.js.org
 - Review Resend documentation: https://resend.com/docs

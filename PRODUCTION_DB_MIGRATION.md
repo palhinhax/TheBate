@@ -7,16 +7,19 @@
 ### How It Works
 
 **On every push to `main`** that includes changes to:
+
 - `prisma/schema.prisma`
 - `prisma/migrations/**`
 
 **GitHub Actions automatically**:
+
 - Checks if migrations are needed
 - Runs `prisma migrate deploy` with retry logic
 - Reports success/failure status
 - **Blocks deployment if migrations fail** (prevents broken deployments)
 
 **Important**: Migrations run **before** Vercel deployment, not during the build. This ensures:
+
 - ✅ Database is updated before new code is deployed
 - ✅ No concurrent migration conflicts
 - ✅ Build failures don't prevent migration troubleshooting
@@ -39,6 +42,7 @@ Use the **Auto-migrate Database on Push** workflow:
 6. Click **Run workflow**
 
 **When to use:**
+
 - ✅ After initial deployment when migrations need to catch up
 - ✅ When auto-migration didn't trigger (e.g., workflow added after migrations)
 - ✅ To quickly apply pending migrations without seeding
@@ -56,11 +60,13 @@ Use the **Database Update & Seed** workflow:
 5. Click **Run workflow**
 
 **When to use:**
+
 - ✅ Initial setup with seed data
 - ✅ Adding engagement data to existing topics
 - ✅ Full database update including migrations and seeding
 
 **Features:**
+
 - ✅ Automatically checks if migrations are needed
 - ✅ Retry logic (3 attempts) to handle timeouts
 - ✅ Proper connection and statement timeouts
@@ -68,6 +74,7 @@ Use the **Database Update & Seed** workflow:
 - ✅ Comprehensive error reporting
 
 **Required GitHub Secret:**
+
 - `DATABASE_URL`: Your production database connection string (add in Settings > Secrets > Actions)
 
 ## Common Issues & Solutions
@@ -75,6 +82,7 @@ Use the **Database Update & Seed** workflow:
 ### Issue: PostgreSQL Advisory Lock Timeout
 
 **Error:**
+
 ```
 P1002: The database server was reached but timed out.
 Context: Timed out trying to acquire a postgres advisory lock
@@ -106,6 +114,7 @@ Run the included migration helper script:
 ```
 
 This script:
+
 - Pulls production environment variables
 - Runs migrations with proper timeouts
 - Verifies the database schema
@@ -168,6 +177,7 @@ The new YAML-based approach allows you to define seed data in a structured forma
 **File:** `prisma/seed-data.yml`
 
 **Run locally:**
+
 ```bash
 pnpm run db:seed-yaml
 ```
@@ -176,6 +186,7 @@ pnpm run db:seed-yaml
 Use the "Database Update & Seed" workflow with `seed_type: yaml`
 
 **Features:**
+
 - ✅ Declarative configuration
 - ✅ Idempotent (safe to run multiple times)
 - ✅ Version controlled
@@ -190,6 +201,7 @@ pnpm run seed:engagement
 ```
 
 This creates:
+
 - 60 users across multiple languages
 - 8-20 comments per topic with realistic opinions
 - Replies to comments (max depth: 2 levels)
@@ -251,13 +263,14 @@ The repository contains the following migrations that may need to be applied:
 ### Issue: Missing Topic.type Column Error
 
 **Error Message:**
+
 ```
 PrismaClientKnownRequestError: Invalid prisma.topic.findMany() invocation:
 The column Topic.type does not exist in the current database.
 Code: P2022
 ```
 
-**Cause:** 
+**Cause:**
 The production database is missing the `20260111000000_add_multi_choice_topics` migration. This migration adds the `type` column to the Topic table, which is required for all topics.
 
 **Solutions (in order of preference):**
@@ -290,6 +303,7 @@ The production database is missing the `20260111000000_add_multi_choice_topics` 
    ```
 
 **What the migration adds:**
+
 - `TopicType` enum with values: `YES_NO`, `MULTI_CHOICE`
 - `type` column on Topic table (defaults to `YES_NO`)
 - `allowMultipleVotes` and `maxChoices` columns for multi-choice configuration
@@ -329,6 +343,7 @@ export PGSTATEMENT_TIMEOUT=45000   # 45 seconds for statements
 ```
 
 These settings help prevent:
+
 - ✅ Advisory lock timeouts
 - ✅ Connection hangs
 - ✅ Long-running query issues

@@ -19,11 +19,11 @@ interface AdContainerProps {
  * - Responsivo para desktop e mobile
  * - Máximo de 1 anúncio por página
  */
-export function AdContainer({ 
-  className, 
+export function AdContainer({
+  className,
   adSlot = "5814797320",
   adLayout = "in-article",
-  adFormat = "fluid"
+  adFormat = "fluid",
 }: AdContainerProps) {
   return (
     <aside
@@ -50,9 +50,7 @@ export function AdContainer({
             />
           ) : (
             <div className="flex items-center justify-center rounded border border-dashed border-muted-foreground/30 bg-muted/30 p-4">
-              <p className="text-sm text-muted-foreground">
-                Espaço Publicitário
-              </p>
+              <p className="text-sm text-muted-foreground">Espaço Publicitário</p>
             </div>
           )}
         </div>

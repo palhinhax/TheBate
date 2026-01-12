@@ -30,12 +30,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
   return (
     <>
       {/* Backdrop for mobile */}
-      {open && (
-        <div
-          className="fixed inset-0 z-40 bg-black/50 md:hidden"
-          onClick={onClose}
-        />
-      )}
+      {open && <div className="fixed inset-0 z-40 bg-black/50 md:hidden" onClick={onClose} />}
 
       {/* Sidebar */}
       <aside
@@ -61,9 +56,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
                 onClick={onClose}
                 className={cn(
                   "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
-                  isActive
-                    ? "bg-primary text-primary-foreground"
-                    : "hover:bg-muted"
+                  isActive ? "bg-primary text-primary-foreground" : "hover:bg-muted"
                 )}
               >
                 <item.icon className="h-4 w-4" />

@@ -51,9 +51,7 @@ describe("PasswordInput", () => {
   });
 
   it("applies custom className", () => {
-    render(
-      <PasswordInput placeholder="Digite sua senha" className="custom-class" />
-    );
+    render(<PasswordInput placeholder="Digite sua senha" className="custom-class" />);
 
     const input = screen.getByPlaceholderText("Digite sua senha");
     expect(input).toHaveClass("custom-class");
@@ -67,13 +65,7 @@ describe("PasswordInput", () => {
   });
 
   it("accepts other input props", () => {
-    render(
-      <PasswordInput
-        placeholder="Digite sua senha"
-        disabled
-        data-testid="password-input"
-      />
-    );
+    render(<PasswordInput placeholder="Digite sua senha" disabled data-testid="password-input" />);
 
     const input = screen.getByTestId("password-input");
     expect(input).toBeDisabled();

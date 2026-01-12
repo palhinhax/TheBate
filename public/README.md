@@ -9,7 +9,7 @@ public/
 │   ├── logo.png          # Logo em PNG (fallback)
 │   ├── logo-dark.svg     # Logo para modo escuro (opcional)
 │   └── og-image.png      # Imagem para Open Graph (1200x630px)
-├── favicon.ico           # Favicon 
+├── favicon.ico           # Favicon
 ├── apple-touch-icon.png  # Ícone para iOS (180x180px)
 └── robots.txt            # Gerado automaticamente
 ```
@@ -32,14 +32,9 @@ public/
 import Image from "next/image";
 
 <Link href="/" className="flex items-center gap-2">
-  <Image 
-    src="/images/logo.svg" 
-    alt="Thebate" 
-    width={32} 
-    height={32}
-  />
+  <Image src="/images/logo.svg" alt="Thebate" width={32} height={32} />
   <span className="text-xl font-bold">Thebate</span>
-</Link>
+</Link>;
 ```
 
 #### Como Favicon:
@@ -50,8 +45,8 @@ export const metadata: Metadata = {
   title: "Thebate",
   description: "...",
   icons: {
-    icon: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
 };
 ```
@@ -63,7 +58,7 @@ export const metadata: Metadata = {
 export const metadata: Metadata = {
   title: "Thebate",
   openGraph: {
-    images: ['/images/og-image.png'],
+    images: ["/images/og-image.png"],
   },
 };
 ```

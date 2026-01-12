@@ -34,10 +34,28 @@ function ResetPasswordForm() {
     .object({
       newPassword: z
         .string()
-        .min(8, t("auth.password_requirements.min_length", "A senha deve ter pelo menos 8 caracteres"))
-        .regex(/[A-Z]/, t("auth.password_requirements.uppercase", "A senha deve conter pelo menos uma letra maiúscula"))
-        .regex(/[a-z]/, t("auth.password_requirements.lowercase", "A senha deve conter pelo menos uma letra minúscula"))
-        .regex(/[0-9]/, t("auth.password_requirements.number", "A senha deve conter pelo menos um número")),
+        .min(
+          8,
+          t("auth.password_requirements.min_length", "A senha deve ter pelo menos 8 caracteres")
+        )
+        .regex(
+          /[A-Z]/,
+          t(
+            "auth.password_requirements.uppercase",
+            "A senha deve conter pelo menos uma letra maiúscula"
+          )
+        )
+        .regex(
+          /[a-z]/,
+          t(
+            "auth.password_requirements.lowercase",
+            "A senha deve conter pelo menos uma letra minúscula"
+          )
+        )
+        .regex(
+          /[0-9]/,
+          t("auth.password_requirements.number", "A senha deve conter pelo menos um número")
+        ),
       confirmPassword: z.string().min(1, t("auth.confirm_password", "Confirme a senha")),
     })
     .refine((data) => data.newPassword === data.confirmPassword, {
@@ -149,19 +167,23 @@ function ResetPasswordForm() {
                 aria-invalid={!!errors.newPassword}
               />
               {errors.newPassword && (
-                <p className="text-sm text-destructive">
-                  {errors.newPassword.message}
-                </p>
+                <p className="text-sm text-destructive">{errors.newPassword.message}</p>
               )}
               <ul className="mt-2 space-y-1 text-xs text-muted-foreground">
                 <li>• {t("auth.password_requirements.min_length", "Mínimo de 8 caracteres")}</li>
-                <li>• {t("auth.password_requirements.uppercase", "Pelo menos uma letra maiúscula")}</li>
-                <li>• {t("auth.password_requirements.lowercase", "Pelo menos uma letra minúscula")}</li>
+                <li>
+                  • {t("auth.password_requirements.uppercase", "Pelo menos uma letra maiúscula")}
+                </li>
+                <li>
+                  • {t("auth.password_requirements.lowercase", "Pelo menos uma letra minúscula")}
+                </li>
                 <li>• {t("auth.password_requirements.number", "Pelo menos um número")}</li>
               </ul>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">{t("auth.confirm_password", "Confirmar Senha")}</Label>
+              <Label htmlFor="confirmPassword">
+                {t("auth.confirm_password", "Confirmar Senha")}
+              </Label>
               <PasswordInput
                 id="confirmPassword"
                 placeholder="••••••••"
@@ -169,9 +191,7 @@ function ResetPasswordForm() {
                 aria-invalid={!!errors.confirmPassword}
               />
               {errors.confirmPassword && (
-                <p className="text-sm text-destructive">
-                  {errors.confirmPassword.message}
-                </p>
+                <p className="text-sm text-destructive">{errors.confirmPassword.message}</p>
               )}
             </div>
           </CardContent>
@@ -182,10 +202,7 @@ function ResetPasswordForm() {
             </Button>
             <p className="text-center text-sm text-muted-foreground">
               {t("auth.remembered_password", "Lembrou-se da senha?")}{" "}
-              <Link
-                href="/auth/login"
-                className="text-primary hover:underline"
-              >
+              <Link href="/auth/login" className="text-primary hover:underline">
                 {t("common.login", "Entrar")}
               </Link>
             </p>

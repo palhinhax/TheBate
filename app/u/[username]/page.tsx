@@ -14,13 +14,7 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -153,9 +147,7 @@ export default function UserProfilePage() {
         <Card className="w-full max-w-md">
           <CardHeader>
             <CardTitle>Utilizador não encontrado</CardTitle>
-            <CardDescription>
-              O utilizador @{username} não existe ou foi removido.
-            </CardDescription>
+            <CardDescription>O utilizador @{username} não existe ou foi removido.</CardDescription>
           </CardHeader>
           <CardContent>
             <Link href="/">
@@ -224,18 +216,14 @@ export default function UserProfilePage() {
             {/* Stats */}
             <div className="mt-6 grid grid-cols-2 gap-4 border-t pt-6 sm:grid-cols-3">
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">
-                  {user.stats.totalTopics}
-                </div>
+                <div className="text-2xl font-bold text-primary">{user.stats.totalTopics}</div>
                 <div className="text-sm text-muted-foreground">
                   Tema{user.stats.totalTopics !== 1 ? "s" : ""} criado
                   {user.stats.totalTopics !== 1 ? "s" : ""}
                 </div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-primary">
-                  {user.stats.totalComments}
-                </div>
+                <div className="text-2xl font-bold text-primary">{user.stats.totalComments}</div>
                 <div className="text-sm text-muted-foreground">
                   Argumento{user.stats.totalComments !== 1 ? "s" : ""}
                 </div>
@@ -287,14 +275,11 @@ export default function UserProfilePage() {
                       <CardDescription className="flex flex-wrap items-center gap-4">
                         <span className="flex items-center gap-1">
                           <Clock className="h-3 w-3" />
-                          {new Date(topic.createdAt).toLocaleDateString(
-                            "pt-PT",
-                            {
-                              day: "numeric",
-                              month: "short",
-                              year: "numeric",
-                            }
-                          )}
+                          {new Date(topic.createdAt).toLocaleDateString("pt-PT", {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          })}
                         </span>
                         <span className="flex items-center gap-1">
                           <MessageSquare className="h-3 w-3" />
@@ -329,9 +314,7 @@ export default function UserProfilePage() {
               <Card>
                 <CardContent className="py-12 text-center">
                   <MessageSquare className="mx-auto h-12 w-12 text-muted-foreground/50" />
-                  <p className="mt-4 text-muted-foreground">
-                    Nenhum tema criado ainda.
-                  </p>
+                  <p className="mt-4 text-muted-foreground">Nenhum tema criado ainda.</p>
                 </CardContent>
               </Card>
             )}
@@ -365,9 +348,7 @@ export default function UserProfilePage() {
                               : "bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-200"
                           }`}
                         >
-                          {comment.side === "AFAVOR"
-                            ? "👍 A Favor"
-                            : "👎 Contra"}
+                          {comment.side === "AFAVOR" ? "👍 A Favor" : "👎 Contra"}
                         </span>
                       )}
                     </div>
@@ -381,14 +362,11 @@ export default function UserProfilePage() {
                     <div className="flex items-center justify-between text-xs text-muted-foreground">
                       <span className="flex items-center gap-1">
                         <Clock className="h-3 w-3" />
-                        {new Date(comment.createdAt).toLocaleDateString(
-                          "pt-PT",
-                          {
-                            day: "numeric",
-                            month: "short",
-                            year: "numeric",
-                          }
-                        )}
+                        {new Date(comment.createdAt).toLocaleDateString("pt-PT", {
+                          day: "numeric",
+                          month: "short",
+                          year: "numeric",
+                        })}
                       </span>
                       <span className="flex items-center gap-1">
                         <ThumbsUp className="h-3 w-3" />
@@ -409,9 +387,7 @@ export default function UserProfilePage() {
               <Card>
                 <CardContent className="py-12 text-center">
                   <UserIcon className="mx-auto h-12 w-12 text-muted-foreground/50" />
-                  <p className="mt-4 text-muted-foreground">
-                    Nenhum argumento publicado ainda.
-                  </p>
+                  <p className="mt-4 text-muted-foreground">Nenhum argumento publicado ainda.</p>
                 </CardContent>
               </Card>
             )}
@@ -439,11 +415,7 @@ export default function UserProfilePage() {
             >
               {t("topics.cancel")}
             </Button>
-            <Button
-              variant="destructive"
-              onClick={handleDeleteAccount}
-              disabled={deleting}
-            >
+            <Button variant="destructive" onClick={handleDeleteAccount} disabled={deleting}>
               {deleting ? (
                 <>
                   <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>

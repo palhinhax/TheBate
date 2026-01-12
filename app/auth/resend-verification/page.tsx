@@ -40,18 +40,13 @@ export default function ResendVerificationPage() {
 
       if (response.status === 429) {
         setError(
-          t(
-            "common.error",
-            `Muitas tentativas. Tente novamente em ${result.retryAfter} segundos.`
-          )
+          t("common.error", `Muitas tentativas. Tente novamente em ${result.retryAfter} segundos.`)
         );
         return;
       }
 
       if (!response.ok) {
-        setError(
-          result.message || t("common.error", "Ocorreu um erro inesperado")
-        );
+        setError(result.message || t("common.error", "Ocorreu um erro inesperado"));
         return;
       }
 
@@ -83,18 +78,11 @@ export default function ResendVerificationPage() {
               )}
             </div>
             <p className="text-center text-sm text-muted-foreground">
-              {t(
-                "auth.check_spam",
-                "Não se esqueça de verificar a pasta de spam."
-              )}
+              {t("auth.check_spam", "Não se esqueça de verificar a pasta de spam.")}
             </p>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
-            <Button
-              variant="outline"
-              className="w-full"
-              onClick={() => router.push("/auth/login")}
-            >
+            <Button variant="outline" className="w-full" onClick={() => router.push("/auth/login")}>
               {t("auth.back_to_login", "Voltar ao Login")}
             </Button>
           </CardFooter>
@@ -111,10 +99,7 @@ export default function ResendVerificationPage() {
             {t("auth.verify_email", "Verificar Email")}
           </CardTitle>
           <CardDescription className="text-center">
-            {t(
-              "auth.verify_email_description",
-              "Reenviamos um link para verificar o seu email"
-            )}
+            {t("auth.verify_email_description", "Reenviamos um link para verificar o seu email")}
           </CardDescription>
         </CardHeader>
         <form

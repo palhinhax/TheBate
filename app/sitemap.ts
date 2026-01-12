@@ -4,9 +4,7 @@ import { prisma } from "@/lib/prisma";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Use production URL or fallback to NEXTAUTH_URL for development
   const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    process.env.NEXTAUTH_URL ||
-    "https://thebatee.com";
+    process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXTAUTH_URL || "https://thebatee.com";
 
   let topicUrls: MetadataRoute.Sitemap = [];
 
@@ -38,20 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.warn("Could not fetch topics for sitemap:", error);
   }
 
-  const languages = [
-    "en",
-    "pt",
-    "es",
-    "fr",
-    "de",
-    "hi",
-    "zh",
-    "ar",
-    "bn",
-    "ru",
-    "id",
-    "ja",
-  ];
+  const languages = ["en", "pt", "es", "fr", "de", "hi", "zh", "ar", "bn", "ru", "id", "ja"];
   const languageUrls: MetadataRoute.Sitemap = languages.map((lang) => ({
     url: `${baseUrl}?lang=${lang}`,
     lastModified: new Date(),

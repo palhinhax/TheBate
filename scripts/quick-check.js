@@ -1,4 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
@@ -12,14 +12,13 @@ async function check() {
       },
     });
 
-    console.log('User:', JSON.stringify(user, null, 2));
+    console.log("User:", JSON.stringify(user, null, 2));
 
     const topics = await prisma.topic.count({
-      where: { status: 'ACTIVE' }
+      where: { status: "ACTIVE" },
     });
 
-    console.log('Active topics:', topics);
-
+    console.log("Active topics:", topics);
   } finally {
     await prisma.$disconnect();
   }

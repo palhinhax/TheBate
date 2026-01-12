@@ -65,9 +65,7 @@ export default function AdminPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState<
-    "topics" | "comments" | "users" | "reports"
-  >("topics");
+  const [activeTab, setActiveTab] = useState<"topics" | "comments" | "users" | "reports">("topics");
   const [topics, setTopics] = useState<Topic[]>([]);
   const [comments, setComments] = useState<Comment[]>([]);
   const [users, setUsers] = useState<User[]>([]);
@@ -101,19 +99,14 @@ export default function AdminPage() {
     ) => {
       setLoading(true);
       try {
-        const [
-          topicsRes,
-          commentsRes,
-          usersRes,
-          reportedTopicsRes,
-          reportedCommentsRes,
-        ] = await Promise.all([
-          fetch(`/api/admin/topics?page=${topicPage}&limit=50`),
-          fetch(`/api/admin/comments?page=${commentPage}&limit=50`),
-          fetch(`/api/admin/users?page=${userPage}&limit=50`),
-          fetch("/api/admin/topics?reported=true"),
-          fetch("/api/admin/comments?reported=true"),
-        ]);
+        const [topicsRes, commentsRes, usersRes, reportedTopicsRes, reportedCommentsRes] =
+          await Promise.all([
+            fetch(`/api/admin/topics?page=${topicPage}&limit=50`),
+            fetch(`/api/admin/comments?page=${commentPage}&limit=50`),
+            fetch(`/api/admin/users?page=${userPage}&limit=50`),
+            fetch("/api/admin/topics?reported=true"),
+            fetch("/api/admin/comments?reported=true"),
+          ]);
 
         if (topicsRes.ok) {
           const data = await topicsRes.json();
@@ -245,10 +238,7 @@ export default function AdminPage() {
     if (!confirm("Limpar denúncias deste conteúdo?")) return;
 
     try {
-      const endpoint =
-        type === "topic"
-          ? `/api/admin/topics/${id}`
-          : `/api/admin/comments/${id}`;
+      const endpoint = type === "topic" ? `/api/admin/topics/${id}` : `/api/admin/comments/${id}`;
 
       const res = await fetch(endpoint, {
         method: "PATCH",
@@ -337,9 +327,7 @@ export default function AdminPage() {
         const updatedUser = await res.json();
         setUsers(users.map((u) => (u.id === id ? updatedUser : u)));
         toast({
-          title: !currentStatus
-            ? "Utilizador promovido a Owner"
-            : "Status de Owner removido",
+          title: !currentStatus ? "Utilizador promovido a Owner" : "Status de Owner removido",
         });
       } else {
         const error = await res.json();
@@ -429,10 +417,13 @@ export default function AdminPage() {
                     {topic.title}
                   </Link>
                   <p className="mt-1 break-words text-sm text-muted-foreground">
-                    Por {topic.createdBy.name || topic.createdBy.username || topic.createdBy.name || "Unknown"} •{" "}
-                    {new Date(topic.createdAt).toLocaleDateString("pt-PT")} •{" "}
-                    {topic._count.comments} argumentos •{" "}
-                    {topic._count.topicVotes} votos
+                    Por{" "}
+                    {topic.createdBy.name ||
+                      topic.createdBy.username ||
+                      topic.createdBy.name ||
+                      "Unknown"}{" "}
+                    • {new Date(topic.createdAt).toLocaleDateString("pt-PT")} •{" "}
+                    {topic._count.comments} argumentos • {topic._count.topicVotes} votos
                   </p>
                   <div className="mt-2">
                     <span
@@ -484,11 +475,7 @@ export default function AdminPage() {
                       <Lock className="h-4 w-4" />
                     </Button>
                   )}
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    onClick={() => deleteTopic(topic.id)}
-                  >
+                  <Button size="sm" variant="destructive" onClick={() => deleteTopic(topic.id)}>
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
@@ -510,8 +497,8 @@ export default function AdminPage() {
                 Anterior
               </Button>
               <span className="text-sm text-muted-foreground">
-                Página {topicsPage} de {topicsPagination.totalPages} (
-                {topicsPagination.total} temas)
+                Página {topicsPage} de {topicsPagination.totalPages} ({topicsPagination.total}{" "}
+                temas)
               </span>
               <Button
                 variant="outline"
@@ -543,12 +530,8 @@ export default function AdminPage() {
                   </p>
                   <p className="mt-2 text-sm text-muted-foreground">
                     Por {comment.user.name || comment.user.username || "Unknown"} •{" "}
-                    {new Date(comment.createdAt).toLocaleDateString("pt-PT")} •
-                    em{" "}
-                    <Link
-                      href={`/t/${comment.topic.slug}`}
-                      className="hover:underline"
-                    >
+                    {new Date(comment.createdAt).toLocaleDateString("pt-PT")} • em{" "}
+                    <Link href={`/t/${comment.topic.slug}`} className="hover:underline">
                       {comment.topic.title}
                     </Link>
                   </p>
@@ -585,11 +568,7 @@ export default function AdminPage() {
                       <Eye className="h-4 w-4" />
                     </Button>
                   )}
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    onClick={() => deleteComment(comment.id)}
-                  >
+                  <Button size="sm" variant="destructive" onClick={() => deleteComment(comment.id)}>
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
@@ -611,8 +590,8 @@ export default function AdminPage() {
                 Anterior
               </Button>
               <span className="text-sm text-muted-foreground">
-                Página {commentsPage} de {commentsPagination.totalPages} (
-                {commentsPagination.total} argumentos)
+                Página {commentsPage} de {commentsPagination.totalPages} ({commentsPagination.total}{" "}
+                argumentos)
               </span>
               <Button
                 variant="outline"
@@ -662,8 +641,7 @@ export default function AdminPage() {
                     @{user.username || user.email} • {user.email}
                   </p>
                   <p className="mt-1 text-xs text-muted-foreground">
-                    Membro desde{" "}
-                    {new Date(user.createdAt).toLocaleDateString("pt-PT")}
+                    Membro desde {new Date(user.createdAt).toLocaleDateString("pt-PT")}
                   </p>
                   <div className="mt-2 flex flex-wrap gap-2 text-xs sm:gap-4 sm:text-sm">
                     <span>{user._count.topics} temas</span>
@@ -689,9 +667,7 @@ export default function AdminPage() {
                       variant={user.isOwner ? "default" : "outline"}
                       onClick={() => toggleOwnerStatus(user.id, user.isOwner)}
                       disabled={user.id === session.user.id}
-                      title={
-                        user.isOwner ? "Remover Owner" : "Promover a Owner"
-                      }
+                      title={user.isOwner ? "Remover Owner" : "Promover a Owner"}
                     >
                       👑
                     </Button>
@@ -725,8 +701,8 @@ export default function AdminPage() {
                 Anterior
               </Button>
               <span className="text-sm text-muted-foreground">
-                Página {usersPage} de {usersPagination.totalPages} (
-                {usersPagination.total} utilizadores)
+                Página {usersPage} de {usersPagination.totalPages} ({usersPagination.total}{" "}
+                utilizadores)
               </span>
               <Button
                 variant="outline"
@@ -749,9 +725,7 @@ export default function AdminPage() {
         <div className="space-y-6">
           {reportedTopics.length === 0 && reportedComments.length === 0 ? (
             <Card className="p-8 text-center">
-              <p className="text-muted-foreground">
-                Nenhum conteúdo denunciado
-              </p>
+              <p className="text-muted-foreground">Nenhum conteúdo denunciado</p>
             </Card>
           ) : (
             <>
@@ -773,12 +747,8 @@ export default function AdminPage() {
                               {topic.title}
                             </Link>
                             <p className="mt-1 break-words text-sm text-muted-foreground">
-                              Por{" "}
-                              {topic.createdBy.name || topic.createdBy.username}{" "}
-                              •{" "}
-                              {new Date(topic.createdAt).toLocaleDateString(
-                                "pt-PT"
-                              )}
+                              Por {topic.createdBy.name || topic.createdBy.username} •{" "}
+                              {new Date(topic.createdAt).toLocaleDateString("pt-PT")}
                             </p>
                             <div className="mt-2">
                               <span className="inline-block rounded bg-red-100 px-2 py-1 text-xs font-semibold text-red-800">
@@ -802,9 +772,7 @@ export default function AdminPage() {
                                 onClick={() =>
                                   updateTopicStatus(
                                     topic.id,
-                                    topic.status === "HIDDEN"
-                                      ? "ACTIVE"
-                                      : "HIDDEN"
+                                    topic.status === "HIDDEN" ? "ACTIVE" : "HIDDEN"
                                   )
                                 }
                                 className="flex-1"
@@ -849,8 +817,7 @@ export default function AdminPage() {
                           <div className="min-w-0 flex-1">
                             <p className="break-words">{comment.content}</p>
                             <p className="mt-1 break-words text-sm text-muted-foreground">
-                              Por {comment.user.name || comment.user.username || "Unknown"}{" "}
-                              em{" "}
+                              Por {comment.user.name || comment.user.username || "Unknown"} em{" "}
                               <Link
                                 href={`/t/${comment.topic.slug}`}
                                 className="hover:underline"
@@ -860,9 +827,7 @@ export default function AdminPage() {
                               </Link>
                             </p>
                             <p className="mt-1 text-xs text-muted-foreground">
-                              {new Date(comment.createdAt).toLocaleDateString(
-                                "pt-PT"
-                              )}
+                              {new Date(comment.createdAt).toLocaleDateString("pt-PT")}
                             </p>
                             <div className="mt-2">
                               <span className="inline-block rounded bg-red-100 px-2 py-1 text-xs font-semibold text-red-800">
@@ -874,9 +839,7 @@ export default function AdminPage() {
                             <Button
                               size="sm"
                               variant="outline"
-                              onClick={() =>
-                                clearReports("comment", comment.id)
-                              }
+                              onClick={() => clearReports("comment", comment.id)}
                               className="w-full"
                             >
                               Limpar Denúncias
@@ -888,9 +851,7 @@ export default function AdminPage() {
                                 onClick={() =>
                                   updateCommentStatus(
                                     comment.id,
-                                    comment.status === "HIDDEN"
-                                      ? "ACTIVE"
-                                      : "HIDDEN"
+                                    comment.status === "HIDDEN" ? "ACTIVE" : "HIDDEN"
                                   )
                                 }
                                 className="flex-1"

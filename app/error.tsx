@@ -44,14 +44,12 @@ export default function Error({
         <p className="mb-8 text-muted-foreground">
           {t(
             "errors.page_description",
-            "We're sorry, but something unexpected happened. Our team has been notified and is working to fix the issue.",
+            "We're sorry, but something unexpected happened. Our team has been notified and is working to fix the issue."
           )}
         </p>
 
         {error.digest && (
-          <p className="mb-6 text-sm text-muted-foreground">
-            Error ID: {error.digest}
-          </p>
+          <p className="mb-6 text-sm text-muted-foreground">Error ID: {error.digest}</p>
         )}
 
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">

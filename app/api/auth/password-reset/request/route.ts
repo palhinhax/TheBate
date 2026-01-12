@@ -58,8 +58,7 @@ export async function POST(request: Request) {
       // Return success to prevent user enumeration
       return NextResponse.json({
         success: true,
-        message:
-          "Se o email existir, receberá um link para recuperar a senha.",
+        message: "Se o email existir, receberá um link para recuperar a senha.",
       });
     }
 
@@ -73,8 +72,7 @@ export async function POST(request: Request) {
     if (!user) {
       return NextResponse.json({
         success: true,
-        message:
-          "Se o email existir, receberá um link para recuperar a senha.",
+        message: "Se o email existir, receberá um link para recuperar a senha.",
       });
     }
 
@@ -106,9 +104,6 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("Password reset request error:", error);
-    return NextResponse.json(
-      { message: "Erro interno do servidor" },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Erro interno do servidor" }, { status: 500 });
   }
 }

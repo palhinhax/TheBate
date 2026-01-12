@@ -56,12 +56,7 @@ export function ReportTopicButton({ slug, className }: ReportTopicButtonProps) {
 
   return (
     <>
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => setShowDialog(true)}
-        className={className}
-      >
+      <Button variant="ghost" size="sm" onClick={() => setShowDialog(true)} className={className}>
         <Flag className="mr-2 h-4 w-4" />
         {t("reports.report_topic")}
       </Button>
@@ -74,23 +69,14 @@ export function ReportTopicButton({ slug, className }: ReportTopicButtonProps) {
               {t("reports.report_topic")}
             </DialogTitle>
             <DialogDescription className="pt-4">
-              Tem a certeza que deseja reportar este tema? O nosso painel de
-              moderação vai analisar.
+              Tem a certeza que deseja reportar este tema? O nosso painel de moderação vai analisar.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="gap-2 sm:gap-0">
-            <Button
-              variant="outline"
-              onClick={() => setShowDialog(false)}
-              disabled={loading}
-            >
+            <Button variant="outline" onClick={() => setShowDialog(false)} disabled={loading}>
               {t("reports.cancel")}
             </Button>
-            <Button
-              variant="destructive"
-              onClick={handleReport}
-              disabled={loading}
-            >
+            <Button variant="destructive" onClick={handleReport} disabled={loading}>
               {loading ? (
                 <>
                   <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>

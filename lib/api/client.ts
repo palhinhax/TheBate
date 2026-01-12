@@ -13,10 +13,7 @@ interface FetchOptions extends RequestInit {
   params?: Record<string, string>;
 }
 
-export async function fetchApi<T>(
-  endpoint: string,
-  options: FetchOptions = {}
-): Promise<T> {
+export async function fetchApi<T>(endpoint: string, options: FetchOptions = {}): Promise<T> {
   const { params, ...fetchOptions } = options;
 
   let url = endpoint;
@@ -35,11 +32,7 @@ export async function fetchApi<T>(
 
   if (!response.ok) {
     const error = await response.json().catch(() => ({}));
-    throw new ApiError(
-      response.status,
-      error.message || "An error occurred",
-      error.errors
-    );
+    throw new ApiError(response.status, error.message || "An error occurred", error.errors);
   }
 
   return response.json();

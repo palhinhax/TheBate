@@ -3,6 +3,7 @@
 ## Problem
 
 Production deployment was failing with the error:
+
 ```
 PrismaClientKnownRequestError: Invalid prisma.topic.findMany() invocation:
 The column Topic.type does not exist in the current database.
@@ -12,6 +13,7 @@ Code: P2022
 ## Root Cause
 
 The migration `20260111000000_add_multi_choice_topics` exists in the codebase but was never applied to the production database. This migration adds:
+
 - `TopicType` enum (`YES_NO`, `MULTI_CHOICE`)
 - `type` column to the Topic table
 - `TopicOption` table for multi-choice voting
@@ -22,6 +24,7 @@ The migration `20260111000000_add_multi_choice_topics` exists in the codebase bu
 ### Automatic Migration on Push to Main
 
 Created `.github/workflows/migrate-on-push.yml` that:
+
 - Triggers automatically when changes are pushed to `main` branch
 - Detects changes to `prisma/schema.prisma` or `prisma/migrations/**`
 - Runs `prisma migrate deploy` with retry logic
@@ -29,6 +32,7 @@ Created `.github/workflows/migrate-on-push.yml` that:
 - **Runs BEFORE Vercel deployment** (not during build)
 
 **Benefits:**
+
 - ✅ Migrations run before deployment, ensuring database is ready
 - ✅ Prevents deployment with outdated database schema
 - ✅ Includes retry logic for reliability
@@ -38,6 +42,7 @@ Created `.github/workflows/migrate-on-push.yml` that:
 
 **Why not during build?**
 Running migrations during Vercel build was considered but rejected because:
+
 - ❌ Multiple concurrent builds could cause migration conflicts
 - ❌ Database unavailability during build would block entire deployment
 - ❌ Migration failures would require build restart
@@ -46,6 +51,7 @@ Running migrations during Vercel build was considered but rejected because:
 ### Updated Documentation
 
 Updated `PRODUCTION_DB_MIGRATION.md` and `DEPLOY.md` to:
+
 - Document the automatic migration workflow
 - Explain the specific error and its solution
 - Provide manual migration options as fallback
@@ -54,18 +60,22 @@ Updated `PRODUCTION_DB_MIGRATION.md` and `DEPLOY.md` to:
 ## How to Apply the Fix
 
 ### Option 1: Automatic (Recommended)
+
 Simply push this PR to the `main` branch. The GitHub Actions workflow will:
+
 1. Detect the migration changes
 2. Apply pending migrations to production database
 3. Complete the deployment
 
 ### Option 2: Manual via GitHub Actions
+
 1. Go to **Actions** > **Database Update & Seed**
 2. Click **Run workflow**
 3. Set `seed_type: none`
 4. Click **Run workflow**
 
 ### Option 3: Manual via CLI
+
 ```bash
 # Set production database URL
 export DATABASE_URL="your_production_database_url"
@@ -82,8 +92,8 @@ After the fix is applied, verify:
 2. **Visit your site** - Should load without errors
 3. **Check database** - Run this SQL to verify:
    ```sql
-   SELECT column_name, data_type 
-   FROM information_schema.columns 
+   SELECT column_name, data_type
+   FROM information_schema.columns
    WHERE table_name = 'Topic' AND column_name = 'type';
    ```
    Should return: `type | USER-DEFINED (TopicType enum)`
@@ -91,6 +101,7 @@ After the fix is applied, verify:
 ## Prevention
 
 This fix includes automatic migration on push, which prevents this issue from happening again by:
+
 - Running migrations before deployment
 - Ensuring schema is always synchronized
 - Failing deployment if migrations fail (preventing broken deployments)

@@ -28,23 +28,13 @@ export function useTranslations() {
       // First priority: user's preferred language from session
       if (session?.user?.preferredLanguage) {
         selectedLang = session.user.preferredLanguage;
-        console.log(
-          "🌐 Loading translations for user preference:",
-          selectedLang
-        );
+        console.log("🌐 Loading translations for user preference:", selectedLang);
       } else {
         // Second priority: detect browser language
         const browserLang =
-          typeof navigator !== "undefined"
-            ? navigator.language.split("-")[0]
-            : "pt";
-        selectedLang = supportedLangs.includes(browserLang)
-          ? browserLang
-          : "pt";
-        console.log(
-          "🌐 Loading translations for browser language:",
-          selectedLang
-        );
+          typeof navigator !== "undefined" ? navigator.language.split("-")[0] : "pt";
+        selectedLang = supportedLangs.includes(browserLang) ? browserLang : "pt";
+        console.log("🌐 Loading translations for browser language:", selectedLang);
       }
 
       // Update locale
@@ -62,11 +52,11 @@ export function useTranslations() {
       try {
         console.log("🔄 Fetching translations for:", selectedLang);
         const response = await fetch(`/locales/${selectedLang}.json`);
-        
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
         const data = await response.json();
         console.log("📦 Received translations data:", Object.keys(data));
         translationsCache[selectedLang] = data;
@@ -82,10 +72,7 @@ export function useTranslations() {
           setTranslations(fallbackData);
           console.log("⚠️ Loaded fallback Portuguese translations");
         } catch (fallbackError) {
-          console.error(
-            "❌ Failed to load fallback translations:",
-            fallbackError
-          );
+          console.error("❌ Failed to load fallback translations:", fallbackError);
         }
       } finally {
         setIsLoading(false);

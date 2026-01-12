@@ -49,10 +49,7 @@ export async function POST(request: Request) {
     // Check if token exists, is expired, or has been used
     // Use same error message for all cases to prevent token enumeration
     if (!resetToken || resetToken.expiresAt < new Date() || resetToken.usedAt) {
-      return NextResponse.json(
-        { message: "Token inválido ou expirado" },
-        { status: 400 }
-      );
+      return NextResponse.json({ message: "Token inválido ou expirado" }, { status: 400 });
     }
 
     // Hash the new password
@@ -85,9 +82,6 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("Password reset confirm error:", error);
-    return NextResponse.json(
-      { message: "Erro interno do servidor" },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Erro interno do servidor" }, { status: 500 });
   }
 }

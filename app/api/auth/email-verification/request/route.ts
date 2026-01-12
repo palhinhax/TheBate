@@ -58,18 +58,12 @@ export async function POST(request: Request) {
     });
 
     if (!user) {
-      return NextResponse.json(
-        { message: "Utilizador não encontrado" },
-        { status: 404 }
-      );
+      return NextResponse.json({ message: "Utilizador não encontrado" }, { status: 404 });
     }
 
     // Check if email is already verified
     if (user.emailVerified) {
-      return NextResponse.json(
-        { message: "Email já verificado" },
-        { status: 400 }
-      );
+      return NextResponse.json({ message: "Email já verificado" }, { status: 400 });
     }
 
     // Delete any existing unverified tokens for this user
@@ -105,10 +99,7 @@ export async function POST(request: Request) {
       await prisma.emailVerificationToken.delete({
         where: { tokenHash },
       });
-      return NextResponse.json(
-        { message: "Erro ao enviar email de verificação" },
-        { status: 500 }
-      );
+      return NextResponse.json({ message: "Erro ao enviar email de verificação" }, { status: 500 });
     }
 
     return NextResponse.json({
@@ -117,9 +108,6 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("Email verification request error:", error);
-    return NextResponse.json(
-      { message: "Erro interno do servidor" },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Erro interno do servidor" }, { status: 500 });
   }
 }

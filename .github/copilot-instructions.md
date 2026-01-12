@@ -369,6 +369,7 @@ When developing features or fixing issues:
    - ✅ Good: `if (error instanceof Error) { ... }`
 
 3. **Use strict type definitions**: Define interfaces and types for all data structures
+
    ```typescript
    // ✅ Good
    interface UserProfile {
@@ -377,12 +378,13 @@ When developing features or fixing issues:
      email: string;
      role: "USER" | "ADMIN" | "MOD";
    }
-   
+
    // ❌ Bad
    const user: any = { id: "1", name: "John" };
    ```
 
 4. **Proper error handling with types**:
+
    ```typescript
    // ✅ Good
    try {
@@ -392,7 +394,7 @@ When developing features or fixing issues:
        console.error(error.message);
      }
    }
-   
+
    // ❌ Bad
    try {
      // ...
@@ -418,6 +420,7 @@ When developing features or fixing issues:
    - Catch any build-time errors
 
 **Commit Workflow**:
+
 ```bash
 # 1. Run quality checks
 pnpm lint
@@ -432,6 +435,7 @@ git commit -m "feat(scope): description"
 ### Code Quality Checklist
 
 Before committing, verify:
+
 - [ ] No `any` types used anywhere
 - [ ] No `unknown` types used unnecessarily
 - [ ] All functions have proper return types

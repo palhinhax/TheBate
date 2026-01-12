@@ -6,10 +6,7 @@ import { prisma } from "@/lib/prisma";
  * POST /api/topics/[slug]/report
  * Reporta um tema para moderação
  */
-export async function POST(
-  request: Request,
-  { params }: { params: { slug: string } }
-) {
+export async function POST(request: Request, { params }: { params: { slug: string } }) {
   try {
     const session = await auth();
 
@@ -26,10 +23,7 @@ export async function POST(
     });
 
     if (!topic) {
-      return NextResponse.json(
-        { error: "Tema não encontrado" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Tema não encontrado" }, { status: 404 });
     }
 
     // Incrementar reportCount
@@ -49,9 +43,6 @@ export async function POST(
     return NextResponse.json(updatedTopic);
   } catch (error) {
     console.error("Report error:", error);
-    return NextResponse.json(
-      { error: "Erro ao reportar tema" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erro ao reportar tema" }, { status: 500 });
   }
 }

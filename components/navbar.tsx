@@ -58,11 +58,7 @@ export function Navbar() {
                     Configurações
                   </Button>
                 </Link>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => signOut({ callbackUrl: "/" })}
-                >
+                <Button variant="outline" size="sm" onClick={() => signOut({ callbackUrl: "/" })}>
                   <LogOut className="mr-2 h-4 w-4" />
                   Sair
                 </Button>
@@ -89,11 +85,7 @@ export function Navbar() {
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
             >
-              {isMobileMenuOpen ? (
-                <X className="h-5 w-5" />
-              ) : (
-                <Menu className="h-5 w-5" />
-              )}
+              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
@@ -111,15 +103,8 @@ export function Navbar() {
                     </Button>
                   </Link>
                   {session.user?.isOwner && (
-                    <Link
-                      href="/admin"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="w-full justify-start"
-                      >
+                    <Link href="/admin" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Button variant="outline" size="sm" className="w-full justify-start">
                         <Shield className="mr-2 h-4 w-4" />
                         Painel Owner
                       </Button>
@@ -129,24 +114,13 @@ export function Navbar() {
                     href={`/u/${session.user?.username}`}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="w-full justify-start"
-                    >
+                    <Button variant="ghost" size="sm" className="w-full justify-start">
                       <User className="mr-2 h-4 w-4" />
                       {session.user?.name || session.user?.username}
                     </Button>
                   </Link>
-                  <Link
-                    href="/settings"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="w-full justify-start"
-                    >
+                  <Link href="/settings" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Button variant="ghost" size="sm" className="w-full justify-start">
                       <Settings className="mr-2 h-4 w-4" />
                       Configurações
                     </Button>
@@ -166,22 +140,12 @@ export function Navbar() {
                 </>
               ) : (
                 <>
-                  <Link
-                    href="/auth/login"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="w-full justify-start"
-                    >
+                  <Link href="/auth/login" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Button variant="ghost" size="sm" className="w-full justify-start">
                       Entrar
                     </Button>
                   </Link>
-                  <Link
-                    href="/auth/register"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
+                  <Link href="/auth/register" onClick={() => setIsMobileMenuOpen(false)}>
                     <Button size="sm" className="w-full justify-start">
                       Registrar
                     </Button>

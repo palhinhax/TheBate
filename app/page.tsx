@@ -12,10 +12,7 @@ async function getTopics(
   languages: string[],
   searchQuery?: string
 ) {
-  const orderBy =
-    sort === "new"
-      ? { createdAt: "desc" as const }
-      : { createdAt: "desc" as const }; // TODO: implement real trending algorithm
+  const orderBy = sort === "new" ? { createdAt: "desc" as const } : { createdAt: "desc" as const }; // TODO: implement real trending algorithm
 
   const whereClause = {
     status: "ACTIVE" as const,
@@ -137,9 +134,8 @@ export default async function Home({
                 Plataforma de <span className="text-primary">Discussão</span>
               </h1>
               <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-                Participe de discussões inteligentes sobre tecnologia, sociedade
-                e cultura. Compartilhe ideias, aprenda e conecte-se com
-                respeito.
+                Participe de discussões inteligentes sobre tecnologia, sociedade e cultura.
+                Compartilhe ideias, aprenda e conecte-se com respeito.
               </p>
               <div className="mt-6">
                 <Link href="/auth/register">
@@ -174,9 +170,7 @@ export default async function Home({
               <div className="rounded-lg border bg-card p-12 text-center">
                 <Search className="mx-auto h-12 w-12 text-muted-foreground" />
                 <h3 className="mt-4 text-lg font-semibold">
-                  {searchQuery
-                    ? "Nenhum tópico encontrado"
-                    : "Ainda não há tópicos"}
+                  {searchQuery ? "Nenhum tópico encontrado" : "Ainda não há tópicos"}
                 </h3>
                 <p className="mt-2 text-sm text-muted-foreground">
                   {searchQuery
@@ -215,18 +209,12 @@ export default async function Home({
                       <div className="mt-3 flex items-center gap-4 text-xs text-muted-foreground">
                         <span>por @{topic.createdBy.username}</span>
                         <span>•</span>
-                        <span>
-                          {new Date(topic.createdAt).toLocaleDateString(
-                            "pt-BR"
-                          )}
-                        </span>
+                        <span>{new Date(topic.createdAt).toLocaleDateString("pt-BR")}</span>
                       </div>
                     </div>
                     <div className="ml-4 flex flex-col items-center">
                       <MessageSquare className="h-5 w-5 text-muted-foreground" />
-                      <span className="mt-1 text-sm font-medium">
-                        {topic._count.comments}
-                      </span>
+                      <span className="mt-1 text-sm font-medium">{topic._count.comments}</span>
                     </div>
                   </div>
                 </Link>

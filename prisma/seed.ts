@@ -161,8 +161,7 @@ async function main() {
       prisma.topic.create({
         data: {
           ...topic,
-          createdById:
-            index % 2 === 0 ? admin.id : users[index % users.length].id,
+          createdById: index % 2 === 0 ? admin.id : users[index % users.length].id,
         },
       })
     )
@@ -190,8 +189,7 @@ async function main() {
     const numComments = 4 + Math.floor(Math.random() * 3);
     for (let i = 0; i < numComments; i++) {
       const randomUser = users[Math.floor(Math.random() * users.length)];
-      const content =
-        commentTexts[Math.floor(Math.random() * commentTexts.length)];
+      const content = commentTexts[Math.floor(Math.random() * commentTexts.length)];
 
       const comment = await prisma.comment.create({
         data: {
@@ -208,8 +206,7 @@ async function main() {
           const replyUser = users[Math.floor(Math.random() * users.length)];
           await prisma.comment.create({
             data: {
-              content:
-                commentTexts[Math.floor(Math.random() * commentTexts.length)],
+              content: commentTexts[Math.floor(Math.random() * commentTexts.length)],
               topicId: topic.id,
               userId: replyUser.id,
               parentId: comment.id,

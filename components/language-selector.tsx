@@ -54,22 +54,14 @@ export function LanguageSelector() {
 
   return (
     <div className="relative">
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => setIsOpen(!isOpen)}
-        className="gap-2"
-      >
+      <Button variant="ghost" size="sm" onClick={() => setIsOpen(!isOpen)} className="gap-2">
         <Globe className="h-4 w-4" />
         <span className="hidden sm:inline">{displayText}</span>
       </Button>
 
       {isOpen && (
         <>
-          <div
-            className="fixed inset-0 z-40"
-            onClick={() => setIsOpen(false)}
-          />
+          <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
           <div className="absolute right-0 top-full z-50 mt-2 w-64 max-w-[calc(100vw-2rem)] rounded-md border bg-background shadow-lg">
             <div className="border-b px-3 py-2">
               <p className="text-xs font-medium text-muted-foreground">

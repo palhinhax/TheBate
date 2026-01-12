@@ -285,6 +285,7 @@ The project uses automated database migrations via GitHub Actions:
 **If you encounter database schema errors in production** (e.g., missing columns), see [PRODUCTION_DB_MIGRATION.md](./PRODUCTION_DB_MIGRATION.md) for detailed troubleshooting steps.
 
 Common issues:
+
 - Missing `Topic.type` column → Run the "Auto-migrate Database on Push" workflow manually
 - Migration timeouts → Check the workflow includes retry logic and proper timeouts
 - Advisory lock errors → Wait and retry, or check for stuck database processes

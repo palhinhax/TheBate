@@ -1,15 +1,15 @@
 /**
  * YAML-based seed script for TheBate
- * 
+ *
  * This script reads seed data from prisma/seed-data.yml and applies it idempotently.
  * It ensures the database is always in sync with the YAML configuration.
- * 
+ *
  * Features:
  * - Idempotent: Can be run multiple times safely
  * - Creates missing users, topics, etc.
  * - Updates existing records if needed
  * - Does not delete existing data
- * 
+ *
  * Run with: pnpm run db:seed-yaml
  */
 
@@ -41,18 +41,18 @@ interface TopicData {
   type?: string;
 }
 
-async function seedUsers(users: UserData[], markAsSeed: boolean = false): Promise<Map<string, string>> {
+async function seedUsers(
+  users: UserData[],
+  markAsSeed: boolean = false
+): Promise<Map<string, string>> {
   const userIdMap = new Map<string, string>();
-  
+
   for (const userData of users) {
     try {
       // Check if user exists
       const existing = await prisma.user.findFirst({
         where: {
-          OR: [
-            { email: userData.email },
-            { username: userData.username },
-          ],
+          OR: [{ email: userData.email }, { username: userData.username }],
         },
       });
 
@@ -91,7 +91,7 @@ async function seedTopics(topics: TopicData[], userIdMap: Map<string, string>): 
   for (const topicData of topics) {
     try {
       const slug = generateSlug(topicData.title);
-      
+
       // Check if topic exists
       const existing = await prisma.topic.findUnique({
         where: { slug },
@@ -145,7 +145,7 @@ async function main() {
     console.log(`📄 Reading seed data from: ${yamlPath}`);
     const yamlContent = readFileSync(yamlPath, "utf-8");
     const seedData = load(yamlContent) as SeedData;
-    
+
     console.log("✅ Parsed seed data successfully\n");
 
     // Seed admin users (not marked as seed data - permanent)

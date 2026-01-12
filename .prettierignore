@@ -1,0 +1,26 @@
+# Ignore artifacts:
+node_modules
+.next
+dist
+build
+coverage
+.vercel
+.turbo
+
+# Ignore generated files
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Ignore environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore Prisma migrations (already formatted)
+prisma/migrations
+
+# Ignore public assets
+public/images

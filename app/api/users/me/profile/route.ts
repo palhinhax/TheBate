@@ -9,16 +9,11 @@ const profileSchema = z.object({
     .string()
     .min(3, "Username deve ter pelo menos 3 caracteres")
     .max(30)
-    .regex(
-      /^[a-zA-Z0-9_.]+$/,
-      "Username só pode conter letras, números, underscore e ponto"
-    )
+    .regex(/^[a-zA-Z0-9_.]+$/, "Username só pode conter letras, números, underscore e ponto")
     .optional(),
   email: z.string().email("Email inválido").optional(),
   preferredLanguage: z.enum(["pt", "en", "es", "fr", "de"]).optional(),
-  preferredContentLanguages: z
-    .array(z.enum(["pt", "en", "es", "fr", "de"]))
-    .optional(),
+  preferredContentLanguages: z.array(z.enum(["pt", "en", "es", "fr", "de"])).optional(),
 });
 
 /**
@@ -37,10 +32,7 @@ export async function PATCH(request: Request) {
     const validation = profileSchema.safeParse(body);
 
     if (!validation.success) {
-      return NextResponse.json(
-        { error: validation.error.issues[0].message },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: validation.error.issues[0].message }, { status: 400 });
     }
 
     const { name, username, email } = validation.data;
@@ -54,10 +46,7 @@ export async function PATCH(request: Request) {
     });
 
     if (!currentUser) {
-      return NextResponse.json(
-        { error: "Utilizador não encontrado" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Utilizador não encontrado" }, { status: 404 });
     }
 
     // Only validate username if it's actually being changed
@@ -67,10 +56,7 @@ export async function PATCH(request: Request) {
       });
 
       if (existingUsername) {
-        return NextResponse.json(
-          { error: "Username já está em uso" },
-          { status: 400 }
-        );
+        return NextResponse.json({ error: "Username já está em uso" }, { status: 400 });
       }
     }
 
@@ -81,10 +67,7 @@ export async function PATCH(request: Request) {
       });
 
       if (existingEmail) {
-        return NextResponse.json(
-          { error: "Email já está em uso" },
-          { status: 400 }
-        );
+        return NextResponse.json({ error: "Email já está em uso" }, { status: 400 });
       }
     }
 
@@ -111,9 +94,6 @@ export async function PATCH(request: Request) {
     return NextResponse.json(updatedUser);
   } catch (error) {
     console.error("Profile update error:", error);
-    return NextResponse.json(
-      { error: "Erro ao atualizar perfil" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erro ao atualizar perfil" }, { status: 500 });
   }
 }

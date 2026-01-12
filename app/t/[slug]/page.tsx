@@ -119,9 +119,7 @@ async function getTopicData(slug: string, userId?: string) {
         },
         select: { optionId: true },
       });
-      userVotes = votes
-        .map((v) => v.optionId)
-        .filter((id): id is string => id !== null);
+      userVotes = votes.map((v) => v.optionId).filter((id): id is string => id !== null);
     }
 
     return {
@@ -139,8 +137,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!topic) {
     return {
       title: "Topic not found - TheBatee",
-      description:
-        "The topic you are looking for does not exist or has been removed.",
+      description: "The topic you are looking for does not exist or has been removed.",
     };
   }
 
@@ -283,9 +280,14 @@ export default async function TopicPage({ params, searchParams }: Props) {
       {
         "@type": "InteractionCounter",
         interactionType: "https://schema.org/VoteAction",
-        userInteractionCount: topic.type === "YES_NO" 
-          ? ("voteStats" in topic ? topic.voteStats.total : 0)
-          : ("totalVotes" in topic ? topic.totalVotes : 0),
+        userInteractionCount:
+          topic.type === "YES_NO"
+            ? "voteStats" in topic
+              ? topic.voteStats.total
+              : 0
+            : "totalVotes" in topic
+              ? topic.totalVotes
+              : 0,
       },
     ],
     keywords: topic.tags.join(", "),
@@ -338,15 +340,12 @@ export default async function TopicPage({ params, searchParams }: Props) {
           <div className="mb-8">
             {topic.status !== "ACTIVE" && (
               <div className="mb-4 rounded-lg border border-yellow-500 bg-yellow-50 px-4 py-3 text-sm text-yellow-800">
-                Este tema está{" "}
-                {topic.status === "HIDDEN" ? "oculto" : "bloqueado"}
+                Este tema está {topic.status === "HIDDEN" ? "oculto" : "bloqueado"}
               </div>
             )}
 
             <div className="mb-4 flex flex-col-reverse items-start gap-4 sm:flex-row sm:justify-between">
-              <h1 className="text-2xl font-bold leading-tight sm:text-3xl">
-                {topic.title}
-              </h1>
+              <h1 className="text-2xl font-bold leading-tight sm:text-3xl">{topic.title}</h1>
               <div className="flex gap-2 self-end sm:self-start">
                 <ShareButton
                   title={topic.title}
@@ -370,17 +369,12 @@ export default async function TopicPage({ params, searchParams }: Props) {
               ))}
             </div>
 
-            <p className="mb-4 whitespace-pre-wrap text-muted-foreground">
-              {topic.description}
-            </p>
+            <p className="mb-4 whitespace-pre-wrap text-muted-foreground">{topic.description}</p>
 
             {/* Topic metadata - responsive layout */}
             <div className="flex flex-col gap-3 text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
               {topic.createdBy.username && (
-                <Link
-                  href={`/u/${topic.createdBy.username}`}
-                  className="hover:underline"
-                >
+                <Link href={`/u/${topic.createdBy.username}`} className="hover:underline">
                   @{topic.createdBy.username}
                 </Link>
               )}
@@ -440,7 +434,9 @@ export default async function TopicPage({ params, searchParams }: Props) {
             </div>
             {topic.type === "YES_NO" ? (
               <ThemeVoteResults
-                voteStats={"voteStats" in topic ? topic.voteStats : { SIM: 0, NAO: 0, DEPENDE: 0, total: 0 }}
+                voteStats={
+                  "voteStats" in topic ? topic.voteStats : { SIM: 0, NAO: 0, DEPENDE: 0, total: 0 }
+                }
               />
             ) : (
               <MultiChoiceVoteResults
@@ -462,9 +458,7 @@ export default async function TopicPage({ params, searchParams }: Props) {
                 />
               ) : (
                 <div className="rounded-lg border bg-muted/50 px-6 py-8 text-center">
-                  <p className="mb-4 text-muted-foreground">
-                    Entre para participar da discussão
-                  </p>
+                  <p className="mb-4 text-muted-foreground">Entre para participar da discussão</p>
                   <Link href={`/auth/login?callbackUrl=/t/${topic.slug}`}>
                     <Button>Entrar</Button>
                   </Link>
@@ -475,8 +469,7 @@ export default async function TopicPage({ params, searchParams }: Props) {
 
           {topic.status === "LOCKED" && (
             <div className="mb-8 rounded-lg border border-yellow-500 bg-yellow-50 px-4 py-3 text-center text-sm text-yellow-800">
-              Este tema está bloqueado. Não é possível adicionar novos
-              argumentos.
+              Este tema está bloqueado. Não é possível adicionar novos argumentos.
             </div>
           )}
 
@@ -487,9 +480,7 @@ export default async function TopicPage({ params, searchParams }: Props) {
               <div className="flex flex-col gap-3">
                 {/* Sort buttons */}
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-                  <span className="text-sm font-medium text-muted-foreground">
-                    Ordenar:
-                  </span>
+                  <span className="text-sm font-medium text-muted-foreground">Ordenar:</span>
                   <div className="flex gap-2">
                     <Link
                       href={`/t/${topic.slug}?sort=top${side ? `&side=${side}` : ""}`}
@@ -521,14 +512,9 @@ export default async function TopicPage({ params, searchParams }: Props) {
                 {/* Side/Option filter buttons */}
                 {topic.type === "YES_NO" ? (
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-                    <span className="text-sm font-medium text-muted-foreground">
-                      Filtrar:
-                    </span>
+                    <span className="text-sm font-medium text-muted-foreground">Filtrar:</span>
                     <div className="flex gap-2">
-                      <Link
-                        href={`/t/${topic.slug}?sort=${sort}`}
-                        className="flex-1 sm:flex-none"
-                      >
+                      <Link href={`/t/${topic.slug}?sort=${sort}`} className="flex-1 sm:flex-none">
                         <Button
                           variant={!side ? "default" : "outline"}
                           size="sm"
@@ -571,14 +557,8 @@ export default async function TopicPage({ params, searchParams }: Props) {
                       Filtrar por opção:
                     </span>
                     <div className="flex flex-wrap gap-2">
-                      <Link
-                        href={`/t/${topic.slug}?sort=${sort}`}
-                        className="flex-none"
-                      >
-                        <Button
-                          variant={!optionId ? "default" : "outline"}
-                          size="sm"
-                        >
+                      <Link href={`/t/${topic.slug}?sort=${sort}`} className="flex-none">
+                        <Button variant={!optionId ? "default" : "outline"} size="sm">
                           Todos
                         </Button>
                       </Link>

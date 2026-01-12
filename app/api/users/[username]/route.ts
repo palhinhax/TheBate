@@ -1,10 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-export async function GET(
-  request: Request,
-  { params }: { params: { username: string } }
-) {
+export async function GET(request: Request, { params }: { params: { username: string } }) {
   try {
     const user = await prisma.user.findUnique({
       where: { username: params.username },
@@ -19,10 +16,7 @@ export async function GET(
     });
 
     if (!user) {
-      return NextResponse.json(
-        { message: "Utilizador não encontrado" },
-        { status: 404 }
-      );
+      return NextResponse.json({ message: "Utilizador não encontrado" }, { status: 404 });
     }
 
     // Get user's topics with counts
@@ -110,9 +104,6 @@ export async function GET(
     return NextResponse.json(userData);
   } catch (error) {
     console.error("Error fetching user:", error);
-    return NextResponse.json(
-      { message: "Erro ao carregar perfil do utilizador" },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Erro ao carregar perfil do utilizador" }, { status: 500 });
   }
 }

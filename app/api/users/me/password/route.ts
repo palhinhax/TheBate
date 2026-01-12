@@ -30,10 +30,7 @@ export async function PATCH(request: Request) {
     const validation = passwordSchema.safeParse(body);
 
     if (!validation.success) {
-      return NextResponse.json(
-        { error: validation.error.issues[0].message },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: validation.error.issues[0].message }, { status: 400 });
     }
 
     const { currentPassword, newPassword } = validation.data;
@@ -45,20 +42,14 @@ export async function PATCH(request: Request) {
     });
 
     if (!user || !user.passwordHash) {
-      return NextResponse.json(
-        { error: "Utilizador não encontrado" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Utilizador não encontrado" }, { status: 404 });
     }
 
     // Verificar se a palavra-passe atual está correta
     const isValid = await verifyPassword(currentPassword, user.passwordHash);
 
     if (!isValid) {
-      return NextResponse.json(
-        { error: "Palavra-passe atual incorreta" },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: "Palavra-passe atual incorreta" }, { status: 401 });
     }
 
     // Hash da nova palavra-passe
@@ -73,9 +64,6 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Password change error:", error);
-    return NextResponse.json(
-      { error: "Erro ao alterar palavra-passe" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erro ao alterar palavra-passe" }, { status: 500 });
   }
 }

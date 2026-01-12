@@ -134,9 +134,7 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-center text-2xl font-bold">
-            Entrar
-          </CardTitle>
+          <CardTitle className="text-center text-2xl font-bold">Entrar</CardTitle>
           <CardDescription className="text-center">
             Escolha uma forma de aceder à sua conta
           </CardDescription>
@@ -149,11 +147,7 @@ export default function LoginPage() {
                   {t("auth.magic_link_sent_message")}
                 </p>
               </div>
-              <Button
-                onClick={() => setEmailSent(false)}
-                className="w-full"
-                variant="outline"
-              >
+              <Button onClick={() => setEmailSent(false)} className="w-full" variant="outline">
                 Voltar
               </Button>
             </div>
@@ -201,9 +195,7 @@ export default function LoginPage() {
                   <span className="w-full border-t" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-background px-2 text-muted-foreground">
-                    {t("auth.or")}
-                  </span>
+                  <span className="bg-background px-2 text-muted-foreground">{t("auth.or")}</span>
                 </div>
               </div>
 
@@ -219,17 +211,10 @@ export default function LoginPage() {
                     disabled={isLoading}
                   />
                   {emailErrors.email && (
-                    <p className="text-sm text-destructive">
-                      {emailErrors.email.message}
-                    </p>
+                    <p className="text-sm text-destructive">{emailErrors.email.message}</p>
                   )}
                 </div>
-                <Button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full"
-                  size="lg"
-                >
+                <Button type="submit" disabled={isLoading} className="w-full" size="lg">
                   {isLoading && <Spinner size="sm" className="mr-2" />}
                   {t("auth.send_magic_link")}
                 </Button>
@@ -240,18 +225,12 @@ export default function LoginPage() {
                   <span className="w-full border-t" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-background px-2 text-muted-foreground">
-                    ou
-                  </span>
+                  <span className="bg-background px-2 text-muted-foreground">ou</span>
                 </div>
               </div>
 
               {/* Show password login option */}
-              <Button
-                onClick={() => setShowPasswordLogin(true)}
-                variant="ghost"
-                className="w-full"
-              >
+              <Button onClick={() => setShowPasswordLogin(true)} variant="ghost" className="w-full">
                 Entrar com senha
               </Button>
             </>
@@ -271,11 +250,7 @@ export default function LoginPage() {
                   {...register("email")}
                   aria-invalid={!!errors.email}
                 />
-                {errors.email && (
-                  <p className="text-sm text-destructive">
-                    {errors.email.message}
-                  </p>
-                )}
+                {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
@@ -295,9 +270,7 @@ export default function LoginPage() {
                   aria-invalid={!!errors.password}
                 />
                 {errors.password && (
-                  <p className="text-sm text-destructive">
-                    {errors.password.message}
-                  </p>
+                  <p className="text-sm text-destructive">{errors.password.message}</p>
                 )}
               </div>
               <Button type="submit" className="w-full" disabled={isLoading}>
@@ -318,10 +291,7 @@ export default function LoginPage() {
         <CardFooter className="flex flex-col space-y-4">
           <p className="text-center text-sm text-muted-foreground">
             Não tem uma conta?{" "}
-            <Link
-              href="/auth/register"
-              className="text-primary hover:underline"
-            >
+            <Link href="/auth/register" className="text-primary hover:underline">
               Registrar
             </Link>
           </p>

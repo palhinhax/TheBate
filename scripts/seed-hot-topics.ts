@@ -51,8 +51,7 @@ const topics = [
   },
   {
     language: "en",
-    title:
-      "Should social media companies be liable for content posted by users?",
+    title: "Should social media companies be liable for content posted by users?",
     description:
       "As misinformation spreads rapidly online, calls grow for platform accountability. Should companies face legal consequences for user-generated content? How do we balance free speech with safety?",
     tags: ["social-media", "law", "free-speech", "technology"],
@@ -212,9 +211,7 @@ async function main() {
         },
       });
 
-      console.log(
-        `✅ Created [${topic.language.toUpperCase()}]: ${topic.title}`
-      );
+      console.log(`✅ Created [${topic.language.toUpperCase()}]: ${topic.title}`);
       created++;
     }
 

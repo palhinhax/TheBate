@@ -4,26 +4,14 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/ui/password-input";
 import { useToast } from "@/components/ui/use-toast";
 import { useTranslations } from "@/lib/use-translations";
 import { SUPPORTED_LANGUAGES, LANGUAGE_METADATA } from "@/lib/language-shared";
-import {
-  User,
-  Lock,
-  AlertTriangle,
-  Settings as SettingsIcon,
-  Globe,
-} from "lucide-react";
+import { User, Lock, AlertTriangle, Settings as SettingsIcon, Globe } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -56,9 +44,13 @@ export default function SettingsPage() {
   });
 
   // Content languages state
-  const [preferredContentLanguages, setPreferredContentLanguages] = useState<
-    string[]
-  >(["pt", "en", "es", "fr", "de"]);
+  const [preferredContentLanguages, setPreferredContentLanguages] = useState<string[]>([
+    "pt",
+    "en",
+    "es",
+    "fr",
+    "de",
+  ]);
 
   // Password form state
   const [passwordForm, setPasswordForm] = useState({
@@ -89,7 +81,7 @@ export default function SettingsPage() {
 
     try {
       console.log("📝 Submitting profile update:", profileForm);
-      
+
       const response = await fetch("/api/users/me/profile", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -99,22 +91,22 @@ export default function SettingsPage() {
       if (response.ok) {
         const updatedData = await response.json();
         console.log("✅ Profile updated successfully:", updatedData);
-        
+
         toast({
           title: t("settings.changes_saved"),
         });
-        
+
         // Check if language changed
         const languageChanged = profileForm.preferredLanguage !== session?.user?.preferredLanguage;
         console.log("🌐 Language changed?", languageChanged, {
           from: session?.user?.preferredLanguage,
-          to: profileForm.preferredLanguage
+          to: profileForm.preferredLanguage,
         });
-        
+
         // Update the session with new data
         console.log("🔄 Updating session...");
         await update();
-        
+
         // If language changed, force full page reload to clear translation cache
         if (languageChanged) {
           console.log("♻️ Reloading page to apply language change...");
@@ -226,9 +218,7 @@ export default function SettingsPage() {
     if (preferredContentLanguages.includes(lang)) {
       // Don't allow removing the last language
       if (preferredContentLanguages.length > 1) {
-        setPreferredContentLanguages(
-          preferredContentLanguages.filter((l) => l !== lang)
-        );
+        setPreferredContentLanguages(preferredContentLanguages.filter((l) => l !== lang));
       }
     } else {
       setPreferredContentLanguages([...preferredContentLanguages, lang]);
@@ -340,9 +330,7 @@ export default function SettingsPage() {
           <Card>
             <CardHeader>
               <CardTitle>{t("settings.profile_info")}</CardTitle>
-              <CardDescription>
-                {t("settings.profile_info_description")}
-              </CardDescription>
+              <CardDescription>{t("settings.profile_info_description")}</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleProfileSubmit} className="space-y-6">
@@ -353,9 +341,7 @@ export default function SettingsPage() {
                     type="text"
                     placeholder={t("settings.name_placeholder")}
                     value={profileForm.name}
-                    onChange={(e) =>
-                      setProfileForm({ ...profileForm, name: e.target.value })
-                    }
+                    onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })}
                   />
                 </div>
 
@@ -382,9 +368,7 @@ export default function SettingsPage() {
                     type="email"
                     placeholder={t("settings.email_placeholder")}
                     value={profileForm.email}
-                    onChange={(e) =>
-                      setProfileForm({ ...profileForm, email: e.target.value })
-                    }
+                    onChange={(e) => setProfileForm({ ...profileForm, email: e.target.value })}
                   />
                 </div>
 
@@ -401,16 +385,12 @@ export default function SettingsPage() {
           <Card>
             <CardHeader>
               <CardTitle>{t("settings.password_settings")}</CardTitle>
-              <CardDescription>
-                {t("settings.password_settings_description")}
-              </CardDescription>
+              <CardDescription>{t("settings.password_settings_description")}</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handlePasswordSubmit} className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="currentPassword">
-                    {t("settings.current_password")}
-                  </Label>
+                  <Label htmlFor="currentPassword">{t("settings.current_password")}</Label>
                   <PasswordInput
                     id="currentPassword"
                     value={passwordForm.currentPassword}
@@ -424,9 +404,7 @@ export default function SettingsPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="newPassword">
-                    {t("settings.new_password")}
-                  </Label>
+                  <Label htmlFor="newPassword">{t("settings.new_password")}</Label>
                   <PasswordInput
                     id="newPassword"
                     value={passwordForm.newPassword}
@@ -440,9 +418,7 @@ export default function SettingsPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">
-                    {t("settings.confirm_new_password")}
-                  </Label>
+                  <Label htmlFor="confirmPassword">{t("settings.confirm_new_password")}</Label>
                   <PasswordInput
                     id="confirmPassword"
                     value={passwordForm.confirmPassword}
@@ -456,9 +432,7 @@ export default function SettingsPage() {
                 </div>
 
                 <Button type="submit" disabled={loading} className="w-full">
-                  {loading
-                    ? t("settings.saving")
-                    : t("settings.change_password")}
+                  {loading ? t("settings.saving") : t("settings.change_password")}
                 </Button>
               </form>
             </CardContent>
@@ -472,16 +446,12 @@ export default function SettingsPage() {
             <Card>
               <CardHeader>
                 <CardTitle>{t("settings.ui_language")}</CardTitle>
-                <CardDescription>
-                  {t("settings.ui_language_description")}
-                </CardDescription>
+                <CardDescription>{t("settings.ui_language_description")}</CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleProfileSubmit} className="space-y-6">
                   <div className="space-y-2">
-                    <Label htmlFor="preferredLanguage">
-                      {t("settings.ui_language")}
-                    </Label>
+                    <Label htmlFor="preferredLanguage">{t("settings.ui_language")}</Label>
                     <select
                       id="preferredLanguage"
                       className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -508,9 +478,7 @@ export default function SettingsPage() {
                   </div>
 
                   <Button type="submit" disabled={loading} className="w-full">
-                    {loading
-                      ? t("settings.saving")
-                      : t("settings.save_changes")}
+                    {loading ? t("settings.saving") : t("settings.save_changes")}
                   </Button>
                 </form>
               </CardContent>
@@ -520,15 +488,10 @@ export default function SettingsPage() {
             <Card>
               <CardHeader>
                 <CardTitle>{t("settings.content_language")}</CardTitle>
-                <CardDescription>
-                  {t("settings.content_language_description")}
-                </CardDescription>
+                <CardDescription>{t("settings.content_language_description")}</CardDescription>
               </CardHeader>
               <CardContent>
-                <form
-                  onSubmit={handleContentLanguagesSubmit}
-                  className="space-y-6"
-                >
+                <form onSubmit={handleContentLanguagesSubmit} className="space-y-6">
                   <div className="space-y-4">
                     <div className="grid gap-3">
                       {SUPPORTED_LANGUAGES.map((lang) => {
@@ -545,9 +508,7 @@ export default function SettingsPage() {
                               className="h-4 w-4 rounded border-gray-300"
                             />
                             <span className="text-2xl">{metadata.flag}</span>
-                            <span className="flex-1">
-                              {metadata.nativeName}
-                            </span>
+                            <span className="flex-1">{metadata.nativeName}</span>
                           </label>
                         );
                       })}
@@ -558,9 +519,7 @@ export default function SettingsPage() {
                   </div>
 
                   <Button type="submit" disabled={loading} className="w-full">
-                    {loading
-                      ? t("settings.saving")
-                      : t("settings.save_changes")}
+                    {loading ? t("settings.saving") : t("settings.save_changes")}
                   </Button>
                 </form>
               </CardContent>
@@ -572,12 +531,8 @@ export default function SettingsPage() {
         {activeTab === "account" && (
           <Card className="border-destructive">
             <CardHeader>
-              <CardTitle className="text-destructive">
-                {t("settings.danger_zone")}
-              </CardTitle>
-              <CardDescription>
-                {t("settings.danger_zone_description")}
-              </CardDescription>
+              <CardTitle className="text-destructive">{t("settings.danger_zone")}</CardTitle>
+              <CardDescription>{t("settings.danger_zone_description")}</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -588,10 +543,7 @@ export default function SettingsPage() {
                   <p className="mb-4 text-sm text-muted-foreground">
                     {t("settings.delete_account_description")}
                   </p>
-                  <Button
-                    variant="destructive"
-                    onClick={() => setShowDeleteDialog(true)}
-                  >
+                  <Button variant="destructive" onClick={() => setShowDeleteDialog(true)}>
                     <AlertTriangle className="mr-2 h-4 w-4" />
                     {t("profile.delete_account")}
                   </Button>
@@ -622,11 +574,7 @@ export default function SettingsPage() {
             >
               {t("topics.cancel")}
             </Button>
-            <Button
-              variant="destructive"
-              onClick={handleDeleteAccount}
-              disabled={deleting}
-            >
+            <Button variant="destructive" onClick={handleDeleteAccount} disabled={deleting}>
               {deleting ? (
                 <>
                   <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>

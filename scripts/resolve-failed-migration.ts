@@ -1,9 +1,9 @@
 /**
  * Script to resolve failed migrations in production database
- * 
+ *
  * This script marks a failed migration as rolled back in the _prisma_migrations table,
  * allowing Prisma to attempt the migration again.
- * 
+ *
  * Usage:
  *   DATABASE_URL=your_db_url pnpm tsx scripts/resolve-failed-migration.ts
  */
@@ -15,18 +15,20 @@ const prisma = new PrismaClient();
 async function resolveFailedMigration() {
   try {
     console.log("🔍 Checking for failed migrations...");
-    
+
     // Query the _prisma_migrations table for failed migrations
-    const failedMigrations = await prisma.$queryRaw<Array<{
-      id: string;
-      checksum: string;
-      finished_at: Date | null;
-      migration_name: string;
-      logs: string | null;
-      rolled_back_at: Date | null;
-      started_at: Date;
-      applied_steps_count: number;
-    }>>`
+    const failedMigrations = await prisma.$queryRaw<
+      Array<{
+        id: string;
+        checksum: string;
+        finished_at: Date | null;
+        migration_name: string;
+        logs: string | null;
+        rolled_back_at: Date | null;
+        started_at: Date;
+        applied_steps_count: number;
+      }>
+    >`
       SELECT * FROM "_prisma_migrations"
       WHERE finished_at IS NULL AND rolled_back_at IS NULL
       ORDER BY started_at DESC
@@ -44,9 +46,10 @@ async function resolveFailedMigration() {
       console.log(`   Applied steps: ${migration.applied_steps_count}`);
       if (migration.logs) {
         const MAX_LOG_LENGTH = 500;
-        const logPreview = migration.logs.length > MAX_LOG_LENGTH 
-          ? `${migration.logs.substring(0, MAX_LOG_LENGTH)}...` 
-          : migration.logs;
+        const logPreview =
+          migration.logs.length > MAX_LOG_LENGTH
+            ? `${migration.logs.substring(0, MAX_LOG_LENGTH)}...`
+            : migration.logs;
         console.log(`   Logs: ${logPreview}`);
       }
       console.log();
@@ -57,7 +60,7 @@ async function resolveFailedMigration() {
     for (const migration of failedMigrations) {
       const timestamp = new Date().toISOString();
       const rollbackMessage = `\n\n[${timestamp}] Marked as rolled back by resolve-failed-migration script`;
-      
+
       // Using Prisma's tagged template literals for safe parameterized queries
       // Both migration.id and rollbackMessage are automatically escaped
       await prisma.$executeRaw`
@@ -71,7 +74,6 @@ async function resolveFailedMigration() {
 
     console.log("\n✅ All failed migrations have been marked as rolled back");
     console.log("\n💡 You can now run 'prisma migrate deploy' to retry the migrations");
-    
   } catch (error) {
     console.error("❌ Error resolving failed migrations:", error);
     throw error;
@@ -80,8 +82,7 @@ async function resolveFailedMigration() {
   }
 }
 
-resolveFailedMigration()
-  .catch((error) => {
-    console.error("Fatal error:", error);
-    process.exit(1);
-  });
+resolveFailedMigration().catch((error) => {
+  console.error("Fatal error:", error);
+  process.exit(1);
+});

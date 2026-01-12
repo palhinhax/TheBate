@@ -29,15 +29,14 @@ export default function VerifyRequestPage() {
           </div>
           <h1 className="text-3xl font-bold">Check Your Email</h1>
           <p className="text-muted-foreground">
-            We&apos;ve sent you a magic link to sign in. Click the link in the
-            email to continue.
+            We&apos;ve sent you a magic link to sign in. Click the link in the email to continue.
           </p>
         </div>
 
         <div className="rounded-lg border bg-muted/50 p-4">
           <p className="text-sm text-muted-foreground">
-            Don&apos;t forget to check your spam folder if you don&apos;t see
-            the email within a few minutes.
+            Don&apos;t forget to check your spam folder if you don&apos;t see the email within a few
+            minutes.
           </p>
         </div>
 

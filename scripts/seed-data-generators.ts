@@ -12,62 +12,158 @@ export interface SeedUser {
 // Realistic names by locale
 const names = {
   en: [
-    "James Smith", "Emma Johnson", "Michael Williams", "Olivia Brown", "William Jones",
-    "Sophia Davis", "Robert Miller", "Isabella Wilson", "David Moore", "Mia Taylor",
-    "John Anderson", "Charlotte Thomas", "Daniel Jackson", "Amelia White", "Matthew Harris",
-    "Harper Martin", "Christopher Thompson", "Evelyn Garcia", "Andrew Martinez", "Abigail Robinson"
+    "James Smith",
+    "Emma Johnson",
+    "Michael Williams",
+    "Olivia Brown",
+    "William Jones",
+    "Sophia Davis",
+    "Robert Miller",
+    "Isabella Wilson",
+    "David Moore",
+    "Mia Taylor",
+    "John Anderson",
+    "Charlotte Thomas",
+    "Daniel Jackson",
+    "Amelia White",
+    "Matthew Harris",
+    "Harper Martin",
+    "Christopher Thompson",
+    "Evelyn Garcia",
+    "Andrew Martinez",
+    "Abigail Robinson",
   ],
   pt: [
-    "João Silva", "Maria Santos", "António Costa", "Ana Pereira", "José Ferreira",
-    "Teresa Rodrigues", "Manuel Alves", "Catarina Martins", "Carlos Sousa", "Sofia Gonçalves",
-    "Francisco Fernandes", "Mariana Ribeiro", "Pedro Carvalho", "Inês Oliveira", "Miguel Lopes",
-    "Rita Teixeira", "Rui Pinto", "Beatriz Mendes", "Nuno Dias", "Sara Araújo"
+    "João Silva",
+    "Maria Santos",
+    "António Costa",
+    "Ana Pereira",
+    "José Ferreira",
+    "Teresa Rodrigues",
+    "Manuel Alves",
+    "Catarina Martins",
+    "Carlos Sousa",
+    "Sofia Gonçalves",
+    "Francisco Fernandes",
+    "Mariana Ribeiro",
+    "Pedro Carvalho",
+    "Inês Oliveira",
+    "Miguel Lopes",
+    "Rita Teixeira",
+    "Rui Pinto",
+    "Beatriz Mendes",
+    "Nuno Dias",
+    "Sara Araújo",
   ],
   es: [
-    "Carlos García", "María Rodríguez", "José Martínez", "Ana López", "Antonio González",
-    "Laura Hernández", "Manuel Pérez", "Carmen Sánchez", "Francisco Ramírez", "Isabel Torres",
-    "David Flores", "Cristina Rivera", "Miguel Gómez", "Patricia Díaz", "Javier Morales",
-    "Elena Jiménez", "Pablo Ruiz", "Marta Álvarez", "Luis Romero", "Rosa Navarro"
+    "Carlos García",
+    "María Rodríguez",
+    "José Martínez",
+    "Ana López",
+    "Antonio González",
+    "Laura Hernández",
+    "Manuel Pérez",
+    "Carmen Sánchez",
+    "Francisco Ramírez",
+    "Isabel Torres",
+    "David Flores",
+    "Cristina Rivera",
+    "Miguel Gómez",
+    "Patricia Díaz",
+    "Javier Morales",
+    "Elena Jiménez",
+    "Pablo Ruiz",
+    "Marta Álvarez",
+    "Luis Romero",
+    "Rosa Navarro",
   ],
   fr: [
-    "Pierre Martin", "Marie Bernard", "Jean Dubois", "Sophie Thomas", "Michel Robert",
-    "Isabelle Richard", "Jacques Petit", "Catherine Durand", "Philippe Leroy", "Nathalie Moreau",
-    "André Simon", "Françoise Laurent", "Alain Lefebvre", "Monique Michel", "Bernard Garcia",
-    "Christine Girard", "René Dupont", "Sylvie Roux", "François Fontaine", "Martine Rousseau"
+    "Pierre Martin",
+    "Marie Bernard",
+    "Jean Dubois",
+    "Sophie Thomas",
+    "Michel Robert",
+    "Isabelle Richard",
+    "Jacques Petit",
+    "Catherine Durand",
+    "Philippe Leroy",
+    "Nathalie Moreau",
+    "André Simon",
+    "Françoise Laurent",
+    "Alain Lefebvre",
+    "Monique Michel",
+    "Bernard Garcia",
+    "Christine Girard",
+    "René Dupont",
+    "Sylvie Roux",
+    "François Fontaine",
+    "Martine Rousseau",
   ],
   de: [
-    "Thomas Müller", "Maria Schmidt", "Hans Weber", "Anna Wagner", "Michael Becker",
-    "Julia Fischer", "Peter Schulz", "Sabine Koch", "Wolfgang Hoffmann", "Petra Richter",
-    "Klaus Klein", "Monika Wolf", "Jürgen Schröder", "Ute Neumann", "Dieter Schwarz",
-    "Andrea Zimmermann", "Helmut Braun", "Karin Hofmann", "Günter Hartmann", "Angelika Schmitt"
+    "Thomas Müller",
+    "Maria Schmidt",
+    "Hans Weber",
+    "Anna Wagner",
+    "Michael Becker",
+    "Julia Fischer",
+    "Peter Schulz",
+    "Sabine Koch",
+    "Wolfgang Hoffmann",
+    "Petra Richter",
+    "Klaus Klein",
+    "Monika Wolf",
+    "Jürgen Schröder",
+    "Ute Neumann",
+    "Dieter Schwarz",
+    "Andrea Zimmermann",
+    "Helmut Braun",
+    "Karin Hofmann",
+    "Günter Hartmann",
+    "Angelika Schmitt",
   ],
   it: [
-    "Mario Rossi", "Anna Russo", "Giuseppe Ferrari", "Maria Esposito", "Antonio Bianchi",
-    "Laura Romano", "Francesco Colombo", "Elena Ricci", "Giovanni Marino", "Chiara Greco",
-    "Paolo Costa", "Francesca Conti", "Marco Bruno", "Giulia De Luca", "Luigi Rizzo",
-    "Valentina Moretti", "Andrea Barbieri", "Silvia Fontana", "Roberto Santoro", "Paola Ferrara"
-  ]
+    "Mario Rossi",
+    "Anna Russo",
+    "Giuseppe Ferrari",
+    "Maria Esposito",
+    "Antonio Bianchi",
+    "Laura Romano",
+    "Francesco Colombo",
+    "Elena Ricci",
+    "Giovanni Marino",
+    "Chiara Greco",
+    "Paolo Costa",
+    "Francesca Conti",
+    "Marco Bruno",
+    "Giulia De Luca",
+    "Luigi Rizzo",
+    "Valentina Moretti",
+    "Andrea Barbieri",
+    "Silvia Fontana",
+    "Roberto Santoro",
+    "Paola Ferrara",
+  ],
 };
 
 // Generate username from name
 function generateUsername(name: string, index: number): string {
-  const parts = name.toLowerCase().split(' ');
-  const base = parts.join('_');
+  const parts = name.toLowerCase().split(" ");
+  const base = parts.join("_");
   // Add suffix for uniqueness: maria_silva, maria_silva2, maria_silva3, etc.
-  return `${base}${index > 0 ? (index + 1) : ''}`;
+  return `${base}${index > 0 ? index + 1 : ""}`;
 }
 
 // Generate email from username
 function generateEmail(username: string, locale: string): string {
   const domains = {
-    en: ['example.com', 'mail.com', 'email.com'],
-    pt: ['exemplo.pt', 'mail.pt', 'email.pt'],
-    es: ['ejemplo.es', 'correo.es', 'email.es'],
-    fr: ['exemple.fr', 'courriel.fr', 'email.fr'],
-    de: ['beispiel.de', 'mail.de', 'email.de'],
-    it: ['esempio.it', 'posta.it', 'email.it']
+    en: ["example.com", "mail.com", "email.com"],
+    pt: ["exemplo.pt", "mail.pt", "email.pt"],
+    es: ["ejemplo.es", "correo.es", "email.es"],
+    fr: ["exemple.fr", "courriel.fr", "email.fr"],
+    de: ["beispiel.de", "mail.de", "email.de"],
+    it: ["esempio.it", "posta.it", "email.it"],
   };
-  
+
   const domainList = domains[locale as keyof typeof domains] || domains.en;
   const domain = domainList[Math.floor(Math.random() * domainList.length)];
   return `${username}@${domain}`;
@@ -77,15 +173,15 @@ function generateEmail(username: string, locale: string): string {
 export function generateUsersForLocale(locale: string, count: number): SeedUser[] {
   const localeNames = names[locale as keyof typeof names] || names.en;
   const users: SeedUser[] = [];
-  
+
   for (let i = 0; i < Math.min(count, localeNames.length); i++) {
     const name = localeNames[i];
     const username = generateUsername(name, i);
     const email = generateEmail(username, locale);
-    
+
     users.push({ name, username, email, locale });
   }
-  
+
   return users;
 }
 
@@ -127,7 +223,7 @@ export const commentTemplates = {
       "Maybe, but we need to consider all factors first.",
       "I'm on the fence. Both approaches have pros and cons.",
       "Fair points on both sides. The answer isn't obvious.",
-    ]
+    ],
   },
   pt: {
     pro: [
@@ -165,7 +261,7 @@ export const commentTemplates = {
       "Talvez, mas temos de considerar todos os factores.",
       "Estou indeciso. Ambas as abordagens têm prós e contras.",
       "Pontos válidos de ambos os lados. Não é óbvio.",
-    ]
+    ],
   },
   es: {
     pro: [
@@ -203,7 +299,7 @@ export const commentTemplates = {
       "Quizás, pero hay que considerar todos los factores.",
       "Estoy indeciso. Ambos enfoques tienen pros y contras.",
       "Puntos válidos de ambos lados. No es obvio.",
-    ]
+    ],
   },
   fr: {
     pro: [
@@ -241,7 +337,7 @@ export const commentTemplates = {
       "Peut-être, mais il faut considérer tous les facteurs.",
       "Je suis indécis. Les deux approches ont des avantages et des inconvénients.",
       "Des points valables des deux côtés. Ce n'est pas évident.",
-    ]
+    ],
   },
   de: {
     pro: [
@@ -279,7 +375,7 @@ export const commentTemplates = {
       "Vielleicht, aber wir müssen alle Faktoren berücksichtigen.",
       "Ich bin unentschlossen. Beide Ansätze haben Vor- und Nachteile.",
       "Gültige Punkte auf beiden Seiten. Es ist nicht offensichtlich.",
-    ]
+    ],
   },
   it: {
     pro: [
@@ -317,13 +413,14 @@ export const commentTemplates = {
       "Forse, ma dobbiamo considerare tutti i fattori.",
       "Sono indeciso. Entrambi gli approcci hanno pro e contro.",
       "Punti validi da entrambe le parti. Non è ovvio.",
-    ]
-  }
+    ],
+  },
 };
 
 // Get random comment for language and opinion
-export function getRandomComment(language: string, opinion: 'pro' | 'contra' | 'neutral'): string {
-  const templates = commentTemplates[language as keyof typeof commentTemplates] || commentTemplates.en;
+export function getRandomComment(language: string, opinion: "pro" | "contra" | "neutral"): string {
+  const templates =
+    commentTemplates[language as keyof typeof commentTemplates] || commentTemplates.en;
   const opinionTemplates = templates[opinion];
   return opinionTemplates[Math.floor(Math.random() * opinionTemplates.length)];
 }
@@ -333,26 +430,26 @@ export function randomDateInRange(startDaysAgo: number, endDaysAgo: number = 0):
   const now = new Date();
   const start = new Date(now.getTime() - startDaysAgo * 24 * 60 * 60 * 1000);
   const end = new Date(now.getTime() - endDaysAgo * 24 * 60 * 60 * 1000);
-  
+
   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 }
 
 // Apply activity pattern (more at night and weekends)
 export function adjustForActivityPattern(date: Date): Date {
   const adjusted = new Date(date);
-  
+
   // 60% chance to adjust to peak hours (19:00-00:00)
   if (Math.random() < 0.6) {
     const peakHour = 19 + Math.floor(Math.random() * 5); // 19:00 to 23:59
     adjusted.setHours(peakHour, Math.floor(Math.random() * 60), Math.floor(Math.random() * 60));
   }
-  
+
   // 40% chance to move to weekend if weekday
   if (Math.random() < 0.4 && adjusted.getDay() !== 0 && adjusted.getDay() !== 6) {
     const daysToWeekend = 6 - adjusted.getDay(); // Days until Saturday
     adjusted.setDate(adjusted.getDate() + daysToWeekend);
   }
-  
+
   return adjusted;
 }
 

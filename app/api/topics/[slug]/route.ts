@@ -3,13 +3,10 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { updateTopicSchema } from "@/features/topics/schemas";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { slug: string } }
-) {
+export async function GET(req: NextRequest, { params }: { params: { slug: string } }) {
   try {
     const session = await auth();
-    
+
     const topic = await prisma.topic.findUnique({
       where: { slug: params.slug },
       include: {
@@ -30,26 +27,20 @@ export async function GET(
     });
 
     if (!topic) {
-      return NextResponse.json(
-        { error: "Tema não encontrado" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Tema não encontrado" }, { status: 404 });
     }
 
     // Only show non-ACTIVE topics to mods/admins
     if (topic.status !== "ACTIVE") {
       const userRole = session?.user?.role;
       if (!userRole || (userRole !== "MOD" && userRole !== "ADMIN")) {
-        return NextResponse.json(
-          { error: "Tema não encontrado" },
-          { status: 404 }
-        );
+        return NextResponse.json({ error: "Tema não encontrado" }, { status: 404 });
       }
     }
 
     // Get vote statistics
     const voteStats = await prisma.topicVote.groupBy({
-      by: ['vote'],
+      by: ["vote"],
       where: { topicId: topic.id },
       _count: true,
     });
@@ -93,10 +84,7 @@ export async function GET(
   }
 }
 
-export async function PATCH(
-  req: NextRequest,
-  { params }: { params: { slug: string } }
-) {
+export async function PATCH(req: NextRequest, { params }: { params: { slug: string } }) {
   try {
     const session = await auth();
     if (!session?.user) {
@@ -133,20 +121,9 @@ export async function PATCH(
     if (error instanceof Error && error.name === "ZodError") {
       return NextResponse.json({ error: "Dados inválidos" }, { status: 400 });
     }
-    if (
-      error &&
-      typeof error === "object" &&
-      "code" in error &&
-      error.code === "P2025"
-    ) {
-      return NextResponse.json(
-        { error: "Tema não encontrado" },
-        { status: 404 }
-      );
+    if (error && typeof error === "object" && "code" in error && error.code === "P2025") {
+      return NextResponse.json({ error: "Tema não encontrado" }, { status: 404 });
     }
-    return NextResponse.json(
-      { error: "Erro ao atualizar tema" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erro ao atualizar tema" }, { status: 500 });
   }
 }

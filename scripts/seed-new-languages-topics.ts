@@ -265,8 +265,7 @@ const japaneseTopics = [
   },
   {
     title: "靖国神社参拝: 戦没者追悼か、軍国主義の象徴か？",
-    description:
-      "首相の靖国参拝は中韓の反発を招く。これは国内問題か、国際的な配慮が必要か？",
+    description: "首相の靖国参拝は中韓の反発を招く。これは国内問題か、国際的な配慮が必要か？",
   },
   {
     title: "アイヌ民族と琉球民族: 日本は単一民族国家か？",
@@ -281,9 +280,7 @@ const japaneseTopics = [
 ];
 
 async function main() {
-  console.log(
-    "🌍 Starting to seed controversial topics for new languages...\n"
-  );
+  console.log("🌍 Starting to seed controversial topics for new languages...\n");
 
   const userId = "cmk72akli0000s909y8a2mm9t"; // joao.mduart
 
@@ -309,11 +306,7 @@ async function main() {
 
       // If slug is empty or too short (non-Latin characters), generate hash-based slug
       if (slug.length < 3) {
-        const hash = crypto
-          .createHash("sha256")
-          .update(topic.title)
-          .digest("hex")
-          .substring(0, 8);
+        const hash = crypto.createHash("sha256").update(topic.title).digest("hex").substring(0, 8);
         slug = `topic-${Math.abs(parseInt(hash, 36)).toString(36)}-${Date.now().toString(36)}`;
       }
 

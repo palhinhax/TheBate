@@ -7,11 +7,13 @@ The default Prisma seed has been changed from the manual JavaScript seed (`prism
 ### What Changed
 
 **Before:**
+
 - Manual seed script with hardcoded data
 - Required code changes to modify seed data
 - Ran via: `pnpm prisma db seed` or `pnpm run db:seed`
 
 **After:**
+
 - YAML-based configuration in `prisma/seed-data.yml`
 - Edit YAML file to change seed data (no code changes needed)
 - Idempotent (safe to run multiple times)
@@ -40,6 +42,7 @@ If you need the old seed behavior:
 ⚠️ **Default passwords in `seed-data.yml` are for development only!**
 
 After seeding production:
+
 1. Change all default passwords immediately
 2. Consider using environment variables for production credentials
 3. Review and customize user accounts as needed

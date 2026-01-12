@@ -45,7 +45,7 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!email) {
       toast({
         title: t("common.error"),
@@ -94,9 +94,7 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>{t("auth.login_modal_title")}</DialogTitle>
-          <DialogDescription>
-            {t("auth.login_modal_description")}
-          </DialogDescription>
+          <DialogDescription>{t("auth.login_modal_description")}</DialogDescription>
         </DialogHeader>
 
         {emailSent ? (
@@ -112,17 +110,8 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
           </div>
         ) : (
           <div className="space-y-4 py-4">
-            <Button
-              onClick={handleGoogleSignIn}
-              disabled={isLoading}
-              className="w-full"
-              size="lg"
-            >
-              <svg
-                className="mr-2 h-5 w-5"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+            <Button onClick={handleGoogleSignIn} disabled={isLoading} className="w-full" size="lg">
+              <svg className="mr-2 h-5 w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                   fill="#4285F4"
@@ -148,9 +137,7 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
                 <span className="w-full border-t" />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">
-                  {t("auth.or")}
-                </span>
+                <span className="bg-background px-2 text-muted-foreground">{t("auth.or")}</span>
               </div>
             </div>
 
@@ -167,15 +154,8 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
                   required
                 />
               </div>
-              <Button
-                type="submit"
-                disabled={isLoading}
-                className="w-full"
-                size="lg"
-              >
-                {isLoading
-                  ? t("common.loading")
-                  : t("auth.send_magic_link")}
+              <Button type="submit" disabled={isLoading} className="w-full" size="lg">
+                {isLoading ? t("common.loading") : t("auth.send_magic_link")}
               </Button>
             </form>
           </div>

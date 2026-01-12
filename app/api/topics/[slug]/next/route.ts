@@ -13,10 +13,7 @@ import { getNextTopic } from "@/lib/get-next-topic";
  * @param params.slug - The slug of the current topic
  * @returns JSON response with nextTopic object or null
  */
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { slug: string } }
-) {
+export async function GET(req: NextRequest, { params }: { params: { slug: string } }) {
   try {
     // Get current topic info
     const currentTopic = await prisma.topic.findUnique({
@@ -29,18 +26,11 @@ export async function GET(
     });
 
     if (!currentTopic) {
-      return NextResponse.json(
-        { error: "Topic not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Topic not found" }, { status: 404 });
     }
 
     // Get next topic
-    const nextTopic = await getNextTopic(
-      currentTopic.id,
-      currentTopic.tags,
-      currentTopic.language
-    );
+    const nextTopic = await getNextTopic(currentTopic.id, currentTopic.tags, currentTopic.language);
 
     if (!nextTopic) {
       return NextResponse.json({ nextTopic: null });
@@ -52,9 +42,6 @@ export async function GET(
       "Error fetching next topic:",
       error instanceof Error ? error.message : String(error)
     );
-    return NextResponse.json(
-      { error: "Failed to fetch next topic" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to fetch next topic" }, { status: 500 });
   }
 }

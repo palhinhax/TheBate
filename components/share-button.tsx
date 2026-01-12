@@ -59,11 +59,7 @@ export function ShareButton({
   };
 
   const handleShare = (platform: keyof typeof shareLinks) => {
-    window.open(
-      shareLinks[platform],
-      "_blank",
-      "noopener,noreferrer,width=600,height=600"
-    );
+    window.open(shareLinks[platform], "_blank", "noopener,noreferrer,width=600,height=600");
     setOpen(false);
   };
 
@@ -78,9 +74,7 @@ export function ShareButton({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Partilhar discussão</DialogTitle>
-          <DialogDescription>
-            Escolhe onde queres partilhar esta discussão
-          </DialogDescription>
+          <DialogDescription>Escolhe onde queres partilhar esta discussão</DialogDescription>
         </DialogHeader>
         <div className="grid gap-3">
           {/* Twitter/X */}
@@ -134,11 +128,7 @@ export function ShareButton({
           </Button>
 
           {/* Copy Link */}
-          <Button
-            variant="outline"
-            className="w-full justify-start gap-3"
-            onClick={handleCopyLink}
-          >
+          <Button variant="outline" className="w-full justify-start gap-3" onClick={handleCopyLink}>
             {copied ? (
               <>
                 <Check className="h-5 w-5 text-green-500" />

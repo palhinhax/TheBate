@@ -43,11 +43,7 @@ type CommentItemProps = {
   topicId: string;
 };
 
-export default function CommentItem({
-  comment,
-  isReply = false,
-  topicId,
-}: CommentItemProps) {
+export default function CommentItem({ comment, isReply = false, topicId }: CommentItemProps) {
   const router = useRouter();
   const { data: session } = useSession();
   const { toast } = useToast();
@@ -133,18 +129,13 @@ export default function CommentItem({
           >
             <ThumbsUp className="h-5 w-5" />
           </button>
-          <span className="text-sm font-medium">
-            {comment._count?.votes || 0}
-          </span>
+          <span className="text-sm font-medium">{comment._count?.votes || 0}</span>
         </div>
 
         {/* Comment Content */}
         <div className="flex-1">
           <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-            <Link
-              href={`/u/${comment.user.username}`}
-              className="font-medium hover:underline"
-            >
+            <Link href={`/u/${comment.user.username}`} className="font-medium hover:underline">
               @{comment.user.username}
             </Link>
             {getSideBadge()}
@@ -196,12 +187,7 @@ export default function CommentItem({
           {comment.replies && comment.replies.length > 0 && (
             <div className="mt-4 space-y-4">
               {comment.replies.map((reply) => (
-                <CommentItem
-                  key={reply.id}
-                  comment={reply}
-                  isReply
-                  topicId={topicId}
-                />
+                <CommentItem key={reply.id} comment={reply} isReply topicId={topicId} />
               ))}
             </div>
           )}
