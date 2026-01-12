@@ -96,9 +96,7 @@ export function useTranslations() {
     const translationsCount = Object.keys(translations).length;
 
     if (translationsCount === 0) {
-      console.warn(
-        `⚠️ Translations object is empty! isLoading: ${isLoading}, locale: ${locale}, key: ${key}`
-      );
+      // Still loading, return fallback or key
       return fallback || key;
     }
 
@@ -110,9 +108,10 @@ export function useTranslations() {
         value = (value as Record<string, unknown>)[k];
       } else {
         console.warn(
-          `⚠️ Translation key not found: ${key}, locale: ${locale}, keys checked: ${keys.join(".")}`
+          `⚠️ Translation key not found: ${key}, locale: ${locale}`
         );
-        console.log("📦 Available translations:", Object.keys(translations));
+        console.log("🔍 Current path:", keys.slice(0, keys.indexOf(k) + 1).join("."));
+        console.log("🔍 Value at this point:", value);
         return fallback || key;
       }
     }
