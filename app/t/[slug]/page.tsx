@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import Link from "next/link";
-import { MessageSquare, Clock } from "lucide-react";
+import { MessageSquare, Clock, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CommentsList from "@/features/comments/components/comments-list";
 import NewCommentForm from "@/features/comments/components/new-comment-form";
@@ -353,7 +353,21 @@ export default async function TopicPage({ params, searchParams }: Props) {
                   url={topicUrl}
                   hashtags={topic.tags.slice(0, 3)}
                 />
-                {session?.user && <ReportTopicButton slug={topic.slug} />}
+                {session?.user && (
+                  <>
+                    {(session.user.id === topic.createdBy.id ||
+                      session.user.role === "ADMIN" ||
+                      session.user.isOwner) && (
+                      <Link href={`/t/${topic.slug}/edit`}>
+                        <Button variant="outline" size="sm">
+                          <Edit className="mr-1 h-4 w-4" />
+                          Editar
+                        </Button>
+                      </Link>
+                    )}
+                    <ReportTopicButton slug={topic.slug} />
+                  </>
+                )}
               </div>
             </div>
 

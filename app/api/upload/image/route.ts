@@ -29,10 +29,10 @@ export async function POST(req: NextRequest) {
     const imageUrl = await uploadToB2(buffer, file.name, file.type);
 
     return NextResponse.json({ imageUrl }, { status: 200 });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error uploading image:", error);
     return NextResponse.json(
-      { error: error.message || "Erro ao fazer upload da imagem" },
+      { error: error instanceof Error ? error.message : "Erro ao fazer upload da imagem" },
       { status: 500 }
     );
   }
