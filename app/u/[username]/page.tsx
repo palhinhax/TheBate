@@ -290,7 +290,7 @@ export default function UserProfilePage() {
                           />
                         </div>
                       )}
-                      
+
                       {/* Topic Content */}
                       <div className="flex-1">
                         <CardHeader>

@@ -62,14 +62,15 @@ async function getTopics(
 export default async function Home({
   searchParams,
 }: {
-  searchParams: { lang?: string; q?: string };
+  searchParams: { lang?: string; q?: string; sort?: string };
 }) {
   const session = await auth();
 
   // Intelligently detect user's languages
   const userLanguages = await getUserLanguages(searchParams);
   const searchQuery = searchParams.q;
-  const topics = await getTopics("new", userLanguages, searchQuery);
+  const sortParam = (searchParams.sort === "trending" ? "trending" : "new") as "trending" | "new";
+  const topics = await getTopics(sortParam, userLanguages, searchQuery);
 
   const baseUrl = process.env.NEXTAUTH_URL || "https://thebatee.com";
 
@@ -152,14 +153,18 @@ export default async function Home({
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-2xl font-bold">Tópicos Recentes</h2>
               <div className="flex gap-2">
-                <Button variant="ghost" size="sm">
-                  <TrendingUp className="mr-2 h-4 w-4" />
-                  Popular
-                </Button>
-                <Button variant="ghost" size="sm">
-                  <Clock className="mr-2 h-4 w-4" />
-                  Novos
-                </Button>
+                <Link href={`/?sort=trending${searchQuery ? `&q=${searchQuery}` : ""}`}>
+                  <Button variant={sortParam === "trending" ? "default" : "ghost"} size="sm">
+                    <TrendingUp className="mr-2 h-4 w-4" />
+                    Popular
+                  </Button>
+                </Link>
+                <Link href={`/?sort=new${searchQuery ? `&q=${searchQuery}` : ""}`}>
+                  <Button variant={sortParam === "new" ? "default" : "ghost"} size="sm">
+                    <Clock className="mr-2 h-4 w-4" />
+                    Novos
+                  </Button>
+                </Link>
               </div>
             </div>
             <SearchBar initialQuery={searchQuery} />
@@ -201,7 +206,7 @@ export default async function Home({
                         />
                       </div>
                     )}
-                    
+
                     {/* Topic Content */}
                     <div className="flex flex-1 items-start justify-between p-6">
                       <div className="flex-1">
