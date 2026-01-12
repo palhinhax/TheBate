@@ -45,11 +45,20 @@ export async function uploadToB2(
     Body: file,
     ContentType: contentType,
     ContentLength: file.length,
-    // Make the file publicly readable
-    ACL: "public-read",
+    // Note: B2 doesn't support ACL parameter - files are public by default if bucket is public
   });
 
-  await b2Client.send(command);
+  try {
+    await b2Client.send(command);
+  } catch (error) {
+    console.error("B2 upload error details:", {
+      error,
+      filename: uniqueFilename,
+      bufferLength: file.length,
+      contentType,
+    });
+    throw error;
+  }
 
   // Return the public URL
   // Format: https://f003.backblazeb2.com/file/bucket-name/file-key
