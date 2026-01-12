@@ -385,6 +385,18 @@ export default async function TopicPage({ params, searchParams }: Props) {
 
             <p className="mb-4 whitespace-pre-wrap text-muted-foreground">{topic.description}</p>
 
+            {/* Topic Image */}
+            {topic.imageUrl && (
+              <div className="mb-6 overflow-hidden rounded-lg border">
+                <img
+                  src={topic.imageUrl}
+                  alt={topic.title}
+                  className="h-auto w-full object-cover"
+                  style={{ maxHeight: "500px" }}
+                />
+              </div>
+            )}
+
             {/* Topic metadata - responsive layout */}
             <div className="flex flex-col gap-3 text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
               {topic.createdBy.username && (

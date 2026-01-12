@@ -208,7 +208,9 @@ export default function EditTopicImage({ topicSlug, currentImageUrl }: EditTopic
       {selectedFile && (
         <div className="mt-4 flex gap-2">
           <Button onClick={handleSaveImage} disabled={isUploading} className="flex-1">
-            {isUploading ? t("topics.uploading_image", "A carregar...") : t("common.save", "Guardar")}
+            {isUploading
+              ? t("topics.uploading_image", "A carregar...")
+              : t("common.save", "Guardar")}
           </Button>
           <Button onClick={handleCancelImage} disabled={isUploading} variant="outline">
             {t("common.cancel", "Cancelar")}
