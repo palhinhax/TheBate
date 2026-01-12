@@ -21,6 +21,34 @@ type Props = {
   searchParams: { sort?: string; side?: string; optionId?: string };
 };
 
+async function getRelatedTopics(currentTopicSlug: string, tags: string[], language: string) {
+  // Find topics with similar tags or same language
+  const relatedTopics = await prisma.topic.findMany({
+    where: {
+      slug: { not: currentTopicSlug },
+      status: "ACTIVE",
+      OR: [{ tags: { hasSome: tags } }, { language: language }],
+    },
+    select: {
+      slug: true,
+      title: true,
+      language: true,
+      tags: true,
+      _count: {
+        select: {
+          comments: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: 4,
+  });
+
+  return relatedTopics;
+}
+
 async function getTopicData(slug: string, userId?: string) {
   const topic = await prisma.topic.findUnique({
     where: { slug },
@@ -246,6 +274,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         "max-snippet": 300,
       },
     },
+    verification: {
+      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    },
     other: {
       "article:published_time": topic.createdAt.toISOString(),
       "article:modified_time": topic.updatedAt.toISOString(),
@@ -271,6 +302,9 @@ export default async function TopicPage({ params, searchParams }: Props) {
       notFound();
     }
   }
+
+  // Get related topics for internal linking
+  const relatedTopics = await getRelatedTopics(topic.slug, topic.tags, topic.language);
 
   const sort = searchParams.sort || "top";
   const side = searchParams.side as "AFAVOR" | "CONTRA" | undefined;
@@ -467,7 +501,40 @@ export default async function TopicPage({ params, searchParams }: Props) {
               ))}
             </div>
 
-            <p className="mb-4 whitespace-pre-wrap text-muted-foreground">{topic.description}</p>
+            {/* Main debate description - SEO-optimized content */}
+            <div className="mb-6 space-y-4">
+              <div className="prose prose-slate dark:prose-invert max-w-none">
+                <p className="whitespace-pre-wrap text-base leading-relaxed text-muted-foreground">
+                  {topic.description}
+                </p>
+              </div>
+
+              {/* SEO-rich context section */}
+              {topic.description.length < 300 && (
+                <div className="mt-4 space-y-3 text-sm text-muted-foreground">
+                  <p>
+                    This debate explores the question:{" "}
+                    <strong className="text-foreground">{topic.title}</strong>. Join thousands of
+                    users sharing their perspectives on this important topic.
+                  </p>
+                  <p>
+                    Share your opinion by voting{" "}
+                    {topic.type === "YES_NO"
+                      ? "yes, no, or it depends"
+                      : "for your preferred option"}
+                    , and join the discussion in the comments section below. Your voice matters in
+                    shaping this global conversation.
+                  </p>
+                  {topic._count.comments > 0 && (
+                    <p>
+                      So far, {topic._count.comments} people have shared their thoughts on this
+                      debate. Read their perspectives and add your own insights to enrich the
+                      discussion.
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
 
             {/* Topic Image */}
             {topic.imageUrl && (
@@ -523,7 +590,13 @@ export default async function TopicPage({ params, searchParams }: Props) {
 
           {/* Theme Voting Section */}
           <div className="mb-8 rounded-lg border bg-card p-6">
-            <h2 className="mb-4 text-xl font-semibold">Vote no tema</h2>
+            <h2 className="mb-4 text-xl font-semibold">
+              {topic.type === "YES_NO" ? "What's Your Stance?" : "Choose Your Position"}
+            </h2>
+            <p className="mb-4 text-sm text-muted-foreground">
+              Cast your vote to see how others view this debate. Your participation helps build a
+              comprehensive understanding of public opinion on this important topic.
+            </p>
             <div className="mb-6">
               {topic.type === "YES_NO" ? (
                 <ThemeVoteButtons
@@ -556,6 +629,33 @@ export default async function TopicPage({ params, searchParams }: Props) {
               />
             )}
           </div>
+
+          {/* Why This Debate Matters - SEO Content */}
+          {topic.description.length < 400 && (
+            <div className="mb-8 rounded-lg border bg-muted/30 p-6">
+              <h2 className="mb-4 text-xl font-semibold">Why This Debate Matters</h2>
+              <div className="space-y-3 text-sm leading-relaxed text-muted-foreground">
+                <p>
+                  Debates like <strong className="text-foreground">{topic.title}</strong> are
+                  crucial for understanding diverse perspectives in our global community. By
+                  participating, you contribute to a richer, more nuanced understanding of complex
+                  issues.
+                </p>
+                <p>
+                  This discussion platform brings together voices from around the world, creating a
+                  space where ideas can be exchanged respectfully and constructively. Whether you
+                  agree or disagree, your perspective adds value to the conversation.
+                </p>
+                {topic.tags.length > 0 && (
+                  <p>
+                    Related topics include {topic.tags.slice(0, 3).join(", ")}. Explore these areas
+                    to deepen your understanding and engage with similar debates that matter to you
+                    and your community.
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* New Comment Form */}
           {topic.status !== "LOCKED" && (
@@ -699,6 +799,39 @@ export default async function TopicPage({ params, searchParams }: Props) {
               optionId={optionId}
             />
           </div>
+
+          {/* Related Debates - Internal Linking for SEO */}
+          {relatedTopics.length > 0 && (
+            <div className="mb-8 rounded-lg border bg-card p-6">
+              <h2 className="mb-4 text-xl font-semibold">Related Debates</h2>
+              <p className="mb-4 text-sm text-muted-foreground">
+                Explore other thought-provoking discussions that might interest you:
+              </p>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {relatedTopics.map((relatedTopic) => (
+                  <Link
+                    key={relatedTopic.slug}
+                    href={`/t/${relatedTopic.slug}`}
+                    className="group rounded-lg border p-4 transition-colors hover:border-primary hover:bg-muted/50"
+                  >
+                    <h3 className="mb-2 font-medium leading-tight group-hover:text-primary">
+                      {relatedTopic.title}
+                    </h3>
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <MessageSquare className="h-3 w-3" />
+                      <span>{relatedTopic._count.comments} comments</span>
+                      {relatedTopic.tags.length > 0 && (
+                        <>
+                          <span>•</span>
+                          <span className="truncate">{relatedTopic.tags[0]}</span>
+                        </>
+                      )}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Next Topic Navigation */}
           <NextTopicNavigation currentSlug={topic.slug} />

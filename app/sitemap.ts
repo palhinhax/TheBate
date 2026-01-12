@@ -9,21 +9,38 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let topicUrls: MetadataRoute.Sitemap = [];
 
   try {
-    // Get all active topics
+    // Get ONLY active topics with substantial content
     const topics = await prisma.topic.findMany({
-      where: { status: "ACTIVE" as const },
+      where: {
+        status: "ACTIVE",
+        // Only include topics with meaningful content (description > 100 chars)
+        description: {
+          not: "",
+        },
+      },
       select: {
         slug: true,
         updatedAt: true,
         language: true,
+        description: true,
+        _count: {
+          select: {
+            comments: true,
+          },
+        },
       },
     });
 
-    topicUrls = topics.map((topic) => ({
+    // Filter topics with at least some content or engagement
+    const qualityTopics = topics.filter(
+      (topic) => topic.description.length > 50 || topic._count.comments > 0
+    );
+
+    topicUrls = qualityTopics.map((topic) => ({
       url: `${baseUrl}/t/${topic.slug}`,
       lastModified: topic.updatedAt,
       changeFrequency: "daily" as const,
-      priority: 0.8,
+      priority: topic._count.comments > 5 ? 0.9 : 0.8, // Higher priority for popular debates
       // Language alternatives for better SEO
       alternates: {
         languages: {
@@ -58,24 +75,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "daily",
       priority: 0.9, // High priority - important marketing page
     },
-    {
-      url: `${baseUrl}/new`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}/legal/terms`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.3,
-    },
-    {
-      url: `${baseUrl}/legal/privacy`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.3,
-    },
+    // Removed /new - requires auth, no SEO value
+    // Removed legal pages from sitemap - low SEO priority
     ...topicUrls,
   ];
 }
