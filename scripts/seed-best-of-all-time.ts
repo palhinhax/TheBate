@@ -176,8 +176,7 @@ async function main() {
         },
         {
           label: "Serena Williams",
-          description:
-            "Tennis powerhouse with 23 Grand Slam singles titles.",
+          description: "Tennis powerhouse with 23 Grand Slam singles titles.",
         },
         {
           label: "Cristiano Ronaldo",
