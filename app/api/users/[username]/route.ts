@@ -106,7 +106,22 @@ export async function GET(request: Request, { params }: { params: { username: st
       prisma.comment.count({ where: commentsWhere }),
     ]);
 
-    // Calculate total votes received on comments
+    // Calculate total votes received on ALL user's comments (not just current page)
+    const allCommentVotes = await prisma.commentVote.aggregate({
+      where: {
+        comment: {
+          userId: user.id,
+          status: "ACTIVE",
+        },
+      },
+      _sum: {
+        value: true,
+      },
+    });
+
+    const totalVotesReceived = allCommentVotes._sum.value || 0;
+
+    // Calculate vote counts for current page of comments
     const commentsWithVoteCounts = comments.map((comment) => ({
       id: comment.id,
       content: comment.content,
@@ -115,12 +130,6 @@ export async function GET(request: Request, { params }: { params: { username: st
       topic: comment.topic,
       votes: comment.votes.reduce((sum, vote) => sum + vote.value, 0),
     }));
-
-    // Calculate stats
-    const totalVotesReceived = commentsWithVoteCounts.reduce(
-      (sum, comment) => sum + comment.votes,
-      0
-    );
 
     const userData = {
       id: user.id,
@@ -143,13 +152,13 @@ export async function GET(request: Request, { params }: { params: { username: st
           page: topicsPage,
           perPage: topicsPerPage,
           total: totalTopics,
-          totalPages: Math.ceil(totalTopics / topicsPerPage),
+          totalPages: Math.max(1, Math.ceil(totalTopics / topicsPerPage)),
         },
         comments: {
           page: commentsPage,
           perPage: commentsPerPage,
           total: totalComments,
-          totalPages: Math.ceil(totalComments / commentsPerPage),
+          totalPages: Math.max(1, Math.ceil(totalComments / commentsPerPage)),
         },
       },
     };
