@@ -174,19 +174,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 
   return {
-    title: `${topic.title} - Thebate`,
+    title: `${topic.title} - TheBatee`,
     description: topic.description.substring(0, 160),
     keywords,
     authors: [{ name: topic.createdBy.name || topic.createdBy.username || "Unknown" }],
     creator: topic.createdBy.name || topic.createdBy.username || "Unknown",
-    publisher: "Thebate",
+    publisher: "TheBatee",
     openGraph: {
       title: topic.title,
       description: topic.description.substring(0, 160),
       type: "article",
       publishedTime: topic.createdAt.toISOString(),
       modifiedTime: topic.updatedAt.toISOString(),
-      authors: [topic.createdBy.username || topic.createdBy.name || "TheBate"],
+      authors: [topic.createdBy.username || topic.createdBy.name || "TheBatee"],
       tags: topic.tags,
       url: topicUrl,
       siteName: "TheBatee",
@@ -280,7 +280,7 @@ export default async function TopicPage({ params, searchParams }: Props) {
     },
     publisher: {
       "@type": "Organization",
-      name: "Thebate",
+      name: "TheBatee",
       url: baseUrl,
       logo: {
         "@type": "ImageObject",
@@ -309,7 +309,7 @@ export default async function TopicPage({ params, searchParams }: Props) {
     keywords: topic.tags.join(", "),
     isPartOf: {
       "@type": "WebSite",
-      name: "Thebate",
+      name: "TheBatee",
       url: baseUrl,
     },
     mainEntityOfPage: {
@@ -328,7 +328,7 @@ export default async function TopicPage({ params, searchParams }: Props) {
         <header className="border-b">
           <div className="container mx-auto flex h-16 items-center justify-between px-4">
             <Link href="/" className="text-xl font-bold">
-              Thebate
+              TheBatee
             </Link>
             <div className="flex items-center gap-4">
               {session?.user ? (

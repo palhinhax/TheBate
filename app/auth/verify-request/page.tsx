@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
-  title: "Check Your Email - TheBate",
+  title: "Check Your Email - TheBatee",
   description: "A magic link has been sent to your email",
 };
 
