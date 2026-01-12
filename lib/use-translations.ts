@@ -28,6 +28,7 @@ export function useTranslations() {
       // First priority: user's preferred language from session
       if (session?.user?.preferredLanguage) {
         selectedLang = session.user.preferredLanguage;
+        console.log("🌐 Loading translations for user preference:", selectedLang);
       } else {
         // Second priority: detect browser language
         const browserLang =
@@ -37,12 +38,18 @@ export function useTranslations() {
         selectedLang = supportedLangs.includes(browserLang)
           ? browserLang
           : "pt";
+        console.log("🌐 Loading translations for browser language:", selectedLang);
       }
 
-      setLocale(selectedLang);
+      // Only update if language actually changed
+      if (selectedLang !== locale) {
+        console.log(`🌐 Language changed from ${locale} to ${selectedLang}`);
+        setLocale(selectedLang);
+      }
 
       // Check cache first
       if (translationsCache[selectedLang]) {
+        console.log("✅ Translations loaded from cache:", selectedLang);
         setTranslations(translationsCache[selectedLang]);
         setIsLoading(false);
         return;
@@ -50,20 +57,23 @@ export function useTranslations() {
 
       // Load translations
       try {
+        console.log("🔄 Fetching translations for:", selectedLang);
         const response = await fetch(`/locales/${selectedLang}.json`);
         const data = await response.json();
         translationsCache[selectedLang] = data;
         setTranslations(data);
+        console.log("✅ Translations loaded successfully:", selectedLang);
       } catch (error) {
-        console.error("Failed to load translations:", error);
+        console.error("❌ Failed to load translations:", error);
         // Fallback to Portuguese
         try {
           const fallbackResponse = await fetch("/locales/pt.json");
           const fallbackData = await fallbackResponse.json();
           translationsCache["pt"] = fallbackData;
           setTranslations(fallbackData);
+          console.log("⚠️ Loaded fallback Portuguese translations");
         } catch (fallbackError) {
-          console.error("Failed to load fallback translations:", fallbackError);
+          console.error("❌ Failed to load fallback translations:", fallbackError);
         }
       } finally {
         setIsLoading(false);
@@ -72,11 +82,18 @@ export function useTranslations() {
 
     // Wait for session to load before loading translations
     if (status !== "loading") {
+      console.log("🔍 Session status:", status, "User preference:", session?.user?.preferredLanguage);
       loadTranslations();
     }
-  }, [session?.user?.preferredLanguage, status]);
+  }, [session?.user?.preferredLanguage, status, locale]);
 
   const t = (key: TranslationKey, fallback?: string): string => {
+    // If translations are still loading, return the key or fallback
+    if (isLoading && Object.keys(translations).length === 0) {
+      console.log("⏳ Translations still loading, returning fallback for:", key);
+      return fallback || key;
+    }
+
     const keys = key.split(".");
     let value: unknown = translations;
 
@@ -84,6 +101,7 @@ export function useTranslations() {
       if (value && typeof value === "object" && k in value) {
         value = (value as Record<string, unknown>)[k];
       } else {
+        console.warn(`⚠️ Translation key not found: ${key}, locale: ${locale}`);
         return fallback || key;
       }
     }

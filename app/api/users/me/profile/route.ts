@@ -10,8 +10,8 @@ const profileSchema = z.object({
     .min(3, "Username deve ter pelo menos 3 caracteres")
     .max(30)
     .regex(
-      /^[a-zA-Z0-9_]+$/,
-      "Username só pode conter letras, números e underscore"
+      /^[a-zA-Z0-9_.]+$/,
+      "Username só pode conter letras, números, underscore e ponto"
     )
     .optional(),
   email: z.string().email("Email inválido").optional(),

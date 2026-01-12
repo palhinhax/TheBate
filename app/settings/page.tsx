@@ -88,6 +88,8 @@ export default function SettingsPage() {
     setLoading(true);
 
     try {
+      console.log("📝 Submitting profile update:", profileForm);
+      
       const response = await fetch("/api/users/me/profile", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -95,15 +97,32 @@ export default function SettingsPage() {
       });
 
       if (response.ok) {
+        const updatedData = await response.json();
+        console.log("✅ Profile updated successfully:", updatedData);
+        
         toast({
           title: t("settings.changes_saved"),
         });
+        
+        // Check if language changed
+        const languageChanged = profileForm.preferredLanguage !== session?.user?.preferredLanguage;
+        console.log("🌐 Language changed?", languageChanged, {
+          from: session?.user?.preferredLanguage,
+          to: profileForm.preferredLanguage
+        });
+        
         // Update the session with new data
+        console.log("🔄 Updating session...");
         await update();
-        // Reload to apply language changes
-        window.location.reload();
+        
+        // If language changed, force full page reload to clear translation cache
+        if (languageChanged) {
+          console.log("♻️ Reloading page to apply language change...");
+          window.location.href = window.location.href;
+        }
       } else {
         const data = await response.json();
+        console.error("❌ Profile update failed:", data);
         toast({
           title: t("settings.changes_error"),
           description: data.error,
@@ -111,7 +130,7 @@ export default function SettingsPage() {
         });
       }
     } catch (error) {
-      console.error("Profile update error:", error);
+      console.error("❌ Profile update error:", error);
       toast({
         title: t("settings.changes_error"),
         variant: "destructive",
