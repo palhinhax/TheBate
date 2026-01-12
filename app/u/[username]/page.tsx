@@ -74,6 +74,20 @@ type UserData = {
     totalComments: number;
     totalVotesReceived: number;
   };
+  pagination: {
+    topics: {
+      page: number;
+      perPage: number;
+      total: number;
+      totalPages: number;
+    };
+    comments: {
+      page: number;
+      perPage: number;
+      total: number;
+      totalPages: number;
+    };
+  };
 };
 
 export default function UserProfilePage() {
@@ -88,6 +102,8 @@ export default function UserProfilePage() {
   const [activeTab, setActiveTab] = useState<"topics" | "comments">("topics");
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [topicsPage, setTopicsPage] = useState(1);
+  const [commentsPage, setCommentsPage] = useState(1);
 
   // Verificar se o utilizador está a ver o próprio perfil
   const isOwnProfile = session?.user?.username === username;
@@ -95,7 +111,9 @@ export default function UserProfilePage() {
   useEffect(() => {
     async function fetchUser() {
       try {
-        const response = await fetch(`/api/users/${username}`);
+        const response = await fetch(
+          `/api/users/${username}?topicsPage=${topicsPage}&commentsPage=${commentsPage}`
+        );
         if (response.ok) {
           const data = await response.json();
           setUser(data);
@@ -108,7 +126,7 @@ export default function UserProfilePage() {
     }
 
     fetchUser();
-  }, [username]);
+  }, [username, topicsPage, commentsPage]);
 
   const handleDeleteAccount = async () => {
     if (!isOwnProfile) return;
@@ -279,7 +297,7 @@ export default function UserProfilePage() {
               onClick={() => setActiveTab("topics")}
             >
               <MessageSquare className="mr-2 h-4 w-4" />
-              Temas ({user.topics.length})
+              Temas ({user.stats.totalTopics})
             </Button>
             <Button
               variant={activeTab === "comments" ? "default" : "ghost"}
@@ -287,74 +305,106 @@ export default function UserProfilePage() {
               onClick={() => setActiveTab("comments")}
             >
               <UserIcon className="mr-2 h-4 w-4" />
-              Argumentos ({user.comments.length})
+              Argumentos ({user.stats.totalComments})
             </Button>
           </div>
         </div>
 
         {/* Topics Tab */}
         {activeTab === "topics" && (
-          <div className="space-y-4">
+          <div className="space-y-6">
             {user.topics.length > 0 ? (
-              user.topics.map((topic) => (
-                <Link key={topic.id} href={`/t/${topic.slug}`}>
-                  <Card className="transition-all hover:shadow-lg">
-                    <div className="flex flex-col sm:flex-row">
-                      {/* Topic Image Thumbnail */}
-                      {topic.imageUrl && (
-                        <div className="sm:w-48 sm:flex-shrink-0">
-                          <img
-                            src={topic.imageUrl}
-                            alt={topic.title}
-                            className="h-48 w-full object-cover sm:h-full sm:rounded-l-lg"
-                          />
-                        </div>
-                      )}
-
-                      {/* Topic Content */}
-                      <div className="flex-1">
-                        <CardHeader>
-                          <CardTitle className="text-xl">{topic.title}</CardTitle>
-                          <CardDescription className="flex flex-wrap items-center gap-4">
-                            <span className="flex items-center gap-1">
-                              <Clock className="h-3 w-3" />
-                              {new Date(topic.createdAt).toLocaleDateString("pt-PT", {
-                                day: "numeric",
-                                month: "short",
-                                year: "numeric",
-                              })}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <MessageSquare className="h-3 w-3" />
-                              {topic._count.comments} argumento
-                              {topic._count.comments !== 1 ? "s" : ""}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <ThumbsUp className="h-3 w-3" />
-                              {topic._count.topicVotes} voto
-                              {topic._count.topicVotes !== 1 ? "s" : ""}
-                            </span>
-                          </CardDescription>
-                        </CardHeader>
-                        {topic.tags.length > 0 && (
-                          <CardContent className="pt-0">
-                            <div className="flex flex-wrap gap-2">
-                              {topic.tags.map((tag) => (
-                                <span
-                                  key={tag}
-                                  className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary"
-                                >
-                                  {tag}
-                                </span>
-                              ))}
+              <>
+                <div className="space-y-6">
+                  {user.topics.map((topic) => (
+                    <Link key={topic.id} href={`/t/${topic.slug}`}>
+                      <Card className="transition-all hover:shadow-lg">
+                        <div className="flex flex-col sm:flex-row">
+                          {/* Topic Image Thumbnail */}
+                          {topic.imageUrl && (
+                            <div className="sm:w-48 sm:flex-shrink-0">
+                              <img
+                                src={topic.imageUrl}
+                                alt={topic.title}
+                                className="h-48 w-full object-cover sm:h-full sm:rounded-l-lg"
+                              />
                             </div>
-                          </CardContent>
-                        )}
-                      </div>
-                    </div>
-                  </Card>
-                </Link>
-              ))
+                          )}
+
+                          {/* Topic Content */}
+                          <div className="flex-1">
+                            <CardHeader>
+                              <CardTitle className="text-xl">{topic.title}</CardTitle>
+                              <CardDescription className="flex flex-wrap items-center gap-4">
+                                <span className="flex items-center gap-1">
+                                  <Clock className="h-3 w-3" />
+                                  {new Date(topic.createdAt).toLocaleDateString("pt-PT", {
+                                    day: "numeric",
+                                    month: "short",
+                                    year: "numeric",
+                                  })}
+                                </span>
+                                <span className="flex items-center gap-1">
+                                  <MessageSquare className="h-3 w-3" />
+                                  {topic._count.comments} argumento
+                                  {topic._count.comments !== 1 ? "s" : ""}
+                                </span>
+                                <span className="flex items-center gap-1">
+                                  <ThumbsUp className="h-3 w-3" />
+                                  {topic._count.topicVotes} voto
+                                  {topic._count.topicVotes !== 1 ? "s" : ""}
+                                </span>
+                              </CardDescription>
+                            </CardHeader>
+                            {topic.tags.length > 0 && (
+                              <CardContent className="pt-0">
+                                <div className="flex flex-wrap gap-2">
+                                  {topic.tags.map((tag) => (
+                                    <span
+                                      key={tag}
+                                      className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary"
+                                    >
+                                      {tag}
+                                    </span>
+                                  ))}
+                                </div>
+                              </CardContent>
+                            )}
+                          </div>
+                        </div>
+                      </Card>
+                    </Link>
+                  ))}
+                </div>
+                {user.pagination.topics.totalPages > 1 && (
+                  <div className="flex items-center justify-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setTopicsPage((prev) => Math.max(1, prev - 1))}
+                      disabled={topicsPage === 1}
+                    >
+                      Anterior
+                    </Button>
+                    <span className="text-sm text-muted-foreground">
+                      Página {user.pagination.topics.page} de {user.pagination.topics.totalPages} (
+                      {user.pagination.topics.total} temas)
+                    </span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() =>
+                        setTopicsPage((prev) =>
+                          Math.min(user.pagination.topics.totalPages, prev + 1)
+                        )
+                      }
+                      disabled={topicsPage === user.pagination.topics.totalPages}
+                    >
+                      Próxima
+                    </Button>
+                  </div>
+                )}
+              </>
             ) : (
               <Card>
                 <CardContent className="py-12 text-center">
@@ -368,66 +418,99 @@ export default function UserProfilePage() {
 
         {/* Comments Tab */}
         {activeTab === "comments" && (
-          <div className="space-y-4">
+          <div className="space-y-6">
             {user.comments.length > 0 ? (
-              user.comments.map((comment) => (
-                <Card key={comment.id}>
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <div className="flex-1">
-                        <CardDescription className="mb-2 flex items-center gap-2">
-                          Argumento em{" "}
-                          <Link
-                            href={`/t/${comment.topic.slug}`}
-                            className="font-medium text-primary hover:underline"
-                          >
-                            {comment.topic.title}
+              <>
+                <div className="space-y-6">
+                  {user.comments.map((comment) => (
+                    <Card key={comment.id}>
+                      <CardHeader>
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <CardDescription className="mb-2 flex items-center gap-2">
+                              Argumento em{" "}
+                              <Link
+                                href={`/t/${comment.topic.slug}`}
+                                className="font-medium text-primary hover:underline"
+                              >
+                                {comment.topic.title}
+                              </Link>
+                            </CardDescription>
+                          </div>
+                          {comment.side && (
+                            <span
+                              className={`rounded-full px-3 py-1 text-xs font-medium ${
+                                comment.side === "AFAVOR"
+                                  ? "bg-green-100 text-green-800 dark:bg-green-950 dark:text-green-200"
+                                  : "bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-200"
+                              }`}
+                            >
+                              {comment.side === "AFAVOR" ? "👍 A Favor" : "👎 Contra"}
+                            </span>
+                          )}
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="mb-4 whitespace-pre-wrap text-sm">
+                          {comment.content.length > 300
+                            ? comment.content.substring(0, 300) + "..."
+                            : comment.content}
+                        </p>
+                        <div className="flex items-center justify-between text-xs text-muted-foreground">
+                          <span className="flex items-center gap-1">
+                            <Clock className="h-3 w-3" />
+                            {new Date(comment.createdAt).toLocaleDateString("pt-PT", {
+                              day: "numeric",
+                              month: "short",
+                              year: "numeric",
+                            })}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <ThumbsUp className="h-3 w-3" />
+                            {comment.votes} voto{comment.votes !== 1 ? "s" : ""}
+                          </span>
+                        </div>
+                        <div className="mt-4">
+                          <Link href={`/t/${comment.topic.slug}`}>
+                            <Button variant="outline" size="sm">
+                              Ver discussão completa
+                            </Button>
                           </Link>
-                        </CardDescription>
-                      </div>
-                      {comment.side && (
-                        <span
-                          className={`rounded-full px-3 py-1 text-xs font-medium ${
-                            comment.side === "AFAVOR"
-                              ? "bg-green-100 text-green-800 dark:bg-green-950 dark:text-green-200"
-                              : "bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-200"
-                          }`}
-                        >
-                          {comment.side === "AFAVOR" ? "👍 A Favor" : "👎 Contra"}
-                        </span>
-                      )}
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="mb-4 whitespace-pre-wrap text-sm">
-                      {comment.content.length > 300
-                        ? comment.content.substring(0, 300) + "..."
-                        : comment.content}
-                    </p>
-                    <div className="flex items-center justify-between text-xs text-muted-foreground">
-                      <span className="flex items-center gap-1">
-                        <Clock className="h-3 w-3" />
-                        {new Date(comment.createdAt).toLocaleDateString("pt-PT", {
-                          day: "numeric",
-                          month: "short",
-                          year: "numeric",
-                        })}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <ThumbsUp className="h-3 w-3" />
-                        {comment.votes} voto{comment.votes !== 1 ? "s" : ""}
-                      </span>
-                    </div>
-                    <div className="mt-4">
-                      <Link href={`/t/${comment.topic.slug}`}>
-                        <Button variant="outline" size="sm">
-                          Ver discussão completa
-                        </Button>
-                      </Link>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+                {user.pagination.comments.totalPages > 1 && (
+                  <div className="flex items-center justify-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setCommentsPage((prev) => Math.max(1, prev - 1))}
+                      disabled={commentsPage === 1}
+                    >
+                      Anterior
+                    </Button>
+                    <span className="text-sm text-muted-foreground">
+                      Página {user.pagination.comments.page} de{" "}
+                      {user.pagination.comments.totalPages} ({user.pagination.comments.total}{" "}
+                      argumentos)
+                    </span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() =>
+                        setCommentsPage((prev) =>
+                          Math.min(user.pagination.comments.totalPages, prev + 1)
+                        )
+                      }
+                      disabled={commentsPage === user.pagination.comments.totalPages}
+                    >
+                      Próxima
+                    </Button>
+                  </div>
+                )}
+              </>
             ) : (
               <Card>
                 <CardContent className="py-12 text-center">

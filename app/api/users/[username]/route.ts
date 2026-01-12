@@ -3,6 +3,15 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET(request: Request, { params }: { params: { username: string } }) {
   try {
+    const { searchParams } = new URL(request.url);
+    const topicsPage = parseInt(searchParams.get("topicsPage") || "1");
+    const topicsPerPage = Math.min(parseInt(searchParams.get("topicsPerPage") || "10"), 50);
+    const commentsPage = parseInt(searchParams.get("commentsPage") || "1");
+    const commentsPerPage = Math.min(parseInt(searchParams.get("commentsPerPage") || "10"), 50);
+
+    const topicsSkip = (topicsPage - 1) * topicsPerPage;
+    const commentsSkip = (commentsPage - 1) * commentsPerPage;
+
     const user = await prisma.user.findUnique({
       where: { username: params.username },
       select: {
@@ -28,56 +37,68 @@ export async function GET(request: Request, { params }: { params: { username: st
       return NextResponse.json({ message: "Utilizador não encontrado" }, { status: 404 });
     }
 
-    // Get user's topics with counts
-    const topics = await prisma.topic.findMany({
-      where: {
-        createdById: user.id,
-        status: "ACTIVE",
-      },
-      orderBy: { createdAt: "desc" },
-      take: 50,
-      select: {
-        id: true,
-        slug: true,
-        title: true,
-        tags: true,
-        imageUrl: true,
-        createdAt: true,
-        _count: {
-          select: {
-            comments: true,
-            topicVotes: true,
-          },
-        },
-      },
-    });
+    const topicsWhere = {
+      createdById: user.id,
+      status: "ACTIVE" as const,
+    };
 
-    // Get user's comments with votes
-    const comments = await prisma.comment.findMany({
-      where: {
-        userId: user.id,
-        status: "ACTIVE",
-      },
-      orderBy: { createdAt: "desc" },
-      take: 50,
-      select: {
-        id: true,
-        content: true,
-        side: true,
-        createdAt: true,
-        topic: {
-          select: {
-            slug: true,
-            title: true,
+    const commentsWhere = {
+      userId: user.id,
+      status: "ACTIVE" as const,
+    };
+
+    // Get user's topics with counts and pagination
+    const [topics, totalTopics] = await Promise.all([
+      prisma.topic.findMany({
+        where: topicsWhere,
+        orderBy: { createdAt: "desc" },
+        skip: topicsSkip,
+        take: topicsPerPage,
+        select: {
+          id: true,
+          slug: true,
+          title: true,
+          tags: true,
+          imageUrl: true,
+          createdAt: true,
+          _count: {
+            select: {
+              comments: true,
+              topicVotes: true,
+            },
           },
         },
-        votes: {
-          select: {
-            value: true,
+      }),
+      prisma.topic.count({ where: topicsWhere }),
+    ]);
+
+    // Get user's comments with votes and pagination
+    const [comments, totalComments] = await Promise.all([
+      prisma.comment.findMany({
+        where: commentsWhere,
+        orderBy: { createdAt: "desc" },
+        skip: commentsSkip,
+        take: commentsPerPage,
+        select: {
+          id: true,
+          content: true,
+          side: true,
+          createdAt: true,
+          topic: {
+            select: {
+              slug: true,
+              title: true,
+            },
+          },
+          votes: {
+            select: {
+              value: true,
+            },
           },
         },
-      },
-    });
+      }),
+      prisma.comment.count({ where: commentsWhere }),
+    ]);
 
     // Calculate total votes received on comments
     const commentsWithVoteCounts = comments.map((comment) => ({
@@ -107,9 +128,23 @@ export async function GET(request: Request, { params }: { params: { username: st
       topics,
       comments: commentsWithVoteCounts,
       stats: {
-        totalTopics: topics.length,
-        totalComments: comments.length,
+        totalTopics,
+        totalComments,
         totalVotesReceived,
+      },
+      pagination: {
+        topics: {
+          page: topicsPage,
+          perPage: topicsPerPage,
+          total: totalTopics,
+          totalPages: Math.ceil(totalTopics / topicsPerPage),
+        },
+        comments: {
+          page: commentsPage,
+          perPage: commentsPerPage,
+          total: totalComments,
+          totalPages: Math.ceil(totalComments / commentsPerPage),
+        },
       },
     };
 
