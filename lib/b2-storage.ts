@@ -1,18 +1,21 @@
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 
 // Validate required environment variables
-const endpoint = process.env.B2_ENDPOINT;
+const rawEndpoint = process.env.B2_ENDPOINT;
 const region = process.env.B2_REGION || "eu-central-003";
 const keyId = process.env.B2_KEY_ID;
 const appKey = process.env.B2_APPLICATION_KEY;
 
-if (!endpoint || !keyId || !appKey) {
+if (!rawEndpoint || !keyId || !appKey) {
   throw new Error("Backblaze B2 env vars missing (B2_ENDPOINT, B2_KEY_ID, B2_APPLICATION_KEY)");
 }
 
+// Ensure endpoint has protocol
+const endpoint = rawEndpoint.startsWith("http") ? rawEndpoint : `https://${rawEndpoint}`;
+
 // Backblaze B2 client configuration
 const b2Client = new S3Client({
-  endpoint, // Should include https:// (e.g., https://s3.eu-central-003.backblazeb2.com)
+  endpoint, // e.g., https://s3.eu-central-003.backblazeb2.com
   region,
   forcePathStyle: true, // CRITICAL for Backblaze B2 compatibility
   credentials: {
