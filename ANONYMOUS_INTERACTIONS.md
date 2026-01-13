@@ -111,11 +111,13 @@ Added new translation keys in all 12 supported languages (en, pt, es, fr, de, hi
 ### For Development
 
 1. Set environment variable:
+
    ```bash
    NEXT_PUBLIC_REQUIRE_AUTH_FOR_INTERACTIONS="false"
    ```
 
 2. Restart the development server:
+
    ```bash
    pnpm dev
    ```
@@ -153,6 +155,7 @@ pnpm test -- auth-config.test.ts
 ```
 
 Tests cover:
+
 - Environment variable parsing
 - Default behavior (false when not set)
 - Case insensitive "true" detection
@@ -231,6 +234,7 @@ When ready to fully support anonymous interactions:
 To revert to requiring authentication:
 
 1. Set environment variable:
+
    ```bash
    NEXT_PUBLIC_REQUIRE_AUTH_FOR_INTERACTIONS="true"
    ```

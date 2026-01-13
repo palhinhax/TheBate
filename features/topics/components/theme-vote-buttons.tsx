@@ -125,7 +125,7 @@ export default function ThemeVoteButtons({
       }
 
       router.refresh();
-    } catch (error: unknown) {
+    } catch (error) {
       toast({
         title: t("common.error", "Error"),
         description: error instanceof Error ? error.message : String(error),

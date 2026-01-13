@@ -18,6 +18,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
 
     // For anonymous users when auth is not required, return a friendly message
+    // TODO: Implement full anonymous commenting support with database storage
     // Comments from anonymous users are not stored in database yet (future enhancement)
     if (!session?.user) {
       return NextResponse.json(
