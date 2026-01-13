@@ -10,13 +10,19 @@
     "search": "Cari"
   },
   "hero": {
-    "title": "Platform Diskusi Global",
-    "subtitle": "Bergabunglah dalam diskusi cerdas tentang teknologi, masyarakat, dan budaya. Bagikan ide, belajar, dan terhubung dengan hormat.",
-    "cta": "Mulai"
+    "title": "Buat Debat, Pilih Topik & Bagikan Pendapat Anda",
+    "subtitle": "Bergabunglah dengan komunitas global yang membahas teknologi, politik, masyarakat, dan budaya. Buat debat Anda sendiri, pilih topik kontroversial, dan lihat apa yang dunia pikirkan.",
+    "cta": "Mulai",
+    "cta_primary": "Buat Debat Anda",
+    "cta_secondary": "Pilih Topik",
+    "feature_free": "Gratis selamanya",
+    "feature_anonymous": "Pemilihan anonim",
+    "feature_languages": "12 bahasa",
+    "feature_community": "Komunitas global"
   },
   "topics": {
     "recent": "Topik Terkini",
-    "trending": "Trending",
+    "trending": "Populer",
     "new": "Baru",
     "no_topics": "Tidak ada topik ditemukan",
     "create": "Buat Topik Baru",
@@ -49,7 +55,12 @@
     "update_error": "Kesalahan memperbarui topik",
     "remove_image_error": "Kesalahan menghapus gambar",
     "back_to_topic": "Kembali ke topik",
-    "edit_topic_image": "Edit gambar topik"
+    "edit_topic_image": "Edit gambar topik",
+    "no_topics_yet": "Belum ada topik",
+    "no_topics_search": "Tidak ada topik ditemukan",
+    "no_topics_search_desc": "Kami tidak menemukan hasil untuk \"{query}\". Coba cari dengan kata lain.",
+    "no_topics_yet_desc": "Jadilah yang pertama membuat topik menarik!",
+    "create_topic": "Buat Topik"
   },
   "profile": {
     "delete_account": "Hapus Akun",
@@ -137,7 +148,26 @@
     "ja": "日本語"
   },
   "footer": {
-    "tagline": "Diskusi publik global"
+    "tagline": "Platform global untuk debat dan opini publik",
+    "platform_name": "TheBatee - Platform diskusi publik",
+    "copyright": "© 2026 TheBatee. Hak cipta dilindungi.",
+    "platform_features": "Fitur Platform",
+    "explore_topics": "Jelajahi Topik",
+    "community": "Komunitas",
+    "legal_support": "Hukum & Dukungan",
+    "create_debate_online": "Buat Debat Online",
+    "vote_on_topics": "Pilih Topik",
+    "public_opinion_polls": "Jajak Pendapat Publik",
+    "online_voting_platform": "Platform Pemilihan Online",
+    "technology_ai": "Teknologi & AI",
+    "politics_society": "Politik & Masyarakat",
+    "culture": "Budaya",
+    "controversial_topics": "Topik Kontroversial",
+    "trending_debates": "Debat Trending",
+    "new_debates": "Debat Baru",
+    "giveaway": "Hadiah",
+    "terms_of_service": "Ketentuan Layanan",
+    "privacy_policy": "Kebijakan Privasi"
   },
   "share": {
     "share": "Bagikan",

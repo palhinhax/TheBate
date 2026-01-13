@@ -7,6 +7,7 @@ import { AdContainer } from "@/components/ad-container";
 import { getUserLanguages } from "@/lib/language";
 import { SearchBar } from "@/components/search-bar";
 import { GiveawayBanner } from "@/components/giveaway-banner";
+import { getTranslations } from "@/lib/get-translations";
 
 async function getTopics(
   sort: "trending" | "new" = "new",
@@ -66,6 +67,7 @@ export default async function Home({
   searchParams: { lang?: string; q?: string; sort?: string };
 }) {
   const session = await auth();
+  const { t } = await getTranslations(searchParams);
 
   // Intelligently detect user's languages
   const userLanguages = await getUserLanguages(searchParams);
@@ -177,28 +179,25 @@ export default async function Home({
         {!session?.user && (
           <section className="border-b bg-muted/50 py-12">
             <div className="container mx-auto px-4 text-center">
-              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-                Create Debates, Vote on Topics & Share Your Opinion
-              </h1>
+              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">{t("hero.title")}</h1>
               <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-                Join a global community discussing technology, politics, society, and culture.
-                Create your own debate, vote on controversial topics, and see what the world thinks.
+                {t("hero.subtitle")}
               </p>
               <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <Link href="/auth/register">
-                  <Button size="lg">Create Your Debate</Button>
+                  <Button size="lg">{t("hero.cta_primary")}</Button>
                 </Link>
                 <Link href="/vote-on-topics">
                   <Button size="lg" variant="outline">
-                    Vote on Topics
+                    {t("hero.cta_secondary")}
                   </Button>
                 </Link>
               </div>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground">
-                <span>✓ Free forever</span>
-                <span>✓ Anonymous voting</span>
-                <span>✓ 12 languages</span>
-                <span>✓ Global community</span>
+                <span>✓ {t("hero.feature_free")}</span>
+                <span>✓ {t("hero.feature_anonymous")}</span>
+                <span>✓ {t("hero.feature_languages")}</span>
+                <span>✓ {t("hero.feature_community")}</span>
               </div>
             </div>
           </section>
@@ -213,18 +212,18 @@ export default async function Home({
 
           <div className="mb-6">
             <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-2xl font-bold">Tópicos Recentes</h2>
+              <h2 className="text-2xl font-bold">{t("topics.recent")}</h2>
               <div className="flex gap-2">
                 <Link href={`/?sort=trending${searchQuery ? `&q=${searchQuery}` : ""}`}>
                   <Button variant={sortParam === "trending" ? "default" : "ghost"} size="sm">
                     <TrendingUp className="mr-2 h-4 w-4" />
-                    Popular
+                    {t("topics.trending")}
                   </Button>
                 </Link>
                 <Link href={`/?sort=new${searchQuery ? `&q=${searchQuery}` : ""}`}>
                   <Button variant={sortParam === "new" ? "default" : "ghost"} size="sm">
                     <Clock className="mr-2 h-4 w-4" />
-                    Novos
+                    {t("topics.new")}
                   </Button>
                 </Link>
               </div>
@@ -237,16 +236,19 @@ export default async function Home({
               <div className="rounded-lg border bg-card p-12 text-center">
                 <Search className="mx-auto h-12 w-12 text-muted-foreground" />
                 <h3 className="mt-4 text-lg font-semibold">
-                  {searchQuery ? "Nenhum tópico encontrado" : "Ainda não há tópicos"}
+                  {searchQuery ? t("topics.no_topics_search") : t("topics.no_topics_yet")}
                 </h3>
                 <p className="mt-2 text-sm text-muted-foreground">
                   {searchQuery
-                    ? `Não encontramos resultados para "${searchQuery}". Tente pesquisar com outras palavras.`
-                    : "Seja o primeiro a criar um tópico interessante!"}
+                    ? t(
+                        "topics.no_topics_search_desc",
+                        `We couldn't find results for "${searchQuery}". Try searching with other words.`
+                      ).replace("{query}", searchQuery)
+                    : t("topics.no_topics_yet_desc")}
                 </p>
                 {!searchQuery && session?.user && (
                   <Link href="/new" className="mt-4 inline-block">
-                    <Button>Criar Tópico</Button>
+                    <Button>{t("topics.create_topic")}</Button>
                   </Link>
                 )}
               </div>
@@ -310,7 +312,7 @@ export default async function Home({
         {/* Footer */}
         <footer className="mt-12 border-t py-8">
           <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-            <p>TheBatee - Plataforma de discussões públicas</p>
+            <p>{t("footer.platform_name")}</p>
           </div>
         </footer>
       </div>

@@ -13,13 +13,19 @@
     "cancel": "Cancelar"
   },
   "hero": {
-    "title": "Plataforma Global de Discusión",
-    "subtitle": "Participa en discusiones inteligentes sobre tecnología, sociedad y cultura. Comparte ideas, aprende y conéctate con respeto.",
-    "cta": "Comenzar Ahora"
+    "title": "Crea Debates, Vota Temas y Comparte Tu Opinión",
+    "subtitle": "Únete a una comunidad global que discute tecnología, política, sociedad y cultura. Crea tu propio debate, vota en temas controvertidos y ve lo que piensa el mundo.",
+    "cta": "Comenzar",
+    "cta_primary": "Crea Tu Debate",
+    "cta_secondary": "Vota en Temas",
+    "feature_free": "Gratis para siempre",
+    "feature_anonymous": "Votación anónima",
+    "feature_languages": "12 idiomas",
+    "feature_community": "Comunidad global"
   },
   "topics": {
     "recent": "Temas Recientes",
-    "trending": "Tendencias",
+    "trending": "Popular",
     "new": "Nuevos",
     "no_topics": "No se encontraron temas",
     "create": "Crear Nuevo Tema",
@@ -52,7 +58,12 @@
     "update_error": "Error al actualizar tema",
     "remove_image_error": "Error al eliminar imagen",
     "back_to_topic": "Volver al tema",
-    "edit_topic_image": "Editar imagen del tema"
+    "edit_topic_image": "Editar imagen del tema",
+    "no_topics_yet": "Aún no hay temas",
+    "no_topics_search": "No se encontraron temas",
+    "no_topics_search_desc": "No encontramos resultados para \"{query}\". Intenta buscar con otras palabras.",
+    "no_topics_yet_desc": "¡Sé el primero en crear un tema interesante!",
+    "create_topic": "Crear Tema"
   },
   "profile": {
     "delete_account": "Eliminar Cuenta",
@@ -139,7 +150,26 @@
     "error": "Error al reportar tema"
   },
   "footer": {
-    "tagline": "Discusiones públicas globales"
+    "tagline": "Plataforma global de debates y opinión pública",
+    "platform_name": "TheBatee - Plataforma de discusiones públicas",
+    "copyright": "© 2026 TheBatee. Todos los derechos reservados.",
+    "platform_features": "Características de la Plataforma",
+    "explore_topics": "Explorar Temas",
+    "community": "Comunidad",
+    "legal_support": "Legal y Soporte",
+    "create_debate_online": "Crear Debate en Línea",
+    "vote_on_topics": "Votar en Temas",
+    "public_opinion_polls": "Encuestas de Opinión Pública",
+    "online_voting_platform": "Plataforma de Votación en Línea",
+    "technology_ai": "Tecnología e IA",
+    "politics_society": "Política y Sociedad",
+    "culture": "Cultura",
+    "controversial_topics": "Temas Controvertidos",
+    "trending_debates": "Debates Populares",
+    "new_debates": "Nuevos Debates",
+    "giveaway": "Sorteo",
+    "terms_of_service": "Términos de Servicio",
+    "privacy_policy": "Política de Privacidad"
   },
   "share": {
     "share": "Compartir",

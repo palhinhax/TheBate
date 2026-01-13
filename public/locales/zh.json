@@ -10,9 +10,15 @@
     "search": "搜索"
   },
   "hero": {
-    "title": "全球讨论平台",
-    "subtitle": "参与关于技术、社会和文化的智能讨论。分享想法、学习并尊重地联系。",
-    "cta": "开始使用"
+    "title": "创建辩论，投票话题并分享您的观点",
+    "subtitle": "加入全球社区，讨论技术、政治、社会和文化。创建您自己的辩论，对有争议的话题投票，看看世界怎么想。",
+    "cta": "开始使用",
+    "cta_primary": "创建您的辩论",
+    "cta_secondary": "投票话题",
+    "feature_free": "永久免费",
+    "feature_anonymous": "匿名投票",
+    "feature_languages": "12种语言",
+    "feature_community": "全球社区"
   },
   "topics": {
     "recent": "最近话题",
@@ -49,7 +55,12 @@
     "update_error": "更新话题时出错",
     "remove_image_error": "删除图片时出错",
     "back_to_topic": "返回话题",
-    "edit_topic_image": "编辑话题图片"
+    "edit_topic_image": "编辑话题图片",
+    "no_topics_yet": "还没有话题",
+    "no_topics_search": "未找到话题",
+    "no_topics_search_desc": "我们没有找到\"{query}\"的结果。尝试用其他词搜索。",
+    "no_topics_yet_desc": "成为第一个创建有趣话题的人！",
+    "create_topic": "创建话题"
   },
   "profile": {
     "delete_account": "删除账户",
@@ -132,7 +143,26 @@
     "zh": "中文"
   },
   "footer": {
-    "tagline": "全球公共讨论"
+    "tagline": "辩论和公众意见的全球平台",
+    "platform_name": "TheBatee - 公共讨论平台",
+    "copyright": "© 2026 TheBatee。保留所有权利。",
+    "platform_features": "平台功能",
+    "explore_topics": "探索话题",
+    "community": "社区",
+    "legal_support": "法律和支持",
+    "create_debate_online": "在线创建辩论",
+    "vote_on_topics": "投票话题",
+    "public_opinion_polls": "公众意见调查",
+    "online_voting_platform": "在线投票平台",
+    "technology_ai": "技术和人工智能",
+    "politics_society": "政治和社会",
+    "culture": "文化",
+    "controversial_topics": "有争议的话题",
+    "trending_debates": "热门辩论",
+    "new_debates": "新辩论",
+    "giveaway": "赠品",
+    "terms_of_service": "服务条款",
+    "privacy_policy": "隐私政策"
   },
   "share": {
     "share": "分享",
