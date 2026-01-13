@@ -10,13 +10,19 @@
     "search": "بحث"
   },
   "hero": {
-    "title": "منصة نقاش عالمية",
-    "subtitle": "انضم إلى مناقشات ذكية حول التكنولوجيا والمجتمع والثقافة. شارك الأفكار وتعلم وتواصل باحترام.",
-    "cta": "ابدأ الآن"
+    "title": "أنشئ النقاشات، صوّت على المواضيع وشارك رأيك",
+    "subtitle": "انضم إلى مجتمع عالمي يناقش التكنولوجيا والسياسة والمجتمع والثقافة. أنشئ نقاشك الخاص، صوّت على المواضيع المثيرة للجدل واعرف ما يفكر فيه العالم.",
+    "cta": "ابدأ الآن",
+    "cta_primary": "أنشئ نقاشك",
+    "cta_secondary": "صوّت على المواضيع",
+    "feature_free": "مجاني للأبد",
+    "feature_anonymous": "تصويت مجهول",
+    "feature_languages": "12 لغة",
+    "feature_community": "مجتمع عالمي"
   },
   "topics": {
     "recent": "المواضيع الأخيرة",
-    "trending": "الرائج",
+    "trending": "رائج",
     "new": "جديد",
     "no_topics": "لم يتم العثور على مواضيع",
     "create": "إنشاء موضوع جديد",
@@ -49,7 +55,12 @@
     "update_error": "خطأ في تحديث الموضوع",
     "remove_image_error": "خطأ في إزالة الصورة",
     "back_to_topic": "العودة إلى الموضوع",
-    "edit_topic_image": "تعديل صورة الموضوع"
+    "edit_topic_image": "تعديل صورة الموضوع",
+    "no_topics_yet": "لا توجد مواضيع بعد",
+    "no_topics_search": "لم يتم العثور على مواضيع",
+    "no_topics_search_desc": "لم نعثر على نتائج لـ \"{query}\". حاول البحث بكلمات أخرى.",
+    "no_topics_yet_desc": "كن أول من ينشئ موضوعاً مثيراً للاهتمام!",
+    "create_topic": "إنشاء موضوع"
   },
   "profile": {
     "delete_account": "حذف الحساب",
@@ -137,7 +148,26 @@
     "ja": "日本語"
   },
   "footer": {
-    "tagline": "مناقشات عامة عالمية"
+    "tagline": "منصة عالمية للنقاشات والرأي العام",
+    "platform_name": "TheBatee - منصة المناقشات العامة",
+    "copyright": "© 2026 TheBatee. جميع الحقوق محفوظة.",
+    "platform_features": "ميزات المنصة",
+    "explore_topics": "استكشف المواضيع",
+    "community": "المجتمع",
+    "legal_support": "القانونية والدعم",
+    "create_debate_online": "أنشئ نقاش على الإنترنت",
+    "vote_on_topics": "صوّت على المواضيع",
+    "public_opinion_polls": "استطلاعات الرأي العام",
+    "online_voting_platform": "منصة التصويت عبر الإنترنت",
+    "technology_ai": "التكنولوجيا والذكاء الاصطناعي",
+    "politics_society": "السياسة والمجتمع",
+    "culture": "الثقافة",
+    "controversial_topics": "مواضيع مثيرة للجدل",
+    "trending_debates": "النقاشات الرائجة",
+    "new_debates": "نقاشات جديدة",
+    "giveaway": "هدية",
+    "terms_of_service": "شروط الخدمة",
+    "privacy_policy": "سياسة الخصوصية"
   },
   "share": {
     "share": "مشاركة",

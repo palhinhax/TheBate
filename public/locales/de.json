@@ -13,13 +13,19 @@
     "cancel": "Abbrechen"
   },
   "hero": {
-    "title": "Globale Diskussionsplattform",
-    "subtitle": "Nehmen Sie an intelligenten Diskussionen über Technologie, Gesellschaft und Kultur teil. Teilen Sie Ideen, lernen Sie und vernetzen Sie sich mit Respekt.",
-    "cta": "Jetzt Starten"
+    "title": "Erstelle Debatten, Stimme über Themen ab und Teile Deine Meinung",
+    "subtitle": "Tritt einer globalen Gemeinschaft bei, die über Technologie, Politik, Gesellschaft und Kultur diskutiert. Erstelle deine eigene Debatte, stimme über kontroverse Themen ab und sieh, was die Welt denkt.",
+    "cta": "Loslegen",
+    "cta_primary": "Erstelle Deine Debatte",
+    "cta_secondary": "Über Themen Abstimmen",
+    "feature_free": "Für immer kostenlos",
+    "feature_anonymous": "Anonyme Abstimmung",
+    "feature_languages": "12 Sprachen",
+    "feature_community": "Globale Gemeinschaft"
   },
   "topics": {
     "recent": "Aktuelle Themen",
-    "trending": "Trends",
+    "trending": "Beliebt",
     "new": "Neu",
     "no_topics": "Keine Themen gefunden",
     "create": "Neues Thema Erstellen",
@@ -52,7 +58,12 @@
     "update_error": "Fehler beim Aktualisieren des Themas",
     "remove_image_error": "Fehler beim Entfernen des Bildes",
     "back_to_topic": "Zurück zum Thema",
-    "edit_topic_image": "Themenbild bearbeiten"
+    "edit_topic_image": "Themenbild bearbeiten",
+    "no_topics_yet": "Noch keine Themen",
+    "no_topics_search": "Keine Themen gefunden",
+    "no_topics_search_desc": "Wir konnten keine Ergebnisse für \"{query}\" finden. Versuche es mit anderen Wörtern.",
+    "no_topics_yet_desc": "Sei der Erste, der ein interessantes Thema erstellt!",
+    "create_topic": "Thema Erstellen"
   },
   "profile": {
     "delete_account": "Konto löschen",
@@ -139,7 +150,26 @@
     "error": "Fehler beim Melden des Themas"
   },
   "footer": {
-    "tagline": "Globale öffentliche Diskussionen"
+    "tagline": "Globale Plattform für Debatten und öffentliche Meinung",
+    "platform_name": "TheBatee - Plattform für öffentliche Diskussionen",
+    "copyright": "© 2026 TheBatee. Alle Rechte vorbehalten.",
+    "platform_features": "Plattform-Funktionen",
+    "explore_topics": "Themen Erkunden",
+    "community": "Gemeinschaft",
+    "legal_support": "Rechtliches und Support",
+    "create_debate_online": "Online-Debatte Erstellen",
+    "vote_on_topics": "Über Themen Abstimmen",
+    "public_opinion_polls": "Öffentliche Meinungsumfragen",
+    "online_voting_platform": "Online-Abstimmungsplattform",
+    "technology_ai": "Technologie und KI",
+    "politics_society": "Politik und Gesellschaft",
+    "culture": "Kultur",
+    "controversial_topics": "Kontroverse Themen",
+    "trending_debates": "Beliebte Debatten",
+    "new_debates": "Neue Debatten",
+    "giveaway": "Verlosung",
+    "terms_of_service": "Nutzungsbedingungen",
+    "privacy_policy": "Datenschutzrichtlinie"
   },
   "share": {
     "share": "Teilen",

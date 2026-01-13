@@ -10,13 +10,19 @@
     "search": "検索"
   },
   "hero": {
-    "title": "グローバル討論プラットフォーム",
-    "subtitle": "テクノロジー、社会、文化についての知的な議論に参加しましょう。アイデアを共有し、学び、敬意を持ってつながりましょう。",
-    "cta": "始める"
+    "title": "討論を作成し、トピックに投票し、意見を共有する",
+    "subtitle": "テクノロジー、政治、社会、文化について議論するグローバルコミュニティに参加しましょう。自分の討論を作成し、議論のあるトピックに投票し、世界が何を考えているかを見てください。",
+    "cta": "始める",
+    "cta_primary": "討論を作成",
+    "cta_secondary": "トピックに投票",
+    "feature_free": "永久無料",
+    "feature_anonymous": "匿名投票",
+    "feature_languages": "12言語",
+    "feature_community": "グローバルコミュニティ"
   },
   "topics": {
     "recent": "最近のトピック",
-    "trending": "トレンド",
+    "trending": "人気",
     "new": "新着",
     "no_topics": "トピックが見つかりません",
     "create": "新しいトピックを作成",
@@ -49,7 +55,12 @@
     "update_error": "トピックの更新エラー",
     "remove_image_error": "画像の削除エラー",
     "back_to_topic": "トピックに戻る",
-    "edit_topic_image": "トピック画像を編集"
+    "edit_topic_image": "トピック画像を編集",
+    "no_topics_yet": "まだトピックはありません",
+    "no_topics_search": "トピックが見つかりません",
+    "no_topics_search_desc": "\"{query}\"の結果が見つかりませんでした。他の言葉で検索してみてください。",
+    "no_topics_yet_desc": "興味深いトピックを作成する最初の人になりましょう！",
+    "create_topic": "トピックを作成"
   },
   "profile": {
     "delete_account": "アカウント削除",
@@ -137,7 +148,26 @@
     "ja": "日本語"
   },
   "footer": {
-    "tagline": "グローバル公開討論"
+    "tagline": "討論と世論のグローバルプラットフォーム",
+    "platform_name": "TheBatee - 公開討論プラットフォーム",
+    "copyright": "© 2026 TheBatee。全著作権所有。",
+    "platform_features": "プラットフォーム機能",
+    "explore_topics": "トピックを探る",
+    "community": "コミュニティ",
+    "legal_support": "法的情報とサポート",
+    "create_debate_online": "オンライン討論を作成",
+    "vote_on_topics": "トピックに投票",
+    "public_opinion_polls": "世論調査",
+    "online_voting_platform": "オンライン投票プラットフォーム",
+    "technology_ai": "テクノロジーとAI",
+    "politics_society": "政治と社会",
+    "culture": "文化",
+    "controversial_topics": "議論のあるトピック",
+    "trending_debates": "トレンドの討論",
+    "new_debates": "新しい討論",
+    "giveaway": "プレゼント",
+    "terms_of_service": "利用規約",
+    "privacy_policy": "プライバシーポリシー"
   },
   "share": {
     "share": "共有",

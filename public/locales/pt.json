@@ -17,16 +17,27 @@
     "cancel": "Cancelar"
   },
   "hero": {
-    "title": "Plataforma Global de Discussão",
-    "subtitle": "Participe em discussões inteligentes sobre tecnologia, sociedade e cultura. Partilhe ideias, aprenda e conecte-se com respeito.",
-    "cta": "Começar Agora"
+    "title": "Cria Debates, Vota em Tópicos e Partilha a Tua Opinião",
+    "subtitle": "Junta-te a uma comunidade global a discutir tecnologia, política, sociedade e cultura. Cria o teu próprio debate, vota em tópicos controversos e vê o que o mundo pensa.",
+    "cta": "Começar Agora",
+    "cta_primary": "Cria o Teu Debate",
+    "cta_secondary": "Vota em Tópicos",
+    "feature_free": "Grátis para sempre",
+    "feature_anonymous": "Votação anónima",
+    "feature_languages": "12 idiomas",
+    "feature_community": "Comunidade global"
   },
   "topics": {
     "recent": "Tópicos Recentes",
-    "trending": "Em Alta",
+    "trending": "Popular",
     "new": "Novos",
     "no_topics": "Nenhum tópico encontrado",
+    "no_topics_yet": "Ainda não há tópicos",
+    "no_topics_search": "Nenhum tópico encontrado",
+    "no_topics_search_desc": "Não encontrámos resultados para \"{query}\". Tenta pesquisar com outras palavras.",
+    "no_topics_yet_desc": "Sê o primeiro a criar um tópico interessante!",
     "create": "Criar Novo Tema",
+    "create_topic": "Criar Tópico",
     "create_new_topic": "Criar Novo Tema",
     "create_topic_description": "Inicie uma nova discussão sobre um tema que considera relevante.",
     "title": "Título",
@@ -160,7 +171,26 @@
     "zh": "中文"
   },
   "footer": {
-    "tagline": "Discussões públicas globais"
+    "tagline": "Plataforma global de debates e opinião pública",
+    "platform_name": "TheBatee - Plataforma de discussões públicas",
+    "copyright": "© 2026 TheBatee. Todos os direitos reservados.",
+    "platform_features": "Funcionalidades da Plataforma",
+    "explore_topics": "Explorar Tópicos",
+    "community": "Comunidade",
+    "legal_support": "Legal e Suporte",
+    "create_debate_online": "Criar Debate Online",
+    "vote_on_topics": "Votar em Tópicos",
+    "public_opinion_polls": "Sondagens de Opinião Pública",
+    "online_voting_platform": "Plataforma de Votação Online",
+    "technology_ai": "Tecnologia e IA",
+    "politics_society": "Política e Sociedade",
+    "culture": "Cultura",
+    "controversial_topics": "Tópicos Controversos",
+    "trending_debates": "Debates em Destaque",
+    "new_debates": "Novos Debates",
+    "giveaway": "Sorteio",
+    "terms_of_service": "Termos de Serviço",
+    "privacy_policy": "Política de Privacidade"
   },
   "share": {
     "share": "Partilhar",

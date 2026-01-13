@@ -13,16 +13,27 @@
     "cancel": "Cancel"
   },
   "hero": {
-    "title": "Global Discussion Platform",
-    "subtitle": "Join intelligent discussions about technology, society, and culture. Share ideas, learn, and connect with respect.",
-    "cta": "Get Started"
+    "title": "Create Debates, Vote on Topics & Share Your Opinion",
+    "subtitle": "Join a global community discussing technology, politics, society, and culture. Create your own debate, vote on controversial topics, and see what the world thinks.",
+    "cta": "Get Started",
+    "cta_primary": "Create Your Debate",
+    "cta_secondary": "Vote on Topics",
+    "feature_free": "Free forever",
+    "feature_anonymous": "Anonymous voting",
+    "feature_languages": "12 languages",
+    "feature_community": "Global community"
   },
   "topics": {
     "recent": "Recent Topics",
-    "trending": "Trending",
+    "trending": "Popular",
     "new": "New",
     "no_topics": "No topics found",
+    "no_topics_yet": "No topics yet",
+    "no_topics_search": "No topics found",
+    "no_topics_search_desc": "We couldn't find results for \"{query}\". Try searching with other words.",
+    "no_topics_yet_desc": "Be the first to create an interesting topic!",
     "create": "Create New Topic",
+    "create_topic": "Create Topic",
     "title": "Title",
     "description": "Description",
     "tags": "Tags",
@@ -141,7 +152,26 @@
     "zh": "中文"
   },
   "footer": {
-    "tagline": "Global public discussions"
+    "tagline": "Global platform for debates and public opinion",
+    "platform_name": "TheBatee - Public discussions platform",
+    "copyright": "© 2026 TheBatee. All rights reserved.",
+    "platform_features": "Platform Features",
+    "explore_topics": "Explore Topics",
+    "community": "Community",
+    "legal_support": "Legal & Support",
+    "create_debate_online": "Create Debate Online",
+    "vote_on_topics": "Vote on Topics",
+    "public_opinion_polls": "Public Opinion Polls",
+    "online_voting_platform": "Online Voting Platform",
+    "technology_ai": "Technology & AI",
+    "politics_society": "Politics & Society",
+    "culture": "Culture",
+    "controversial_topics": "Controversial Topics",
+    "trending_debates": "Trending Debates",
+    "new_debates": "New Debates",
+    "giveaway": "Giveaway",
+    "terms_of_service": "Terms of Service",
+    "privacy_policy": "Privacy Policy"
   },
   "share": {
     "share": "Share",
