@@ -240,10 +240,7 @@ export default async function Home({
                 </h3>
                 <p className="mt-2 text-sm text-muted-foreground">
                   {searchQuery
-                    ? t(
-                        "topics.no_topics_search_desc",
-                        `We couldn't find results for "${searchQuery}". Try searching with other words.`
-                      ).replace("{query}", searchQuery)
+                    ? t("topics.no_topics_search_desc").replace("{query}", searchQuery)
                     : t("topics.no_topics_yet_desc")}
                 </p>
                 {!searchQuery && session?.user && (
