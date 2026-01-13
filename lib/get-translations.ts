@@ -11,6 +11,16 @@ const translationsCache: Record<string, Translations> = {};
 /**
  * Server-side translation utility
  * Loads translations from JSON files for server components
+ *
+ * @param searchParams - Optional URL search parameters object
+ * @param searchParams.lang - Optional language code (e.g., 'en', 'pt', 'es') to override automatic detection
+ * @returns Object containing translation function (t) and detected locale
+ *
+ * @example
+ * ```typescript
+ * const { t, locale } = await getTranslations(searchParams);
+ * const title = t("hero.title");
+ * ```
  */
 export async function getTranslations(searchParams?: {
   lang?: string;
