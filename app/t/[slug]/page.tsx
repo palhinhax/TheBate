@@ -601,12 +601,14 @@ export default async function TopicPage({ params, searchParams }: Props) {
               {topic.type === "YES_NO" ? (
                 <ThemeVoteButtons
                   topicSlug={topic.slug}
+                  topicId={topic.id}
                   userVote={"userVote" in topic ? topic.userVote : null}
                   disabled={false}
                 />
               ) : (
                 <MultiChoiceVoteButtons
                   topicSlug={topic.slug}
+                  topicId={topic.id}
                   options={topic.options}
                   userVotes={"userVotes" in topic ? topic.userVotes : []}
                   allowMultipleVotes={topic.allowMultipleVotes}

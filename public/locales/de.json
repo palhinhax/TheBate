@@ -35,6 +35,8 @@
     "vote_depends": "Kommt darauf an",
     "vote_remove_error": "Fehler beim Entfernen der Stimme",
     "vote_error": "Fehler beim Abstimmen",
+    "vote_registered": "Stimme registriert",
+    "vote_registered_desc": "Ihre Stimme wurde erfolgreich registriert!",
     "edit_image": "Themenbild Bearbeiten",
     "image_updated": "Bild aktualisiert!",
     "image_updated_desc": "Das Themenbild wurde erfolgreich aktualisiert.",

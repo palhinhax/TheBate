@@ -35,6 +35,8 @@
     "vote_depends": "Depende",
     "vote_remove_error": "Error al eliminar voto",
     "vote_error": "Error al votar",
+    "vote_registered": "Voto registrado",
+    "vote_registered_desc": "¡Tu voto ha sido registrado con éxito!",
     "edit_image": "Editar Imagen del Tema",
     "image_updated": "¡Imagen actualizada!",
     "image_updated_desc": "La imagen del tema se ha actualizado correctamente.",

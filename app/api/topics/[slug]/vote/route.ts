@@ -4,15 +4,22 @@ import { auth } from "@/lib/auth";
 import { z } from "zod";
 import { yesNoVoteSchema, multiChoiceVoteSchema } from "@/features/topics/schemas/topic.schema";
 import { awardKarma, checkAchievements, KARMA_POINTS } from "@/lib/karma";
+import { requireAuthForInteractions } from "@/lib/auth-config";
 
 export async function POST(req: NextRequest, { params }: { params: { slug: string } }) {
   try {
     const session = await auth();
-    if (!session?.user) {
+    const authRequired = requireAuthForInteractions();
+
+    // Check auth only if required
+    if (authRequired && !session?.user) {
       return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
     }
 
     const body = await req.json();
+
+    // Get user ID (anonymous voting tracked client-side only in this phase)
+    const userId = session?.user?.id;
 
     // Check if topic exists and get its type
     const topic = await prisma.topic.findUnique({
@@ -38,10 +45,41 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
     if (topic.type === "YES_NO") {
       const { vote } = yesNoVoteSchema.parse(body);
 
+      // For anonymous users, just return success (vote tracked client-side only)
+      if (!userId) {
+        // Get current vote statistics for response
+        const voteStats = await prisma.topicVote.groupBy({
+          by: ["vote"],
+          where: { topicId: topic.id, optionId: null },
+          _count: true,
+        });
+
+        const voteCounts = {
+          SIM: 0,
+          NAO: 0,
+          DEPENDE: 0,
+          total: 0,
+        };
+
+        voteStats.forEach((stat) => {
+          if (stat.vote) {
+            voteCounts[stat.vote] = stat._count;
+            voteCounts.total += stat._count;
+          }
+        });
+
+        return NextResponse.json({
+          success: true,
+          userVote: vote,
+          voteStats: voteCounts,
+          anonymous: true,
+        });
+      }
+
       // Check if user already has a vote
       const existingVote = await prisma.topicVote.findFirst({
         where: {
-          userId: session.user.id,
+          userId,
           topicId: topic.id,
           optionId: null,
         },
@@ -59,13 +97,13 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
           data: {
             vote,
             topicId: topic.id,
-            userId: session.user.id,
+            userId,
           },
         });
 
         // Award karma for first-time vote on this topic
-        await awardKarma(session.user.id, KARMA_POINTS.VOTE_ON_TOPIC);
-        await checkAchievements(session.user.id);
+        await awardKarma(userId, KARMA_POINTS.VOTE_ON_TOPIC);
+        await checkAchievements(userId);
       }
 
       // Get updated vote statistics
@@ -127,10 +165,43 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
         );
       }
 
+      // For anonymous users, just return success (vote tracked client-side only)
+      if (!userId) {
+        // Get current vote statistics for response
+        const voteStats = await prisma.topicVote.groupBy({
+          by: ["optionId"],
+          where: {
+            topicId: topic.id,
+            optionId: { not: null },
+          },
+          _count: true,
+        });
+
+        const optionVoteCounts = voteStats.reduce(
+          (acc, stat) => {
+            if (stat.optionId) {
+              acc[stat.optionId] = stat._count;
+            }
+            return acc;
+          },
+          {} as Record<string, number>
+        );
+
+        const totalVotes = voteStats.reduce((sum, stat) => sum + stat._count, 0);
+
+        return NextResponse.json({
+          success: true,
+          userVotes: optionIds,
+          optionVoteCounts,
+          totalVotes,
+          anonymous: true,
+        });
+      }
+
       // Delete existing votes for this user on this topic
       const existingVotes = await prisma.topicVote.findMany({
         where: {
-          userId: session.user.id,
+          userId,
           topicId: topic.id,
         },
       });
@@ -138,7 +209,7 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
 
       await prisma.topicVote.deleteMany({
         where: {
-          userId: session.user.id,
+          userId,
           topicId: topic.id,
         },
       });
@@ -146,7 +217,7 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
       // Create new votes
       await prisma.topicVote.createMany({
         data: optionIds.map((optionId) => ({
-          userId: session.user.id,
+          userId,
           topicId: topic.id,
           optionId,
         })),
@@ -154,8 +225,8 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
 
       // Award karma only for first-time votes
       if (!hadPreviousVotes) {
-        await awardKarma(session.user.id, KARMA_POINTS.VOTE_ON_TOPIC);
-        await checkAchievements(session.user.id);
+        await awardKarma(userId, KARMA_POINTS.VOTE_ON_TOPIC);
+        await checkAchievements(userId);
       }
 
       // Get updated vote statistics per option
@@ -201,9 +272,14 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
 export async function DELETE(req: NextRequest, { params }: { params: { slug: string } }) {
   try {
     const session = await auth();
-    if (!session?.user) {
+    const authRequired = requireAuthForInteractions();
+
+    // Check auth only if required
+    if (authRequired && !session?.user) {
       return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
     }
+
+    const userId = session?.user?.id;
 
     // Find topic and get its type
     const topic = await prisma.topic.findUnique({
@@ -215,10 +291,73 @@ export async function DELETE(req: NextRequest, { params }: { params: { slug: str
       return NextResponse.json({ error: "Tema não encontrado" }, { status: 404 });
     }
 
+    // For anonymous users, just return success (vote tracked client-side only)
+    if (!userId) {
+      // Return updated statistics based on topic type
+      if (topic.type === "YES_NO") {
+        const voteStats = await prisma.topicVote.groupBy({
+          by: ["vote"],
+          where: { topicId: topic.id, optionId: null },
+          _count: true,
+        });
+
+        const voteCounts = {
+          SIM: 0,
+          NAO: 0,
+          DEPENDE: 0,
+          total: 0,
+        };
+
+        voteStats.forEach((stat) => {
+          if (stat.vote) {
+            voteCounts[stat.vote] = stat._count;
+            voteCounts.total += stat._count;
+          }
+        });
+
+        return NextResponse.json({
+          success: true,
+          userVote: null,
+          voteStats: voteCounts,
+          anonymous: true,
+        });
+      } else {
+        // MULTI_CHOICE
+        const voteStats = await prisma.topicVote.groupBy({
+          by: ["optionId"],
+          where: {
+            topicId: topic.id,
+            optionId: { not: null },
+          },
+          _count: true,
+        });
+
+        const optionVoteCounts = voteStats.reduce(
+          (acc, stat) => {
+            if (stat.optionId) {
+              acc[stat.optionId] = stat._count;
+            }
+            return acc;
+          },
+          {} as Record<string, number>
+        );
+
+        const totalVotes = voteStats.reduce((sum, stat) => sum + stat._count, 0);
+
+        return NextResponse.json({
+          success: true,
+          userVotes: [],
+          optionVoteCounts,
+          totalVotes,
+          anonymous: true,
+        });
+      }
+    }
+
     // Delete all votes for this user on this topic
     await prisma.topicVote.deleteMany({
       where: {
-        userId: session.user.id,
+        userId,
         topicId: topic.id,
       },
     });

@@ -32,6 +32,8 @@
     "vote_depends": "場合による",
     "vote_remove_error": "投票の削除エラー",
     "vote_error": "投票エラー",
+    "vote_registered": "投票が記録されました",
+    "vote_registered_desc": "投票が正常に記録されました！",
     "edit_image": "トピック画像を編集",
     "image_updated": "画像が更新されました！",
     "image_updated_desc": "トピック画像が正常に更新されました。",

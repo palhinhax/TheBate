@@ -3,15 +3,32 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { commentSchema, replySchema } from "@/features/comments/schemas";
 import { awardKarma, checkAchievements, KARMA_POINTS } from "@/lib/karma";
+import { requireAuthForInteractions } from "@/lib/auth-config";
 
 export async function POST(req: NextRequest) {
   try {
     const session = await auth();
-    if (!session?.user) {
+    const authRequired = requireAuthForInteractions();
+
+    // Check auth only if required
+    if (authRequired && !session?.user) {
       return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
     }
 
     const body = await req.json();
+
+    // For anonymous users when auth is not required, return a friendly message
+    // TODO: Implement full anonymous commenting support with database storage
+    // Comments from anonymous users are not stored in database yet (future enhancement)
+    if (!session?.user) {
+      return NextResponse.json(
+        {
+          error: "Comentários anónimos estarão disponíveis em breve",
+          info: "Por favor, regista-te para comentar neste momento",
+        },
+        { status: 403 }
+      );
+    }
 
     // Check if this is a reply or a top-level comment
     const isReply = !!body.parentId;

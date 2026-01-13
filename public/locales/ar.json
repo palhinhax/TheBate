@@ -32,6 +32,8 @@
     "vote_depends": "يعتمد",
     "vote_remove_error": "خطأ في إزالة التصويت",
     "vote_error": "خطأ في التصويت",
+    "vote_registered": "تم تسجيل التصويت",
+    "vote_registered_desc": "تم تسجيل تصويتك بنجاح!",
     "edit_image": "تعديل صورة الموضوع",
     "image_updated": "تم تحديث الصورة!",
     "image_updated_desc": "تم تحديث صورة الموضوع بنجاح.",

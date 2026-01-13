@@ -32,6 +32,8 @@
     "vote_depends": "看情况",
     "vote_remove_error": "删除投票时出错",
     "vote_error": "投票时出错",
+    "vote_registered": "投票已记录",
+    "vote_registered_desc": "您的投票已成功记录！",
     "edit_image": "编辑话题图片",
     "image_updated": "图片已更新！",
     "image_updated_desc": "话题图片已成功更新。",
