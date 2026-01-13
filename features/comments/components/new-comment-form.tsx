@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { AuthModal } from "@/components/auth-modal";
+import { requireAuthForInteractions, generateAnonymousId } from "@/lib/auth-config";
 
 type TopicOption = {
   id: string;
@@ -44,6 +45,7 @@ export default function NewCommentForm({
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const requireAuth = requireAuthForInteractions();
 
   const isReply = !!parentId;
 
@@ -67,8 +69,8 @@ export default function NewCommentForm({
   const selectedOptionId = watch("optionId" as never) as unknown;
 
   const onSubmit = async (data: CommentFormData | ReplyFormData) => {
-    // Check authentication before submitting
-    if (!session?.user) {
+    // Check authentication before submitting only if required
+    if (requireAuth && !session?.user) {
       setShowAuthModal(true);
       return;
     }
@@ -78,7 +80,10 @@ export default function NewCommentForm({
       const response = await fetch("/api/comments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          anonymousId: !session?.user ? generateAnonymousId() : undefined,
+        }),
       });
 
       if (!response.ok) {
@@ -212,7 +217,7 @@ export default function NewCommentForm({
           )}
         </div>
       </form>
-      <AuthModal open={showAuthModal} onOpenChange={setShowAuthModal} />
+      {requireAuth && <AuthModal open={showAuthModal} onOpenChange={setShowAuthModal} />}
     </>
   );
 }

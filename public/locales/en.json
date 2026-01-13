@@ -35,6 +35,8 @@
     "vote_depends": "It Depends",
     "vote_remove_error": "Error removing vote",
     "vote_error": "Error voting",
+    "vote_registered": "Vote registered",
+    "vote_registered_desc": "Your vote has been recorded successfully!",
     "edit_image": "Edit Topic Image",
     "image_updated": "Image updated!",
     "image_updated_desc": "The topic image has been updated successfully.",

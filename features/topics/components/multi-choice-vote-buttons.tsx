@@ -1,12 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import Link from "next/link";
 import { Check } from "lucide-react";
+import {
+  requireAuthForInteractions,
+  storeAnonymousVote,
+  getAnonymousVote,
+  removeAnonymousVote,
+  generateAnonymousId,
+} from "@/lib/auth-config";
 
 type TopicOption = {
   id: string;
@@ -16,6 +23,7 @@ type TopicOption = {
 
 type MultiChoiceVoteButtonsProps = {
   topicSlug: string;
+  topicId: string;
   options: TopicOption[];
   userVotes: string[]; // Array of option IDs user has voted for
   allowMultipleVotes: boolean;
@@ -25,6 +33,7 @@ type MultiChoiceVoteButtonsProps = {
 
 export default function MultiChoiceVoteButtons({
   topicSlug,
+  topicId,
   options,
   userVotes,
   allowMultipleVotes,
@@ -36,9 +45,22 @@ export default function MultiChoiceVoteButtons({
   const { toast } = useToast();
   const [isVoting, setIsVoting] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState<string[]>(userVotes);
+  const requireAuth = requireAuthForInteractions();
+
+  // Load anonymous votes from localStorage if not authenticated
+  useEffect(() => {
+    if (!session?.user && !requireAuth) {
+      const storedVotes = getAnonymousVote(topicId);
+      if (storedVotes && Array.isArray(storedVotes)) {
+        setSelectedOptions(storedVotes);
+      }
+    } else {
+      setSelectedOptions(userVotes);
+    }
+  }, [session, topicId, userVotes, requireAuth]);
 
   const handleOptionToggle = (optionId: string) => {
-    if (!session?.user) {
+    if (requireAuth && !session?.user) {
       toast({
         title: "Entre para votar",
         description: "Precisa de iniciar sessão para votar.",
@@ -77,7 +99,7 @@ export default function MultiChoiceVoteButtons({
   };
 
   const handleSubmitVote = async () => {
-    if (!session?.user) {
+    if (requireAuth && !session?.user) {
       toast({
         title: "Entre para votar",
         description: "Precisa de iniciar sessão para votar.",
@@ -102,12 +124,20 @@ export default function MultiChoiceVoteButtons({
       const response = await fetch(`/api/topics/${topicSlug}/vote`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ optionIds: selectedOptions }),
+        body: JSON.stringify({
+          optionIds: selectedOptions,
+          anonymousId: !session?.user ? generateAnonymousId() : undefined,
+        }),
       });
 
       if (!response.ok) {
         const error = await response.json();
         throw new Error(error.error || "Erro ao votar");
+      }
+
+      // For anonymous users, store in localStorage
+      if (!session?.user) {
+        storeAnonymousVote(topicId, selectedOptions);
       }
 
       toast({
@@ -130,12 +160,18 @@ export default function MultiChoiceVoteButtons({
   };
 
   const handleRemoveVote = async () => {
-    if (!session?.user || isVoting) return;
+    if ((requireAuth && !session?.user) || isVoting) return;
 
     setIsVoting(true);
     try {
       const response = await fetch(`/api/topics/${topicSlug}/vote`, {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          anonymousId: !session?.user ? generateAnonymousId() : undefined,
+        }),
       });
 
       if (!response.ok) {
@@ -144,6 +180,12 @@ export default function MultiChoiceVoteButtons({
       }
 
       setSelectedOptions([]);
+
+      // For anonymous users, remove from localStorage
+      if (!session?.user) {
+        removeAnonymousVote(topicId);
+      }
+
       router.refresh();
     } catch (error) {
       if (error instanceof Error) {
@@ -158,7 +200,8 @@ export default function MultiChoiceVoteButtons({
     }
   };
 
-  if (!session?.user) {
+  // Show login prompt only if auth is required
+  if (requireAuth && !session?.user) {
     return (
       <div className="rounded-lg border bg-muted/50 px-6 py-8 text-center">
         <p className="mb-4 text-muted-foreground">Entre para votar neste tema</p>

@@ -32,6 +32,8 @@
     "vote_depends": "Tergantung",
     "vote_remove_error": "Kesalahan menghapus suara",
     "vote_error": "Kesalahan memberikan suara",
+    "vote_registered": "Suara tercatat",
+    "vote_registered_desc": "Suara Anda berhasil tercatat!",
     "edit_image": "Edit Gambar Topik",
     "image_updated": "Gambar diperbarui!",
     "image_updated_desc": "Gambar topik berhasil diperbarui.",

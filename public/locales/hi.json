@@ -32,6 +32,8 @@
     "vote_depends": "निर्भर करता है",
     "vote_remove_error": "वोट हटाने में त्रुटि",
     "vote_error": "वोटिंग में त्रुटि",
+    "vote_registered": "वोट दर्ज किया गया",
+    "vote_registered_desc": "आपका वोट सफलतापूर्वक दर्ज कर लिया गया है!",
     "edit_image": "विषय छवि संपादित करें",
     "image_updated": "छवि अपडेट की गई!",
     "image_updated_desc": "विषय छवि सफलतापूर्वक अपडेट की गई है।",

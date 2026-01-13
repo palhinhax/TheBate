@@ -32,6 +32,8 @@
     "vote_depends": "নির্ভর করে",
     "vote_remove_error": "ভোট সরাতে ত্রুটি",
     "vote_error": "ভোট দিতে ত্রুটি",
+    "vote_registered": "ভোট নিবন্ধিত",
+    "vote_registered_desc": "আপনার ভোট সফলভাবে নিবন্ধিত হয়েছে!",
     "edit_image": "বিষয়ের ছবি সম্পাদনা করুন",
     "image_updated": "ছবি আপডেট করা হয়েছে!",
     "image_updated_desc": "বিষয়ের ছবি সফলভাবে আপডেট করা হয়েছে।",
